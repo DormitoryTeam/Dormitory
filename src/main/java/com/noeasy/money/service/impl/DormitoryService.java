@@ -75,8 +75,10 @@ public class DormitoryService implements IDormitoryService {
 	 * @see com.noeasy.money.service.IDormitoryService#calculateDistance()
 	 */
 	public Boolean calculateDistance() {
-		// TODO Auto-generated method stub
-		return null;
+
+		this.sqlSession.delete("com.noeasy.money.model.Dormitory.clearDistanceResult");
+		this.sqlSession.insert("com.noeasy.money.model.Dormitory.initialDistanceResult");
+		return true;
 	}
 
 }
