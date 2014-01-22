@@ -70,7 +70,7 @@
   <!-- map all requests for /app/* to the dispatcher servlet -->
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
-        <url-pattern>*.html</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
     <!-- spring config end -->
     <!-- jstl -->

@@ -80,7 +80,7 @@ public class DormitoryService implements IDormitoryService {
     public Double rateDormitory(int pDormitoryId, int pUserId, int pPoint) {
         DormitoryRateBean rate = new DormitoryRateBean(pDormitoryId, pUserId, pPoint);
         this.sqlSession.insert("com.noeasy.money.model.Dormitory.rate", rate);
-        return this.sqlSession.selectOne("om.noeasy.money.model.Dormitory.calculateAvgRating", pDormitoryId);
+        return this.sqlSession.selectOne("com.noeasy.money.model.Dormitory.calculateAvgRating", pDormitoryId);
     }
 
 
