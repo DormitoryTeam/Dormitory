@@ -1,18 +1,31 @@
 /*
- * File name: Dor mitoryBean.java
+ * This code is provided solely for the use of the licensee subject to the terms
+ * and conditions of the Master Service Agreement. Redistribution and use in
+ * source and binary forms, with or without modification, are prohibited.
  * 
- * Purpose:
+ * DISCLAIMER.THIS SOFTWARE IS PROVIDED BY AAXIS GROUP CORPORATION "AS IS."
+ * EXCEPT AS SPECIFICALLY SET FORTH IN THE MASTER SERVICES AGREEMENT, ALL
+ * EXPRESS OR IMPLIED CONDITIONS, REPRESENTATIONS, AND WARRANTIES INCLUDING,
+ * WITHOUT LIMITATION, ANY IMPLIED WARRANTY OF MERCHANTABILITY, FITNESS FOR A
+ * PARTICULAR PURPOSE, NONINFRINGEMENT OR ARISING FROM A COURSE OF DEALING,
+ * USAGE, OR TRADE PRACTICE, ARE HEREBY EXCLUDED TO THE EXTENT ALLOWED BY
+ * APPLICABLE LAW.
  * 
- * Functions used and called: Name Purpose ... ...
+ * IN NO EVENT WILL AAXIS GROUP CORPORATION, THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY LOST REVENUE, PROFIT, OR DATA, OR FOR SPECIAL, INDIRECT,
+ * CONSEQUENTIAL, INCIDENTAL, EXEMPLARY OR PUNITIVE DAMAGESINCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND REGARDLESS OF THE
+ * THEORY OF LIABILITY ARISING OUT OF THE USE OF OR INABILITY TO USE THE
+ * SOFTWARE EVEN IF AAXIS GROUP CORPORATION HAS BEEN ADVISED OF THE POSSIBILITY
+ * OF SUCH DAMAGES.
  * 
- * Additional Information:
- * 
- * Development History: Revision No. Author Date 1.0 Yove Jan 21, 2014 ... ...
- * ...
- * 
- * *************************************************
+ * IN NO EVENT SHALL AAXIS GROUP CORPORATION'S LIABILITY TO THE CUSTOMER OR USER
+ * OF THIS SOFTWARE, WHETHER IN CONTRACT, TORT (INCLUDING NEGLIGENCE), OR
+ * OTHERWISE, EXCEED THE PRICE PAID BY THE CUSTOMER OR USER FOR THIS SOFTWARE.
+ * THE FOREGOING LIMITATIONS SHALL APPLY EVEN IF THE ANY WARRANTY PROVIDED IN
+ * THE MASTER SERVICE AGREEMENT FAILS OF ITS ESSENTIAL PURPOSE.
  */
-
 package com.noeasy.money.model;
 
 /**
@@ -24,276 +37,406 @@ package com.noeasy.money.model;
 
 public class DormitoryBean {
 
-	private String	mId;
+    private int    mId;
+    private String mName;
+    private String mAddress;
+    private String mPostCode;
+    private String mEquipment;
+    private String mService;
+    private Double mSalePrice;
+    private Double mListPrice;
+    private String mCurrency;
+    private Double mDistance;
+    private Double mRanting;
+    private String Description;
 
-	private String	mName;
+    private int    mCityId;
+    private String mCity;
+    private int    mCollegeId;
+    private String mCollege;
+    private int    mDormitoryTypeId;
+    private String mDormitoryType;
+    private int    mContractId;
+    private String mContract;
 
-	private String	mAddress;
 
-	private String	mEquipment;
 
-	private String	mService;
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return mId;
+    }
 
-	private Double	mSalePrice;
 
-	private Double	mListPrice;
 
-	private String	mCurrency;
+    /**
+     * @param pId
+     *            the id to set
+     */
+    public void setId(int pId) {
+        mId = pId;
+    }
 
-	private Double	mDistance;
 
-	private String	mCollegeId;
 
-	private String	mPostCode;
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return mName;
+    }
 
-	private Integer	mRanting;
 
-	private String	mDormitoryType;
 
+    /**
+     * @param pName
+     *            the name to set
+     */
+    public void setName(String pName) {
+        mName = pName;
+    }
 
 
-	/**
-	 * @return the id
-	 */
-	public String getId() {
-		return mId;
-	}
 
+    /**
+     * @return the address
+     */
+    public String getAddress() {
+        return mAddress;
+    }
 
 
-	/**
-	 * @param pId
-	 *            the id to set
-	 */
-	public void setId(String pId) {
-		mId = pId;
-	}
 
+    /**
+     * @param pAddress
+     *            the address to set
+     */
+    public void setAddress(String pAddress) {
+        mAddress = pAddress;
+    }
 
 
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return mName;
-	}
 
+    /**
+     * @return the postCode
+     */
+    public String getPostCode() {
+        return mPostCode;
+    }
 
 
-	/**
-	 * @param pName
-	 *            the name to set
-	 */
-	public void setName(String pName) {
-		mName = pName;
-	}
 
+    /**
+     * @param pPostCode
+     *            the postCode to set
+     */
+    public void setPostCode(String pPostCode) {
+        mPostCode = pPostCode;
+    }
 
 
-	/**
-	 * @return the address
-	 */
-	public String getAddress() {
-		return mAddress;
-	}
 
+    /**
+     * @return the equipment
+     */
+    public String getEquipment() {
+        return mEquipment;
+    }
 
 
-	/**
-	 * @param pAddress
-	 *            the address to set
-	 */
-	public void setAddress(String pAddress) {
-		mAddress = pAddress;
-	}
 
+    /**
+     * @param pEquipment
+     *            the equipment to set
+     */
+    public void setEquipment(String pEquipment) {
+        mEquipment = pEquipment;
+    }
 
 
-	/**
-	 * @return the equipment
-	 */
-	public String getEquipment() {
-		return mEquipment;
-	}
 
+    /**
+     * @return the service
+     */
+    public String getService() {
+        return mService;
+    }
 
 
-	/**
-	 * @param pEquipment
-	 *            the equipment to set
-	 */
-	public void setEquipment(String pEquipment) {
-		mEquipment = pEquipment;
-	}
 
+    /**
+     * @param pService
+     *            the service to set
+     */
+    public void setService(String pService) {
+        mService = pService;
+    }
 
 
-	/**
-	 * @return the service
-	 */
-	public String getService() {
-		return mService;
-	}
 
+    /**
+     * @return the salePrice
+     */
+    public Double getSalePrice() {
+        return mSalePrice;
+    }
 
 
-	/**
-	 * @param pService
-	 *            the service to set
-	 */
-	public void setService(String pService) {
-		mService = pService;
-	}
 
+    /**
+     * @param pSalePrice
+     *            the salePrice to set
+     */
+    public void setSalePrice(Double pSalePrice) {
+        mSalePrice = pSalePrice;
+    }
 
 
-	/**
-	 * @return the salePrice
-	 */
-	public Double getSalePrice() {
-		return mSalePrice;
-	}
 
+    /**
+     * @return the listPrice
+     */
+    public Double getListPrice() {
+        return mListPrice;
+    }
 
 
-	/**
-	 * @param pSalePrice
-	 *            the salePrice to set
-	 */
-	public void setSalePrice(Double pSalePrice) {
-		mSalePrice = pSalePrice;
-	}
 
+    /**
+     * @param pListPrice
+     *            the listPrice to set
+     */
+    public void setListPrice(Double pListPrice) {
+        mListPrice = pListPrice;
+    }
 
 
-	/**
-	 * @return the listPrice
-	 */
-	public Double getListPrice() {
-		return mListPrice;
-	}
 
+    /**
+     * @return the currency
+     */
+    public String getCurrency() {
+        return mCurrency;
+    }
 
 
-	/**
-	 * @param pListPrice
-	 *            the listPrice to set
-	 */
-	public void setListPrice(Double pListPrice) {
-		mListPrice = pListPrice;
-	}
 
+    /**
+     * @param pCurrency
+     *            the currency to set
+     */
+    public void setCurrency(String pCurrency) {
+        mCurrency = pCurrency;
+    }
 
 
-	/**
-	 * @return the currency
-	 */
-	public String getCurrency() {
-		return mCurrency;
-	}
 
+    /**
+     * @return the distance
+     */
+    public Double getDistance() {
+        return mDistance;
+    }
 
 
-	/**
-	 * @param pCurrency
-	 *            the currency to set
-	 */
-	public void setCurrency(String pCurrency) {
-		mCurrency = pCurrency;
-	}
 
+    /**
+     * @param pDistance
+     *            the distance to set
+     */
+    public void setDistance(Double pDistance) {
+        mDistance = pDistance;
+    }
 
 
-	/**
-	 * @return the distance
-	 */
-	public Double getDistance() {
-		return mDistance;
-	}
 
+    /**
+     * @return the ranting
+     */
+    public Double getRanting() {
+        return mRanting;
+    }
 
 
-	/**
-	 * @param pDistance
-	 *            the distance to set
-	 */
-	public void setDistance(Double pDistance) {
-		mDistance = pDistance;
-	}
 
+    /**
+     * @param pRanting
+     *            the ranting to set
+     */
+    public void setRanting(Double pRanting) {
+        mRanting = pRanting;
+    }
 
 
-	/**
-	 * @return the collegeId
-	 */
-	public String getCollegeId() {
-		return mCollegeId;
-	}
 
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return Description;
+    }
 
 
-	/**
-	 * @param pCollegeId
-	 *            the collegeId to set
-	 */
-	public void setCollegeId(String pCollegeId) {
-		mCollegeId = pCollegeId;
-	}
 
+    /**
+     * @param pDescription
+     *            the description to set
+     */
+    public void setDescription(String pDescription) {
+        Description = pDescription;
+    }
 
 
-	/**
-	 * @return the postCode
-	 */
-	public String getPostCode() {
-		return mPostCode;
-	}
 
+    /**
+     * @return the cityId
+     */
+    public int getCityId() {
+        return mCityId;
+    }
 
 
-	/**
-	 * @param pPostCode
-	 *            the postCode to set
-	 */
-	public void setPostCode(String pPostCode) {
-		mPostCode = pPostCode;
-	}
 
+    /**
+     * @param pCityId
+     *            the cityId to set
+     */
+    public void setCityId(int pCityId) {
+        mCityId = pCityId;
+    }
 
 
-	/**
-	 * @return the ranting
-	 */
-	public Integer getRanting() {
-		return mRanting;
-	}
 
+    /**
+     * @return the city
+     */
+    public String getCity() {
+        return mCity;
+    }
 
 
-	/**
-	 * @param pRanting
-	 *            the ranting to set
-	 */
-	public void setRanting(Integer pRanting) {
-		mRanting = pRanting;
-	}
 
+    /**
+     * @param pCity
+     *            the city to set
+     */
+    public void setCity(String pCity) {
+        mCity = pCity;
+    }
 
 
-	/**
-	 * @return the dormitoryType
-	 */
-	public String getDormitoryType() {
-		return mDormitoryType;
-	}
 
+    /**
+     * @return the collegeId
+     */
+    public int getCollegeId() {
+        return mCollegeId;
+    }
 
 
-	/**
-	 * @param pDormitoryType
-	 *            the dormitoryType to set
-	 */
-	public void setDormitoryType(String pDormitoryType) {
-		mDormitoryType = pDormitoryType;
-	}
+
+    /**
+     * @param pCollegeId
+     *            the collegeId to set
+     */
+    public void setCollegeId(int pCollegeId) {
+        mCollegeId = pCollegeId;
+    }
+
+
+
+    /**
+     * @return the college
+     */
+    public String getCollege() {
+        return mCollege;
+    }
+
+
+
+    /**
+     * @param pCollege
+     *            the college to set
+     */
+    public void setCollege(String pCollege) {
+        mCollege = pCollege;
+    }
+
+
+
+    /**
+     * @return the dormitoryTypeId
+     */
+    public int getDormitoryTypeId() {
+        return mDormitoryTypeId;
+    }
+
+
+
+    /**
+     * @param pDormitoryTypeId
+     *            the dormitoryTypeId to set
+     */
+    public void setDormitoryTypeId(int pDormitoryTypeId) {
+        mDormitoryTypeId = pDormitoryTypeId;
+    }
+
+
+
+    /**
+     * @return the dormitoryType
+     */
+    public String getDormitoryType() {
+        return mDormitoryType;
+    }
+
+
+
+    /**
+     * @param pDormitoryType
+     *            the dormitoryType to set
+     */
+    public void setDormitoryType(String pDormitoryType) {
+        mDormitoryType = pDormitoryType;
+    }
+
+
+
+    /**
+     * @return the contractId
+     */
+    public int getContractId() {
+        return mContractId;
+    }
+
+
+
+    /**
+     * @param pContractId
+     *            the contractId to set
+     */
+    public void setContractId(int pContractId) {
+        mContractId = pContractId;
+    }
+
+
+
+    /**
+     * @return the contract
+     */
+    public String getContract() {
+        return mContract;
+    }
+
+
+
+    /**
+     * @param pContract
+     *            the contract to set
+     */
+    public void setContract(String pContract) {
+        mContract = pContract;
+    }
+
 }

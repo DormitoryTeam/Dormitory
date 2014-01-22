@@ -1,18 +1,31 @@
 /*
- * File name: DormitorySearchBean.java
+ * This code is provided solely for the use of the licensee subject to the terms
+ * and conditions of the Master Service Agreement. Redistribution and use in
+ * source and binary forms, with or without modification, are prohibited.
  * 
- * Purpose:
+ * DISCLAIMER.THIS SOFTWARE IS PROVIDED BY AAXIS GROUP CORPORATION "AS IS."
+ * EXCEPT AS SPECIFICALLY SET FORTH IN THE MASTER SERVICES AGREEMENT, ALL
+ * EXPRESS OR IMPLIED CONDITIONS, REPRESENTATIONS, AND WARRANTIES INCLUDING,
+ * WITHOUT LIMITATION, ANY IMPLIED WARRANTY OF MERCHANTABILITY, FITNESS FOR A
+ * PARTICULAR PURPOSE, NONINFRINGEMENT OR ARISING FROM A COURSE OF DEALING,
+ * USAGE, OR TRADE PRACTICE, ARE HEREBY EXCLUDED TO THE EXTENT ALLOWED BY
+ * APPLICABLE LAW.
  * 
- * Functions used and called: Name Purpose ... ...
+ * IN NO EVENT WILL AAXIS GROUP CORPORATION, THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY LOST REVENUE, PROFIT, OR DATA, OR FOR SPECIAL, INDIRECT,
+ * CONSEQUENTIAL, INCIDENTAL, EXEMPLARY OR PUNITIVE DAMAGESINCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND REGARDLESS OF THE
+ * THEORY OF LIABILITY ARISING OUT OF THE USE OF OR INABILITY TO USE THE
+ * SOFTWARE EVEN IF AAXIS GROUP CORPORATION HAS BEEN ADVISED OF THE POSSIBILITY
+ * OF SUCH DAMAGES.
  * 
- * Additional Information:
- * 
- * Development History: Revision No. Author Date 1.0 Yove Jan 21, 2014 ... ...
- * ...
- * 
- * *************************************************
+ * IN NO EVENT SHALL AAXIS GROUP CORPORATION'S LIABILITY TO THE CUSTOMER OR USER
+ * OF THIS SOFTWARE, WHETHER IN CONTRACT, TORT (INCLUDING NEGLIGENCE), OR
+ * OTHERWISE, EXCEED THE PRICE PAID BY THE CUSTOMER OR USER FOR THIS SOFTWARE.
+ * THE FOREGOING LIMITATIONS SHALL APPLY EVEN IF THE ANY WARRANTY PROVIDED IN
+ * THE MASTER SERVICE AGREEMENT FAILS OF ITS ESSENTIAL PURPOSE.
  */
-
 package com.noeasy.money.model;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -26,192 +39,193 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public class DormitorySearchBean {
 
-	private String					mDormitoryName;
+    private String               mDormitoryName;
 
-	private String					mCityId;
+    private int                  mCityId;
 
-	private String					mCollegeId;
+    private int                  mCollegeId;
 
-	private String					mKeyword;
+    private String               mKeyword;
 
-	private Pair<Double, Double>	mPriceRange;
+    private Pair<Double, Double> mPriceRange;
 
-	private String					mContractTypeId;
+    private int                  mContractTypeId;
 
-	private String					mDormitoryTypeId;
+    private int                  mDormitoryTypeId;
 
-	private String					mSortBy;
+    private String               mSortBy;
 
-	private PageBean				mPageBean;
-
-
-
-	/**
-	 * @return the dormitoryName
-	 */
-	public String getDormitoryName() {
-		return mDormitoryName;
-	}
+    private PageBean             mPageBean;
 
 
 
-	/**
-	 * @param pDormitoryName
-	 *            the dormitoryName to set
-	 */
-	public void setDormitoryName(String pDormitoryName) {
-		mDormitoryName = pDormitoryName;
-	}
+    /**
+     * @return the dormitoryName
+     */
+    public String getDormitoryName() {
+        return mDormitoryName;
+    }
 
 
 
-	/**
-	 * @return the cityId
-	 */
-	public String getCityId() {
-		return mCityId;
-	}
+    /**
+     * @param pDormitoryName
+     *            the dormitoryName to set
+     */
+    public void setDormitoryName(String pDormitoryName) {
+        mDormitoryName = pDormitoryName;
+    }
 
 
 
-	/**
-	 * @param pCityId
-	 *            the cityId to set
-	 */
-	public void setCityId(String pCityId) {
-		mCityId = pCityId;
-	}
+    /**
+     * @return the cityId
+     */
+    public int getCityId() {
+        return mCityId;
+    }
 
 
 
-	/**
-	 * @return the collegeId
-	 */
-	public String getCollegeId() {
-		return mCollegeId;
-	}
+    /**
+     * @param pCityId
+     *            the cityId to set
+     */
+    public void setCityId(int pCityId) {
+        mCityId = pCityId;
+    }
 
 
 
-	/**
-	 * @param pCollegeId
-	 *            the collegeId to set
-	 */
-	public void setCollegeId(String pCollegeId) {
-		mCollegeId = pCollegeId;
-	}
+    /**
+     * @return the collegeId
+     */
+    public int getCollegeId() {
+        return mCollegeId;
+    }
 
 
 
-	/**
-	 * @return the keyword
-	 */
-	public String getKeyword() {
-		return mKeyword;
-	}
+    /**
+     * @param pCollegeId
+     *            the collegeId to set
+     */
+    public void setCollegeId(int pCollegeId) {
+        mCollegeId = pCollegeId;
+    }
 
 
 
-	/**
-	 * @param pKeyword
-	 *            the keyword to set
-	 */
-	public void setKeyword(String pKeyword) {
-		mKeyword = pKeyword;
-	}
+    /**
+     * @return the keyword
+     */
+    public String getKeyword() {
+        return mKeyword;
+    }
 
 
 
-	/**
-	 * @return the priceRange
-	 */
-	public Pair<Double, Double> getPriceRange() {
-		return mPriceRange;
-	}
+    /**
+     * @param pKeyword
+     *            the keyword to set
+     */
+    public void setKeyword(String pKeyword) {
+        mKeyword = pKeyword;
+    }
 
 
 
-	/**
-	 * @param pPriceRange
-	 *            the priceRange to set
-	 */
-	public void setPriceRange(Pair<Double, Double> pPriceRange) {
-		mPriceRange = pPriceRange;
-	}
+    /**
+     * @return the priceRange
+     */
+    public Pair<Double, Double> getPriceRange() {
+        return mPriceRange;
+    }
 
 
 
-	/**
-	 * @return the contractTypeId
-	 */
-	public String getContractTypeId() {
-		return mContractTypeId;
-	}
+    /**
+     * @param pPriceRange
+     *            the priceRange to set
+     */
+    public void setPriceRange(Pair<Double, Double> pPriceRange) {
+        mPriceRange = pPriceRange;
+    }
 
 
 
-	/**
-	 * @param pContractTypeId
-	 *            the contractTypeId to set
-	 */
-	public void setContractTypeId(String pContractTypeId) {
-		mContractTypeId = pContractTypeId;
-	}
+    /**
+     * @return the contractTypeId
+     */
+    public int getContractTypeId() {
+        return mContractTypeId;
+    }
 
 
 
-	/**
-	 * @return the dormitoryTypeId
-	 */
-	public String getDormitoryTypeId() {
-		return mDormitoryTypeId;
-	}
+    /**
+     * @param pContractTypeId
+     *            the contractTypeId to set
+     */
+    public void setContractTypeId(int pContractTypeId) {
+        mContractTypeId = pContractTypeId;
+    }
 
 
 
-	/**
-	 * @param pDormitoryTypeId
-	 *            the dormitoryTypeId to set
-	 */
-	public void setDormitoryTypeId(String pDormitoryTypeId) {
-		mDormitoryTypeId = pDormitoryTypeId;
-	}
+    /**
+     * @return the dormitoryTypeId
+     */
+    public int getDormitoryTypeId() {
+        return mDormitoryTypeId;
+    }
 
 
 
-	/**
-	 * @return the sortBy
-	 */
-	public String getSortBy() {
-		return mSortBy;
-	}
+    /**
+     * @param pDormitoryTypeId
+     *            the dormitoryTypeId to set
+     */
+    public void setDormitoryTypeId(int pDormitoryTypeId) {
+        mDormitoryTypeId = pDormitoryTypeId;
+    }
 
 
 
-	/**
-	 * @param pSortBy
-	 *            the sortBy to set
-	 */
-	public void setSortBy(String pSortBy) {
-		mSortBy = pSortBy;
-	}
+    /**
+     * @return the sortBy
+     */
+    public String getSortBy() {
+        return mSortBy;
+    }
 
 
 
-	/**
-	 * @return the pageBean
-	 */
-	public PageBean getPageBean() {
-		return mPageBean;
-	}
+    /**
+     * @param pSortBy
+     *            the sortBy to set
+     */
+    public void setSortBy(String pSortBy) {
+        mSortBy = pSortBy;
+    }
 
 
 
-	/**
-	 * @param pPageBean
-	 *            the pageBean to set
-	 */
-	public void setPageBean(PageBean pPageBean) {
-		mPageBean = pPageBean;
-	}
+    /**
+     * @return the pageBean
+     */
+    public PageBean getPageBean() {
+        return mPageBean;
+    }
+
+
+
+    /**
+     * @param pPageBean
+     *            the pageBean to set
+     */
+    public void setPageBean(PageBean pPageBean) {
+        mPageBean = pPageBean;
+    }
+
 }
