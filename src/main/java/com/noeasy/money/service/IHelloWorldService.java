@@ -4,5 +4,5 @@ import com.noeasy.money.model.HelloWroldBean;
 
 public interface IHelloWorldService {
 
-	HelloWroldBean getBean();
+    HelloWroldBean getBean();
 }

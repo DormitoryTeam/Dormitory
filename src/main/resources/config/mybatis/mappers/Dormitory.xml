@@ -4,6 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.noeasy.money.model.Dormitory">
 
+	<!-- Select Dormitory -->
 	<sql id="select-dormitory">
 		select t1.id, ti.name, t1.address, t1.postcode, t1.equipment, t1.service, t1.salePrice, t1.listPrice, t1.description
 		t1.type_id as dormitoryTypeId, t2.name as dormitoryType,
@@ -14,12 +15,19 @@
 		left join dormitory_type t2 on t1.type_id = t2.id
 		left join contract_type t3 on t1.contract_type_id = t3.id
 		left join city t4 on t1.city_id = t4.id
-		left join dormitory_rating on t1.id =t5.dormitory_id
+		left join
+		dormitory_rating on t1.id =t5.dormitory_id
 	</sql>
 
 	<sql id="where-with-id">
 		<![CDATA[
 			where t1.id = #id
+		]]>
+	</sql>
+	
+	<sql id="where-with-college-id">
+		<![CDATA[
+
 		]]>
 	</sql>
 

@@ -44,7 +44,7 @@ public class DormitoryController {
 
 
 
-    @RequestMapping(value = "/unit-test/to-rate")
+    @RequestMapping("/unit-test/to-rate")
     public String toRate(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
         return "dormitory/rate";
     }

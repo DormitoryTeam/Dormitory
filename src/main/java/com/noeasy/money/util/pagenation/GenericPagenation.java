@@ -1,30 +1,36 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * To change this template, choose Tools | Templates and open the template in
+ * the editor.
  */
 package com.noeasy.money.util.pagenation;
 
 /**
- *
+ * 
  * @author acer
  */
 public class GenericPagenation implements IPagenation {
 
-    private int totalRows;
-    private int pageSize;
-    private int totalPage;
-    private int firstPage;
-    private int lastPage;
-    private int currentPage;
+    private int   totalRows;
+    private int   pageSize;
+    private int   totalPage;
+    private int   firstPage;
+    private int   lastPage;
+    private int   currentPage;
     private int[] pageArray;
+
+
 
     public GenericPagenation(int pageSize) {
         this.setPageSize(pageSize);
     }
-    
+
+
+
     public int getTotalRows() {
         return this.totalRows;
     }
+
+
 
     public void setTotalRows(int totalRows) {
         this.totalRows = totalRows;
@@ -46,33 +52,47 @@ public class GenericPagenation implements IPagenation {
         }
     }
 
+
+
     public int getPageSize() {
         return this.pageSize;
     }
 
+
+
     public void setPageSize(int pageSize) {
         if (pageSize <= 0) {
-            throw new IllegalArgumentException("Page Size must greater than 0."); 
+            throw new IllegalArgumentException("Page Size must greater than 0.");
         }
         this.pageSize = pageSize;
 
     }
 
+
+
     public int getTotalPage() {
         return this.totalPage;
     }
+
+
 
     public int getFirstPage() {
         return this.firstPage;
     }
 
+
+
     public int getLastPage() {
         return this.lastPage;
     }
 
+
+
     public int getCurrentPage() {
         return this.currentPage;
     }
+
+
 
     public void setCurrentPage(int currentPage) {
         if (currentPage > this.lastPage || currentPage < this.firstPage) {
@@ -81,6 +101,8 @@ public class GenericPagenation implements IPagenation {
             this.currentPage = currentPage;
         }
     }
+
+
 
     public int nextPage() {
         if (this.currentPage < this.lastPage) {
@@ -91,6 +113,8 @@ public class GenericPagenation implements IPagenation {
         return this.currentPage;
     }
 
+
+
     public int prePage() {
         if (this.currentPage > this.firstPage) {
             this.currentPage--;
@@ -99,6 +123,8 @@ public class GenericPagenation implements IPagenation {
         }
         return this.currentPage;
     }
+
+
 
     public int[] getPageArray() {
         return this.pageArray;

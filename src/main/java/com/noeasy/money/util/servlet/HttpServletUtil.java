@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * To change this template, choose Tools | Templates and open the template in
+ * the editor.
  */
 package com.noeasy.money.util.servlet;
 
@@ -12,13 +12,15 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- *
+ * 
  * @author acer
  */
 public class HttpServletUtil {
 
     public final static String METHOD_POST = "POST";
-    private static final Log logger = LogFactory.getLog(HttpServletUtil.class);
+    private static final Log   logger      = LogFactory.getLog(HttpServletUtil.class);
+
+
 
     public static boolean isPost(HttpServletRequest request) {
         if (METHOD_POST.equals(request.getMethod())) {
@@ -26,6 +28,8 @@ public class HttpServletUtil {
         }
         return false;
     }
+
+
 
     public static void populateWithJSON(HttpServletResponse response, String jsonStr) {
         if (null != jsonStr) {
@@ -46,6 +50,8 @@ public class HttpServletUtil {
         }
     }
 
+
+
     public static void populateWithXMl(HttpServletResponse response, String xmlStr) {
         if (null != xmlStr) {
             PrintWriter out = null;
@@ -64,12 +70,16 @@ public class HttpServletUtil {
 
     }
 
+
+
     public static String getDomain(HttpServletRequest request) {
         String requestURL = request.getRequestURL().toString();
         String requestURI = request.getRequestURI();
         String domain = requestURL.substring(0, requestURL.length() - requestURI.length());
         return domain;
     }
+
+
 
     public static String getWebsite(HttpServletRequest request) {
         String website = getDomain(request);

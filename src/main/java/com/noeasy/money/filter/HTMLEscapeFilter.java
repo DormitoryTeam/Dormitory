@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * To change this template, choose Tools | Templates and open the template in
+ * the editor.
  */
 package com.noeasy.money.filter;
 
@@ -18,20 +18,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 /**
- *
+ * 
  * @author acer
  */
-public class HTMLEscapeFilter implements Filter{
+public class HTMLEscapeFilter implements Filter {
 
     public void init(FilterConfig fc) throws ServletException {
     }
 
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequestWrapper requestWrapper = new HTMLEscapeRequestWrapper((HttpServletRequest)request);
+
+
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
+            ServletException {
+        HttpServletRequestWrapper requestWrapper = new HTMLEscapeRequestWrapper((HttpServletRequest) request);
         chain.doFilter(requestWrapper, response);
     }
 
+
+
     public void destroy() {
     }
-    
+
 }
