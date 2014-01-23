@@ -52,22 +52,26 @@ public interface IDormitoryService {
 
 
     /**
-     * 
      * Rate dormitory and return the average rating
      * 
      * @param pDormitoryId
      * @param pUserId
-     * @param point
+     * @param pPoint
+     * @param pGetAvg
      * @return
      */
-    Double rateDormitory(int pDormitoryId, int pUserId, int point, boolean getAvg);
+    Double rateDormitory(int pDormitoryId, int pUserId, int pPoint, boolean pGetAvg);
 
 
 
     Boolean calculateDistance();
-    
+
+
+
     Boolean calculateDistance4City(int pCityId);
-    
+
+
+
     Boolean calculateDistance4College(int pCollegeId);
 
 }
