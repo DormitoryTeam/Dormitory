@@ -20,12 +20,14 @@ public class DormitoryController {
 
 
 
-    @RequestMapping(value = "/initialDistance.html")
+    @RequestMapping(value = "/initalDistance.html")
     public String indexPage(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
         this.dormitoryService.calculateDistance();
         return "dormitory/sucess";
     }
-    
+
+
+
     @RequestMapping("/unit-test/rate")
     public String testRate(HttpServletRequest request, HttpServletResponse response, Model model, String dormitoryId,
             String userId, String point) {
