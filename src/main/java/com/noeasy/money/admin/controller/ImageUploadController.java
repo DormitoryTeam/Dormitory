@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * To change this template, choose Tools | Templates and open the template in
+ * the editor.
  */
 package com.noeasy.money.admin.controller;
 
@@ -30,13 +30,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.util.WebUtils;
 
 /**
- *
+ * 
  * @author acer
  */
 @Controller
 public class ImageUploadController {
 
     private Log logging = LogFactory.getLog(ImageUploadController.class);
+
+
 
     @RequestMapping(value = "/admin/uploadImage.html")
     public void uploadImage(HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
@@ -56,12 +58,20 @@ public class ImageUploadController {
             // Item item = itemService.get(itemId);
             // String filePath = item.getItemTempPath();
             String webRoot = WebUtils.getRealPath(request.getSession().getServletContext(), "/");
-            String tempFilePath = webRoot + Constants.IMAGE_STORAGE_PATH + itemID.toString()
-                    + File.separator;// Path to store file on local system
+            String tempFilePath = webRoot + Constants.IMAGE_STORAGE_PATH + itemID.toString() + File.separator;// Path
+                                                                                                              // to
+                                                                                                              // store
+                                                                                                              // file
+                                                                                                              // on
+                                                                                                              // local
+                                                                                                              // system
             logging.info("Temp file path: " + tempFilePath);
             List uploadedItems = null;
             try {
-                uploadedItems = upload.parseRequest(request); //if files are too big, this line would blow up
+                uploadedItems = upload.parseRequest(request); // if files are
+                                                              // too big, this
+                                                              // line would blow
+                                                              // up
 
                 Iterator i = uploadedItems.iterator();
 
@@ -78,7 +88,8 @@ public class ImageUploadController {
                             if (!tempDirctory.exists()) {
                                 tempDirctory.mkdirs();
                             }
-//                            String fileName = fieldName + fileItem.getName().substring(fileItem.getName().lastIndexOf("."));
+                            // String fileName = fieldName +
+                            // fileItem.getName().substring(fileItem.getName().lastIndexOf("."));
                             uploadedFile = new File(tempFilePath, fieldName);
                             if (!uploadedFile.exists()) {
                                 uploadedFile.createNewFile();
@@ -92,9 +103,8 @@ public class ImageUploadController {
                 }
                 if (null != uploadFiles && uploadFiles.size() > 0) {
                     File tempImageFile = uploadFiles.get(0);
-                    String imageURL = HttpServletUtil.getWebsite(request)
-                            + Constants.IMAGE_STORAGE_PATH + itemID.toString()
-                            + "/" + tempImageFile.getName();
+                    String imageURL = HttpServletUtil.getWebsite(request) + Constants.IMAGE_STORAGE_PATH
+                            + itemID.toString() + "/" + tempImageFile.getName();
                     jsonMap.put("imageURL", imageURL);
 
                 } else {

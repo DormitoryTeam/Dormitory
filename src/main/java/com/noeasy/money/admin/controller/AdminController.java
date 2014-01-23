@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * To change this template, choose Tools | Templates and open the template in
+ * the editor.
  */
 package com.noeasy.money.admin.controller;
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- *
+ * 
  * @author acer
  */
 @Controller
@@ -19,7 +19,10 @@ public class AdminController {
     public String home(HttpServletRequest request, HttpServletResponse response) {
         return "admin/home";
     }
-     @RequestMapping(value = "/admin/merchandise.html")
+
+
+
+    @RequestMapping(value = "/admin/merchandise.html")
     public String merchandise(HttpServletRequest request, HttpServletResponse response) {
         return "admin/merchandise";
     }

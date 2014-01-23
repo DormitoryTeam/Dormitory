@@ -24,79 +24,79 @@ package com.noeasy.money.model;
 
 public class PageBean {
 
-	private int	mPageNum;
+    private int mPageNum;
 
-	private int	mPageSize;
+    private int mPageSize;
 
-	private int	mMaxPageNum;
-
-
-
-	public boolean isFirstPage() {
-		return getPageNum() == 0;
-	}
+    private int mMaxPageNum;
 
 
 
-	public boolean isLastPage() {
-		return getPageNum() == getMaxPageNum();
-	}
+    public boolean isFirstPage() {
+        return getPageNum() == 0;
+    }
 
 
 
-	/**
-	 * @return the pageNum
-	 */
-	public int getPageNum() {
-		return mPageNum;
-	}
+    public boolean isLastPage() {
+        return getPageNum() == getMaxPageNum();
+    }
 
 
 
-	/**
-	 * @param pPageNum
-	 *            the pageNum to set
-	 */
-	public void setPageNum(int pPageNum) {
-		mPageNum = pPageNum;
-	}
+    /**
+     * @return the pageNum
+     */
+    public int getPageNum() {
+        return mPageNum;
+    }
 
 
 
-	/**
-	 * @return the pageSize
-	 */
-	public int getPageSize() {
-		return mPageSize;
-	}
+    /**
+     * @param pPageNum
+     *            the pageNum to set
+     */
+    public void setPageNum(int pPageNum) {
+        mPageNum = pPageNum;
+    }
 
 
 
-	/**
-	 * @param pPageSize
-	 *            the pageSize to set
-	 */
-	public void setPageSize(int pPageSize) {
-		mPageSize = pPageSize;
-	}
+    /**
+     * @return the pageSize
+     */
+    public int getPageSize() {
+        return mPageSize;
+    }
 
 
 
-	/**
-	 * @return the maxPageNum
-	 */
-	public int getMaxPageNum() {
-		return mMaxPageNum;
-	}
+    /**
+     * @param pPageSize
+     *            the pageSize to set
+     */
+    public void setPageSize(int pPageSize) {
+        mPageSize = pPageSize;
+    }
 
 
 
-	/**
-	 * @param pMaxPageNum
-	 *            the maxPageNum to set
-	 */
-	public void setMaxPageNum(int pMaxPageNum) {
-		mMaxPageNum = pMaxPageNum;
-	}
+    /**
+     * @return the maxPageNum
+     */
+    public int getMaxPageNum() {
+        return mMaxPageNum;
+    }
+
+
+
+    /**
+     * @param pMaxPageNum
+     *            the maxPageNum to set
+     */
+    public void setMaxPageNum(int pMaxPageNum) {
+        mMaxPageNum = pMaxPageNum;
+    }
 
 }

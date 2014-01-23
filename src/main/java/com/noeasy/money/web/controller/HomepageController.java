@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * To change this template, choose Tools | Templates and open the template in
+ * the editor.
  */
 package com.noeasy.money.web.controller;
 
@@ -25,28 +25,33 @@ import com.noeasy.money.service.IHelloWorldService;
 @Controller
 public class HomepageController {
 
-	Log logger = LogFactory.getLog(HomepageController.class);
+    Log                   logger = LogFactory.getLog(HomepageController.class);
 
-	IHelloWorldService helloWorldService;
+    IHelloWorldService    helloWorldService;
 
-	SessionLocaleResolver localeResolver;
+    SessionLocaleResolver localeResolver;
 
-	@Resource(name = "localeResolver")
-	public void setLocaleResolver(SessionLocaleResolver localeResolver) {
-		this.localeResolver = localeResolver;
-	}
 
-	@Resource(name = "helloWorldService")
-	public void setHelloWorldService(IHelloWorldService helloWorldService) {
-		this.helloWorldService = helloWorldService;
-	}
 
-	@RequestMapping(value = "/home.html")
-	public String indexPage(ModelMap model, HttpServletRequest request,
-			HttpServletResponse response) {
-		HelloWroldBean bean = this.helloWorldService.getBean();
-		model.addAttribute("intro", bean.sayHello());
-		return "index";
-	}
+    @Resource(name = "localeResolver")
+    public void setLocaleResolver(SessionLocaleResolver localeResolver) {
+        this.localeResolver = localeResolver;
+    }
+
+
+
+    @Resource(name = "helloWorldService")
+    public void setHelloWorldService(IHelloWorldService helloWorldService) {
+        this.helloWorldService = helloWorldService;
+    }
+
+
+
+    @RequestMapping(value = "/home.html")
+    public String indexPage(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+        HelloWroldBean bean = this.helloWorldService.getBean();
+        model.addAttribute("intro", bean.sayHello());
+        return "index";
+    }
 
 }

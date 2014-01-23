@@ -60,7 +60,7 @@ public interface IDormitoryService {
      * @param point
      * @return
      */
-    Double rateDormitory(int pDormitoryId, int pUserId, int point);
+    Double rateDormitory(int pDormitoryId, int pUserId, int point, boolean getAvg);
 
 
 

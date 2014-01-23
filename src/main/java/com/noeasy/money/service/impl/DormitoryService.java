@@ -77,10 +77,13 @@ public class DormitoryService implements IDormitoryService {
      * @see com.noeasy.money.service.IDormitoryService#rateDormitory(int, int,
      *      int)
      */
-    public Double rateDormitory(int pDormitoryId, int pUserId, int pPoint) {
+    public Double rateDormitory(int pDormitoryId, int pUserId, int pPoint, boolean getAvg) {
         DormitoryRateBean rate = new DormitoryRateBean(pDormitoryId, pUserId, pPoint);
         this.sqlSession.insert("com.noeasy.money.model.Dormitory.rate", rate);
-        return this.sqlSession.selectOne("om.noeasy.money.model.Dormitory.calculateAvgRating", pDormitoryId);
+        if (!getAvg) {
+            return 0D;
+        }
+        return this.sqlSession.selectOne("com.noeasy.money.model.Dormitory.calculateAvgRating", pDormitoryId);
     }
 
 
