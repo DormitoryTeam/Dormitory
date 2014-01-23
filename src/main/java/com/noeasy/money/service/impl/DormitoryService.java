@@ -96,4 +96,20 @@ public class DormitoryService implements IDormitoryService {
         this.sqlSession.insert("com.noeasy.money.model.Dormitory.initialDistanceResult");
         return true;
     }
+
+
+
+    public Boolean calculateDistance4City(int pCityId) {
+        this.sqlSession.delete("com.noeasy.money.model.Dormitory.clearDistanceResult4City", pCityId);
+        this.sqlSession.insert("com.noeasy.money.model.Dormitory.calculateDistance4City", pCityId);
+        return true;
+    }
+
+
+
+    public Boolean calculateDistance4College(int pCollegeId) {
+        this.sqlSession.delete("com.noeasy.money.model.Dormitory.clearDistanceResult4College", pCollegeId);
+        this.sqlSession.insert("com.noeasy.money.model.Dormitory.calculateDistance4College", pCollegeId);
+        return true;
+    }
 }

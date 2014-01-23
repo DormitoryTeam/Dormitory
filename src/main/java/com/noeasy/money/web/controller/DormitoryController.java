@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -20,9 +21,17 @@ public class DormitoryController {
 
 
 
-    @RequestMapping(value = "/initalDistance.html")
-    public String indexPage(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-        this.dormitoryService.calculateDistance();
+    // TODO: move to backend controller.
+    @RequestMapping(value = "/initialDistance.html")
+    public String calculateDistance(ModelMap model, HttpServletRequest request, HttpServletResponse response, String cityId, String collegeId) {
+        if (StringUtils.isNotBlank(cityId)) {
+            this.dormitoryService.calculateDistance4City(Integer.parseInt(cityId));
+        } else if (StringUtils.isNotBlank(collegeId)){
+            this.dormitoryService.calculateDistance4College(Integer.parseInt(collegeId));
+        }  else {
+            this.dormitoryService.calculateDistance();            
+        }
+        
         return "dormitory/sucess";
     }
 

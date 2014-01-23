@@ -65,5 +65,9 @@ public interface IDormitoryService {
 
 
     Boolean calculateDistance();
+    
+    Boolean calculateDistance4City(int pCityId);
+    
+    Boolean calculateDistance4College(int pCollegeId);
 
 }

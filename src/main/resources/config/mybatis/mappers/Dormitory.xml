@@ -68,4 +68,38 @@
 		ON p1.city_id = p2.city_id
 		) t1) t2;
 	</insert>
+	
+	<delete id="clearDistanceResult4City" parameterType='int'>
+		DELETE FROM distance_result WHERE city_id = #{id};
+	</delete>
+	
+	<insert id="calculateDistance4City" parameterType='int'>
+		INSERT INTO distance_result(city_id, college_id, dormitory_id, distance, create_time, update_time)
+		SELECT t2.city_id, t2.college_id, t2.dormitory_id, 2*R*ASIN(d/2/R) AS distance, now() AS create_time, now() AS update_time
+		FROM (SELECT 6378 AS R) t0,
+		(SELECT t1.city_id, t1.college_id, t1.dormitory_id, SQRT(dx*dx+dy*dy+dz*dz) AS d
+		FROM (
+		SELECT p1.x-p2.x AS dx, p1.y-p2.y AS dy, p1.z-p2.z AS dz, p1.city_id, p1.college_id, p2.dormitory_id
+		FROM view_college_glb p1
+		INNER JOIN view_dormitory_glb p2
+		ON p1.city_id = p2.city_id AND p1.city_id = #{cityId}
+		) t1) t2;
+	</insert>
+	
+	<delete id="clearDistanceResult4College" parameterType='int'>
+		DELETE FROM distance_result WHERE college_id = #{id};
+	</delete>
+	
+	<insert id="calculateDistance4College" parameterType='int'>
+		INSERT INTO distance_result(city_id, college_id, dormitory_id, distance, create_time, update_time)
+		SELECT t2.city_id, t2.college_id, t2.dormitory_id, 2*R*ASIN(d/2/R) AS distance, now() AS create_time, now() AS update_time
+		FROM (SELECT 6378 AS R) t0,
+		(SELECT t1.city_id, t1.college_id, t1.dormitory_id, SQRT(dx*dx+dy*dy+dz*dz) AS d
+		FROM (
+		SELECT p1.x-p2.x AS dx, p1.y-p2.y AS dy, p1.z-p2.z AS dz, p1.city_id, p1.college_id, p2.dormitory_id
+		FROM view_college_glb p1
+		INNER JOIN view_dormitory_glb p2
+		ON p1.city_id = p2.city_id AND p1.college_id = #{collegeId}
+		) t1) t2;
+	</insert>
 </mapper>
