@@ -24,7 +24,7 @@ package com.noeasy.money.model;
 
 public class PageBean {
 
-    private int mPageNum;
+    private int mPageNum = 1;
 
     private int mPageSize;
 

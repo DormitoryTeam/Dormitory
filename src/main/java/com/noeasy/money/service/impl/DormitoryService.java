@@ -75,12 +75,12 @@ public class DormitoryService implements IDormitoryService {
 
     /**
      * @see com.noeasy.money.service.IDormitoryService#rateDormitory(int, int,
-     *      int)
+     *      int, boolean)
      */
-    public Double rateDormitory(int pDormitoryId, int pUserId, int pPoint, boolean getAvg) {
+    public Double rateDormitory(int pDormitoryId, int pUserId, int pPoint, boolean pGetAvg) {
         DormitoryRateBean rate = new DormitoryRateBean(pDormitoryId, pUserId, pPoint);
         this.sqlSession.insert("com.noeasy.money.model.Dormitory.rate", rate);
-        if (!getAvg) {
+        if (!pGetAvg) {
             return 0D;
         }
         return this.sqlSession.selectOne("com.noeasy.money.model.Dormitory.calculateAvgRating", pDormitoryId);
@@ -99,6 +99,9 @@ public class DormitoryService implements IDormitoryService {
 
 
 
+    /**
+     * @see com.noeasy.money.service.IDormitoryService#calculateDistance4City(int)
+     */
     public Boolean calculateDistance4City(int pCityId) {
         this.sqlSession.delete("com.noeasy.money.model.Dormitory.clearDistanceResult4City", pCityId);
         this.sqlSession.insert("com.noeasy.money.model.Dormitory.calculateDistance4City", pCityId);
@@ -107,9 +110,13 @@ public class DormitoryService implements IDormitoryService {
 
 
 
+    /**
+     * @see com.noeasy.money.service.IDormitoryService#calculateDistance4College(int)
+     */
     public Boolean calculateDistance4College(int pCollegeId) {
         this.sqlSession.delete("com.noeasy.money.model.Dormitory.clearDistanceResult4College", pCollegeId);
         this.sqlSession.insert("com.noeasy.money.model.Dormitory.calculateDistance4College", pCollegeId);
         return true;
     }
+
 }

@@ -23,15 +23,16 @@ public class DormitoryController {
 
     // TODO: move to backend controller.
     @RequestMapping(value = "/initialDistance.html")
-    public String calculateDistance(ModelMap model, HttpServletRequest request, HttpServletResponse response, String cityId, String collegeId) {
+    public String calculateDistance(ModelMap model, HttpServletRequest request, HttpServletResponse response,
+            String cityId, String collegeId) {
         if (StringUtils.isNotBlank(cityId)) {
             this.dormitoryService.calculateDistance4City(Integer.parseInt(cityId));
-        } else if (StringUtils.isNotBlank(collegeId)){
+        } else if (StringUtils.isNotBlank(collegeId)) {
             this.dormitoryService.calculateDistance4College(Integer.parseInt(collegeId));
-        }  else {
-            this.dormitoryService.calculateDistance();            
+        } else {
+            this.dormitoryService.calculateDistance();
         }
-        
+
         return "dormitory/sucess";
     }
 
