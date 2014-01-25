@@ -47,8 +47,8 @@ public class DormitoryBean {
     private Double mListPrice;
     private String mCurrency;
     private Double mDistance;
-    private Double mRanting;
-    private String Description;
+    private Double mRating;
+    private String mDescription;
 
     private int    mCityId;
     private String mCity;
@@ -252,29 +252,10 @@ public class DormitoryBean {
 
 
     /**
-     * @return the ranting
-     */
-    public Double getRanting() {
-        return mRanting;
-    }
-
-
-
-    /**
-     * @param pRanting
-     *            the ranting to set
-     */
-    public void setRanting(Double pRanting) {
-        mRanting = pRanting;
-    }
-
-
-
-    /**
      * @return the description
      */
     public String getDescription() {
-        return Description;
+        return mDescription;
     }
 
 
@@ -284,7 +265,7 @@ public class DormitoryBean {
      *            the description to set
      */
     public void setDescription(String pDescription) {
-        Description = pDescription;
+        mDescription = pDescription;
     }
 
 
@@ -437,6 +418,25 @@ public class DormitoryBean {
      */
     public void setContract(String pContract) {
         mContract = pContract;
+    }
+
+
+
+    /**
+     * @return the rating
+     */
+    public Double getRating() {
+        return mRating;
+    }
+
+
+
+    /**
+     * @param pRating
+     *            the rating to set
+     */
+    public void setRating(Double pRating) {
+        mRating = pRating;
     }
 
 }

@@ -69,7 +69,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`dormitory` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `city_id` INT NOT NULL ,
   `type_id` INT NOT NULL ,
-  `contact_type_id` INT NOT NULL ,
+  `contract_type_id` INT NOT NULL ,
   `name` VARCHAR(200) NOT NULL ,
   `address` VARCHAR(500) NULL ,
   `postcode` VARCHAR(200) NULL ,

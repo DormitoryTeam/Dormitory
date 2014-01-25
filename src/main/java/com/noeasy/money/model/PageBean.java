@@ -24,9 +24,9 @@ package com.noeasy.money.model;
 
 public class PageBean {
 
-    private int mPageNum = 1;
+    private int mPageNum  = 1;
 
-    private int mPageSize;
+    private int mPageSize = 20;
 
     private int mMaxPageNum;
 
@@ -40,6 +40,12 @@ public class PageBean {
 
     public boolean isLastPage() {
         return getPageNum() == getMaxPageNum();
+    }
+
+
+
+    public int getPageStartIndex() {
+        return (mPageNum - 1) * mPageSize;
     }
 
 

@@ -28,10 +28,13 @@
  */
 package com.noeasy.money.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +61,7 @@ public class DormitoryService implements IDormitoryService {
      * @see com.noeasy.money.service.IDormitoryService#queryDormitoryById(int)
      */
     public DormitoryBean queryDormitoryById(int pId) {
-        return this.sqlSession.selectOne("om.noeasy.money.model.Dormitory.queryDormitoryById", pId);
+        return this.sqlSession.selectOne("com.noeasy.money.model.Dormitory.queryDormitoryById", pId);
     }
 
 
@@ -67,8 +70,15 @@ public class DormitoryService implements IDormitoryService {
      * @see com.noeasy.money.service.IDormitoryService#queryDormitoryByConditions(com.noeasy.money.model.DormitorySearchBean)
      */
     public List<DormitoryBean> queryDormitoryByConditions(DormitorySearchBean pSearchBean) {
-        // TODO Auto-generated method stub
-        return null;
+        List<DormitoryBean> queryResult = null;
+        if (StringUtils.isNoneBlank(pSearchBean.getKeyword())) {
+            queryResult = queryDormitoryPageByKeywordOrderByField(pSearchBean);
+        } else if (pSearchBean.getCityId() > 0) {
+            queryResult = queryDormitoryByCityId(pSearchBean);
+        } else if (pSearchBean.getContractTypeId() > 0 && pSearchBean.getDormitoryTypeId() > 0) {
+            queryResult = queryDormitoryByDormitoryTypeAndContract(pSearchBean);
+        }
+        return CollectionUtils.isEmpty(queryResult) ? Collections.EMPTY_LIST : queryResult;
     }
 
 
@@ -117,6 +127,35 @@ public class DormitoryService implements IDormitoryService {
         this.sqlSession.delete("com.noeasy.money.model.Dormitory.clearDistanceResult4College", pCollegeId);
         this.sqlSession.insert("com.noeasy.money.model.Dormitory.calculateDistance4College", pCollegeId);
         return true;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.IDormitoryService#queryDormitoryByCityId(com.noeasy.money.model.DormitorySearchBean)
+     */
+    public List<DormitoryBean> queryDormitoryByCityId(DormitorySearchBean pSearchBean) {
+        return this.sqlSession.selectList("com.noeasy.money.model.Dormitory.queryDormitoryByCityId", pSearchBean);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.IDormitoryService#queryDormitoryByDormitoryTypeAndContract(com.noeasy.money.model.DormitorySearchBean)
+     */
+    public List<DormitoryBean> queryDormitoryByDormitoryTypeAndContract(DormitorySearchBean pSearchBean) {
+        return this.sqlSession.selectList("com.noeasy.money.model.Dormitory.queryDormitoryByDormitoryTypeAndContract",
+                pSearchBean);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.IDormitoryService#queryDormitoryPageByKeywordOrderByField(com.noeasy.money.model.DormitorySearchBean)
+     */
+    public List<DormitoryBean> queryDormitoryPageByKeywordOrderByField(DormitorySearchBean pSearchBean) {
+        return this.sqlSession.selectList("com.noeasy.money.model.Dormitory.queryDormitoryPageByKeywordOrderByField",
+                pSearchBean);
     }
 
 }

@@ -18,7 +18,7 @@ xcopy dormitory.war %tomcat_webapp_path% /s /f /y
 
 cd %tomcat_webapp_path%
 
-del dormitory /q
+rd dormitory /q /s
 
 cd %tomcat_startup_related_path%
 

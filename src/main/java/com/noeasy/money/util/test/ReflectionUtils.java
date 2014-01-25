@@ -26,63 +26,50 @@
  * THE FOREGOING LIMITATIONS SHALL APPLY EVEN IF THE ANY WARRANTY PROVIDED IN
  * THE MASTER SERVICE AGREEMENT FAILS OF ITS ESSENTIAL PURPOSE.
  */
+package com.noeasy.money.util.test;
 
-package com.noeasy.money.service;
-
-import java.util.List;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.noeasy.money.model.DormitoryBean;
-import com.noeasy.money.model.DormitorySearchBean;
 
 /**
  * <class description>
  * 
  * @author: Yove
- * @version: 1.0, Jan 21, 2014
+ * @version: 1.0, Jan 25, 2014
  */
 
-public interface IDormitoryService {
+public class ReflectionUtils {
 
-    DormitoryBean queryDormitoryById(int pId);
-
-
-
-    List<DormitoryBean> queryDormitoryByConditions(DormitorySearchBean pSearchBean);
+    private static final String GET_METHOD_PREFIX = "get";
 
 
 
-    /**
-     * Rate dormitory and return the average rating
-     * 
-     * @param pDormitoryId
-     * @param pUserId
-     * @param pPoint
-     * @param pGetAvg
-     * @return
-     */
-    Double rateDormitory(int pDormitoryId, int pUserId, int pPoint, boolean pGetAvg);
+    public static Set<String> getFieldsValue(Object pObject) {
+
+        Class<? extends Object> clazz = pObject.getClass();
+        Field[] fields = clazz.getDeclaredFields();
+        Set<String> results = new HashSet<String>();
+        for (Field field : fields) {
+            try {
+                String filedName = field.getName().substring(1);
+                Method method = clazz.getMethod(GET_METHOD_PREFIX + filedName);
+                String result = filedName + "=" + method.invoke(pObject);
+                results.add(result);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return results;
+    }
 
 
 
-    Boolean calculateDistance();
-
-
-
-    Boolean calculateDistance4City(int pCityId);
-
-
-
-    Boolean calculateDistance4College(int pCollegeId);
-
-
-
-    List<DormitoryBean> queryDormitoryByCityId(DormitorySearchBean pSearchBean);
-
-
-
-    List<DormitoryBean> queryDormitoryByDormitoryTypeAndContract(DormitorySearchBean pSearchBean);
-
-
-
-    List<DormitoryBean> queryDormitoryPageByKeywordOrderByField(DormitorySearchBean pSearchBean);
+    public static void main(String[] args) {
+        DormitoryBean dormitoryBean = new DormitoryBean();
+        getFieldsValue(dormitoryBean);
+    }
 }
