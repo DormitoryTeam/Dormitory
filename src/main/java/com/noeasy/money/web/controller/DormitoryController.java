@@ -85,7 +85,8 @@ public class DormitoryController {
         searchBean3.setKeyword("London,");
         searchBean3.getPageBean().setPageNum(1);
         searchBean3.getPageBean().setPageSize(20);
-        searchBean3.setSortBy("listPrice");
+        searchBean3.setSortField("rating");
+        searchBean3.setSortType("desc");
         searchBean3.setCollegeId(1);
         List<DormitoryBean> dormitoryBeans3 = this.dormitoryService.queryDormitoryByConditions(searchBean3);
         List<Set<String>> Results3 = new ArrayList<Set<String>>();
