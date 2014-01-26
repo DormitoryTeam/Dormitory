@@ -4,8 +4,8 @@
 	<hr />
 	queryDormitoryByCityId: ${resultOfQueryByCityId}
 	<hr />
-	queryDormitoryByDormitoryTypeAndContract:${resultOfQueryByKeyword}
+	queryDormitoryByDormitoryTypeAndContract: ${resultOfQueryByDormitoryTypeAndContract}
 	<hr />
-	queryDormitoryPageByKeywordOrderByField:${resultOfQueryByDormitoryTypeAndContract}
+	queryDormitoryPageByKeywordOrderByField: ${resultOfQueryByKeyword}
 </body>
 </html5>
