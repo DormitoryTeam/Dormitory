@@ -69,7 +69,7 @@ public class DormitoryController {
 
     @RequestMapping("/unit-test/to-dormitory")
     public String toDormitory(HttpServletRequest request, HttpServletResponse response, Model model) {
-        DormitoryBean dormitoryBean1 = this.dormitoryService.queryDormitoryById(1);
+        DormitoryBean dormitoryBean1 = this.dormitoryService.queryDormitoryById(3);
         model.addAttribute("resultOfQueryById", ReflectionUtils.getFieldsValue(dormitoryBean1));
 
         DormitorySearchBean searchBean2 = new DormitorySearchBean();
@@ -82,10 +82,12 @@ public class DormitoryController {
         model.addAttribute("resultOfQueryByCityId", Results2);
 
         DormitorySearchBean searchBean3 = new DormitorySearchBean();
-        searchBean3.setKeyword("House");
+        searchBean3.setKeyword("London,");
         searchBean3.getPageBean().setPageNum(1);
         searchBean3.getPageBean().setPageSize(20);
-        searchBean3.setSortBy("name");
+        searchBean3.setSortField("rating");
+        searchBean3.setSortType("desc");
+        searchBean3.setCollegeId(1);
         List<DormitoryBean> dormitoryBeans3 = this.dormitoryService.queryDormitoryByConditions(searchBean3);
         List<Set<String>> Results3 = new ArrayList<Set<String>>();
         for (DormitoryBean bean : dormitoryBeans3) {

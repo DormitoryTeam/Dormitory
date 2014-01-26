@@ -53,7 +53,9 @@ public class DormitorySearchBean {
 
     private int                  mDormitoryTypeId;
 
-    private String               mSortBy;
+    private String               mSortType;
+
+    private String               mSortField;
 
     private PageBean             mPageBean;
 
@@ -202,17 +204,14 @@ public class DormitorySearchBean {
      * @return the sortBy
      */
     public String getSortBy() {
-        return mSortBy;
-    }
-
-
-
-    /**
-     * @param pSortBy
-     *            the sortBy to set
-     */
-    public void setSortBy(String pSortBy) {
-        mSortBy = pSortBy;
+        String orderByConditon = null;
+        if (mSortField != null) {
+            orderByConditon = mSortField;
+            if (mSortType != null) {
+                orderByConditon += " " + mSortType;
+            }
+        }
+        return orderByConditon;
     }
 
 
@@ -232,6 +231,44 @@ public class DormitorySearchBean {
      */
     public void setPageBean(PageBean pPageBean) {
         mPageBean = pPageBean;
+    }
+
+
+
+    /**
+     * @return the sortType
+     */
+    public String getSortType() {
+        return mSortType;
+    }
+
+
+
+    /**
+     * @param pSortType
+     *            the sortType to set
+     */
+    public void setSortType(String pSortType) {
+        mSortType = pSortType;
+    }
+
+
+
+    /**
+     * @return the sortField
+     */
+    public String getSortField() {
+        return mSortField;
+    }
+
+
+
+    /**
+     * @param pSortField
+     *            the sortField to set
+     */
+    public void setSortField(String pSortField) {
+        mSortField = pSortField;
     }
 
 }

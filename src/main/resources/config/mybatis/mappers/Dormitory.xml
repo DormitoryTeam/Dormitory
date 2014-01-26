@@ -9,15 +9,25 @@
 	<sql id="select-dormitory">
 		select t1.id, t1.name, t1.address, t1.postcode, t1.equipment, t1.service, t1.salePrice, t1.listPrice, t1.description,
 		t1.type_id as dormitoryTypeId, t2.name as dormitoryType,
-		t1.contract_type_id as contractId, t3.name as
-		contract,
-		t1.city_id as cityId, t4.name as city, avg(t5.score) as rating
+		t1.contract_type_id as contractId, t3.name as contract,
+		t1.city_id as cityId, t4.name as city, coalesce(avg(t5.score), 0) as rating
 		from dormitory t1
 		left join dormitory_type t2 on t1.type_id = t2.id
 		left join contract_type t3 on t1.contract_type_id = t3.id
 		left join city t4 on t1.city_id = t4.id
-		left
-		join dormitory_rating t5 on t1.id =t5.dormitory_id
+		left join dormitory_rating t5 on t1.id = t5.dormitory_id
+	</sql>
+	
+	<sql id="select-dormitory-page">
+		select t1.id, t1.name, t1.address, t1.postcode, t1.equipment, t1.service, t1.salePrice, t1.listPrice, 
+		t1.type_id as dormitoryTypeId, t2.name as dormitoryType,
+		t1.contract_type_id as contractId, t3.name as contract,
+		coalesce(avg(t5.score), 0) as rating, t6.distance
+		from dormitory t1
+		left join dormitory_type t2 on t1.type_id = t2.id
+		left join contract_type t3 on t1.contract_type_id = t3.id
+		left join dormitory_rating t5 on t1.id = t5.dormitory_id
+		left join distance_result t6 on t1.id = t6.dormitory_id and t6.college_id = #{collegeId}
 	</sql>
 
 	<sql id="where-with-id">
@@ -33,12 +43,12 @@
 	<sql id="where-with-keyword">
 		where t1.name like concat('%', #{keyword}, '%') or t1.address like concat('%', #{keyword}, '%')
 		or t1.postcode like concat('%', #{keyword}, '%') or t1.description like concat('%', #{keyword}, '%')
+		group by t1.id
 	</sql>
 
 	<sql id="where-with-dormitory-type-and-contract">
 		where t1.contract_type_id = #{contractTypeId} and t1.type_id = #{dormitoryTypeId}
 	</sql>
-
 
 	<sql id="order-by-order-field">
 		order by #{sortBy}
@@ -59,13 +69,13 @@
 	</select>
 
 	<select id="queryDormitoryPageByKeywordOrderByField" parameterType='com.noeasy.money.model.DormitorySearchBean' resultType="com.noeasy.money.model.DormitoryBean">
-		<include refid="select-dormitory" />
+		<include refid="select-dormitory-page" />
 		<if test="keyword != null">
 			<include refid="where-with-keyword" />
 		</if>
-		<if test="sortBy != null">
+	 	<if test="sortBy != null">
 			<include refid="order-by-order-field" />
-		</if>
+	 	</if>
 		<include refid="limit-split-page" />
 	</select>
 

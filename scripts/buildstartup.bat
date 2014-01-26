@@ -4,6 +4,8 @@ for /f "tokens=1,2 delims==" %%i in (%config_file%) do (
 	set %%i=%%j
 )
 
+taskkill /f /im java.exe
+
 %mvn_letter%:
 
 cd %mvn_path%
