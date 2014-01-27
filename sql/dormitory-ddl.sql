@@ -69,7 +69,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`dormitory` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `city_id` INT NOT NULL ,
   `type_id` INT NOT NULL ,
-  `contract_type_id` INT NOT NULL ,
+  `contact_type_id` INT NOT NULL ,
   `name` VARCHAR(200) NOT NULL ,
   `address` VARCHAR(500) NULL ,
   `postcode` VARCHAR(200) NULL ,
@@ -139,28 +139,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dormitory`.`pickup_order`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `dormitory`.`pickup_order` ;
-
-CREATE  TABLE IF NOT EXISTS `dormitory`.`pickup_order` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `dormitory`.`dormitory_order`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `dormitory`.`dormitory_order` ;
-
-CREATE  TABLE IF NOT EXISTS `dormitory`.`dormitory_order` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `dormitory`.`airport`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `dormitory`.`airport` ;
@@ -225,6 +203,207 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`contract_type` (
   `name` VARCHAR(45) NOT NULL ,
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_time` TIMESTAMP NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dormitory`.`order`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dormitory`.`order` ;
+
+CREATE  TABLE IF NOT EXISTS `dormitory`.`order` (
+  `id` INT NOT NULL ,
+  `uesr_id` INT NOT NULL ,
+  `belongs_to` INT NOT NULL ,
+  `type` VARCHAR(45) NOT NULL ,
+  `status` VARCHAR(45) NOT NULL ,
+  `amount` DECIMAL(5,2) NOT NULL ,
+  `currency` VARCHAR(3) NOT NULL ,
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
+  `update_time` TIMESTAMP NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dormitory`.`order_history`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dormitory`.`order_history` ;
+
+CREATE  TABLE IF NOT EXISTS `dormitory`.`order_history` (
+  `id` INT NOT NULL ,
+  `order_id` VARCHAR(45) NOT NULL ,
+  `operator_id` INT NOT NULL ,
+  `operation` INT NOT NULL ,
+  `operate_time` TIMESTAMP NOT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dormitory`.`order_contact_info`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dormitory`.`order_contact_info` ;
+
+CREATE  TABLE IF NOT EXISTS `dormitory`.`order_contact_info` (
+  `id` INT NOT NULL ,
+  `order_id` VARCHAR(45) NOT NULL ,
+  `name` VARCHAR(45) NOT NULL ,
+  `gender` INT NOT NULL ,
+  `qq` VARCHAR(15) NULL ,
+  `phone` VARCHAR(20) NULL ,
+  `address` VARCHAR(400) NULL ,
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
+  `update_time` TIMESTAMP NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dormitory`.`line_item_pickup`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dormitory`.`line_item_pickup` ;
+
+CREATE  TABLE IF NOT EXISTS `dormitory`.`line_item_pickup` (
+  `id` INT NOT NULL ,
+  `order_id` INT NOT NULL ,
+  `flight_number` VARCHAR(45) NOT NULL ,
+  `city_id` VARCHAR(45) NOT NULL ,
+  `pickup_date` DATETIME NOT NULL ,
+  `pickup_type` INT NOT NULL ,
+  `amount` DECIMAL(5,2) NOT NULL ,
+  `currency` VARCHAR(3) NOT NULL ,
+  `luggage_amount` INT NULL ,
+  `luggage_size` DECIMAL(2,1) NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dormitory`.`line_item_dormitory`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dormitory`.`line_item_dormitory` ;
+
+CREATE  TABLE IF NOT EXISTS `dormitory`.`line_item_dormitory` (
+  `id` INT NOT NULL ,
+  `order_id` INT NOT NULL ,
+  `dormitory_id` INT NOT NULL ,
+  `create_time` INT NULL ,
+  `update_time` INT NULL ,
+  `list_price` DECIMAL(5,2) NOT NULL ,
+  `amount` DECIMAL(5,2) NOT NULL ,
+  `currency` VARCHAR(3) NOT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dormitory`.`users`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dormitory`.`users` ;
+
+CREATE  TABLE IF NOT EXISTS `dormitory`.`users` (
+  `id` INT NOT NULL ,
+  `login` VARCHAR(200) NOT NULL ,
+  `password` VARCHAR(200) NOT NULL ,
+  `email` VARCHAR(100) NOT NULL ,
+  `name` VARCHAR(200) NULL ,
+  `gender` INT NULL ,
+  `passport` VARCHAR(45) NULL ,
+  `age` INT NULL ,
+  `birthday` DATETIME NULL ,
+  `address` VARCHAR(500) NULL ,
+  `phone` VARCHAR(20) NULL ,
+  `qq` VARCHAR(45) NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dormitory`.`groups`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dormitory`.`groups` ;
+
+CREATE  TABLE IF NOT EXISTS `dormitory`.`groups` (
+  `id` INT NOT NULL ,
+  `name` VARCHAR(200) NOT NULL ,
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
+  `update_time` TIMESTAMP NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dormitory`.`roles`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dormitory`.`roles` ;
+
+CREATE  TABLE IF NOT EXISTS `dormitory`.`roles` (
+  `id` INT NOT NULL ,
+  `name` VARCHAR(200) NOT NULL ,
+  `create_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
+  `update_date` TIMESTAMP NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dormitory`.`functions`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dormitory`.`functions` ;
+
+CREATE  TABLE IF NOT EXISTS `dormitory`.`functions` (
+  `id` INT NOT NULL ,
+  `name` VARCHAR(200) NOT NULL ,
+  `servlet_path_info` VARCHAR(200) NOT NULL ,
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
+  `update_time` TIMESTAMP NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dormitory`.`user_group`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dormitory`.`user_group` ;
+
+CREATE  TABLE IF NOT EXISTS `dormitory`.`user_group` (
+  `id` INT NOT NULL ,
+  `user_id` INT NOT NULL ,
+  `group_id` INT NOT NULL ,
+  `create_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
+  `update_date` TIMESTAMP NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dormitory`.`role_fuction`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dormitory`.`role_fuction` ;
+
+CREATE  TABLE IF NOT EXISTS `dormitory`.`role_fuction` (
+  `id` INT NOT NULL ,
+  `role_id` INT NOT NULL ,
+  `funciton_id` INT NOT NULL ,
+  `create_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
+  `update_date` TIMESTAMP NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dormitory`.`group_role`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dormitory`.`group_role` ;
+
+CREATE  TABLE IF NOT EXISTS `dormitory`.`group_role` (
+  `id` INT NOT NULL ,
+  `group_id` INT NOT NULL ,
+  `role_id` INT NOT NULL ,
+  `create_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
+  `update_date` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 

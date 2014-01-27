@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.noeasy.money.model.Authentication">
+
+	<!-- Select Authentication -->
+	<!-- SQL Fraggment -->
+	<select id="getRolesByUserId" parameterType="int" resultType="int">
+		SELECT rgroup.role_id FROM user_group AS ugroup
+		INNER JOIN group_role AS rgroup ON rgroup.group_id = ugroup.group_id
+		WHERE ugroup.user_id = #{id}
+	</select>
+	
+	
+	<select id="getUserGroupCount" parameterType="java.util.Map" resultType="int">
+		SELECT count(*) FROM user_group AS ugroup
+		WHERE ugroup.user_id = #{userId} AND ugroup.group_id = #{groupId}
+	</select>
+	
+	
+	<insert id="addUser2Group" parameterType="java.util.Map">
+		INSERT INTO user_group (user_id, group_id, update_date)
+		VALUES (#{userId}, #{groupId}, now());
+	</insert>
+	
+	
+	<delete id="removeUserFromGroup" parameterType="java.util.Map">
+	DELETE from user_group WHERE user_id = #{userId} AND group_id = #{groupId};
+	</delete>
+	
+	
+	<select id="getRoleGroupCount" parameterType="java.util.Map" resultType="int">
+		SELECT count(*) FROM group_role
+		WHERE group_id = #{groupId} AND role_id = #{roleId}
+	</select>
+	
+	
+	<insert id="addRole2Group" parameterType="java.util.Map">
+		INSERT INTO group_role (group_id, role_id，update_date)
+		VALUES (#{groupId}, #{roleId}, now());
+	</insert>
+	
+	
+	<delete id="removeRoleFromGroup" parameterType="java.util.Map">
+	DELETE from group_role WHERE role_id = #{roleId} AND group_id = #{groupId};
+	</delete>
+</mapper>
