@@ -26,9 +26,12 @@
  * THE FOREGOING LIMITATIONS SHALL APPLY EVEN IF THE ANY WARRANTY PROVIDED IN
  * THE MASTER SERVICE AGREEMENT FAILS OF ITS ESSENTIAL PURPOSE.
  */
-package com.noeasy.money.model;
+package com.noeasy.money.service;
 
-import java.sql.Timestamp;
+import java.util.List;
+
+import com.noeasy.money.model.OrderBean;
+import com.noeasy.money.model.OrderSearchBean;
 
 /**
  * <class description>
@@ -37,27 +40,11 @@ import java.sql.Timestamp;
  * @version: 1.0, Jan 27, 2014
  */
 
-public abstract class BaseBean {
+public interface IOrderService {
 
-    private Timestamp mUpdateTime = new Timestamp(System.currentTimeMillis());
-
-
-
-    /**
-     * @return the updateTime
-     */
-    public Timestamp getUpdateTime() {
-        return mUpdateTime;
-    }
+    List<OrderBean> queryOrder(OrderSearchBean pOrderSearchBean);
 
 
 
-    /**
-     * @param pUpdateTime
-     *            the updateTime to set
-     */
-    public void setUpdateTime(Timestamp pUpdateTime) {
-        mUpdateTime = pUpdateTime;
-    }
-
+    boolean placeOrder(OrderBean pOrderBean);
 }

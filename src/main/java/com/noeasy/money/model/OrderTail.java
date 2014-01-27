@@ -28,7 +28,7 @@
  */
 package com.noeasy.money.model;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * <class description>
@@ -37,27 +37,68 @@ import java.sql.Timestamp;
  * @version: 1.0, Jan 27, 2014
  */
 
-public abstract class BaseBean {
+public class OrderTail {
 
-    private Timestamp mUpdateTime = new Timestamp(System.currentTimeMillis());
+    private User      mOperator;
+
+    private Operation mOperation;
+
+    private Date      mOperationTime;
 
 
 
     /**
-     * @return the updateTime
+     * @return the operator
      */
-    public Timestamp getUpdateTime() {
-        return mUpdateTime;
+    public User getOperator() {
+        return mOperator;
     }
 
 
 
     /**
-     * @param pUpdateTime
-     *            the updateTime to set
+     * @param pOperator
+     *            the operator to set
      */
-    public void setUpdateTime(Timestamp pUpdateTime) {
-        mUpdateTime = pUpdateTime;
+    public void setOperator(User pOperator) {
+        mOperator = pOperator;
     }
 
+
+
+    /**
+     * @return the operation
+     */
+    public Operation getOperation() {
+        return mOperation;
+    }
+
+
+
+    /**
+     * @param pOperation
+     *            the operation to set
+     */
+    public void setOperation(Operation pOperation) {
+        mOperation = pOperation;
+    }
+
+
+
+    /**
+     * @return the operationTime
+     */
+    public Date getOperationTime() {
+        return mOperationTime;
+    }
+
+
+
+    /**
+     * @param pOperationTime
+     *            the operationTime to set
+     */
+    public void setOperationTime(Date pOperationTime) {
+        mOperationTime = pOperationTime;
+    }
 }

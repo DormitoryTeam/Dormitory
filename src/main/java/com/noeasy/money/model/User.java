@@ -2,31 +2,46 @@ package com.noeasy.money.model;
 
 public class User {
 
-    private String id;
-    private String name;
+    private String mId;
+
+    private String mName;
 
 
 
-    public String getName() {
-        return name;
-    }
-
-
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
-
+    /**
+     * @return the id
+     */
     public String getId() {
-        return id;
+        return mId;
     }
 
 
 
-    public void setId(String id) {
-        this.id = id;
+    /**
+     * @param pId
+     *            the id to set
+     */
+    public void setId(String pId) {
+        mId = pId;
+    }
+
+
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return mName;
+    }
+
+
+
+    /**
+     * @param pName
+     *            the name to set
+     */
+    public void setName(String pName) {
+        mName = pName;
     }
 
 }

@@ -28,8 +28,6 @@
  */
 package com.noeasy.money.model;
 
-import java.sql.Timestamp;
-
 /**
  * <class description>
  * 
@@ -37,27 +35,111 @@ import java.sql.Timestamp;
  * @version: 1.0, Jan 27, 2014
  */
 
-public abstract class BaseBean {
+public class OrderContactInfo extends BaseBean {
 
-    private Timestamp mUpdateTime = new Timestamp(System.currentTimeMillis());
+    private String mName;
+
+    private int    mGender;
+
+    private String mQQNum;
+
+    private String mPhoneNum;
+
+    private String mAddress;
 
 
 
     /**
-     * @return the updateTime
+     * @return the name
      */
-    public Timestamp getUpdateTime() {
-        return mUpdateTime;
+    public String getName() {
+        return mName;
     }
 
 
 
     /**
-     * @param pUpdateTime
-     *            the updateTime to set
+     * @param pName
+     *            the name to set
      */
-    public void setUpdateTime(Timestamp pUpdateTime) {
-        mUpdateTime = pUpdateTime;
+    public void setName(String pName) {
+        mName = pName;
+    }
+
+
+
+    /**
+     * @return the gender
+     */
+    public int getGender() {
+        return mGender;
+    }
+
+
+
+    /**
+     * @param pGender
+     *            the gender to set
+     */
+    public void setGender(int pGender) {
+        mGender = pGender;
+    }
+
+
+
+    /**
+     * @return the qQNum
+     */
+    public String getQQNum() {
+        return mQQNum;
+    }
+
+
+
+    /**
+     * @param pQQNum
+     *            the qQNum to set
+     */
+    public void setQQNum(String pQQNum) {
+        mQQNum = pQQNum;
+    }
+
+
+
+    /**
+     * @return the phoneNum
+     */
+    public String getPhoneNum() {
+        return mPhoneNum;
+    }
+
+
+
+    /**
+     * @param pPhoneNum
+     *            the phoneNum to set
+     */
+    public void setPhoneNum(String pPhoneNum) {
+        mPhoneNum = pPhoneNum;
+    }
+
+
+
+    /**
+     * @return the address
+     */
+    public String getAddress() {
+        return mAddress;
+    }
+
+
+
+    /**
+     * @param pAddress
+     *            the address to set
+     */
+    public void setAddress(String pAddress) {
+        mAddress = pAddress;
     }
 
 }
