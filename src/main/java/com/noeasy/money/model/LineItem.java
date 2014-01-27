@@ -28,7 +28,7 @@
  */
 package com.noeasy.money.model;
 
-import java.sql.Timestamp;
+import java.math.BigDecimal;
 
 /**
  * <class description>
@@ -37,27 +37,68 @@ import java.sql.Timestamp;
  * @version: 1.0, Jan 27, 2014
  */
 
-public abstract class BaseBean {
+public abstract class LineItem extends BaseBean {
 
-    private Timestamp mUpdateTime = new Timestamp(System.currentTimeMillis());
+    private BigDecimal mAmout;
+
+    private String     mCurrency;
+
+    private String     mListPrice;
 
 
 
     /**
-     * @return the updateTime
+     * @return the amout
      */
-    public Timestamp getUpdateTime() {
-        return mUpdateTime;
+    public BigDecimal getAmout() {
+        return mAmout;
     }
 
 
 
     /**
-     * @param pUpdateTime
-     *            the updateTime to set
+     * @param pAmout
+     *            the amout to set
      */
-    public void setUpdateTime(Timestamp pUpdateTime) {
-        mUpdateTime = pUpdateTime;
+    public void setAmout(BigDecimal pAmout) {
+        mAmout = pAmout;
     }
 
+
+
+    /**
+     * @return the currency
+     */
+    public String getCurrency() {
+        return mCurrency;
+    }
+
+
+
+    /**
+     * @param pCurrency
+     *            the currency to set
+     */
+    public void setCurrency(String pCurrency) {
+        mCurrency = pCurrency;
+    }
+
+
+
+    /**
+     * @return the listPrice
+     */
+    public String getListPrice() {
+        return mListPrice;
+    }
+
+
+
+    /**
+     * @param pListPrice
+     *            the listPrice to set
+     */
+    public void setListPrice(String pListPrice) {
+        mListPrice = pListPrice;
+    }
 }

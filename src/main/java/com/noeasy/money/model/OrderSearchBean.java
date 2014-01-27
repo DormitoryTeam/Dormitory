@@ -28,7 +28,7 @@
  */
 package com.noeasy.money.model;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * <class description>
@@ -37,27 +37,131 @@ import java.sql.Timestamp;
  * @version: 1.0, Jan 27, 2014
  */
 
-public abstract class BaseBean {
+public class OrderSearchBean {
 
-    private Timestamp mUpdateTime = new Timestamp(System.currentTimeMillis());
+    private User     mUser;
+
+    private int      mOrderType;
+
+    private String   mOrderNumber;
+
+    private Date     mDateFrom;
+
+    private Date     mDateTo;
+
+    private PageBean mPageBean;
 
 
 
     /**
-     * @return the updateTime
+     * @return the user
      */
-    public Timestamp getUpdateTime() {
-        return mUpdateTime;
+    public User getUser() {
+        return mUser;
     }
 
 
 
     /**
-     * @param pUpdateTime
-     *            the updateTime to set
+     * @param pUser
+     *            the user to set
      */
-    public void setUpdateTime(Timestamp pUpdateTime) {
-        mUpdateTime = pUpdateTime;
+    public void setUser(User pUser) {
+        mUser = pUser;
     }
 
+
+
+    /**
+     * @return the orderType
+     */
+    public int getOrderType() {
+        return mOrderType;
+    }
+
+
+
+    /**
+     * @param pOrderType
+     *            the orderType to set
+     */
+    public void setOrderType(int pOrderType) {
+        mOrderType = pOrderType;
+    }
+
+
+
+    /**
+     * @return the orderNumber
+     */
+    public String getOrderNumber() {
+        return mOrderNumber;
+    }
+
+
+
+    /**
+     * @param pOrderNumber
+     *            the orderNumber to set
+     */
+    public void setOrderNumber(String pOrderNumber) {
+        mOrderNumber = pOrderNumber;
+    }
+
+
+
+    /**
+     * @return the dateFrom
+     */
+    public Date getDateFrom() {
+        return mDateFrom;
+    }
+
+
+
+    /**
+     * @param pDateFrom
+     *            the dateFrom to set
+     */
+    public void setDateFrom(Date pDateFrom) {
+        mDateFrom = pDateFrom;
+    }
+
+
+
+    /**
+     * @return the dateTo
+     */
+    public Date getDateTo() {
+        return mDateTo;
+    }
+
+
+
+    /**
+     * @param pDateTo
+     *            the dateTo to set
+     */
+    public void setDateTo(Date pDateTo) {
+        mDateTo = pDateTo;
+    }
+
+
+
+    /**
+     * @return the pageBean
+     */
+    public PageBean getPageBean() {
+        return mPageBean;
+    }
+
+
+
+    /**
+     * @param pPageBean
+     *            the pageBean to set
+     */
+    public void setPageBean(PageBean pPageBean) {
+        mPageBean = pPageBean;
+    }
 }

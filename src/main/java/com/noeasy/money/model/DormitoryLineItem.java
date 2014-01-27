@@ -28,8 +28,6 @@
  */
 package com.noeasy.money.model;
 
-import java.sql.Timestamp;
-
 /**
  * <class description>
  * 
@@ -37,27 +35,27 @@ import java.sql.Timestamp;
  * @version: 1.0, Jan 27, 2014
  */
 
-public abstract class BaseBean {
+public class DormitoryLineItem {
 
-    private Timestamp mUpdateTime = new Timestamp(System.currentTimeMillis());
+    private DormitoryBean mDormitory;
 
 
 
     /**
-     * @return the updateTime
+     * @return the dormitory
      */
-    public Timestamp getUpdateTime() {
-        return mUpdateTime;
+    public DormitoryBean getDormitory() {
+        return mDormitory;
     }
 
 
 
     /**
-     * @param pUpdateTime
-     *            the updateTime to set
+     * @param pDormitory
+     *            the dormitory to set
      */
-    public void setUpdateTime(Timestamp pUpdateTime) {
-        mUpdateTime = pUpdateTime;
+    public void setDormitory(DormitoryBean pDormitory) {
+        mDormitory = pDormitory;
     }
 
 }

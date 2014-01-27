@@ -28,8 +28,6 @@
  */
 package com.noeasy.money.model;
 
-import java.sql.Timestamp;
-
 /**
  * <class description>
  * 
@@ -37,27 +35,6 @@ import java.sql.Timestamp;
  * @version: 1.0, Jan 27, 2014
  */
 
-public abstract class BaseBean {
-
-    private Timestamp mUpdateTime = new Timestamp(System.currentTimeMillis());
-
-
-
-    /**
-     * @return the updateTime
-     */
-    public Timestamp getUpdateTime() {
-        return mUpdateTime;
-    }
-
-
-
-    /**
-     * @param pUpdateTime
-     *            the updateTime to set
-     */
-    public void setUpdateTime(Timestamp pUpdateTime) {
-        mUpdateTime = pUpdateTime;
-    }
-
+public enum OrderStatus {
+    COMMIT, REVIEW, PAYMENT, PASS, SENDING_CONTACT
 }
