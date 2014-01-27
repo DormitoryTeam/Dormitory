@@ -4,33 +4,13 @@
  */
 package com.noeasy.money.repository;
 
-import java.io.Serializable;
+import org.apache.ibatis.session.SqlSession;
 
 /**
  * 
  * @author acer
  */
-public interface IBaseRepository<T, ID extends Serializable> {
+public interface IBaseRepository {
 
-    Class<T> getEntityClass();
-
-
-
-    T findByID(ID id);
-
-
-
-    ID save(T entity);
-
-
-
-    T update(T entity);
-
-
-
-    void delete(T entity);
-
-
-
-    void deleteByID(ID id);
+    SqlSession getSqlSession();
 }
