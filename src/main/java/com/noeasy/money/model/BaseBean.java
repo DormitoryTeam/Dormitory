@@ -28,119 +28,36 @@
  */
 package com.noeasy.money.model;
 
+import java.sql.Timestamp;
+
 /**
  * <class description>
  * 
  * @author: Yove
- * @version: 1.0, Jan 22, 2014
+ * @version: 1.0, Jan 27, 2014
  */
 
-public class DormitoryRateBean extends BaseBean {
+public class BaseBean {
 
-    private int mId;
-
-    private int mUserId;
-
-    private int mDormitoryId;
-
-    private int mPoint;
+    private Timestamp mUpdateTime = new Timestamp(System.currentTimeMillis());
 
 
 
-    public DormitoryRateBean() {
-
+    /**
+     * @return the updateTime
+     */
+    public Timestamp getUpdateTime() {
+        return mUpdateTime;
     }
 
 
 
     /**
-     * @param pUserId
-     * @param pDormitoryId
-     * @param pPoint
+     * @param pUpdateTime
+     *            the updateTime to set
      */
-    public DormitoryRateBean(int pDormitoryId, int pUserId, int pPoint) {
-        super();
-        mUserId = pUserId;
-        mDormitoryId = pDormitoryId;
-        mPoint = pPoint;
-    }
-
-
-
-    //
-
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return mId;
-    }
-
-
-
-    /**
-     * @param pId
-     *            the id to set
-     */
-    public void setId(int pId) {
-        mId = pId;
-    }
-
-
-
-    /**
-     * @return the userId
-     */
-    public int getUserId() {
-        return mUserId;
-    }
-
-
-
-    /**
-     * @param pUserId
-     *            the userId to set
-     */
-    public void setUserId(int pUserId) {
-        mUserId = pUserId;
-    }
-
-
-
-    /**
-     * @return the dormitoryId
-     */
-    public int getDormitoryId() {
-        return mDormitoryId;
-    }
-
-
-
-    /**
-     * @param pDormitoryId
-     *            the dormitoryId to set
-     */
-    public void setDormitoryId(int pDormitoryId) {
-        mDormitoryId = pDormitoryId;
-    }
-
-
-
-    /**
-     * @return the point
-     */
-    public int getPoint() {
-        return mPoint;
-    }
-
-
-
-    /**
-     * @param pPoint
-     *            the point to set
-     */
-    public void setPoint(int pPoint) {
-        mPoint = pPoint;
+    public void setUpdateTime(Timestamp pUpdateTime) {
+        mUpdateTime = pUpdateTime;
     }
 
 }

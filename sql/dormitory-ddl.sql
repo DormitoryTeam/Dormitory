@@ -16,7 +16,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`country` (
   `name` VARCHAR(100) NOT NULL ,
   `countrycode` VARCHAR(5) NOT NULL ,
   `status` VARCHAR(45) NULL ,
-  `create_time` TIMESTAMP NULL ,
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_time` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `countrycode_UNIQUE` (`countrycode` ASC) ,
@@ -34,7 +34,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`city` (
   `country_id` INT NOT NULL ,
   `name` VARCHAR(200) NOT NULL ,
   `status` VARCHAR(45) NULL ,
-  `create_time` TIMESTAMP NULL ,
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_time` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `index_city` (`country_id` ASC, `name` ASC) )
@@ -53,7 +53,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`college` (
   `latitude` DECIMAL(10,7) NULL ,
   `longitude` DECIMAL(10,7) NULL ,
   `status` VARCHAR(45) NULL ,
-  `create_time` TIMESTAMP NULL ,
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_time` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `index_college` (`city_id` ASC, `name` ASC) )
@@ -81,7 +81,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`dormitory` (
   `equipment` INT NULL ,
   `service` INT NULL ,
   `description` VARCHAR(500) NULL ,
-  `create_time` TIMESTAMP NULL ,
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_time` TIMESTAMP NULL ,
   `status` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) ,
@@ -99,7 +99,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`dormitory_rating` (
   `dormitory_id` INT NOT NULL ,
   `user_id` INT NOT NULL ,
   `score` INT NOT NULL ,
-  `create_time` TIMESTAMP NULL ,
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_time` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `index_dormitory_rating` (`dormitory_id` ASC, `user_id` ASC) )
@@ -114,7 +114,7 @@ DROP TABLE IF EXISTS `dormitory`.`dormitory_type` ;
 CREATE  TABLE IF NOT EXISTS `dormitory`.`dormitory_type` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
-  `create_time` TIMESTAMP NULL ,
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_time` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
@@ -131,7 +131,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`dormitory_media` (
   `media_type` INT NOT NULL ,
   `media_path` VARCHAR(300) NULL ,
   `index` INT NULL ,
-  `create_time` TIMESTAMP NULL ,
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_time` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `index_dormitory_media` (`dormitory_id` ASC, `media_type` ASC) )
@@ -172,7 +172,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`airport` (
   `name` VARCHAR(100) NOT NULL ,
   `airportCode` VARCHAR(45) NULL ,
   `status` INT NULL ,
-  `create_time` TIMESTAMP NULL ,
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_time` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `index_airport` (`country_id` ASC, `airportCode` ASC) )
@@ -190,7 +190,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`desitination` (
   `airport_id` INT NOT NULL ,
   `name` INT NOT NULL ,
   `status` VARCHAR(45) NULL ,
-  `create_time` TIMESTAMP NULL ,
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_time` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `index_desitination` (`country_id` ASC, `airport_id` ASC) )
@@ -208,7 +208,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`distance_result` (
   `college_id` INT NOT NULL ,
   `dormitory_id` INT NOT NULL ,
   `distance` DECIMAL(20,10) NOT NULL ,
-  `create_time` TIMESTAMP NULL ,
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_time` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `index_distance_result` (`city_id` ASC, `college_id` ASC, `dormitory_id` ASC) )
@@ -223,7 +223,7 @@ DROP TABLE IF EXISTS `dormitory`.`contract_type` ;
 CREATE  TABLE IF NOT EXISTS `dormitory`.`contract_type` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
-  `create_time` TIMESTAMP NULL ,
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_time` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;

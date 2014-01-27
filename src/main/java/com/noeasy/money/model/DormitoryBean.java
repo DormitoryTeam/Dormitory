@@ -35,7 +35,7 @@ package com.noeasy.money.model;
  * @version: 1.0, Jan 21, 2014
  */
 
-public class DormitoryBean {
+public class DormitoryBean extends BaseBean {
 
     private int    mId;
     private String mName;
