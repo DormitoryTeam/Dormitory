@@ -47,22 +47,21 @@ import com.noeasy.money.repository.IDormitoryRepository;
 public class DormitoryRepository extends BaseRepository implements IDormitoryRepository {
 
     /**
-     * @see com.noeasy.money.repository.IDormitoryRepository#queryDormitoryById(int)
+     * @see com.noeasy.money.repository.IDormitoryRepository#queryDormitory(com.noeasy.money.model.DormitorySearchBean)
      */
     @Override
-    public DormitoryBean queryDormitoryById(int pId) {
-        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.queryDormitoryById", pId);
+    public DormitoryBean queryDormitory(DormitorySearchBean pSearchBean) {
+        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.queryDormitory", pSearchBean);
     }
 
 
 
     /**
-     * @see com.noeasy.money.repository.IDormitoryRepository#queryDormitoryByConditions(com.noeasy.money.model.DormitorySearchBean)
+     * @see com.noeasy.money.repository.IDormitoryRepository#queryDormitoryPage(com.noeasy.money.model.DormitorySearchBean)
      */
     @Override
-    public List<DormitoryBean> queryDormitoryByConditions(DormitorySearchBean pSearchBean) {
-        // TODO Auto-generated method stub
-        return null;
+    public List<DormitoryBean> queryDormitoryPage(DormitorySearchBean pSearchBean) {
+        return getSqlSession().selectList("com.noeasy.money.model.Dormitory.queryDormitoryPage", pSearchBean);
     }
 
 
@@ -84,38 +83,6 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
     @Override
     public Double queryDormitoryAvgRate(int pDormitoryId) {
         return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.calculateAvgRating", pDormitoryId);
-    }
-
-
-
-    /**
-     * @see com.noeasy.money.repository.IDormitoryRepository#queryDormitoryByCityId(com.noeasy.money.model.DormitorySearchBean)
-     */
-    @Override
-    public List<DormitoryBean> queryDormitoryByCityId(DormitorySearchBean pSearchBean) {
-        return getSqlSession().selectList("com.noeasy.money.model.Dormitory.queryDormitoryByCityId", pSearchBean);
-    }
-
-
-
-    /**
-     * @see com.noeasy.money.repository.IDormitoryRepository#queryDormitoryByDormitoryTypeAndContract(com.noeasy.money.model.DormitorySearchBean)
-     */
-    @Override
-    public List<DormitoryBean> queryDormitoryByDormitoryTypeAndContract(DormitorySearchBean pSearchBean) {
-        return getSqlSession().selectList("com.noeasy.money.model.Dormitory.queryDormitoryByDormitoryTypeAndContract",
-                pSearchBean);
-    }
-
-
-
-    /**
-     * @see com.noeasy.money.repository.IDormitoryRepository#queryDormitoryPageByKeywordOrderByField(com.noeasy.money.model.DormitorySearchBean)
-     */
-    @Override
-    public List<DormitoryBean> queryDormitoryPageByKeywordOrderByField(DormitorySearchBean pSearchBean) {
-        return getSqlSession().selectList("com.noeasy.money.model.Dormitory.queryDormitoryPageByKeywordOrderByField",
-                pSearchBean);
     }
 
 

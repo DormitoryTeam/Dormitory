@@ -39,25 +39,46 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public class DormitorySearchBean {
 
+    private Integer                  mId;
+
     private String               mDormitoryName;
 
-    private int                  mCityId;
+    private Integer                  mCityId;
 
-    private int                  mCollegeId;
+    private Integer                  mCollegeId;
 
     private String               mKeyword;
 
     private Pair<Double, Double> mPriceRange;
 
-    private int                  mContractTypeId;
+    private Integer                  mContractTypeId;
 
-    private int                  mDormitoryTypeId;
+    private Integer                  mDormitoryTypeId;
 
     private String               mSortType;
 
     private String               mSortField;
 
     private PageBean             mPageBean;
+
+
+
+    /**
+     * @return the id
+     */
+    public Integer getId() {
+        return mId;
+    }
+
+
+
+    /**
+     * @param pId
+     *            the id to set
+     */
+    public void setId(Integer pId) {
+        mId = pId;
+    }
 
 
 
@@ -89,7 +110,7 @@ public class DormitorySearchBean {
     /**
      * @return the cityId
      */
-    public int getCityId() {
+    public Integer getCityId() {
         return mCityId;
     }
 
@@ -99,7 +120,7 @@ public class DormitorySearchBean {
      * @param pCityId
      *            the cityId to set
      */
-    public void setCityId(int pCityId) {
+    public void setCityId(Integer pCityId) {
         mCityId = pCityId;
     }
 
@@ -108,7 +129,7 @@ public class DormitorySearchBean {
     /**
      * @return the collegeId
      */
-    public int getCollegeId() {
+    public Integer getCollegeId() {
         return mCollegeId;
     }
 
@@ -118,7 +139,7 @@ public class DormitorySearchBean {
      * @param pCollegeId
      *            the collegeId to set
      */
-    public void setCollegeId(int pCollegeId) {
+    public void setCollegeId(Integer pCollegeId) {
         mCollegeId = pCollegeId;
     }
 
@@ -165,7 +186,7 @@ public class DormitorySearchBean {
     /**
      * @return the contractTypeId
      */
-    public int getContractTypeId() {
+    public Integer getContractTypeId() {
         return mContractTypeId;
     }
 
@@ -175,7 +196,7 @@ public class DormitorySearchBean {
      * @param pContractTypeId
      *            the contractTypeId to set
      */
-    public void setContractTypeId(int pContractTypeId) {
+    public void setContractTypeId(Integer pContractTypeId) {
         mContractTypeId = pContractTypeId;
     }
 
@@ -184,7 +205,7 @@ public class DormitorySearchBean {
     /**
      * @return the dormitoryTypeId
      */
-    public int getDormitoryTypeId() {
+    public Integer getDormitoryTypeId() {
         return mDormitoryTypeId;
     }
 
@@ -194,7 +215,7 @@ public class DormitorySearchBean {
      * @param pDormitoryTypeId
      *            the dormitoryTypeId to set
      */
-    public void setDormitoryTypeId(int pDormitoryTypeId) {
+    public void setDormitoryTypeId(Integer pDormitoryTypeId) {
         mDormitoryTypeId = pDormitoryTypeId;
     }
 

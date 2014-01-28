@@ -9,45 +9,60 @@
 	<sql id="select-dormitory">
 		select t1.id, t1.name, t1.address, t1.postcode, t1.equipment, t1.service, t1.salePrice, t1.listPrice, t1.description,
 		t1.type_id as dormitoryTypeId, t2.name as dormitoryType,
-		t1.contract_type_id as contractId, t3.name as contract,
+		t1.contract_type_id as contractId, t3.name as
+		contract,
 		t1.city_id as cityId, t4.name as city, coalesce(avg(t5.score), 0) as rating
 		from dormitory t1
 		left join dormitory_type t2 on t1.type_id = t2.id
 		left join contract_type t3 on t1.contract_type_id = t3.id
-		left join city t4 on t1.city_id = t4.id
+		left join city t4 on t1.city_id
+		= t4.id
 		left join dormitory_rating t5 on t1.id = t5.dormitory_id
 	</sql>
-	
+
 	<sql id="select-dormitory-page">
-		select t1.id, t1.name, t1.address, t1.postcode, t1.equipment, t1.service, t1.salePrice, t1.listPrice, 
+		select t1.id, t1.name, t1.address, t1.postcode, t1.equipment, t1.service, t1.salePrice, t1.listPrice,
 		t1.type_id as dormitoryTypeId, t2.name as dormitoryType,
 		t1.contract_type_id as contractId, t3.name as contract,
 		coalesce(avg(t5.score), 0) as rating, t6.distance
 		from dormitory t1
 		left join dormitory_type t2 on t1.type_id = t2.id
-		left join contract_type t3 on t1.contract_type_id = t3.id
+		left join
+		contract_type t3 on t1.contract_type_id = t3.id
 		left join dormitory_rating t5 on t1.id = t5.dormitory_id
-		left join distance_result t6 on t1.id = t6.dormitory_id and t6.college_id = #{collegeId}
+		left join
+		distance_result t6 on t1.id = t6.dormitory_id and t6.college_id = #{collegeId}
 	</sql>
 
-	<sql id="where-with-id">
+	<sql id="where">
 		<![CDATA[
-			where t1.id = #{id}
+			where 1=1
 		]]>
 	</sql>
 
+	<sql id="where-with-id">
+		and t1.id = #{id}
+	</sql>
+
 	<sql id="where-with-city-id">
-		where t1.city_id = #{cityId}
+		and t1.city_id = #{cityId}
 	</sql>
 
 	<sql id="where-with-keyword">
-		where t1.name like concat('%', #{keyword}, '%') or t1.address like concat('%', #{keyword}, '%')
-		or t1.postcode like concat('%', #{keyword}, '%') or t1.description like concat('%', #{keyword}, '%')
-		group by t1.id
+		and (t1.name like concat('%', #{keyword}, '%') or t1.address like concat('%', #{keyword}, '%')
+		or t1.postcode like concat('%', #{keyword}, '%') or t1.description like concat('%', #{keyword}, '%'))
 	</sql>
 
-	<sql id="where-with-dormitory-type-and-contract">
-		where t1.contract_type_id = #{contractTypeId} and t1.type_id = #{dormitoryTypeId}
+	<sql id="where-with-dormitory-type">
+		and t1.type_id = #{dormitoryTypeId}
+	</sql>
+
+	<sql id="where-with-contract">
+		and t1.contract_type_id = #{contractTypeId}
+	</sql>
+
+	<sql id="group-by-id">
+		group by t1.id
 	</sql>
 
 	<sql id="order-by-order-field">
@@ -58,30 +73,50 @@
 		limit #{pageBean.pageStartIndex}, #{pageBean.pageSize}
 	</sql>
 
-	<select id="queryDormitoryById" parameterType='int' resultType="com.noeasy.money.model.DormitoryBean">
-		<include refid="select-dormitory" />
-		<include refid="where-with-id" />
-	</select>
-
-	<select id="queryDormitoryByCityId" parameterType='com.noeasy.money.model.DormitorySearchBean' resultType="com.noeasy.money.model.DormitoryBean">
-		<include refid="select-dormitory" />
-		<include refid="where-with-city-id" />
-	</select>
-
-	<select id="queryDormitoryPageByKeywordOrderByField" parameterType='com.noeasy.money.model.DormitorySearchBean' resultType="com.noeasy.money.model.DormitoryBean">
+	<select id="queryDormitoryPage" parameterType='com.noeasy.money.model.DormitorySearchBean' resultType="com.noeasy.money.model.DormitoryBean">
 		<include refid="select-dormitory-page" />
+		<include refid="where" />
+		<if test="id != null">
+			<include refid="where-with-id" />
+		</if>
+		<if test="cityId != null">
+			<include refid="where-with-city-id" />
+		</if>
+		<if test="dormitoryTypeId != null">
+			<include refid="where-with-dormitory-type" />
+		</if>
+		<if test="contractTypeId != null ">
+			<include refid="where-with-contract" />
+		</if>
 		<if test="keyword != null">
 			<include refid="where-with-keyword" />
 		</if>
-	 	<if test="sortBy != null">
+		<include refid="group-by-id" />
+		<if test="sortBy != null">
 			<include refid="order-by-order-field" />
-	 	</if>
+		</if>
 		<include refid="limit-split-page" />
 	</select>
 
-	<select id="queryDormitoryByDormitoryTypeAndContract" parameterType='com.noeasy.money.model.DormitorySearchBean' resultType="com.noeasy.money.model.DormitoryBean">
+	<select id="queryDormitory" parameterType='com.noeasy.money.model.DormitorySearchBean' resultType="com.noeasy.money.model.DormitoryBean">
 		<include refid="select-dormitory" />
-		<include refid="where-with-dormitory-type-and-contract" />
+		<include refid="where" />
+		<if test="id != null">
+			<include refid="where-with-id" />
+		</if>
+		<if test="cityId != null">
+			<include refid="where-with-city-id" />
+		</if>
+		<if test="dormitoryTypeId != null">
+			<include refid="where-with-dormitory-type" />
+		</if>
+		<if test="contractTypeId != null ">
+			<include refid="where-with-contract" />
+		</if>
+		<if test="keyword != null">
+			<include refid="where-with-keyword" />
+		</if>
+		<include refid="group-by-id" />
 	</select>
 
 	<!-- Rate Dormitory -->

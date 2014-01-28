@@ -43,11 +43,11 @@ import com.noeasy.money.model.DormitorySearchBean;
 
 public interface IDormitoryService {
 
-    DormitoryBean queryDormitoryById(int pId);
+    DormitoryBean queryDormitory(DormitorySearchBean pSearchBean);
 
 
 
-    List<DormitoryBean> queryDormitoryByConditions(DormitorySearchBean pSearchBean);
+    List<DormitoryBean> queryDormitoryPage(DormitorySearchBean pSearchBean);
 
 
 

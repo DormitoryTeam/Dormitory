@@ -40,7 +40,7 @@ import java.util.List;
 
 public class OrderBean extends BaseBean {
 
-    private int              mId;
+    private Integer              mId;
 
     private String           mCurrency;
 
@@ -61,7 +61,7 @@ public class OrderBean extends BaseBean {
     /**
      * @return the id
      */
-    public int getId() {
+    public Integer getId() {
         return mId;
     }
 
@@ -71,7 +71,7 @@ public class OrderBean extends BaseBean {
      * @param pId
      *            the id to set
      */
-    public void setId(int pId) {
+    public void setId(Integer pId) {
         mId = pId;
     }
 

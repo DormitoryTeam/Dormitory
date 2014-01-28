@@ -69,12 +69,14 @@ public class DormitoryController {
 
     @RequestMapping("/unit-test/to-dormitory")
     public String toDormitory(HttpServletRequest request, HttpServletResponse response, Model model) {
-        DormitoryBean dormitoryBean1 = this.dormitoryService.queryDormitoryById(3);
+        DormitorySearchBean searchBean1 = new DormitorySearchBean();
+        searchBean1.setId(3);
+        DormitoryBean dormitoryBean1 = this.dormitoryService.queryDormitory(searchBean1);
         model.addAttribute("resultOfQueryById", ReflectionUtils.getFieldsValue(dormitoryBean1));
 
         DormitorySearchBean searchBean2 = new DormitorySearchBean();
         searchBean2.setCityId(1);
-        List<DormitoryBean> dormitoryBeans2 = this.dormitoryService.queryDormitoryByConditions(searchBean2);
+        List<DormitoryBean> dormitoryBeans2 = this.dormitoryService.queryDormitoryPage(searchBean2);
         List<Set<String>> Results2 = new ArrayList<Set<String>>();
         for (DormitoryBean bean : dormitoryBeans2) {
             Results2.add(ReflectionUtils.getFieldsValue(bean));
@@ -88,7 +90,7 @@ public class DormitoryController {
         searchBean3.setSortField("rating");
         searchBean3.setSortType("desc");
         searchBean3.setCollegeId(1);
-        List<DormitoryBean> dormitoryBeans3 = this.dormitoryService.queryDormitoryByConditions(searchBean3);
+        List<DormitoryBean> dormitoryBeans3 = this.dormitoryService.queryDormitoryPage(searchBean3);
         List<Set<String>> Results3 = new ArrayList<Set<String>>();
         for (DormitoryBean bean : dormitoryBeans3) {
             Results3.add(ReflectionUtils.getFieldsValue(bean));
@@ -98,7 +100,8 @@ public class DormitoryController {
         DormitorySearchBean searchBean4 = new DormitorySearchBean();
         searchBean4.setContractTypeId(1);
         searchBean4.setDormitoryTypeId(1);
-        List<DormitoryBean> dormitoryBeans4 = this.dormitoryService.queryDormitoryByConditions(searchBean4);
+        searchBean4.setCollegeId(1);
+        List<DormitoryBean> dormitoryBeans4 = this.dormitoryService.queryDormitoryPage(searchBean4);
         List<Set<String>> Results4 = new ArrayList<Set<String>>();
         for (DormitoryBean bean : dormitoryBeans4) {
             Results4.add(ReflectionUtils.getFieldsValue(bean));

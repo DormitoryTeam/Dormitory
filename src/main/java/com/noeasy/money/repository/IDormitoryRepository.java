@@ -43,11 +43,11 @@ import com.noeasy.money.model.DormitorySearchBean;
 
 public interface IDormitoryRepository {
 
-    DormitoryBean queryDormitoryById(int pId);
+    DormitoryBean queryDormitory(DormitorySearchBean pSearchBean);
 
 
 
-    List<DormitoryBean> queryDormitoryByConditions(DormitorySearchBean pSearchBean);
+    List<DormitoryBean> queryDormitoryPage(DormitorySearchBean pSearchBean);
 
 
 
@@ -56,18 +56,6 @@ public interface IDormitoryRepository {
 
 
     Double queryDormitoryAvgRate(int pDormitoryId);
-
-
-
-    List<DormitoryBean> queryDormitoryByCityId(DormitorySearchBean pSearchBean);
-
-
-
-    List<DormitoryBean> queryDormitoryByDormitoryTypeAndContract(DormitorySearchBean pSearchBean);
-
-
-
-    List<DormitoryBean> queryDormitoryPageByKeywordOrderByField(DormitorySearchBean pSearchBean);
 
 
 

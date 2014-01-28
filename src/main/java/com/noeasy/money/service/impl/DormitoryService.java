@@ -63,26 +63,20 @@ public class DormitoryService implements IDormitoryService {
 
 
     /**
-     * @see com.noeasy.money.service.IDormitoryService#queryDormitoryById(int)
+     * @see com.noeasy.money.service.IDormitoryService#queryDormitory(com.noeasy.money.model.DormitorySearchBean)
      */
-    public DormitoryBean queryDormitoryById(int pId) {
-        return this.sqlSession.selectOne("com.noeasy.money.model.Dormitory.queryDormitoryById", pId);
+    @Override
+    public DormitoryBean queryDormitory(DormitorySearchBean pSearchBean) {
+        return dormitoryRepository.queryDormitory(pSearchBean);
     }
 
 
 
     /**
-     * @see com.noeasy.money.service.IDormitoryService#queryDormitoryByConditions(com.noeasy.money.model.DormitorySearchBean)
+     * @see com.noeasy.money.service.IDormitoryService#queryDormitoryPage(com.noeasy.money.model.DormitorySearchBean)
      */
-    public List<DormitoryBean> queryDormitoryByConditions(DormitorySearchBean pSearchBean) {
-        List<DormitoryBean> queryResult = null;
-        if (StringUtils.isNoneBlank(pSearchBean.getKeyword())) {
-            queryResult = dormitoryRepository.queryDormitoryPageByKeywordOrderByField(pSearchBean);
-        } else if (pSearchBean.getCityId() > 0) {
-            queryResult = dormitoryRepository.queryDormitoryByCityId(pSearchBean);
-        } else if (pSearchBean.getContractTypeId() > 0 && pSearchBean.getDormitoryTypeId() > 0) {
-            queryResult = dormitoryRepository.queryDormitoryByDormitoryTypeAndContract(pSearchBean);
-        }
+    public List<DormitoryBean> queryDormitoryPage(DormitorySearchBean pSearchBean) {
+        List<DormitoryBean> queryResult = dormitoryRepository.queryDormitoryPage(pSearchBean);
         return CollectionUtils.isEmpty(queryResult) ? Collections.EMPTY_LIST : queryResult;
     }
 
