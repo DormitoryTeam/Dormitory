@@ -30,6 +30,8 @@ package com.noeasy.money.repository.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitoryRateBean;
 import com.noeasy.money.model.DormitorySearchBean;
@@ -41,7 +43,7 @@ import com.noeasy.money.repository.IDormitoryRepository;
  * @author: Yove
  * @version: 1.0, Jan 28, 2014
  */
-
+@Repository("dormitoryRepository")
 public class DormitoryRepository extends BaseRepository implements IDormitoryRepository {
 
     /**
