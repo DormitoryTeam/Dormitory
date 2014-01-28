@@ -36,11 +36,13 @@ import javax.annotation.Resource;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitoryRateBean;
 import com.noeasy.money.model.DormitorySearchBean;
+import com.noeasy.money.repository.IDormitoryRepository;
 import com.noeasy.money.service.IDormitoryService;
 
 /**
@@ -53,7 +55,10 @@ import com.noeasy.money.service.IDormitoryService;
 public class DormitoryService implements IDormitoryService {
 
     @Resource(name = "sqlSession")
-    private SqlSession sqlSession;
+    private SqlSession           sqlSession;
+
+    @Resource(name = "dormitoryRepository")
+    private IDormitoryRepository dormitoryRepository;
 
 
 
@@ -72,11 +77,11 @@ public class DormitoryService implements IDormitoryService {
     public List<DormitoryBean> queryDormitoryByConditions(DormitorySearchBean pSearchBean) {
         List<DormitoryBean> queryResult = null;
         if (StringUtils.isNoneBlank(pSearchBean.getKeyword())) {
-            queryResult = queryDormitoryPageByKeywordOrderByField(pSearchBean);
+            queryResult = dormitoryRepository.queryDormitoryPageByKeywordOrderByField(pSearchBean);
         } else if (pSearchBean.getCityId() > 0) {
-            queryResult = queryDormitoryByCityId(pSearchBean);
+            queryResult = dormitoryRepository.queryDormitoryByCityId(pSearchBean);
         } else if (pSearchBean.getContractTypeId() > 0 && pSearchBean.getDormitoryTypeId() > 0) {
-            queryResult = queryDormitoryByDormitoryTypeAndContract(pSearchBean);
+            queryResult = dormitoryRepository.queryDormitoryByDormitoryTypeAndContract(pSearchBean);
         }
         return CollectionUtils.isEmpty(queryResult) ? Collections.EMPTY_LIST : queryResult;
     }
@@ -89,11 +94,11 @@ public class DormitoryService implements IDormitoryService {
      */
     public Double rateDormitory(int pDormitoryId, int pUserId, int pPoint, boolean pGetAvg) {
         DormitoryRateBean rate = new DormitoryRateBean(pDormitoryId, pUserId, pPoint);
-        this.sqlSession.insert("com.noeasy.money.model.Dormitory.rate", rate);
+        dormitoryRepository.rateDormitory(rate);
         if (!pGetAvg) {
             return 0D;
         }
-        return this.sqlSession.selectOne("com.noeasy.money.model.Dormitory.calculateAvgRating", pDormitoryId);
+        return dormitoryRepository.queryDormitoryAvgRate(pDormitoryId);
     }
 
 
@@ -102,9 +107,10 @@ public class DormitoryService implements IDormitoryService {
      * @see com.noeasy.money.service.IDormitoryService#calculateDistance()
      */
     public Boolean calculateDistance() {
-        this.sqlSession.delete("com.noeasy.money.model.Dormitory.clearDistanceResult");
-        this.sqlSession.insert("com.noeasy.money.model.Dormitory.initialDistanceResult");
-        return true;
+        if (dormitoryRepository.clearDistanceResult()) {
+            return dormitoryRepository.initialDistanceResult();
+        }
+        return false;
     }
 
 
@@ -113,9 +119,10 @@ public class DormitoryService implements IDormitoryService {
      * @see com.noeasy.money.service.IDormitoryService#calculateDistance4City(int)
      */
     public Boolean calculateDistance4City(int pCityId) {
-        this.sqlSession.delete("com.noeasy.money.model.Dormitory.clearDistanceResult4City", pCityId);
-        this.sqlSession.insert("com.noeasy.money.model.Dormitory.calculateDistance4City", pCityId);
-        return true;
+        if (dormitoryRepository.clearDistanceResult4City(pCityId)) {
+            return dormitoryRepository.calculateDistance4City(pCityId);
+        }
+        return false;
     }
 
 
@@ -124,38 +131,10 @@ public class DormitoryService implements IDormitoryService {
      * @see com.noeasy.money.service.IDormitoryService#calculateDistance4College(int)
      */
     public Boolean calculateDistance4College(int pCollegeId) {
-        this.sqlSession.delete("com.noeasy.money.model.Dormitory.clearDistanceResult4College", pCollegeId);
-        this.sqlSession.insert("com.noeasy.money.model.Dormitory.calculateDistance4College", pCollegeId);
-        return true;
-    }
-
-
-
-    /**
-     * @see com.noeasy.money.service.IDormitoryService#queryDormitoryByCityId(com.noeasy.money.model.DormitorySearchBean)
-     */
-    public List<DormitoryBean> queryDormitoryByCityId(DormitorySearchBean pSearchBean) {
-        return this.sqlSession.selectList("com.noeasy.money.model.Dormitory.queryDormitoryByCityId", pSearchBean);
-    }
-
-
-
-    /**
-     * @see com.noeasy.money.service.IDormitoryService#queryDormitoryByDormitoryTypeAndContract(com.noeasy.money.model.DormitorySearchBean)
-     */
-    public List<DormitoryBean> queryDormitoryByDormitoryTypeAndContract(DormitorySearchBean pSearchBean) {
-        return this.sqlSession.selectList("com.noeasy.money.model.Dormitory.queryDormitoryByDormitoryTypeAndContract",
-                pSearchBean);
-    }
-
-
-
-    /**
-     * @see com.noeasy.money.service.IDormitoryService#queryDormitoryPageByKeywordOrderByField(com.noeasy.money.model.DormitorySearchBean)
-     */
-    public List<DormitoryBean> queryDormitoryPageByKeywordOrderByField(DormitorySearchBean pSearchBean) {
-        return this.sqlSession.selectList("com.noeasy.money.model.Dormitory.queryDormitoryPageByKeywordOrderByField",
-                pSearchBean);
+        if (dormitoryRepository.clearDistanceResult4College(pCollegeId)) {
+            return dormitoryRepository.calculateDistance4College(pCollegeId);
+        }
+        return false;
     }
 
 }

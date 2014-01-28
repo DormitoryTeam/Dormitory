@@ -26,52 +26,18 @@
  * THE FOREGOING LIMITATIONS SHALL APPLY EVEN IF THE ANY WARRANTY PROVIDED IN
  * THE MASTER SERVICE AGREEMENT FAILS OF ITS ESSENTIAL PURPOSE.
  */
+package com.noeasy.money.repository;
 
-package com.noeasy.money.service;
-
-import java.util.List;
-
-import com.noeasy.money.model.DormitoryBean;
-import com.noeasy.money.model.DormitorySearchBean;
+import com.noeasy.money.model.OrderBean;
 
 /**
  * <class description>
  * 
  * @author: Yove
- * @version: 1.0, Jan 21, 2014
+ * @version: 1.0, Jan 28, 2014
  */
 
-public interface IDormitoryService {
+public interface IOrderRepository {
 
-    DormitoryBean queryDormitoryById(int pId);
-
-
-
-    List<DormitoryBean> queryDormitoryByConditions(DormitorySearchBean pSearchBean);
-
-
-
-    /**
-     * Rate dormitory and return the average rating
-     * 
-     * @param pDormitoryId
-     * @param pUserId
-     * @param pPoint
-     * @param pGetAvg
-     * @return
-     */
-    Double rateDormitory(int pDormitoryId, int pUserId, int pPoint, boolean pGetAvg);
-
-
-
-    Boolean calculateDistance();
-
-
-
-    Boolean calculateDistance4City(int pCityId);
-
-
-
-    Boolean calculateDistance4College(int pCollegeId);
-
+    boolean placeOrder(OrderBean pOrderBean);
 }

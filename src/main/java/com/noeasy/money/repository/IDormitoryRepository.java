@@ -26,22 +26,22 @@
  * THE FOREGOING LIMITATIONS SHALL APPLY EVEN IF THE ANY WARRANTY PROVIDED IN
  * THE MASTER SERVICE AGREEMENT FAILS OF ITS ESSENTIAL PURPOSE.
  */
-
-package com.noeasy.money.service;
+package com.noeasy.money.repository;
 
 import java.util.List;
 
 import com.noeasy.money.model.DormitoryBean;
+import com.noeasy.money.model.DormitoryRateBean;
 import com.noeasy.money.model.DormitorySearchBean;
 
 /**
  * <class description>
  * 
  * @author: Yove
- * @version: 1.0, Jan 21, 2014
+ * @version: 1.0, Jan 28, 2014
  */
 
-public interface IDormitoryService {
+public interface IDormitoryRepository {
 
     DormitoryBean queryDormitoryById(int pId);
 
@@ -51,24 +51,43 @@ public interface IDormitoryService {
 
 
 
-    /**
-     * Rate dormitory and return the average rating
-     * 
-     * @param pDormitoryId
-     * @param pUserId
-     * @param pPoint
-     * @param pGetAvg
-     * @return
-     */
-    Double rateDormitory(int pDormitoryId, int pUserId, int pPoint, boolean pGetAvg);
+    Boolean rateDormitory(DormitoryRateBean pDormitoryRateBean);
 
 
 
-    Boolean calculateDistance();
+    Double queryDormitoryAvgRate(int pDormitoryId);
+
+
+
+    List<DormitoryBean> queryDormitoryByCityId(DormitorySearchBean pSearchBean);
+
+
+
+    List<DormitoryBean> queryDormitoryByDormitoryTypeAndContract(DormitorySearchBean pSearchBean);
+
+
+
+    List<DormitoryBean> queryDormitoryPageByKeywordOrderByField(DormitorySearchBean pSearchBean);
+
+
+
+    Boolean clearDistanceResult();
+
+
+
+    Boolean initialDistanceResult();
+
+
+
+    Boolean clearDistanceResult4City(int pCityId);
 
 
 
     Boolean calculateDistance4City(int pCityId);
+
+
+
+    Boolean clearDistanceResult4College(int pCollegeId);
 
 
 
