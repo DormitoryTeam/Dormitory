@@ -49,7 +49,7 @@ DROP TABLE IF EXISTS `dormitory`.`college` ;
 CREATE  TABLE IF NOT EXISTS `dormitory`.`college` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `city_id` INT NOT NULL ,
-  `name` VARCHAR(500) NOT NULL ,
+  `name` VARCHAR(150) NOT NULL ,
   `latitude` DECIMAL(10,7) NULL ,
   `longitude` DECIMAL(10,7) NULL ,
   `status` VARCHAR(45) NULL ,
@@ -69,7 +69,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`dormitory` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `city_id` INT NOT NULL ,
   `type_id` INT NOT NULL ,
-  `contact_type_id` INT NOT NULL ,
+  `contract_type_id` INT NOT NULL ,
   `name` VARCHAR(200) NOT NULL ,
   `address` VARCHAR(500) NULL ,
   `postcode` VARCHAR(200) NULL ,
@@ -85,7 +85,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`dormitory` (
   `update_time` TIMESTAMP NULL ,
   `status` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `index_dormitory` (`city_id` ASC, `type_id` ASC, `contact_type_id` ASC) )
+  INDEX `index_dormitory` (`city_id` ASC, `type_id` ASC, `contract_type_id` ASC) )
 ENGINE = InnoDB;
 
 
@@ -213,7 +213,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `dormitory`.`order` ;
 
 CREATE  TABLE IF NOT EXISTS `dormitory`.`order` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `uesr_id` INT NOT NULL ,
   `belongs_to` INT NOT NULL ,
   `type` VARCHAR(45) NOT NULL ,
@@ -232,7 +232,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `dormitory`.`order_history` ;
 
 CREATE  TABLE IF NOT EXISTS `dormitory`.`order_history` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `order_id` VARCHAR(45) NOT NULL ,
   `operator_id` INT NOT NULL ,
   `operation` INT NOT NULL ,
@@ -247,7 +247,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `dormitory`.`order_contact_info` ;
 
 CREATE  TABLE IF NOT EXISTS `dormitory`.`order_contact_info` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `order_id` VARCHAR(45) NOT NULL ,
   `name` VARCHAR(45) NOT NULL ,
   `gender` INT NOT NULL ,
@@ -266,7 +266,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `dormitory`.`line_item_pickup` ;
 
 CREATE  TABLE IF NOT EXISTS `dormitory`.`line_item_pickup` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `order_id` INT NOT NULL ,
   `flight_number` VARCHAR(45) NOT NULL ,
   `city_id` VARCHAR(45) NOT NULL ,
@@ -286,7 +286,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `dormitory`.`line_item_dormitory` ;
 
 CREATE  TABLE IF NOT EXISTS `dormitory`.`line_item_dormitory` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `order_id` INT NOT NULL ,
   `dormitory_id` INT NOT NULL ,
   `create_time` INT NULL ,
@@ -304,7 +304,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `dormitory`.`users` ;
 
 CREATE  TABLE IF NOT EXISTS `dormitory`.`users` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `login` VARCHAR(200) NOT NULL ,
   `password` VARCHAR(200) NOT NULL ,
   `email` VARCHAR(100) NOT NULL ,
@@ -326,7 +326,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `dormitory`.`groups` ;
 
 CREATE  TABLE IF NOT EXISTS `dormitory`.`groups` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(200) NOT NULL ,
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_time` TIMESTAMP NULL ,
@@ -340,7 +340,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `dormitory`.`roles` ;
 
 CREATE  TABLE IF NOT EXISTS `dormitory`.`roles` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(200) NOT NULL ,
   `create_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_date` TIMESTAMP NULL ,
@@ -354,7 +354,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `dormitory`.`functions` ;
 
 CREATE  TABLE IF NOT EXISTS `dormitory`.`functions` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(200) NOT NULL ,
   `servlet_path_info` VARCHAR(200) NOT NULL ,
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
@@ -369,7 +369,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `dormitory`.`user_group` ;
 
 CREATE  TABLE IF NOT EXISTS `dormitory`.`user_group` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `user_id` INT NOT NULL ,
   `group_id` INT NOT NULL ,
   `create_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
@@ -384,9 +384,9 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `dormitory`.`role_fuction` ;
 
 CREATE  TABLE IF NOT EXISTS `dormitory`.`role_fuction` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `role_id` INT NOT NULL ,
-  `funciton_id` INT NOT NULL ,
+  `function_id` INT NOT NULL ,
   `create_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_date` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) )
@@ -399,7 +399,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `dormitory`.`group_role` ;
 
 CREATE  TABLE IF NOT EXISTS `dormitory`.`group_role` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `group_id` INT NOT NULL ,
   `role_id` INT NOT NULL ,
   `create_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,

@@ -39,7 +39,7 @@ import java.util.Date;
 
 public class OrderTail {
 
-    private User      mOperator;
+    private UserBean      mOperator;
 
     private Operation mOperation;
 
@@ -50,7 +50,7 @@ public class OrderTail {
     /**
      * @return the operator
      */
-    public User getOperator() {
+    public UserBean getOperator() {
         return mOperator;
     }
 
@@ -60,7 +60,7 @@ public class OrderTail {
      * @param pOperator
      *            the operator to set
      */
-    public void setOperator(User pOperator) {
+    public void setOperator(UserBean pOperator) {
         mOperator = pOperator;
     }
 

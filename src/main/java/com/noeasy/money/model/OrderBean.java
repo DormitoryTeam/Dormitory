@@ -46,7 +46,7 @@ public class OrderBean extends BaseBean {
 
     private BigDecimal       mAmount;
 
-    private User             mUser;
+    private UserBean             mUser;
 
     private OrderStatus      mOrderStatus;
 
@@ -118,7 +118,7 @@ public class OrderBean extends BaseBean {
     /**
      * @return the user
      */
-    public User getUser() {
+    public UserBean getUser() {
         return mUser;
     }
 
@@ -128,7 +128,7 @@ public class OrderBean extends BaseBean {
      * @param pUser
      *            the user to set
      */
-    public void setUser(User pUser) {
+    public void setUser(UserBean pUser) {
         mUser = pUser;
     }
 

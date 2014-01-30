@@ -1,14 +1,19 @@
 package com.noeasy.money.repository;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public interface IAuthenticationRepository {
+    
+    int FRONT_USER_GROUP_ID = 1;
+    
 
     Set<Integer> getRolesByUserId(Integer pUserId);
 
 
 
-    int getUserGroupCount(Integer pUserId, Integer pGroupId);
+    Integer getUserGroupCount(Integer pUserId, Integer pGroupId);
 
 
 
@@ -20,7 +25,7 @@ public interface IAuthenticationRepository {
 
 
 
-    int getRoleGroupCount(Integer pRoleId, Integer pGroupId);
+    Integer getRoleGroupCount(Integer pRoleId, Integer pGroupId);
 
 
 
@@ -29,5 +34,9 @@ public interface IAuthenticationRepository {
 
 
     int removeRoleFromGroup(Integer pRoleId, Integer pGroupId);
+
+
+
+    List<Map<String, String>> getAuthenticationData();
 
 }

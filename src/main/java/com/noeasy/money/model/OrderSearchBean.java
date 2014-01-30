@@ -39,7 +39,7 @@ import java.util.Date;
 
 public class OrderSearchBean {
 
-    private User     mUser;
+    private UserBean     mUser;
 
     private int      mOrderType;
 
@@ -56,7 +56,7 @@ public class OrderSearchBean {
     /**
      * @return the user
      */
-    public User getUser() {
+    public UserBean getUser() {
         return mUser;
     }
 
@@ -66,7 +66,7 @@ public class OrderSearchBean {
      * @param pUser
      *            the user to set
      */
-    public void setUser(User pUser) {
+    public void setUser(UserBean pUser) {
         mUser = pUser;
     }
 

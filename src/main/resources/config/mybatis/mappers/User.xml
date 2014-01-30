@@ -3,7 +3,56 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.noeasy.money.model.User">
-  <select id="selectUser" resultType="com.noeasy.money.model.User">
-    select * from USERS where id = #{id}
-  </select>
+	
+	<insert id="register" parameterType="com.noeasy.money.model.UserBean">
+		INSERT INTO USERS(login,
+		password, email)
+		VALUES(#{login}, md5(#{password}), #{login});
+	</insert>
+
+
+	<insert id="saveUser" parameterType="com.noeasy.money.model.UserBean">
+		INSERT INTO users (login, password, email, name, gender, passport, age, birthday, address, phone, qq)
+		VALUES(#{login}, md5(#{password}), #{login}, #{name}, #{gender}, #{passport}, ${age}, #{birthday}, #{address}, #{phone}, #{qq});
+	</insert>
+
+
+	<update id="updateUser" parameterType="com.noeasy.money.model.UserBean">
+		UPDATE users SET
+			name = #{name},
+			gender = #{gender},
+			passport = #{passport},
+			birthday = #{birthday},
+			address = #{address},
+			phone = #{phone},
+			qq = #{qq}
+		WHERE id = #{id}
+	</update>
+
+
+	<update id="resetPassword" parameterType="com.noeasy.money.model.UserBean">
+		UPDATE users SET
+			password = md5(#{password})
+		WHERE login = #{login}
+	</update>
+
+
+	<select id="queryUser" parameterType="com.noeasy.money.model.UserSearchBean"
+		resultType=com.noeasy.money.model.UserBean">
+		SELECT u.id, u.login, u.password, u.email, u.name, u.gender, u.passport, u.age, u.birthday, u.address, u.phone
+		FROM users AS u LEFT JOIN user_group AS ugroup ON u.id = ugroup.user_id
+		WHERE 1=1
+		<if test="id != null">
+			AND u.id = #{id}
+		</if>
+		<if test="login != null">
+			AND (u.login = #{login}  OR u.email = #{login}) 
+		</if>
+		<if test="password != null">
+			AND u.password = #{password}
+		</if>
+		<if test="groupId != null">
+			AND ugroup.group_id = #{groupId}
+		</if>
+	</select>
 </mapper>

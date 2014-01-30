@@ -9,6 +9,12 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
     <filter>
+    	<filter-name>authentication-filter</filter-name>
+        <filter-class>
+            com.noeasy.money.filter.AuthenticationFilter
+        </filter-class>
+    </filter>
+    <filter>
         <filter-name>encoding-filter</filter-name>
         <filter-class>
             org.springframework.web.filter.CharacterEncodingFilter
@@ -28,13 +34,27 @@
             com.noeasy.money.filter.HTMLEscapeFilter
         </filter-class>
     </filter>
+    
+    <filter-mapping>
+        <filter-name>authentication-filter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>encoding-filter</filter-name>
         <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
     </filter-mapping>
     <filter-mapping>
         <filter-name>html-escape-filter</filter-name>
         <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
     </filter-mapping>
     <!-- spring config start -->
 

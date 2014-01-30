@@ -2092,15 +2092,19 @@
 <XPD:OBJ name="Operations[0]" type="UMLOperation" guid="mfnub1nKK0Kap8T97now8AAA">
 <XPD:ATTR name="Name" type="string">register</XPD:ATTR>
 <XPD:REF name="Owner">wFmoZf/s5kKvpaeUDmUDIQAA</XPD:REF>
-<XPD:ATTR name="#Parameters" type="integer">2</XPD:ATTR>
-<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="0JEeXGz0JkKxnjnw/lFhagAA">
+<XPD:ATTR name="#Parameters" type="integer">3</XPD:ATTR>
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="WZp07UIE0EmH1OcaSdCU4gAA">
 <XPD:ATTR name="DirectionKind" type="UMLParameterDirectionKind">pdkReturn</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">boolean</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">mfnub1nKK0Kap8T97now8AAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="ZGCVKUukpECIyNZczMcD5gAA">
-<XPD:ATTR name="Name" type="string">bean</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">UserBean</XPD:ATTR>
+<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="J0obrMrBcU+dh6h+MLs0HwAA">
+<XPD:ATTR name="Name" type="string">login</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">String</XPD:ATTR>
+<XPD:REF name="BehavioralFeature">mfnub1nKK0Kap8T97now8AAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Parameters[2]" type="UMLParameter" guid="hg6px8oBXkqtuxdM4ywrQQAA">
+<XPD:ATTR name="Name" type="string">password</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">mfnub1nKK0Kap8T97now8AAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>

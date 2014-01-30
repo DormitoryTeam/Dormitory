@@ -1,5 +1,8 @@
 package com.noeasy.money.service.impl;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -7,17 +10,19 @@ import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
+import org.springframework.stereotype.Service;
 
 import com.noeasy.money.repository.IAuthenticationRepository;
 import com.noeasy.money.service.IAuthenticationService;
 
+@Service(value = "authenticationService")
 public class AuthenticationService implements IAuthenticationService {
 
     
     @Resource(name = "authenticationRepository")
     IAuthenticationRepository repository;
     
-    public boolean hasAccess(Integer pUserId, Integer pServletPathInfo, Map<Integer, Set<Integer>> authenData) {
+    public boolean passAccess(Integer pUserId, String pServletPathInfo, Map<String, Set<Integer>> authenData) {
         if (null == authenData) {
             return true;
         }
@@ -29,6 +34,9 @@ public class AuthenticationService implements IAuthenticationService {
         Set<Integer > roleIds = authenData.get(pServletPathInfo);
         if (CollectionUtils.isEmpty(roleIds)) {
             return true;
+        }
+        if (null == pUserId) {
+            return false;
         }
         Set<Integer> roleIdOnUser = repository.getRolesByUserId(pUserId);
         return CollectionUtils.containsAny(roleIds, roleIdOnUser);
@@ -67,6 +75,30 @@ public class AuthenticationService implements IAuthenticationService {
 
     public int removeRoleFromGroup(Integer pRoleId, Integer pGroupId) {
         return repository.removeRoleFromGroup(pRoleId, pGroupId);
+    }
+
+
+
+    @Override
+    public Map<String, Set<Integer>> getAuthenticationData() {
+        List<Map<String, String>> results = repository.getAuthenticationData();
+        Map<String, Set<Integer>> data = new HashMap<String, Set<Integer>>();
+        if (CollectionUtils.isEmpty(results)) {
+            return data;
+        }
+        for (Map<String, String> result : results) {
+            String servletPathInfo = result.get("servletLPathInfo");
+            String roleIdStr = result.get("roleId");
+            if (null == roleIdStr) {
+                continue;
+            }
+            if (!data.containsKey(servletPathInfo)) {
+                Set<Integer> roleIds = new HashSet<Integer>();
+                data.put(servletPathInfo, roleIds);
+            }
+            data.get(servletPathInfo).add(Integer.valueOf(roleIdStr));
+        }
+        return data;
     }
 
 }
