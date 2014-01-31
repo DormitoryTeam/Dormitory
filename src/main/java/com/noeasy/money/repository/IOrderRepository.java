@@ -42,7 +42,7 @@ import com.noeasy.money.model.OrderSearchBean;
 
 public interface IOrderRepository {
 
-    List<OrderBean> queryDormiotyOrderPage(OrderSearchBean pOrderSearchBean);
+    List<OrderBean> queryDormitoryOrderPage(OrderSearchBean pOrderSearchBean);
 
 
 

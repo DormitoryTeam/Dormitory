@@ -46,7 +46,7 @@ import com.noeasy.money.repository.IOrderRepository;
 public class OrderRepository extends BaseRepository implements IOrderRepository {
 
     @Override
-    public List<OrderBean> queryDormiotyOrderPage(final OrderSearchBean pOrderSearchBean) {
+    public OrderBean queryDormitoryOrder(final OrderSearchBean pOrderSearchBean) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -54,9 +54,8 @@ public class OrderRepository extends BaseRepository implements IOrderRepository 
 
 
     @Override
-    public OrderBean queryDormitoryOrder(final OrderSearchBean pOrderSearchBean) {
-        // TODO Auto-generated method stub
-        return null;
+    public List<OrderBean> queryDormitoryOrderPage(final OrderSearchBean pOrderSearchBean) {
+        return getSqlSession().selectList("com.noeasy.money.model.Order.queryDormitoryOrder", pOrderSearchBean);
     }
 
 

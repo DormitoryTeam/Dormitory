@@ -24,6 +24,30 @@
 	<sql id="where-with-id">
 		t1.id = #{id}
 	</sql>
+	
+	<sql id="limit-split-page">
+		limit #{pageBean.pageStartIndex}, #{pageBean.pageSize}
+	</sql>
+	
+	<select id="queryDormitoryOrder">
+		<include refid="select-dormitory-order" />
+		<include refid="where" />
+		<if test="orderNumber != null">
+			and t1.id = #{orderNumber}
+		</if>
+		<if test="dateFrom != null">
+			and t1.create_time >= #{dateFrom}
+		</if>
+		<if test="dateTo != null">
+			and t1.create_time <= #{dateTo}
+		</if>
+		<if test="user != null">
+			and t1.belongs_to = #{user.id}
+		</if>
+		<if test="pageBean != null">
+			<include refid="limit-split-page" />
+		</if>
+	</select>
 
 	<result-Map>
 		<id column="id" property="id" />

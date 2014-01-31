@@ -30,6 +30,8 @@ package com.noeasy.money.model;
 
 import java.util.Date;
 
+import com.noeasy.money.enumeration.OrderType;
+
 /**
  * <class description>
  * 
@@ -39,74 +41,17 @@ import java.util.Date;
 
 public class OrderSearchBean {
 
-    private UserBean mUser;
+    private UserBean  mUser;
 
-    private int      mOrderType;
+    private OrderType mOrderType;
 
-    private String   mOrderNumber;
+    private String    mOrderNumber;
 
-    private Date     mDateFrom;
+    private Date      mDateFrom;
 
-    private Date     mDateTo;
+    private Date      mDateTo;
 
-    private PageBean mPageBean;
-
-
-
-    /**
-     * @return the user
-     */
-    public UserBean getUser() {
-        return mUser;
-    }
-
-
-
-    /**
-     * @param pUser
-     *            the user to set
-     */
-    public void setUser(UserBean pUser) {
-        mUser = pUser;
-    }
-
-
-
-    /**
-     * @return the orderType
-     */
-    public int getOrderType() {
-        return mOrderType;
-    }
-
-
-
-    /**
-     * @param pOrderType
-     *            the orderType to set
-     */
-    public void setOrderType(int pOrderType) {
-        mOrderType = pOrderType;
-    }
-
-
-
-    /**
-     * @return the orderNumber
-     */
-    public String getOrderNumber() {
-        return mOrderNumber;
-    }
-
-
-
-    /**
-     * @param pOrderNumber
-     *            the orderNumber to set
-     */
-    public void setOrderNumber(String pOrderNumber) {
-        mOrderNumber = pOrderNumber;
-    }
+    private PageBean  mPageBean;
 
 
 
@@ -115,16 +60,6 @@ public class OrderSearchBean {
      */
     public Date getDateFrom() {
         return mDateFrom;
-    }
-
-
-
-    /**
-     * @param pDateFrom
-     *            the dateFrom to set
-     */
-    public void setDateFrom(Date pDateFrom) {
-        mDateFrom = pDateFrom;
     }
 
 
@@ -139,11 +74,16 @@ public class OrderSearchBean {
 
 
     /**
-     * @param pDateTo
-     *            the dateTo to set
+     * @return the orderNumber
      */
-    public void setDateTo(Date pDateTo) {
-        mDateTo = pDateTo;
+    public String getOrderNumber() {
+        return mOrderNumber;
+    }
+
+
+
+    public OrderType getOrderType() {
+        return mOrderType;
     }
 
 
@@ -158,10 +98,65 @@ public class OrderSearchBean {
 
 
     /**
+     * @return the user
+     */
+    public UserBean getUser() {
+        return mUser;
+    }
+
+
+
+    /**
+     * @param pDateFrom
+     *            the dateFrom to set
+     */
+    public void setDateFrom(final Date pDateFrom) {
+        mDateFrom = pDateFrom;
+    }
+
+
+
+    /**
+     * @param pDateTo
+     *            the dateTo to set
+     */
+    public void setDateTo(final Date pDateTo) {
+        mDateTo = pDateTo;
+    }
+
+
+
+    /**
+     * @param pOrderNumber
+     *            the orderNumber to set
+     */
+    public void setOrderNumber(final String pOrderNumber) {
+        mOrderNumber = pOrderNumber;
+    }
+
+
+
+    public void setOrderType(final OrderType pOrderType) {
+        mOrderType = pOrderType;
+    }
+
+
+
+    /**
      * @param pPageBean
      *            the pageBean to set
      */
-    public void setPageBean(PageBean pPageBean) {
+    public void setPageBean(final PageBean pPageBean) {
         mPageBean = pPageBean;
+    }
+
+
+
+    /**
+     * @param pUser
+     *            the user to set
+     */
+    public void setUser(final UserBean pUser) {
+        mUser = pUser;
     }
 }
