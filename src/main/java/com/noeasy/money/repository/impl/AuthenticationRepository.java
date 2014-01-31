@@ -8,11 +8,12 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.noeasy.money.repository.IAuthenticationRepository;
 
-@Service(value = "authenticationRepository")
+@Repository("authenticationRepository")
 public class AuthenticationRepository extends BaseRepository implements IAuthenticationRepository {
 
     public Set<Integer> getRolesByUserId(Integer pUserId) {

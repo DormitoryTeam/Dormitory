@@ -16,12 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.noeasy.money.constant.SessionConstants;
 import com.noeasy.money.service.IAuthenticationService;
 
 public class AuthenticationFilter implements Filter {
 
     public final static String                 SERVICE_NAME_AUTHENTICATION_SERVICE = "authenticationService";
-    public final static String                 SESSION_KEY_USER_ID                 = "USER_ID";
     private volatile Map<String, Set<Integer>> authenticationData;
     private volatile IAuthenticationService    authenticationService;
 
@@ -42,14 +42,15 @@ public class AuthenticationFilter implements Filter {
         //
         HttpServletRequest request = (HttpServletRequest) pRequest;
         HttpServletResponse response = (HttpServletResponse) pResponse;
-        String userIdStr = (String) request.getSession().getAttribute(SESSION_KEY_USER_ID);
+        Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
         String servletPathInfo = request.getServletPath() + request.getPathInfo();
-        Integer userId = null == userIdStr ? null : Integer.valueOf(userIdStr);
         boolean passAccess = getAuthenticationService().passAccess(userId, servletPathInfo, getAuthenticationData());
         if (passAccess) {
             pChain.doFilter(pRequest, pResponse);
+        } else {
+            response.sendRedirect("/AccessDenied.jsp");    
         }
-        response.sendRedirect("/AccessDenied.jsp");
+        
     }
 
 

@@ -11,6 +11,12 @@ public class BaseException extends RuntimeException {
 
 
 
+    public ErrorMetadata getErrorMetadata() {
+        return errorMetadata;
+    }
+
+
+
     public BaseException() {
         super();
         this.errorMetadata = BaseErrorMetadata.DEFAULT_METADATA;

@@ -2,10 +2,13 @@ package com.noeasy.money.repository.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.noeasy.money.model.UserBean;
 import com.noeasy.money.model.UserSearchBean;
 import com.noeasy.money.repository.IUserRepository;
 
+@Repository("userRepository")
 public class UserRepository extends BaseRepository implements IUserRepository {
 
     public int register(UserBean pBean) {

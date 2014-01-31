@@ -5,7 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.stereotype.Service;
 
 import com.noeasy.money.exception.BaseException;
 import com.noeasy.money.exception.UserErrorMetadata;
@@ -16,15 +19,20 @@ import com.noeasy.money.repository.IUserRepository;
 import com.noeasy.money.service.IAuthenticationService;
 import com.noeasy.money.service.IUserService;
 
+
+@Service(value = "userService")
 public class UserService implements IUserService {
 
-    IUserRepository           userRepository;
-    IAuthenticationRepository authenticationRepository;
+    @Resource(name = "userRepository")
+    private IUserRepository           userRepository;
+    
+    @Resource(name = "authenticationRepository")
+    private IAuthenticationRepository authenticationRepository;
 
 
 
     @Override
-    public boolean register(String pLogin, String pPassword) {
+    public UserBean register(String pLogin, String pPassword) {
         // check user exit or not.
         if (exist(pLogin)) {
             throw new BaseException(UserErrorMetadata.USER_EXIST);
@@ -34,14 +42,15 @@ public class UserService implements IUserService {
         bean.setPassword(pPassword);
         // save register information.
         int userId = userRepository.register(bean);
+        bean.setId(userId);
         // assign front user group to current user.
         authenticationRepository.addUser2Group(userId, IAuthenticationRepository.FRONT_USER_GROUP_ID);
-        return true;
+        return bean;
     }
 
 
-
-    private boolean exist(String pLogin) {
+    @Override
+    public boolean exist(String pLogin) {
         UserSearchBean searchBean = new UserSearchBean();
         searchBean.setLogin(pLogin);
         List<UserBean> matchUsers = userRepository.queryUser(searchBean);
@@ -72,6 +81,16 @@ public class UserService implements IUserService {
             return Collections.EMPTY_LIST;
         }
         return result;
+    }
+
+
+    @Override
+    public boolean exist(String pLogin, String pPassword) {
+        UserSearchBean searchBean = new UserSearchBean();
+        searchBean.setLogin(pLogin);
+        searchBean.setPassword(pPassword);
+        List<UserBean> matchUsers = userRepository.queryUser(searchBean);
+        return CollectionUtils.isNotEmpty(matchUsers);
     }
 
 }

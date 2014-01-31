@@ -34,9 +34,6 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.noeasy.money.model.DormitoryBean;
@@ -53,9 +50,6 @@ import com.noeasy.money.service.IDormitoryService;
  */
 @Service(value = "dormitoryService")
 public class DormitoryService implements IDormitoryService {
-
-    @Resource(name = "sqlSession")
-    private SqlSession           sqlSession;
 
     @Resource(name = "dormitoryRepository")
     private IDormitoryRepository dormitoryRepository;
