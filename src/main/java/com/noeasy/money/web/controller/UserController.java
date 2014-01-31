@@ -37,12 +37,12 @@ public class UserController {
 
     
     @RequestMapping(value = "/login.html")
-    public String login(ModelMap model, HttpServletRequest request, HttpServletResponse response, String pLogin,
-            String pPassword) {
+    public String login(ModelMap model, HttpServletRequest request, HttpServletResponse response, String login,
+            String password) {
         // TODO check precondition
         UserSearchBean bean = new UserSearchBean();
-        bean.setLogin(pLogin);
-        bean.setPassword(pPassword);
+        bean.setLogin(login);
+        bean.setPassword(password);
         List<UserBean> users = userService.queryUser(bean);
         if (CollectionUtils.isNotEmpty(users)) {
             UserBean user = users.get(0);

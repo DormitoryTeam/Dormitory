@@ -49,7 +49,7 @@
 			AND (u.login = #{login}  OR u.email = #{login}) 
 		</if>
 		<if test="password != null">
-			AND u.password = #{password}
+			AND u.password = md5(#{password})
 		</if>
 		<if test="groupId != null">
 			AND ugroup.group_id = #{groupId}
