@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.noeasy.money.model.Order">
+
+	<sql id="select-dormitory-order">
+		select t1.id, t1.user_id, t1.belongs_to, t1.type as order_type, t1.status as order_status, t1.currency, t1.amount, t1.create_time,
+		t2.id as uid, t2.login as ulogin, t2.password as upassword, t2.email as uemail, t2.name as uname, t2.gender as ugender, t2.passport as upassport, t2.age as uage, t2.birthday as ubirthday, t2.address as uaddress, t2.qq as uqq, t2.phone as uphone,
+		t3.id as bid, t3.login as blogin, t3.password as bpassword, t3.email as bemail, t3.name as bname, t3.gender as bgender, t3.passport as bpassport, t3.age as bage, t3.birthday as bbirthday, t3.address as baddress, t3.qq as bqq, t3.phone as bphone,
+		t4.id as cid, t4.name as cname, t4.gender as cgender, t4.qq as cqq, t4.phone as cphone, t4.address as caddress,
+		t5.id as lid, t5.amount as lamount, t5.currency as lcurrency, t5.listPrice as llistPrice, t5.dormitory_id,
+		t6.id as did, t6.city_id, t6.type_id, t6.contract_type_id, t6.name as dname, t6.address as daddress, t6.postcode, t6.listPrice as dlistPrice, t6.salePrice, t6.currency as dcurrency, t6.equipment, t6.service, t6.description, t6.status as dstatus
+		from order t1
+		left join users t2 on t1.user_id = t2.id
+		left join users t3 on t1.belongs_to = t3.id
+		left join order_contact_info t4 on t1.id = t4.order_id
+		left join line_item_dormitory t5 on t1.id = t5.order_id
+		left join dormitory t6 on t5.dormitory_id = t6.id
+	</sql>
+
+	<sql id="where">
+		where 1=1
+	</sql>
+
+	<sql id="where-with-id">
+		t1.id = #{id}
+	</sql>
+
+	<result-Map>
+		<id column="id" property="id" />
+		<result property="belongsTo" column="belongs_to" />
+		<result property="orderType" column="order_type" />
+		<result property="orderStatus" column="order_status" />
+		<result property="currency" column="currency" />
+		<result property="amount" column="amount" />
+		<result property="createTime" column="create_time" />
+		<association property="user" column="user_id" javaType="com.noeasy.money.model.User">
+			<id property="id" column="uid" />
+			<result property="login" column="ulogin" />
+			<result property="password" column="upassword" />
+			<result property="email" column="uemail" />
+			<result property="name" column="uname" />
+			<result property="gender" column="ugender" />
+			<result property="password" column="upassport" />
+			<result property="age" column="uage" />
+			<result property="birthday" column="ubirthday" />
+			<result property="address" column="uaddress" />
+			<result property="qq" column="uqq" />
+			<result property="phone" column="uphone" />
+		</association>
+		<association property="belongsTo" column="belongs_to" javaType="com.noeasy.money.model.User">
+			<id property="id" column="bid" />
+			<result property="login" column="blogin" />
+			<result property="password" column="bpassword" />
+			<result property="email" column="bemail" />
+			<result property="name" column="bname" />
+			<result property="gender" column="bgender" />
+			<result property="password" column="bpassport" />
+			<result property="age" column="bage" />
+			<result property="birthday" column="bbirthday" />
+			<result property="address" column="baddress" />
+			<result property="qq" column="bqq" />
+			<result property="phone" column="bphone" />
+		</association>
+		<association property="orderContact" column="cid" javaType="com.noeasy.money.model.OrderContactInfo">
+			<id property="id" column="cid" />
+			<result property="name" column="cname" />
+			<result property="gender" column="cgender" />
+			<result property="QQ" column="cqq" />
+			<result property="phone" column="cphone" />
+			<result property="address" column="caddress" />
+		</association>
+		<collection property="lineItems" ofType="com.noeasy.money.model.DormitoryLineItem">
+			<id property="id" column="lid" />
+			<result property="amount" column="lamount" />
+			<result property="listPrice" column="llistPrice" />
+			<result property="currency" column="lcurrency" />
+			<association property="dormitory" column="dormitory_id" javaType="com.noeasy.money.model.DormitoryBean">
+				<id property="id" column="did" />
+				<result property="cityId" column="city_id" />
+				<result property="dormitoryTypeId" column="type_id" />
+				<result property="contractId" column="contract_type_id" />
+				<result property="name" column="dname" />
+				<result property="address" column="daddress" />
+				<result property="postcode" column="postcode" />
+				<result property="listPrice" column="dlistPrice" />
+				<result property="salePrice" column="salePrice" />
+				<result property="currency" column="dcurrency" />
+				<result property="equipment" column="equipment" />
+				<result property="service" column="service" />
+				<result property="description" column="description" />
+				<result property="status" column="dstatus" />
+			</association>
+		</collection>
+	</result-Map>
+
+</mapper>

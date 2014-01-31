@@ -28,9 +28,12 @@
  */
 package com.noeasy.money.repository.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.noeasy.money.model.OrderBean;
+import com.noeasy.money.model.OrderSearchBean;
 import com.noeasy.money.repository.IOrderRepository;
 
 /**
@@ -42,13 +45,34 @@ import com.noeasy.money.repository.IOrderRepository;
 @Repository("orderRepository")
 public class OrderRepository extends BaseRepository implements IOrderRepository {
 
-    /**
-     * @see com.noeasy.money.repository.IOrderRepository#placeOrder(com.noeasy.money.model.OrderBean)
-     */
     @Override
-    public boolean placeOrder(OrderBean pOrderBean) {
+    public List<OrderBean> queryDormiotyOrderPage(final OrderSearchBean pOrderSearchBean) {
         // TODO Auto-generated method stub
-        return false;
+        return null;
+    }
+
+
+
+    @Override
+    public OrderBean queryDormitoryOrder(final OrderSearchBean pOrderSearchBean) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+
+    @Override
+    public OrderBean queryPickupOrder(final OrderSearchBean pOrderSearchBean) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+
+    @Override
+    public List<OrderBean> queryPickupOrderPage(final OrderSearchBean pOrderSearchBean) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }
