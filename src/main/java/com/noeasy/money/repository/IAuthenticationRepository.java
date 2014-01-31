@@ -5,9 +5,10 @@ import java.util.Map;
 import java.util.Set;
 
 public interface IAuthenticationRepository {
-    
+
     int FRONT_USER_GROUP_ID = 1;
-    
+
+
 
     Set<Integer> getRolesByUserId(Integer pUserId);
 

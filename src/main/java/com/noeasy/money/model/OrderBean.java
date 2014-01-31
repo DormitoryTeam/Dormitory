@@ -31,6 +31,8 @@ package com.noeasy.money.model;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.noeasy.money.enumeration.OrderStatus;
+
 /**
  * <class description>
  * 
@@ -40,13 +42,13 @@ import java.util.List;
 
 public class OrderBean extends BaseBean {
 
-    private Integer              mId;
+    private Integer          mId;
 
     private String           mCurrency;
 
     private BigDecimal       mAmount;
 
-    private UserBean             mUser;
+    private UserBean         mUser;
 
     private OrderStatus      mOrderStatus;
 

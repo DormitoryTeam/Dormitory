@@ -30,6 +30,8 @@ package com.noeasy.money.model;
 
 import java.util.Date;
 
+import com.noeasy.money.enumeration.Operation;
+
 /**
  * <class description>
  * 
@@ -39,7 +41,7 @@ import java.util.Date;
 
 public class OrderTail {
 
-    private UserBean      mOperator;
+    private UserBean  mOperator;
 
     private Operation mOperation;
 
@@ -48,39 +50,10 @@ public class OrderTail {
 
 
     /**
-     * @return the operator
-     */
-    public UserBean getOperator() {
-        return mOperator;
-    }
-
-
-
-    /**
-     * @param pOperator
-     *            the operator to set
-     */
-    public void setOperator(UserBean pOperator) {
-        mOperator = pOperator;
-    }
-
-
-
-    /**
      * @return the operation
      */
     public Operation getOperation() {
         return mOperation;
-    }
-
-
-
-    /**
-     * @param pOperation
-     *            the operation to set
-     */
-    public void setOperation(Operation pOperation) {
-        mOperation = pOperation;
     }
 
 
@@ -95,10 +68,39 @@ public class OrderTail {
 
 
     /**
+     * @return the operator
+     */
+    public UserBean getOperator() {
+        return mOperator;
+    }
+
+
+
+    /**
+     * @param pOperation
+     *            the operation to set
+     */
+    public void setOperation(final Operation pOperation) {
+        mOperation = pOperation;
+    }
+
+
+
+    /**
      * @param pOperationTime
      *            the operationTime to set
      */
-    public void setOperationTime(Date pOperationTime) {
+    public void setOperationTime(final Date pOperationTime) {
         mOperationTime = pOperationTime;
+    }
+
+
+
+    /**
+     * @param pOperator
+     *            the operator to set
+     */
+    public void setOperator(final UserBean pOperator) {
+        mOperator = pOperator;
     }
 }

@@ -9,9 +9,14 @@ public interface IUserRepository {
     int register(UserBean pBean);
 
 
+
     List<UserBean> queryUser(UserSearchBean pSearchBean);
 
+
+
     int saveUser(UserBean pBean);
+
+
 
     int updateUser(UserBean pBean);
 

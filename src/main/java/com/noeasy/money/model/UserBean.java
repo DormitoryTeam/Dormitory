@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class UserBean extends BaseBean {
 
-    private Integer  id;
+    private Integer id;
     private String  login;
     private String  password;
     private String  email;
@@ -136,7 +136,8 @@ public class UserBean extends BaseBean {
         qq = pQq;
     }
 
-    
+
+
     public int getAge() {
         if (null == getBirthday()) {
             return 0;

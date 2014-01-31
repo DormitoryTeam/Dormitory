@@ -39,7 +39,7 @@ import java.util.Date;
 
 public class OrderSearchBean {
 
-    private UserBean     mUser;
+    private UserBean mUser;
 
     private int      mOrderType;
 

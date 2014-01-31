@@ -10,8 +10,9 @@ public class BaseRepository implements IBaseRepository {
 
     @Resource(name = "sqlSession")
     private SqlSession sqlSession;
-    
-    
+
+
+
     public SqlSession getSqlSession() {
         return this.sqlSession;
     }

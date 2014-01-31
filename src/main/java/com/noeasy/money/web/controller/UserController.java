@@ -35,7 +35,8 @@ public class UserController {
         return "dormitory/sucess";
     }
 
-    
+
+
     @RequestMapping(value = "/login.html")
     public String login(ModelMap model, HttpServletRequest request, HttpServletResponse response, String login,
             String password) {
@@ -51,5 +52,5 @@ public class UserController {
         }
         return "userNotFound";
     }
-    
+
 }

@@ -26,7 +26,7 @@
  * THE FOREGOING LIMITATIONS SHALL APPLY EVEN IF THE ANY WARRANTY PROVIDED IN
  * THE MASTER SERVICE AGREEMENT FAILS OF ITS ESSENTIAL PURPOSE.
  */
-package com.noeasy.money.model;
+package com.noeasy.money.enumeration;
 
 /**
  * <class description>
@@ -35,6 +35,6 @@ package com.noeasy.money.model;
  * @version: 1.0, Jan 27, 2014
  */
 
-public enum OrderStatus {
-    COMMIT, REVIEW, PAYMENT, PASS, SENDING_CONTACT
+public enum Operation {
+
 }
