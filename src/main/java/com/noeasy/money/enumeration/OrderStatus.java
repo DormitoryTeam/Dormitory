@@ -36,5 +36,16 @@ package com.noeasy.money.enumeration;
  */
 
 public enum OrderStatus {
-    COMMIT, REVIEW, PAYMENT, PASS, SENDING_CONTACT
+
+    COMMIT, REVIEW, PAYMENT, PASS, SENDING_CONTACT;
+
+    public String getName() {
+        return this.name();
+    }
+
+
+
+    public int getValue() {
+        return this.ordinal();
+    }
 }

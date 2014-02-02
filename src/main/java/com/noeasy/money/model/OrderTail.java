@@ -41,6 +41,8 @@ import com.noeasy.money.enumeration.Operation;
 
 public class OrderTail {
 
+    private int       mOrderId;
+
     private UserBean  mOperator;
 
     private Operation mOperation;
@@ -76,6 +78,12 @@ public class OrderTail {
 
 
 
+    public int getOrderId() {
+        return mOrderId;
+    }
+
+
+
     /**
      * @param pOperation
      *            the operation to set
@@ -102,5 +110,11 @@ public class OrderTail {
      */
     public void setOperator(final UserBean pOperator) {
         mOperator = pOperator;
+    }
+
+
+
+    public void setOrderId(final int pOrderId) {
+        mOrderId = pOrderId;
     }
 }

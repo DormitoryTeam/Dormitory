@@ -37,6 +37,8 @@ package com.noeasy.money.model;
 
 public class OrderContactInfo extends BaseBean {
 
+    private int     mOrderId;
+
     private String  mName;
 
     private boolean mGender;
@@ -63,6 +65,12 @@ public class OrderContactInfo extends BaseBean {
      */
     public String getName() {
         return mName;
+    }
+
+
+
+    public int getOrderId() {
+        return mOrderId;
     }
 
 
@@ -107,6 +115,12 @@ public class OrderContactInfo extends BaseBean {
      */
     public void setName(final String pName) {
         mName = pName;
+    }
+
+
+
+    public void setOrderId(final int pOrderId) {
+        mOrderId = pOrderId;
     }
 
 

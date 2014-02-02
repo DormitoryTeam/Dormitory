@@ -37,4 +37,15 @@ package com.noeasy.money.enumeration;
 
 public enum Operation {
 
+    CREATE, UPDATE, ACCEPT, FAILED, FINISHED;
+
+    public String getName() {
+        return this.name();
+    }
+
+
+
+    public int getValue() {
+        return this.ordinal();
+    }
 }

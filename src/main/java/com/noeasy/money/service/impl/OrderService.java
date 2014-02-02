@@ -60,8 +60,13 @@ public class OrderService implements IOrderService {
      */
     @Override
     public boolean placeOrder(final OrderBean pOrderBean) {
-        // TODO Auto-generated method stub
-        return false;
+        boolean saveResult = false;
+        if (pOrderBean.getOrderType().equals(OrderType.DORMIOTRY)) {
+            saveResult = orderRepository.placeDormitoryOrder(pOrderBean);
+        } else if (pOrderBean.getOrderType().equals(OrderType.PICKUP)) {
+            saveResult = orderRepository.placePickupOrder(pOrderBean);
+        }
+        return saveResult;
     }
 
 
@@ -71,10 +76,12 @@ public class OrderService implements IOrderService {
      */
     @Override
     public List<OrderBean> queryOrder(final OrderSearchBean pOrderSearchBean) {
-        Collections.emptyList();
+        List<OrderBean> queryResult = Collections.emptyList();
         if (pOrderSearchBean.getOrderType().equals(OrderType.DORMIOTRY)) {
-            orderRepository.queryDormitoryOrderPage(pOrderSearchBean);
+            queryResult = orderRepository.queryDormitoryOrderPage(pOrderSearchBean);
+        } else if (pOrderSearchBean.getOrderType().equals(OrderType.PICKUP)) {
+            queryResult = orderRepository.queryPickupOrderPage(pOrderSearchBean);
         }
-        return null;
+        return queryResult;
     }
 }

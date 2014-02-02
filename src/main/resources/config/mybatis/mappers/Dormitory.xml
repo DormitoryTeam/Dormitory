@@ -121,8 +121,7 @@
 
 	<!-- Rate Dormitory -->
 	<insert id="rate" keyProperty="id" useGeneratedKeys='true' parameterType="com.noeasy.money.model.DormitoryRateBean">
-		insert into dormitory_rating (id, dormitory_id, user_id, score, update_time) values (
-		#{id},
+		insert into dormitory_rating (dormitory_id, user_id, score, update_time) values (
 		#{dormitoryId,javaType=int,jdbcType=INTEGER},
 		#{userId,javaType=int,jdbcType=INTEGER},
 		#{point,javaType=int,jdbcType=INTEGER},

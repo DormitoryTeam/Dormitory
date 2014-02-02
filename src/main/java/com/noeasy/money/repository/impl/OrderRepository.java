@@ -32,7 +32,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.noeasy.money.enumeration.Operation;
+import com.noeasy.money.model.LineItem;
 import com.noeasy.money.model.OrderBean;
+import com.noeasy.money.model.OrderContactInfo;
 import com.noeasy.money.model.OrderSearchBean;
 import com.noeasy.money.repository.IOrderRepository;
 
@@ -44,6 +47,22 @@ import com.noeasy.money.repository.IOrderRepository;
  */
 @Repository("orderRepository")
 public class OrderRepository extends BaseRepository implements IOrderRepository {
+
+    @Override
+    public boolean placeDormitoryOrder(final OrderBean pOrderBean) {
+        getSqlSession().insert("com.noeasy.money.model.Order.saveDormitoryOrder", pOrderBean);
+        return true;
+    }
+
+
+
+    @Override
+    public boolean placePickupOrder(final OrderBean pOrderBean) {
+        getSqlSession().insert("com.noeasy.money.model.Order.savePickupOrder", pOrderBean);
+        return true;
+    }
+
+
 
     @Override
     public OrderBean queryDormitoryOrder(final OrderSearchBean pOrderSearchBean) {
@@ -70,8 +89,47 @@ public class OrderRepository extends BaseRepository implements IOrderRepository 
 
     @Override
     public List<OrderBean> queryPickupOrderPage(final OrderSearchBean pOrderSearchBean) {
+        return getSqlSession().selectList("com.noeasy.money.model.Order.queryPickupOrder", pOrderSearchBean);
+    }
+
+
+
+    @Override
+    public boolean saveDormitoryLineItem(final LineItem pLineItem) {
         // TODO Auto-generated method stub
-        return null;
+        return false;
+    }
+
+
+
+    @Override
+    public boolean saveOrder(final OrderBean pOrderBean) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+
+    @Override
+    public boolean saveOrderContactInfo(final OrderContactInfo pContactInfo) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+
+    @Override
+    public boolean saveOrderRecord(final int pOrderId, final int pOperatorId, final Operation pOperation) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+
+    @Override
+    public boolean savePickupLineItem(final LineItem pLineItem) {
+        // TODO Auto-generated method stub
+        return false;
     }
 
 }

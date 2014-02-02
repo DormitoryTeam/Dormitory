@@ -64,7 +64,7 @@
 		</if>
 	</select>
 	
-	<select id="queryDormitoryOrder" resultMap="pickup-order">
+	<select id="queryPickupOrder" resultMap="pickup-order">
 		<include refid="select-dormitory-order" />
 		<include refid="where" />
 		<if test="orderNumber != null">
@@ -83,6 +83,36 @@
 			<include refid="limit-split-page" />
 		</if>
 	</select>
+	
+	<insert id="saveOrder" keyProperty="id" useGeneratedKeys="true" parameterType="com.noeasy.money.model.OrderBean">
+		insert into order (user_id, belongs_to, type, status, amount, currency) values (
+		#{user.id,javaType=int,jdbcType=INTEGER},
+		#{belongsTo.id,javaType=int,jdbcType=INTEGER},
+		#{orderType.name,javaType=String,jdbcType=VARCHAR},
+		#{orderStatus.name,javaType=String,jdbcType=VARCHAR},
+		#{amount,javaType=java.math.BigDecimal,jdbcType=DECIMAL},
+		#{currency,javaType=String,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<insert id="saveOrderContactInfo" keyProperty="id" useGeneratedKeys="true" parameterType="com.noeasy.money.model.OrderContactInfo">
+		insert into order_contact_info (order_id, name, gender, qq, phone, address) values (
+		#{orderid,javaType=int,jdbcType=INTEGER},
+		#{name,javaType=String,jdbcType=INTEGER},
+		#{gender,javaType=boolean,jdbcType=INTEGER},
+		#{QQ,javaType=String,jdbcType=VARCHAR},
+		#{phone,javaType=String,jdbcType=VARCHAR},
+		#{address,javaType=String,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<insert id="saveOrderHistory" keyProperty="id" useGeneratedKeys="true" parameterType="com.noeasy.money.model.OrderTail">
+		insert into order_history (order_id, operator_id, operation) values (
+		#{orderid,javaType=int,jdbcType=INTEGER},
+		#{operator.id,javaType=int,jdbcType=INTEGER},
+		#{operation.name,javaType=String,jdbcType=VARCHAR}
+		)
+	</insert>
 
 	<result-Map id="dormitory_order">
 		<id column="id" property="id" />

@@ -32,6 +32,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.noeasy.money.enumeration.OrderStatus;
+import com.noeasy.money.enumeration.OrderType;
 
 /**
  * <class description>
@@ -59,6 +60,8 @@ public class OrderBean extends BaseBean {
     private List<LineItem>   mLineItems;
 
     private List<OrderTail>  mTails;
+
+    private OrderType        mOrderType;
 
 
 
@@ -118,6 +121,12 @@ public class OrderBean extends BaseBean {
      */
     public OrderStatus getOrderStatus() {
         return mOrderStatus;
+    }
+
+
+
+    public OrderType getOrderType() {
+        return mOrderType;
     }
 
 
@@ -202,6 +211,12 @@ public class OrderBean extends BaseBean {
      */
     public void setOrderStatus(final OrderStatus pOrderStatus) {
         mOrderStatus = pOrderStatus;
+    }
+
+
+
+    public void setOrderType(final OrderType pOrderType) {
+        mOrderType = pOrderType;
     }
 
 
