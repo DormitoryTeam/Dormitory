@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.noeasy.money.model.Order">
 
 	<sql id="select-dormitory-order">
@@ -8,7 +10,8 @@
 		user_passport, t2.age as user_age, t2.birthday as user_birthday, t2.address as user_address, t2.qq as user_qq, t2.phone as user_phone,
 		t3.id as bid, t3.login as belong_login, t3.password as belong_password, t3.email as belong_email, t3.name as belong_name, t3.gender as belong_gender, t3.passport as
 		belong_passport, t3.age as belong_age, t3.birthday as belong_birthday, t3.address as belong_address, t3.qq as belong_qq, t3.phone as belong_phone,
-		t4.id as cid, t4.name as contact_name, t4.gender as contact_gender, t4.qq as contact_qq, t4.phone as contact_phone, t4.address as contact_address,
+		t4.id as cid, t4.name as contact_name, t4.gender as
+		contact_gender, t4.qq as contact_qq, t4.phone as contact_phone, t4.address as contact_address,
 		t5.id
 		as lid, t5.dormitory_id, t5.amount as li_amount, t5.currency as li_currency, t5.listPrice as li_listPrice,
 		t6.id as did, t6.city_id, t6.type_id, t6.contract_type_id, t6.name as dname, t6.address as daddress, t6.postcode, t6.listPrice as dlistPrice, t6.salePrice, t6.currency as dcurrency,
@@ -28,7 +31,8 @@
 		user_passport, t2.age as user_age, t2.birthday as user_birthday, t2.address as user_address, t2.qq as user_qq, t2.phone as user_phone,
 		t3.id as bid, t3.login as belong_login, t3.password as belong_password, t3.email as belong_email, t3.name as belong_name, t3.gender as belong_gender, t3.passport as
 		belong_passport, t3.age as belong_age, t3.birthday as belong_birthday, t3.address as belong_address, t3.qq as belong_qq, t3.phone as belong_phone,
-		t4.id as cid, t4.name as contact_name, t4.gender as contact_gender, t4.qq as contact_qq, t4.phone as contact_phone, t4.address as contact_address,
+		t4.id as cid, t4.name as contact_name, t4.gender as
+		contact_gender, t4.qq as contact_qq, t4.phone as contact_phone, t4.address as contact_address,
 		t5.id
 		as lid, t5.flight_number, t5.city_id, t5.pickup_date, t5.pickup_type, t5.luggage_amount, t5.luggage_size, t5.amount as li_amount, t5.currency as li_currency,
 		t6.name as city_name
@@ -52,17 +56,17 @@
 		limit #{pageBean.pageStartIndex}, #{pageBean.pageSize}
 	</sql>
 
-	<select id="queryDormitoryOrder" resultMap="dormitory_order">
+	<select id="queryDormitoryOrder" resultMap="dormitory-order">
 		<include refid="select-dormitory-order" />
 		<include refid="where" />
 		<if test="orderNumber != null">
 			and t1.id = #{orderNumber}
 		</if>
 		<if test="dateFrom != null">
-			and t1.create_time >= #{dateFrom}
+			and t1.create_time &gt;= #{dateFrom}
 		</if>
 		<if test="dateTo != null">
-			and t1.create_time <= #{dateTo}
+			and t1.create_time &lt;= #{dateTo}
 		</if>
 		<if test="user != null">
 			and t1.belongs_to = #{user.id}
@@ -79,10 +83,10 @@
 			and t1.id = #{orderNumber}
 		</if>
 		<if test="dateFrom != null">
-			and t1.create_time >= #{dateFrom}
+			and t1.create_time &gt;= #{dateFrom}
 		</if>
 		<if test="dateTo != null">
-			and t1.create_time <= #{dateTo}
+			and t1.create_time &lt;= #{dateTo}
 		</if>
 		<if test="user != null">
 			and t1.belongs_to = #{user.id}
@@ -131,7 +135,7 @@
 		#{currency,javaType=String,jdbcType=VARCHAR}
 		)
 	</insert>
-	
+
 	<insert id="savePickupLineItem" keyProperty="id" useGeneratedKeys="true" parameterType="com.noeasy.money.model.PickupLineItem">
 		insert into line_item_pickup (order_id, flight_number, city_id, pickup_date, pickup_type, amount, currency, luggage_amount, luggage_size) values (
 		#{orderId,javaType=int,jdbcType=INTEGER},
@@ -146,15 +150,14 @@
 		)
 	</insert>
 
-	<result-Map id="dormitory_order">
+	<resultMap id="dormitory_order" type="com.noeasy.money.model.OrderBean">
 		<id column="id" property="id" />
-		<result property="belongsTo" column="belongs_to" />
 		<result property="orderType" column="order_type" />
 		<result property="orderStatus" column="order_status" />
 		<result property="currency" column="currency" />
 		<result property="amount" column="amount" />
 		<result property="createTime" column="create_time" />
-		<association property="user" column="user_id" javaType="com.noeasy.money.model.User">
+		<association property="user" column="user_id" javaType="com.noeasy.money.model.UserBean">
 			<id property="id" column="uid" />
 			<result property="login" column="user_login" />
 			<result property="password" column="user_password" />
@@ -168,7 +171,7 @@
 			<result property="qq" column="user_qq" />
 			<result property="phone" column="user_phone" />
 		</association>
-		<association property="belongsTo" column="belongs_to" javaType="com.noeasy.money.model.User">
+		<association property="belongsTo" column="belongs_to" javaType="com.noeasy.money.model.UserBean">
 			<id property="id" column="bid" />
 			<result property="login" column="belong_login" />
 			<result property="password" column="belong_password" />
@@ -212,17 +215,16 @@
 				<result property="status" column="dstatus" />
 			</association>
 		</collection>
-	</result-Map>
+	</resultMap>
 
-	<result-Map id="pickup-order">
+	<resultMap id="pickup-order" type="com.noeasy.money.model.OrderBean">
 		<id column="id" property="id" />
-		<result property="belongsTo" column="belongs_to" />
 		<result property="orderType" column="order_type" />
 		<result property="orderStatus" column="order_status" />
 		<result property="currency" column="currency" />
 		<result property="amount" column="amount" />
 		<result property="createTime" column="create_time" />
-		<association property="user" column="user_id" javaType="com.noeasy.money.model.User">
+		<association property="user" column="user_id" javaType="com.noeasy.money.model.UserBean">
 			<id property="id" column="uid" />
 			<result property="login" column="user_login" />
 			<result property="password" column="user_password" />
@@ -236,7 +238,7 @@
 			<result property="qq" column="user_qq" />
 			<result property="phone" column="user_phone" />
 		</association>
-		<association property="belongsTo" column="belongs_to" javaType="com.noeasy.money.model.User">
+		<association property="belongsTo" column="belongs_to" javaType="com.noeasy.money.model.UserBean">
 			<id property="id" column="bid" />
 			<result property="login" column="belong_login" />
 			<result property="password" column="belong_password" />
@@ -270,5 +272,5 @@
 			<result property="amount" column="li_amount" />
 			<result property="currency" column="li_currency" />
 		</collection>
-	</result-Map>
+	</resultMap>
 </mapper>
