@@ -30,6 +30,7 @@ package com.noeasy.money.model;
 
 import java.util.Date;
 
+import com.noeasy.money.enumeration.OrderStatus;
 import com.noeasy.money.enumeration.OrderType;
 
 /**
@@ -41,17 +42,19 @@ import com.noeasy.money.enumeration.OrderType;
 
 public class OrderSearchBean {
 
-    private UserBean  mUser;
+    private UserBean    mUser;
 
-    private OrderType mOrderType;
+    private OrderType   mOrderType;
 
-    private String    mOrderNumber;
+    private String      mOrderNumber;
 
-    private Date      mDateFrom;
+    private Date        mDateFrom;
 
-    private Date      mDateTo;
+    private Date        mDateTo;
 
-    private PageBean  mPageBean;
+    private OrderStatus mOrderStatus;
+
+    private PageBean    mPageBean;
 
 
 
@@ -78,6 +81,12 @@ public class OrderSearchBean {
      */
     public String getOrderNumber() {
         return mOrderNumber;
+    }
+
+
+
+    public OrderStatus getOrderStatus() {
+        return mOrderStatus;
     }
 
 
@@ -132,6 +141,12 @@ public class OrderSearchBean {
      */
     public void setOrderNumber(final String pOrderNumber) {
         mOrderNumber = pOrderNumber;
+    }
+
+
+
+    public void setOrderStatus(final OrderStatus pOrderStatus) {
+        mOrderStatus = pOrderStatus;
     }
 
 

@@ -71,6 +71,9 @@
 		<if test="user != null">
 			and t1.belongs_to = #{user.id}
 		</if>
+		<if test="orderType != null">
+			and t1.status = #{orderType.name}
+		</if>
 		<if test="pageBean != null">
 			<include refid="limit-split-page" />
 		</if>
@@ -90,6 +93,9 @@
 		</if>
 		<if test="user != null">
 			and t1.belongs_to = #{user.id}
+		</if>
+		<if test="orderType != null">
+			and t1.status = #{orderType.name}
 		</if>
 		<if test="pageBean != null">
 			<include refid="limit-split-page" />
