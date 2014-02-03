@@ -90,8 +90,8 @@ public class OrderRepository extends BaseRepository implements IOrderRepository 
 
     @Override
     public OrderBean queryDormitoryOrder(final OrderSearchBean pOrderSearchBean) {
-        // TODO Auto-generated method stub
-        return null;
+        pOrderSearchBean.setPageBean(null);
+        return getSqlSession().selectOne("com.noeasy.money.model.Order.queryDormitoryOrder", pOrderSearchBean);
     }
 
 
@@ -105,8 +105,8 @@ public class OrderRepository extends BaseRepository implements IOrderRepository 
 
     @Override
     public OrderBean queryPickupOrder(final OrderSearchBean pOrderSearchBean) {
-        // TODO Auto-generated method stub
-        return null;
+        pOrderSearchBean.setPageBean(null);
+        return getSqlSession().selectOne("com.noeasy.money.model.Order.queryPickupOrder", pOrderSearchBean);
     }
 
 
