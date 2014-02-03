@@ -32,11 +32,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.noeasy.money.enumeration.Operation;
+import com.noeasy.money.model.DormitoryLineItem;
 import com.noeasy.money.model.LineItem;
 import com.noeasy.money.model.OrderBean;
 import com.noeasy.money.model.OrderContactInfo;
 import com.noeasy.money.model.OrderSearchBean;
+import com.noeasy.money.model.OrderTail;
+import com.noeasy.money.model.PickupLineItem;
 import com.noeasy.money.repository.IOrderRepository;
 
 /**
@@ -49,17 +51,39 @@ import com.noeasy.money.repository.IOrderRepository;
 public class OrderRepository extends BaseRepository implements IOrderRepository {
 
     @Override
-    public boolean placeDormitoryOrder(final OrderBean pOrderBean) {
-        getSqlSession().insert("com.noeasy.money.model.Order.saveDormitoryOrder", pOrderBean);
-        return true;
-    }
+    public boolean placeOrder(final OrderBean pOrderBean) {
+        boolean saveResult = this.saveOrder(pOrderBean);
+        if (!saveResult) {
+            return saveResult;
+        }
 
+        OrderContactInfo contact = pOrderBean.getOrderContact();
+        contact.setOrderId(pOrderBean.getId());
+        saveResult = this.saveOrderContactInfo(contact);
+        if (!saveResult) {
+            return saveResult;
+        }
 
+        for (LineItem lineItem : pOrderBean.getLineItems()) {
+            lineItem.setOrderId(pOrderBean.getId());
+            if (lineItem instanceof DormitoryLineItem) {
+                saveResult = this.saveDormitoryLineItem(lineItem);
+            } else if (lineItem instanceof PickupLineItem) {
+                saveResult = this.savePickupLineItem(lineItem);
+            }
+            if (!saveResult) {
+                break;
+            }
+        }
+        if (!saveResult) {
+            return saveResult;
+        }
 
-    @Override
-    public boolean placePickupOrder(final OrderBean pOrderBean) {
-        getSqlSession().insert("com.noeasy.money.model.Order.savePickupOrder", pOrderBean);
-        return true;
+        OrderTail lastOpertation = pOrderBean.getTails().get(pOrderBean.getTails().size() - 1);
+        lastOpertation.setOrderId(pOrderBean.getId());
+        saveResult = this.saveOrderRecord(lastOpertation);
+
+        return saveResult;
     }
 
 
@@ -96,40 +120,40 @@ public class OrderRepository extends BaseRepository implements IOrderRepository 
 
     @Override
     public boolean saveDormitoryLineItem(final LineItem pLineItem) {
-        // TODO Auto-generated method stub
-        return false;
+        getSqlSession().insert("com.noeasy.money.model.Order.saveDormitoryLineItem", pLineItem);
+        return true;
     }
 
 
 
     @Override
     public boolean saveOrder(final OrderBean pOrderBean) {
-        // TODO Auto-generated method stub
-        return false;
+        getSqlSession().insert("com.noeasy.money.model.Order.saveOrder", pOrderBean);
+        return true;
     }
 
 
 
     @Override
     public boolean saveOrderContactInfo(final OrderContactInfo pContactInfo) {
-        // TODO Auto-generated method stub
-        return false;
+        getSqlSession().insert("com.noeasy.money.model.Order.saveOrderContactInfo", pContactInfo);
+        return true;
     }
 
 
 
     @Override
-    public boolean saveOrderRecord(final int pOrderId, final int pOperatorId, final Operation pOperation) {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean saveOrderRecord(final OrderTail pOrderTail) {
+        getSqlSession().insert("com.noeasy.money.model.Order.saveOrderHistory", pOrderTail);
+        return true;
     }
 
 
 
     @Override
     public boolean savePickupLineItem(final LineItem pLineItem) {
-        // TODO Auto-generated method stub
-        return false;
+        getSqlSession().insert("com.noeasy.money.model.Order.savePickupLineItem", pLineItem);
+        return true;
     }
 
 }

@@ -4,25 +4,33 @@
 
 	<sql id="select-dormitory-order">
 		select t1.id, t1.user_id, t1.belongs_to, t1.type as order_type, t1.status as order_status, t1.currency, t1.amount, t1.create_time,
-		t2.id as uid, t2.login as user_login, t2.password as user_password, t2.email as user_email, t2.name as user_name, t2.gender as user_gender, t2.passport as user_passport, t2.age as user_age, t2.birthday as user_birthday, t2.address as user_address, t2.qq as user_qq, t2.phone as user_phone,
-		t3.id as bid, t3.login as belong_login, t3.password as belong_password, t3.email as belong_email, t3.name as belong_name, t3.gender as belong_gender, t3.passport as belong_passport, t3.age as belong_age, t3.birthday as belong_birthday, t3.address as belong_address, t3.qq as belong_qq, t3.phone as belong_phone,
+		t2.id as uid, t2.login as user_login, t2.password as user_password, t2.email as user_email, t2.name as user_name, t2.gender as user_gender, t2.passport as
+		user_passport, t2.age as user_age, t2.birthday as user_birthday, t2.address as user_address, t2.qq as user_qq, t2.phone as user_phone,
+		t3.id as bid, t3.login as belong_login, t3.password as belong_password, t3.email as belong_email, t3.name as belong_name, t3.gender as belong_gender, t3.passport as
+		belong_passport, t3.age as belong_age, t3.birthday as belong_birthday, t3.address as belong_address, t3.qq as belong_qq, t3.phone as belong_phone,
 		t4.id as cid, t4.name as contact_name, t4.gender as contact_gender, t4.qq as contact_qq, t4.phone as contact_phone, t4.address as contact_address,
-		t5.id as lid, t5.dormitory_id, t5.amount as li_amount, t5.currency as li_currency, t5.listPrice as li_listPrice,
-		t6.id as did, t6.city_id, t6.type_id, t6.contract_type_id, t6.name as dname, t6.address as daddress, t6.postcode, t6.listPrice as dlistPrice, t6.salePrice, t6.currency as dcurrency, t6.equipment, t6.service, t6.description, t6.status as dstatus
+		t5.id
+		as lid, t5.dormitory_id, t5.amount as li_amount, t5.currency as li_currency, t5.listPrice as li_listPrice,
+		t6.id as did, t6.city_id, t6.type_id, t6.contract_type_id, t6.name as dname, t6.address as daddress, t6.postcode, t6.listPrice as dlistPrice, t6.salePrice, t6.currency as dcurrency,
+		t6.equipment, t6.service, t6.description, t6.status as dstatus
 		from order t1
 		left join users t2 on t1.user_id = t2.id
 		left join users t3 on t1.belongs_to = t3.id
 		left join order_contact_info t4 on t1.id = t4.order_id
 		left join line_item_dormitory t5 on t1.id = t5.order_id
-		left join dormitory t6 on t5.dormitory_id = t6.id
+		left join dormitory t6 on
+		t5.dormitory_id = t6.id
 	</sql>
-	
+
 	<sql id="select-pickup-order">
 		select t1.id, t1.user_id, t1.belongs_to, t1.type as order_type, t1.status as order_status, t1.currency, t1.amount, t1.create_time,
-		t2.id as uid, t2.login as user_login, t2.password as user_password, t2.email as user_email, t2.name as user_name, t2.gender as user_gender, t2.passport as user_passport, t2.age as user_age, t2.birthday as user_birthday, t2.address as user_address, t2.qq as user_qq, t2.phone as user_phone,
-		t3.id as bid, t3.login as belong_login, t3.password as belong_password, t3.email as belong_email, t3.name as belong_name, t3.gender as belong_gender, t3.passport as belong_passport, t3.age as belong_age, t3.birthday as belong_birthday, t3.address as belong_address, t3.qq as belong_qq, t3.phone as belong_phone,
+		t2.id as uid, t2.login as user_login, t2.password as user_password, t2.email as user_email, t2.name as user_name, t2.gender as user_gender, t2.passport as
+		user_passport, t2.age as user_age, t2.birthday as user_birthday, t2.address as user_address, t2.qq as user_qq, t2.phone as user_phone,
+		t3.id as bid, t3.login as belong_login, t3.password as belong_password, t3.email as belong_email, t3.name as belong_name, t3.gender as belong_gender, t3.passport as
+		belong_passport, t3.age as belong_age, t3.birthday as belong_birthday, t3.address as belong_address, t3.qq as belong_qq, t3.phone as belong_phone,
 		t4.id as cid, t4.name as contact_name, t4.gender as contact_gender, t4.qq as contact_qq, t4.phone as contact_phone, t4.address as contact_address,
-		t5.id as lid, t5.flight_number, t5.city_id, t5.pickup_date, t5.pickup_type, t5.luggage_amount, t5.luggage_size, t5.amount as li_amount, t5.currency as li_currency, 
+		t5.id
+		as lid, t5.flight_number, t5.city_id, t5.pickup_date, t5.pickup_type, t5.luggage_amount, t5.luggage_size, t5.amount as li_amount, t5.currency as li_currency,
 		t6.name as city_name
 		from order t1
 		left join users t2 on t1.user_id = t2.id
@@ -39,11 +47,11 @@
 	<sql id="where-with-id">
 		t1.id = #{id}
 	</sql>
-	
+
 	<sql id="limit-split-page">
 		limit #{pageBean.pageStartIndex}, #{pageBean.pageSize}
 	</sql>
-	
+
 	<select id="queryDormitoryOrder" resultMap="dormitory_order">
 		<include refid="select-dormitory-order" />
 		<include refid="where" />
@@ -63,7 +71,7 @@
 			<include refid="limit-split-page" />
 		</if>
 	</select>
-	
+
 	<select id="queryPickupOrder" resultMap="pickup-order">
 		<include refid="select-dormitory-order" />
 		<include refid="where" />
@@ -83,7 +91,7 @@
 			<include refid="limit-split-page" />
 		</if>
 	</select>
-	
+
 	<insert id="saveOrder" keyProperty="id" useGeneratedKeys="true" parameterType="com.noeasy.money.model.OrderBean">
 		insert into order (user_id, belongs_to, type, status, amount, currency) values (
 		#{user.id,javaType=int,jdbcType=INTEGER},
@@ -94,10 +102,10 @@
 		#{currency,javaType=String,jdbcType=VARCHAR}
 		)
 	</insert>
-	
+
 	<insert id="saveOrderContactInfo" keyProperty="id" useGeneratedKeys="true" parameterType="com.noeasy.money.model.OrderContactInfo">
 		insert into order_contact_info (order_id, name, gender, qq, phone, address) values (
-		#{orderid,javaType=int,jdbcType=INTEGER},
+		#{orderId,javaType=int,jdbcType=INTEGER},
 		#{name,javaType=String,jdbcType=INTEGER},
 		#{gender,javaType=boolean,jdbcType=INTEGER},
 		#{QQ,javaType=String,jdbcType=VARCHAR},
@@ -105,12 +113,36 @@
 		#{address,javaType=String,jdbcType=VARCHAR}
 		)
 	</insert>
-	
+
 	<insert id="saveOrderHistory" keyProperty="id" useGeneratedKeys="true" parameterType="com.noeasy.money.model.OrderTail">
 		insert into order_history (order_id, operator_id, operation) values (
-		#{orderid,javaType=int,jdbcType=INTEGER},
+		#{orderId,javaType=int,jdbcType=INTEGER},
 		#{operator.id,javaType=int,jdbcType=INTEGER},
 		#{operation.name,javaType=String,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<insert id="saveDormitoryLineItem" keyProperty="id" useGeneratedKeys="true" parameterType="com.noeasy.money.model.DormitoryLineItem">
+		insert into line_item_dormitory (order_id, dormitory_id, list_price, amount, currency) values (
+		#{orderId,javaType=int,jdbcType=INTEGER},
+		#{dormitory.id,javaType=int,jdbcType=INTEGER},
+		#{listPrice,javaType=java.math.BigDecimal,jdbcType=DECIMAL},
+		#{amount,javaType=java.math.BigDecimal,jdbcType=DECIMAL},
+		#{currency,javaType=String,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<insert id="savePickupLineItem" keyProperty="id" useGeneratedKeys="true" parameterType="com.noeasy.money.model.PickupLineItem">
+		insert into line_item_pickup (order_id, flight_number, city_id, pickup_date, pickup_type, amount, currency, luggage_amount, luggage_size) values (
+		#{orderId,javaType=int,jdbcType=INTEGER},
+		#{flightNum,javaType=String,jdbcType=VARCHAR},
+		#{cityId,javaType=int,jdbcType=INTEGER},
+		#{pickupDate,javaType=java.util.Date,jdbcType=DATETIME},
+		#{pickupType.name,javaType=String,jdbcType=VARCHAR},
+		#{amount,javaType=java.math.BigDecimal,jdbcType=DECIMAL},
+		#{currency,javaType=String,jdbcType=VARCHAR},
+		#{luggageAmount,javaType=int,jdbcType=INTEGER},
+		#{luggageSize,javaType=Double,jdbcType=DECIMAL}
 		)
 	</insert>
 

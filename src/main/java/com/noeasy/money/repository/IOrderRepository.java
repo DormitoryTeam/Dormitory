@@ -30,11 +30,11 @@ package com.noeasy.money.repository;
 
 import java.util.List;
 
-import com.noeasy.money.enumeration.Operation;
 import com.noeasy.money.model.LineItem;
 import com.noeasy.money.model.OrderBean;
 import com.noeasy.money.model.OrderContactInfo;
 import com.noeasy.money.model.OrderSearchBean;
+import com.noeasy.money.model.OrderTail;
 
 /**
  * <class description>
@@ -45,11 +45,7 @@ import com.noeasy.money.model.OrderSearchBean;
 
 public interface IOrderRepository {
 
-    boolean placeDormitoryOrder(OrderBean pOrderBean);
-
-
-
-    boolean placePickupOrder(OrderBean pOrderBean);
+    boolean placeOrder(OrderBean pOrderBean);
 
 
 
@@ -81,7 +77,7 @@ public interface IOrderRepository {
 
 
 
-    boolean saveOrderRecord(int pOrderId, int pOperatorId, Operation pOperation);
+    boolean saveOrderRecord(OrderTail pOrderTail);
 
 
 

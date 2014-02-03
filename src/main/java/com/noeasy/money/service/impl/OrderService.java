@@ -61,11 +61,8 @@ public class OrderService implements IOrderService {
     @Override
     public boolean placeOrder(final OrderBean pOrderBean) {
         boolean saveResult = false;
-        if (pOrderBean.getOrderType().equals(OrderType.DORMIOTRY)) {
-            saveResult = orderRepository.placeDormitoryOrder(pOrderBean);
-        } else if (pOrderBean.getOrderType().equals(OrderType.PICKUP)) {
-            saveResult = orderRepository.placePickupOrder(pOrderBean);
-        }
+
+        saveResult = orderRepository.placeOrder(pOrderBean);
         return saveResult;
     }
 
