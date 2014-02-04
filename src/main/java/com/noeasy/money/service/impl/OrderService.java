@@ -28,10 +28,17 @@
  */
 package com.noeasy.money.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.noeasy.money.enumeration.OrderType;
 import com.noeasy.money.model.OrderBean;
 import com.noeasy.money.model.OrderSearchBean;
+import com.noeasy.money.repository.IOrderRepository;
 import com.noeasy.money.service.IOrderService;
 
 /**
@@ -40,17 +47,11 @@ import com.noeasy.money.service.IOrderService;
  * @author: Yove
  * @version: 1.0, Jan 28, 2014
  */
-
+@Service(value = "orderService")
 public class OrderService implements IOrderService {
 
-    /**
-     * @see com.noeasy.money.service.IOrderService#queryOrder(com.noeasy.money.model.OrderSearchBean)
-     */
-    @Override
-    public List<OrderBean> queryOrder(OrderSearchBean pOrderSearchBean) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    @Resource(name = "orderRepository")
+    private IOrderRepository orderRepository;
 
 
 
@@ -58,9 +59,26 @@ public class OrderService implements IOrderService {
      * @see com.noeasy.money.service.IOrderService#placeOrder(com.noeasy.money.model.OrderBean)
      */
     @Override
-    public boolean placeOrder(OrderBean pOrderBean) {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean placeOrder(final OrderBean pOrderBean) {
+        boolean saveResult = false;
+
+        saveResult = orderRepository.placeOrder(pOrderBean);
+        return saveResult;
     }
 
+
+
+    /**
+     * @see com.noeasy.money.service.IOrderService#queryOrder(com.noeasy.money.model.OrderSearchBean)
+     */
+    @Override
+    public List<OrderBean> queryOrder(final OrderSearchBean pOrderSearchBean) {
+        List<OrderBean> queryResult = Collections.emptyList();
+        if (pOrderSearchBean.getOrderType().equals(OrderType.DORMIOTRY)) {
+            queryResult = orderRepository.queryDormitoryOrderPage(pOrderSearchBean);
+        } else if (pOrderSearchBean.getOrderType().equals(OrderType.PICKUP)) {
+            queryResult = orderRepository.queryPickupOrderPage(pOrderSearchBean);
+        }
+        return queryResult;
+    }
 }

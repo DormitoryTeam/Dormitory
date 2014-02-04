@@ -18,10 +18,11 @@ import com.noeasy.money.service.IAuthenticationService;
 @Service(value = "authenticationService")
 public class AuthenticationService implements IAuthenticationService {
 
-    
     @Resource(name = "authenticationRepository")
     IAuthenticationRepository repository;
-    
+
+
+
     public boolean passAccess(Integer pUserId, String pServletPathInfo, Map<String, Set<Integer>> authenData) {
         if (null == authenData) {
             return true;
@@ -29,9 +30,10 @@ public class AuthenticationService implements IAuthenticationService {
         if (MapUtils.isEmpty(authenData)) {
             return true;
         }
-        // if roleIds is not empty, it contains roles that has authentication to access current servletPathInfo.
+        // if roleIds is not empty, it contains roles that has authentication to
+        // access current servletPathInfo.
         // if role is empty means any role can access this servletPathInfo
-        Set<Integer > roleIds = authenData.get(pServletPathInfo);
+        Set<Integer> roleIds = authenData.get(pServletPathInfo);
         if (CollectionUtils.isEmpty(roleIds)) {
             return true;
         }
@@ -46,12 +48,12 @@ public class AuthenticationService implements IAuthenticationService {
 
     public int addUser2Group(Integer pUserId, Integer pGroupId) {
         int record = repository.getUserGroupCount(pUserId, pGroupId);
-        if (record<=0) {
+        if (record <= 0) {
             return 0;
         }
         repository.addUser2Group(pUserId, pGroupId);
         return 1;
-        
+
     }
 
 
@@ -64,7 +66,7 @@ public class AuthenticationService implements IAuthenticationService {
 
     public int addRole2Group(Integer pRoleId, Integer pGroupId) {
         int record = repository.getRoleGroupCount(pRoleId, pGroupId);
-        if (record<=0) {
+        if (record <= 0) {
             return 0;
         }
         repository.addRole2Group(pRoleId, pGroupId);

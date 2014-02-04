@@ -26,15 +26,26 @@
  * THE FOREGOING LIMITATIONS SHALL APPLY EVEN IF THE ANY WARRANTY PROVIDED IN
  * THE MASTER SERVICE AGREEMENT FAILS OF ITS ESSENTIAL PURPOSE.
  */
-package com.noeasy.money.model;
+package com.noeasy.money.enumeration;
 
 /**
  * <class description>
- *		
+ * 
  * @author: Yove
  * @version: 1.0, Jan 27, 2014
  */
 
 public enum Operation {
 
+    CREATE, UPDATE, ACCEPT, FAILED, FINISHED;
+
+    public String getName() {
+        return this.name();
+    }
+
+
+
+    public int getValue() {
+        return this.ordinal();
+    }
 }

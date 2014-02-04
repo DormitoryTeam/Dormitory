@@ -39,21 +39,21 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public class DormitorySearchBean {
 
-    private Integer                  mId;
+    private Integer              mId;
 
     private String               mDormitoryName;
 
-    private Integer                  mCityId;
+    private Integer              mCityId;
 
-    private Integer                  mCollegeId;
+    private Integer              mCollegeId;
 
     private String               mKeyword;
 
     private Pair<Double, Double> mPriceRange;
 
-    private Integer                  mContractTypeId;
+    private Integer              mContractTypeId;
 
-    private Integer                  mDormitoryTypeId;
+    private Integer              mDormitoryTypeId;
 
     private String               mSortType;
 

@@ -31,6 +31,9 @@ package com.noeasy.money.model;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.noeasy.money.enumeration.OrderStatus;
+import com.noeasy.money.enumeration.OrderType;
+
 /**
  * <class description>
  * 
@@ -40,13 +43,15 @@ import java.util.List;
 
 public class OrderBean extends BaseBean {
 
-    private Integer              mId;
+    private Integer          mId;
 
     private String           mCurrency;
 
     private BigDecimal       mAmount;
 
-    private UserBean             mUser;
+    private UserBean         mUser;
+
+    private UserBean         mBelongsTo;
 
     private OrderStatus      mOrderStatus;
 
@@ -56,23 +61,21 @@ public class OrderBean extends BaseBean {
 
     private List<OrderTail>  mTails;
 
+    private OrderType        mOrderType;
+
 
 
     /**
-     * @return the id
+     * @return the amount
      */
-    public Integer getId() {
-        return mId;
+    public BigDecimal getAmount() {
+        return mAmount;
     }
 
 
 
-    /**
-     * @param pId
-     *            the id to set
-     */
-    public void setId(Integer pId) {
-        mId = pId;
+    public UserBean getBelongsTo() {
+        return mBelongsTo;
     }
 
 
@@ -87,87 +90,10 @@ public class OrderBean extends BaseBean {
 
 
     /**
-     * @param pCurrency
-     *            the currency to set
+     * @return the id
      */
-    public void setCurrency(String pCurrency) {
-        mCurrency = pCurrency;
-    }
-
-
-
-    /**
-     * @return the amount
-     */
-    public BigDecimal getAmount() {
-        return mAmount;
-    }
-
-
-
-    /**
-     * @param pAmount
-     *            the amount to set
-     */
-    public void setAmount(BigDecimal pAmount) {
-        mAmount = pAmount;
-    }
-
-
-
-    /**
-     * @return the user
-     */
-    public UserBean getUser() {
-        return mUser;
-    }
-
-
-
-    /**
-     * @param pUser
-     *            the user to set
-     */
-    public void setUser(UserBean pUser) {
-        mUser = pUser;
-    }
-
-
-
-    /**
-     * @return the orderStatus
-     */
-    public OrderStatus getOrderStatus() {
-        return mOrderStatus;
-    }
-
-
-
-    /**
-     * @param pOrderStatus
-     *            the orderStatus to set
-     */
-    public void setOrderStatus(OrderStatus pOrderStatus) {
-        mOrderStatus = pOrderStatus;
-    }
-
-
-
-    /**
-     * @return the orderContact
-     */
-    public OrderContactInfo getOrderContact() {
-        return mOrderContact;
-    }
-
-
-
-    /**
-     * @param pOrderContact
-     *            the orderContact to set
-     */
-    public void setOrderContact(OrderContactInfo pOrderContact) {
-        mOrderContact = pOrderContact;
+    public Integer getId() {
+        return mId;
     }
 
 
@@ -182,11 +108,25 @@ public class OrderBean extends BaseBean {
 
 
     /**
-     * @param pLineItems
-     *            the lineItems to set
+     * @return the orderContact
      */
-    public void setLineItems(List<LineItem> pLineItems) {
-        mLineItems = pLineItems;
+    public OrderContactInfo getOrderContact() {
+        return mOrderContact;
+    }
+
+
+
+    /**
+     * @return the orderStatus
+     */
+    public OrderStatus getOrderStatus() {
+        return mOrderStatus;
+    }
+
+
+
+    public OrderType getOrderType() {
+        return mOrderType;
     }
 
 
@@ -201,10 +141,101 @@ public class OrderBean extends BaseBean {
 
 
     /**
+     * @return the user
+     */
+    public UserBean getUser() {
+        return mUser;
+    }
+
+
+
+    /**
+     * @param pAmount
+     *            the amount to set
+     */
+    public void setAmount(final BigDecimal pAmount) {
+        mAmount = pAmount;
+    }
+
+
+
+    public void setBelongsTo(final UserBean pBelongsTo) {
+        mBelongsTo = pBelongsTo;
+    }
+
+
+
+    /**
+     * @param pCurrency
+     *            the currency to set
+     */
+    public void setCurrency(final String pCurrency) {
+        mCurrency = pCurrency;
+    }
+
+
+
+    /**
+     * @param pId
+     *            the id to set
+     */
+    public void setId(final Integer pId) {
+        mId = pId;
+    }
+
+
+
+    /**
+     * @param pLineItems
+     *            the lineItems to set
+     */
+    public void setLineItems(final List<LineItem> pLineItems) {
+        mLineItems = pLineItems;
+    }
+
+
+
+    /**
+     * @param pOrderContact
+     *            the orderContact to set
+     */
+    public void setOrderContact(final OrderContactInfo pOrderContact) {
+        mOrderContact = pOrderContact;
+    }
+
+
+
+    /**
+     * @param pOrderStatus
+     *            the orderStatus to set
+     */
+    public void setOrderStatus(final OrderStatus pOrderStatus) {
+        mOrderStatus = pOrderStatus;
+    }
+
+
+
+    public void setOrderType(final OrderType pOrderType) {
+        mOrderType = pOrderType;
+    }
+
+
+
+    /**
      * @param pTails
      *            the tails to set
      */
-    public void setTails(List<OrderTail> pTails) {
+    public void setTails(final List<OrderTail> pTails) {
         mTails = pTails;
+    }
+
+
+
+    /**
+     * @param pUser
+     *            the user to set
+     */
+    public void setUser(final UserBean pUser) {
+        mUser = pUser;
     }
 }

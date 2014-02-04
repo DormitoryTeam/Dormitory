@@ -48,7 +48,7 @@ public class ReflectionUtils {
 
 
 
-    public static Set<String> getFieldsValue(Object pObject) {
+    public static Set<String> getFieldsValue(final Object pObject) {
 
         Class<? extends Object> clazz = pObject.getClass();
         Field[] fields = clazz.getDeclaredFields();
@@ -68,7 +68,7 @@ public class ReflectionUtils {
 
 
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         DormitoryBean dormitoryBean = new DormitoryBean();
         getFieldsValue(dormitoryBean);
     }

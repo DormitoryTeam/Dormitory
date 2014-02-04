@@ -57,43 +57,9 @@ public class DormitoryService implements IDormitoryService {
 
 
     /**
-     * @see com.noeasy.money.service.IDormitoryService#queryDormitory(com.noeasy.money.model.DormitorySearchBean)
-     */
-    @Override
-    public DormitoryBean queryDormitory(DormitorySearchBean pSearchBean) {
-        return dormitoryRepository.queryDormitory(pSearchBean);
-    }
-
-
-
-    /**
-     * @see com.noeasy.money.service.IDormitoryService#queryDormitoryPage(com.noeasy.money.model.DormitorySearchBean)
-     */
-    public List<DormitoryBean> queryDormitoryPage(DormitorySearchBean pSearchBean) {
-        List<DormitoryBean> queryResult = dormitoryRepository.queryDormitoryPage(pSearchBean);
-        return CollectionUtils.isEmpty(queryResult) ? Collections.EMPTY_LIST : queryResult;
-    }
-
-
-
-    /**
-     * @see com.noeasy.money.service.IDormitoryService#rateDormitory(int, int,
-     *      int, boolean)
-     */
-    public Double rateDormitory(int pDormitoryId, int pUserId, int pPoint, boolean pGetAvg) {
-        DormitoryRateBean rate = new DormitoryRateBean(pDormitoryId, pUserId, pPoint);
-        dormitoryRepository.rateDormitory(rate);
-        if (!pGetAvg) {
-            return 0D;
-        }
-        return dormitoryRepository.queryDormitoryAvgRate(pDormitoryId);
-    }
-
-
-
-    /**
      * @see com.noeasy.money.service.IDormitoryService#calculateDistance()
      */
+    @Override
     public Boolean calculateDistance() {
         if (dormitoryRepository.clearDistanceResult()) {
             return dormitoryRepository.initialDistanceResult();
@@ -106,7 +72,8 @@ public class DormitoryService implements IDormitoryService {
     /**
      * @see com.noeasy.money.service.IDormitoryService#calculateDistance4City(int)
      */
-    public Boolean calculateDistance4City(int pCityId) {
+    @Override
+    public Boolean calculateDistance4City(final int pCityId) {
         if (dormitoryRepository.clearDistanceResult4City(pCityId)) {
             return dormitoryRepository.calculateDistance4City(pCityId);
         }
@@ -118,11 +85,49 @@ public class DormitoryService implements IDormitoryService {
     /**
      * @see com.noeasy.money.service.IDormitoryService#calculateDistance4College(int)
      */
-    public Boolean calculateDistance4College(int pCollegeId) {
+    @Override
+    public Boolean calculateDistance4College(final int pCollegeId) {
         if (dormitoryRepository.clearDistanceResult4College(pCollegeId)) {
             return dormitoryRepository.calculateDistance4College(pCollegeId);
         }
         return false;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.IDormitoryService#queryDormitory(com.noeasy.money.model.DormitorySearchBean)
+     */
+    @Override
+    public DormitoryBean queryDormitory(final DormitorySearchBean pSearchBean) {
+        return dormitoryRepository.queryDormitory(pSearchBean);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.IDormitoryService#queryDormitoryPage(com.noeasy.money.model.DormitorySearchBean)
+     */
+    @Override
+    public List<DormitoryBean> queryDormitoryPage(final DormitorySearchBean pSearchBean) {
+        List<DormitoryBean> queryResult = dormitoryRepository.queryDormitoryPage(pSearchBean);
+        return CollectionUtils.isEmpty(queryResult) ? Collections.EMPTY_LIST : queryResult;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.IDormitoryService#rateDormitory(int, int,
+     *      int, boolean)
+     */
+    @Override
+    public Double rateDormitory(final int pDormitoryId, final int pUserId, final int pPoint, final boolean pGetAvg) {
+        DormitoryRateBean rate = new DormitoryRateBean(pDormitoryId, pUserId, pPoint);
+        dormitoryRepository.rateDormitory(rate);
+        if (!pGetAvg) {
+            return 0D;
+        }
+        return dormitoryRepository.queryDormitoryAvgRate(pDormitoryId);
     }
 
 }

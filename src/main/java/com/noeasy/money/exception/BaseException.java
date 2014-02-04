@@ -70,9 +70,12 @@ public class BaseException extends RuntimeException {
         super(pCause);
         this.errorMetadata = pMetadata;
     }
-    
+
+
+
     @Override
     public String getMessage() {
-        return super.getMessage() + "\nErrorcode: " + this.errorMetadata.getErrorCode() + ". ErrorMessage: " + this.errorMetadata.getErrorMessage();
+        return super.getMessage() + "\nErrorcode: " + this.errorMetadata.getErrorCode() + ". ErrorMessage: "
+                + this.errorMetadata.getErrorMessage();
     }
 }

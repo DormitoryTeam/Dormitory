@@ -35,7 +35,7 @@ package com.noeasy.money.model;
  * @version: 1.0, Jan 27, 2014
  */
 
-public class DormitoryLineItem {
+public class DormitoryLineItem extends LineItem {
 
     private DormitoryBean mDormitory;
 
@@ -54,7 +54,7 @@ public class DormitoryLineItem {
      * @param pDormitory
      *            the dormitory to set
      */
-    public void setDormitory(DormitoryBean pDormitory) {
+    public void setDormitory(final DormitoryBean pDormitory) {
         mDormitory = pDormitory;
     }
 

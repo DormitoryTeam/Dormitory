@@ -39,17 +39,25 @@ import java.util.Date;
 
 public class PickupLineItem extends LineItem {
 
-    private String mFlightNum;
+    private String  mFlightNum;
 
-    private String mLandingCity;
+    private Integer mCityId;
 
-    private Date   mPickupDate;
+    private String  mLandingCity;
 
-    private int    mPickupType;
+    private Date    mPickupDate;
 
-    private int    mLuggageAmount;
+    private int     mPickupType;
 
-    private double mLuggageSize;
+    private int     mLuggageAmount;
+
+    private double  mLuggageSize;
+
+
+
+    public Integer getCityId() {
+        return mCityId;
+    }
 
 
 
@@ -58,16 +66,6 @@ public class PickupLineItem extends LineItem {
      */
     public String getFlightNum() {
         return mFlightNum;
-    }
-
-
-
-    /**
-     * @param pFlightNum
-     *            the flightNum to set
-     */
-    public void setFlightNum(String pFlightNum) {
-        mFlightNum = pFlightNum;
     }
 
 
@@ -82,68 +80,10 @@ public class PickupLineItem extends LineItem {
 
 
     /**
-     * @param pLandingCity
-     *            the landingCity to set
-     */
-    public void setLandingCity(String pLandingCity) {
-        mLandingCity = pLandingCity;
-    }
-
-
-
-    /**
-     * @return the pickupDate
-     */
-    public Date getPickupDate() {
-        return mPickupDate;
-    }
-
-
-
-    /**
-     * @param pPickupDate
-     *            the pickupDate to set
-     */
-    public void setPickupDate(Date pPickupDate) {
-        mPickupDate = pPickupDate;
-    }
-
-
-
-    /**
-     * @return the pickupType
-     */
-    public int getPickupType() {
-        return mPickupType;
-    }
-
-
-
-    /**
-     * @param pPickupType
-     *            the pickupType to set
-     */
-    public void setPickupType(int pPickupType) {
-        mPickupType = pPickupType;
-    }
-
-
-
-    /**
      * @return the luggageAmount
      */
     public int getLuggageAmount() {
         return mLuggageAmount;
-    }
-
-
-
-    /**
-     * @param pLuggageAmount
-     *            the luggageAmount to set
-     */
-    public void setLuggageAmount(int pLuggageAmount) {
-        mLuggageAmount = pLuggageAmount;
     }
 
 
@@ -158,10 +98,84 @@ public class PickupLineItem extends LineItem {
 
 
     /**
+     * @return the pickupDate
+     */
+    public Date getPickupDate() {
+        return mPickupDate;
+    }
+
+
+
+    /**
+     * @return the pickupType
+     */
+    public int getPickupType() {
+        return mPickupType;
+    }
+
+
+
+    public void setCityId(final Integer pCityId) {
+        mCityId = pCityId;
+    }
+
+
+
+    /**
+     * @param pFlightNum
+     *            the flightNum to set
+     */
+    public void setFlightNum(final String pFlightNum) {
+        mFlightNum = pFlightNum;
+    }
+
+
+
+    /**
+     * @param pLandingCity
+     *            the landingCity to set
+     */
+    public void setLandingCity(final String pLandingCity) {
+        mLandingCity = pLandingCity;
+    }
+
+
+
+    /**
+     * @param pLuggageAmount
+     *            the luggageAmount to set
+     */
+    public void setLuggageAmount(final int pLuggageAmount) {
+        mLuggageAmount = pLuggageAmount;
+    }
+
+
+
+    /**
      * @param pLuggageSize
      *            the luggageSize to set
      */
-    public void setLuggageSize(double pLuggageSize) {
+    public void setLuggageSize(final double pLuggageSize) {
         mLuggageSize = pLuggageSize;
+    }
+
+
+
+    /**
+     * @param pPickupDate
+     *            the pickupDate to set
+     */
+    public void setPickupDate(final Date pPickupDate) {
+        mPickupDate = pPickupDate;
+    }
+
+
+
+    /**
+     * @param pPickupType
+     *            the pickupType to set
+     */
+    public void setPickupType(final int pPickupType) {
+        mPickupType = pPickupType;
     }
 }

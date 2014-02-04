@@ -28,7 +28,13 @@
  */
 package com.noeasy.money.repository;
 
+import java.util.List;
+
+import com.noeasy.money.model.LineItem;
 import com.noeasy.money.model.OrderBean;
+import com.noeasy.money.model.OrderContactInfo;
+import com.noeasy.money.model.OrderSearchBean;
+import com.noeasy.money.model.OrderTail;
 
 /**
  * <class description>
@@ -40,4 +46,41 @@ import com.noeasy.money.model.OrderBean;
 public interface IOrderRepository {
 
     boolean placeOrder(OrderBean pOrderBean);
+
+
+
+    OrderBean queryDormitoryOrder(OrderSearchBean pOrderSearchBean);
+
+
+
+    List<OrderBean> queryDormitoryOrderPage(OrderSearchBean pOrderSearchBean);
+
+
+
+    OrderBean queryPickupOrder(OrderSearchBean pOrderSearchBean);
+
+
+
+    List<OrderBean> queryPickupOrderPage(OrderSearchBean pOrderSearchBean);
+
+
+
+    boolean saveDormitoryLineItem(LineItem pLineItem);
+
+
+
+    boolean saveOrder(OrderBean pOrderBean);
+
+
+
+    boolean saveOrderContactInfo(OrderContactInfo pContactInfo);
+
+
+
+    boolean saveOrderRecord(OrderTail pOrderTail);
+
+
+
+    boolean savePickupLineItem(LineItem pLineItem);
+
 }

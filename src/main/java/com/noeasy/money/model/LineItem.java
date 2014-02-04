@@ -39,11 +39,13 @@ import java.math.BigDecimal;
 
 public abstract class LineItem extends BaseBean {
 
+    private int        mOrderId;
+
     private BigDecimal mAmout;
 
     private String     mCurrency;
 
-    private String     mListPrice;
+    private BigDecimal mListPrice;
 
 
 
@@ -57,16 +59,6 @@ public abstract class LineItem extends BaseBean {
 
 
     /**
-     * @param pAmout
-     *            the amout to set
-     */
-    public void setAmout(BigDecimal pAmout) {
-        mAmout = pAmout;
-    }
-
-
-
-    /**
      * @return the currency
      */
     public String getCurrency() {
@@ -75,30 +67,45 @@ public abstract class LineItem extends BaseBean {
 
 
 
-    /**
-     * @param pCurrency
-     *            the currency to set
-     */
-    public void setCurrency(String pCurrency) {
-        mCurrency = pCurrency;
-    }
-
-
-
-    /**
-     * @return the listPrice
-     */
-    public String getListPrice() {
+    public BigDecimal getListPrice() {
         return mListPrice;
     }
 
 
 
+    public int getOrderId() {
+        return mOrderId;
+    }
+
+
+
     /**
-     * @param pListPrice
-     *            the listPrice to set
+     * @param pAmout
+     *            the amout to set
      */
-    public void setListPrice(String pListPrice) {
+    public void setAmout(final BigDecimal pAmout) {
+        mAmout = pAmout;
+    }
+
+
+
+    /**
+     * @param pCurrency
+     *            the currency to set
+     */
+    public void setCurrency(final String pCurrency) {
+        mCurrency = pCurrency;
+    }
+
+
+
+    public void setListPrice(final BigDecimal pListPrice) {
         mListPrice = pListPrice;
+    }
+
+
+
+    public void setOrderId(final int pOrderId) {
+        mOrderId = pOrderId;
     }
 }

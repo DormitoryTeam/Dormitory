@@ -19,13 +19,12 @@ import com.noeasy.money.repository.IUserRepository;
 import com.noeasy.money.service.IAuthenticationService;
 import com.noeasy.money.service.IUserService;
 
-
 @Service(value = "userService")
 public class UserService implements IUserService {
 
     @Resource(name = "userRepository")
     private IUserRepository           userRepository;
-    
+
     @Resource(name = "authenticationRepository")
     private IAuthenticationRepository authenticationRepository;
 
@@ -47,6 +46,7 @@ public class UserService implements IUserService {
         authenticationRepository.addUser2Group(userId, IAuthenticationRepository.FRONT_USER_GROUP_ID);
         return bean;
     }
+
 
 
     @Override
@@ -82,6 +82,7 @@ public class UserService implements IUserService {
         }
         return result;
     }
+
 
 
     @Override

@@ -48,9 +48,9 @@ public class AuthenticationFilter implements Filter {
         if (passAccess) {
             pChain.doFilter(pRequest, pResponse);
         } else {
-            response.sendRedirect("/AccessDenied.jsp");    
+            response.sendRedirect("/AccessDenied.jsp");
         }
-        
+
     }
 
 

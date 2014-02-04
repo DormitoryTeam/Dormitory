@@ -5,11 +5,11 @@ import java.util.Date;
 
 public class UserBean extends BaseBean {
 
-    private Integer  id;
+    private Integer id;
     private String  login;
     private String  password;
     private String  email;
-    private boolean genter;
+    private boolean gender;
     private String  passport;
     private Date    birthday;
     private String  address;
@@ -18,74 +18,21 @@ public class UserBean extends BaseBean {
 
 
 
-    public Integer getId() {
-        return id;
+    public String getAddress() {
+        return address;
     }
 
 
 
-    public void setId(Integer pId) {
-        id = pId;
-    }
-
-
-
-    public String getLogin() {
-        return login;
-    }
-
-
-
-    public void setLogin(String pLogin) {
-        login = pLogin;
-    }
-
-
-
-    public String getPassword() {
-        return password;
-    }
-
-
-
-    public void setPassword(String pPassword) {
-        password = pPassword;
-    }
-
-
-
-    public String getEmail() {
-        return email;
-    }
-
-
-
-    public void setEmail(String pEmail) {
-        email = pEmail;
-    }
-
-
-
-    public boolean isGenter() {
-        return genter;
-    }
-
-
-
-    public void setGenter(boolean pGenter) {
-        genter = pGenter;
-    }
-
-
-
-    public String getPassport() {
-        return passport;
-    }
-
-
-
-    public void setPassport(String pPassport) {
-        passport = pPassport;
+    public int getAge() {
+        if (null == getBirthday()) {
+            return 0;
+        }
+        Calendar birth = Calendar.getInstance();
+        birth.setTime(this.getBirthday());
+        Calendar today = Calendar.getInstance();
+        today.setTime(new Date());
+        return today.get(Calendar.YEAR) - birth.get(Calendar.YEAR);
     }
 
 
@@ -96,20 +43,32 @@ public class UserBean extends BaseBean {
 
 
 
-    public void setBirthday(Date pBirthday) {
-        birthday = pBirthday;
+    public String getEmail() {
+        return email;
     }
 
 
 
-    public String getAddress() {
-        return address;
+    public Integer getId() {
+        return id;
     }
 
 
 
-    public void setAddress(String pAddress) {
-        address = pAddress;
+    public String getLogin() {
+        return login;
+    }
+
+
+
+    public String getPassport() {
+        return passport;
+    }
+
+
+
+    public String getPassword() {
+        return password;
     }
 
 
@@ -120,31 +79,73 @@ public class UserBean extends BaseBean {
 
 
 
-    public void setPhone(String pPhone) {
-        phone = pPhone;
-    }
-
-
-
     public String getQq() {
         return qq;
     }
 
 
 
-    public void setQq(String pQq) {
-        qq = pQq;
+    public boolean isGender() {
+        return gender;
     }
 
-    
-    public int getAge() {
-        if (null == getBirthday()) {
-            return 0;
-        }
-        Calendar birth = Calendar.getInstance();
-        birth.setTime(this.getBirthday());
-        Calendar today = Calendar.getInstance();
-        today.setTime(new Date());
-        return today.get(Calendar.YEAR) - birth.get(Calendar.YEAR);
+
+
+    public void setAddress(final String pAddress) {
+        address = pAddress;
+    }
+
+
+
+    public void setBirthday(final Date pBirthday) {
+        birthday = pBirthday;
+    }
+
+
+
+    public void setEmail(final String pEmail) {
+        email = pEmail;
+    }
+
+
+
+    public void setGender(final boolean pGender) {
+        gender = pGender;
+    }
+
+
+
+    public void setId(final Integer pId) {
+        id = pId;
+    }
+
+
+
+    public void setLogin(final String pLogin) {
+        login = pLogin;
+    }
+
+
+
+    public void setPassport(final String pPassport) {
+        passport = pPassport;
+    }
+
+
+
+    public void setPassword(final String pPassword) {
+        password = pPassword;
+    }
+
+
+
+    public void setPhone(final String pPhone) {
+        phone = pPhone;
+    }
+
+
+
+    public void setQq(final String pQq) {
+        qq = pQq;
     }
 }

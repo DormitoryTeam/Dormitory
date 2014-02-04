@@ -37,91 +37,17 @@ package com.noeasy.money.model;
 
 public class OrderContactInfo extends BaseBean {
 
-    private String mName;
+    private int     mOrderId;
 
-    private int    mGender;
+    private String  mName;
 
-    private String mQQNum;
+    private boolean mGender;
 
-    private String mPhoneNum;
+    private String  mQQ;
 
-    private String mAddress;
+    private String  mPhone;
 
-
-
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return mName;
-    }
-
-
-
-    /**
-     * @param pName
-     *            the name to set
-     */
-    public void setName(String pName) {
-        mName = pName;
-    }
-
-
-
-    /**
-     * @return the gender
-     */
-    public int getGender() {
-        return mGender;
-    }
-
-
-
-    /**
-     * @param pGender
-     *            the gender to set
-     */
-    public void setGender(int pGender) {
-        mGender = pGender;
-    }
-
-
-
-    /**
-     * @return the qQNum
-     */
-    public String getQQNum() {
-        return mQQNum;
-    }
-
-
-
-    /**
-     * @param pQQNum
-     *            the qQNum to set
-     */
-    public void setQQNum(String pQQNum) {
-        mQQNum = pQQNum;
-    }
-
-
-
-    /**
-     * @return the phoneNum
-     */
-    public String getPhoneNum() {
-        return mPhoneNum;
-    }
-
-
-
-    /**
-     * @param pPhoneNum
-     *            the phoneNum to set
-     */
-    public void setPhoneNum(String pPhoneNum) {
-        mPhoneNum = pPhoneNum;
-    }
+    private String  mAddress;
 
 
 
@@ -135,11 +61,78 @@ public class OrderContactInfo extends BaseBean {
 
 
     /**
+     * @return the name
+     */
+    public String getName() {
+        return mName;
+    }
+
+
+
+    public int getOrderId() {
+        return mOrderId;
+    }
+
+
+
+    public String getPhone() {
+        return mPhone;
+    }
+
+
+
+    public String getQQ() {
+        return mQQ;
+    }
+
+
+
+    public boolean isGender() {
+        return mGender;
+    }
+
+
+
+    /**
      * @param pAddress
      *            the address to set
      */
-    public void setAddress(String pAddress) {
+    public void setAddress(final String pAddress) {
         mAddress = pAddress;
+    }
+
+
+
+    public void setGender(final boolean pGender) {
+        mGender = pGender;
+    }
+
+
+
+    /**
+     * @param pName
+     *            the name to set
+     */
+    public void setName(final String pName) {
+        mName = pName;
+    }
+
+
+
+    public void setOrderId(final int pOrderId) {
+        mOrderId = pOrderId;
+    }
+
+
+
+    public void setPhone(final String pPhone) {
+        mPhone = pPhone;
+    }
+
+
+
+    public void setQQ(final String pQQ) {
+        mQQ = pQQ;
     }
 
 }
