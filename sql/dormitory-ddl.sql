@@ -216,7 +216,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`order` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `uesr_id` INT NOT NULL ,
   `belongs_to` INT NOT NULL ,
-  `type` VARCHAR(45) NOT NULL ,
+  `type` INT NOT NULL ,
   `status` VARCHAR(45) NOT NULL ,
   `amount` DECIMAL(5,2) NOT NULL ,
   `currency` VARCHAR(3) NOT NULL ,
@@ -233,7 +233,7 @@ DROP TABLE IF EXISTS `dormitory`.`order_history` ;
 
 CREATE  TABLE IF NOT EXISTS `dormitory`.`order_history` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `order_id` VARCHAR(45) NOT NULL ,
+  `order_id` INT NOT NULL ,
   `operator_id` INT NOT NULL ,
   `operation` INT NOT NULL ,
   `operate_time` TIMESTAMP NOT NULL ,
@@ -248,7 +248,7 @@ DROP TABLE IF EXISTS `dormitory`.`order_contact_info` ;
 
 CREATE  TABLE IF NOT EXISTS `dormitory`.`order_contact_info` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `order_id` VARCHAR(45) NOT NULL ,
+  `order_id` INT NOT NULL ,
   `name` VARCHAR(45) NOT NULL ,
   `gender` INT NOT NULL ,
   `qq` VARCHAR(15) NULL ,
