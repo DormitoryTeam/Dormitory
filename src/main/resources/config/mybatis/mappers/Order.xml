@@ -156,7 +156,7 @@
 		)
 	</insert>
 
-	<resultMap id="dormitory_order" type="com.noeasy.money.model.OrderBean">
+	<resultMap id="dormitory-order" type="com.noeasy.money.model.OrderBean">
 		<id column="id" property="id" />
 		<result property="orderType" column="order_type" />
 		<result property="orderStatus" column="order_status" />
