@@ -2,7 +2,7 @@ package com.noeasy.money.enumeration;
 
 public enum OrderType {
 
-    DORMIOTRY, PICKUP;
+    DORMITORY, PICKUP;
 
     public String getName() {
         return this.name();

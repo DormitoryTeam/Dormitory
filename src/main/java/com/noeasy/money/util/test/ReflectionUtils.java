@@ -28,12 +28,16 @@
  */
 package com.noeasy.money.util.test;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import com.noeasy.money.model.DormitoryBean;
+import com.noeasy.money.enumeration.OrderType;
 
 /**
  * <class description>
@@ -44,32 +48,70 @@ import com.noeasy.money.model.DormitoryBean;
 
 public class ReflectionUtils {
 
-    private static final String GET_METHOD_PREFIX = "get";
+    private static final String     GET_METHOD_PREFIX = "get";
+
+    private static final Set<Class> simpleClassSet    = new HashSet<Class>();
+
+    static {
+        simpleClassSet.add(String.class);
+        simpleClassSet.add(Double.class);
+        simpleClassSet.add(Integer.class);
+        simpleClassSet.add(Boolean.class);
+        simpleClassSet.add(BigDecimal.class);
+        simpleClassSet.add(Date.class);
+        simpleClassSet.add(Timestamp.class);
+    }
 
 
 
-    public static Set<String> getFieldsValue(final Object pObject) {
+    public static List<String> getFieldsValue(final Object pObject) {
 
         Class<? extends Object> clazz = pObject.getClass();
-        Field[] fields = clazz.getDeclaredFields();
-        Set<String> results = new HashSet<String>();
-        for (Field field : fields) {
-            try {
-                String filedName = field.getName().substring(1);
-                Method method = clazz.getMethod(GET_METHOD_PREFIX + filedName);
-                String result = filedName + "=" + method.invoke(pObject);
-                results.add(result);
-            } catch (Exception e) {
-                e.printStackTrace();
+        List<String> results = new ArrayList<String>();
+        Method[] methods = clazz.getDeclaredMethods();
+        results.add("{");
+        for (Method method : methods) {
+            if (method.getName().startsWith("get") || method.getName().startsWith("is")) {
+                try {
+                    String filedName = method.getName().substring(3);
+                    Object invokeResult = method.invoke(pObject);
+                    String result = "";
+                    if (invokeResult == null) {
+                        result += filedName + "=" + null;
+                        results.add(result);
+                    } else if (invokeResult.getClass().equals(List.class)
+                            || invokeResult.getClass().equals(ArrayList.class)) {
+                        result += filedName + "=[";
+                        results.add(result);
+                        for (Object obj : (ArrayList<?>) invokeResult) {
+                            results.addAll(getFieldsValue(obj));
+                        }
+                        results.add("]");
+                    }
+
+                    else if (simpleClassSet.contains(invokeResult.getClass()) || invokeResult instanceof Enum<?>) {
+                        result += filedName + "=" + invokeResult;
+                        results.add(result);
+                    } else {
+                        result += "<br />" + filedName + "=";
+                        List<String> subResult = getFieldsValue(invokeResult);
+                        subResult.add(0, result);
+                        results.addAll(subResult);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
+        results.add("}");
         return results;
     }
 
 
 
     public static void main(final String[] args) {
-        DormitoryBean dormitoryBean = new DormitoryBean();
-        getFieldsValue(dormitoryBean);
+        if (OrderType.DORMITORY instanceof Enum<?>) {
+            System.out.println(1111);
+        }
     }
 }

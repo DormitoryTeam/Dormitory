@@ -6,7 +6,11 @@ import java.util.Date;
 public class UserBean extends BaseBean {
 
     private Integer id;
+
     private String  login;
+
+    private String  name;
+
     private String  password;
     private String  email;
     private boolean gender;
@@ -57,6 +61,15 @@ public class UserBean extends BaseBean {
 
     public String getLogin() {
         return login;
+    }
+
+
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
     }
 
 
@@ -127,6 +140,16 @@ public class UserBean extends BaseBean {
 
 
 
+    /**
+     * @param pName
+     *            the name to set
+     */
+    public void setName(final String pName) {
+        name = pName;
+    }
+
+
+
     public void setPassport(final String pPassport) {
         passport = pPassport;
     }
@@ -148,4 +171,5 @@ public class UserBean extends BaseBean {
     public void setQq(final String pQq) {
         qq = pQq;
     }
+
 }

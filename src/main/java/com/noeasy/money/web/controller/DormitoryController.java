@@ -2,7 +2,6 @@ package com.noeasy.money.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -30,14 +29,14 @@ public class DormitoryController {
 
     // TODO: move to backend controller.
     @RequestMapping(value = "/initialDistance.html")
-    public String calculateDistance(ModelMap model, HttpServletRequest request, HttpServletResponse response,
-            String cityId, String collegeId) {
+    public String calculateDistance(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, final String cityId, final String collegeId) {
         if (StringUtils.isNotBlank(cityId)) {
-            this.dormitoryService.calculateDistance4City(Integer.parseInt(cityId));
+            dormitoryService.calculateDistance4City(Integer.parseInt(cityId));
         } else if (StringUtils.isNotBlank(collegeId)) {
-            this.dormitoryService.calculateDistance4College(Integer.parseInt(collegeId));
+            dormitoryService.calculateDistance4College(Integer.parseInt(collegeId));
         } else {
-            this.dormitoryService.calculateDistance();
+            dormitoryService.calculateDistance();
         }
 
         return "dormitory/sucess";
@@ -46,12 +45,12 @@ public class DormitoryController {
 
 
     @RequestMapping("/unit-test/rate")
-    public String testRate(HttpServletRequest request, HttpServletResponse response, Model model, String dormitoryId,
-            String userId, String point) {
+    public String testRate(final HttpServletRequest request, final HttpServletResponse response, final Model model,
+            final String dormitoryId, final String userId, final String point) {
         int iDormitoryId = Integer.parseInt(dormitoryId);
         int iUserId = Integer.parseInt(userId);
         int iPoint = Integer.parseInt(point);
-        Double tAvgRateResult = this.dormitoryService.rateDormitory(iDormitoryId, iUserId, iPoint, true);
+        Double tAvgRateResult = dormitoryService.rateDormitory(iDormitoryId, iUserId, iPoint, true);
         model.addAttribute("avgRate", tAvgRateResult);
         model.addAttribute("dormitoryId", dormitoryId);
         model.addAttribute("userId", userId);
@@ -60,24 +59,17 @@ public class DormitoryController {
 
 
 
-    @RequestMapping("/unit-test/to-rate")
-    public String toRate(HttpServletRequest request, HttpServletResponse response) {
-        return "dormitory/rate";
-    }
-
-
-
     @RequestMapping("/unit-test/to-dormitory")
-    public String toDormitory(HttpServletRequest request, HttpServletResponse response, Model model) {
+    public String toDormitory(final HttpServletRequest request, final HttpServletResponse response, final Model model) {
         DormitorySearchBean searchBean1 = new DormitorySearchBean();
         searchBean1.setId(3);
-        DormitoryBean dormitoryBean1 = this.dormitoryService.queryDormitory(searchBean1);
+        DormitoryBean dormitoryBean1 = dormitoryService.queryDormitory(searchBean1);
         model.addAttribute("resultOfQueryById", ReflectionUtils.getFieldsValue(dormitoryBean1));
 
         DormitorySearchBean searchBean2 = new DormitorySearchBean();
         searchBean2.setCityId(1);
-        List<DormitoryBean> dormitoryBeans2 = this.dormitoryService.queryDormitoryPage(searchBean2);
-        List<Set<String>> Results2 = new ArrayList<Set<String>>();
+        List<DormitoryBean> dormitoryBeans2 = dormitoryService.queryDormitoryPage(searchBean2);
+        List<List<String>> Results2 = new ArrayList<List<String>>();
         for (DormitoryBean bean : dormitoryBeans2) {
             Results2.add(ReflectionUtils.getFieldsValue(bean));
         }
@@ -90,8 +82,8 @@ public class DormitoryController {
         searchBean3.setSortField("rating");
         searchBean3.setSortType("desc");
         searchBean3.setCollegeId(1);
-        List<DormitoryBean> dormitoryBeans3 = this.dormitoryService.queryDormitoryPage(searchBean3);
-        List<Set<String>> Results3 = new ArrayList<Set<String>>();
+        List<DormitoryBean> dormitoryBeans3 = dormitoryService.queryDormitoryPage(searchBean3);
+        List<List<String>> Results3 = new ArrayList<List<String>>();
         for (DormitoryBean bean : dormitoryBeans3) {
             Results3.add(ReflectionUtils.getFieldsValue(bean));
         }
@@ -101,13 +93,20 @@ public class DormitoryController {
         searchBean4.setContractTypeId(1);
         searchBean4.setDormitoryTypeId(1);
         searchBean4.setCollegeId(1);
-        List<DormitoryBean> dormitoryBeans4 = this.dormitoryService.queryDormitoryPage(searchBean4);
-        List<Set<String>> Results4 = new ArrayList<Set<String>>();
+        List<DormitoryBean> dormitoryBeans4 = dormitoryService.queryDormitoryPage(searchBean4);
+        List<List<String>> Results4 = new ArrayList<List<String>>();
         for (DormitoryBean bean : dormitoryBeans4) {
             Results4.add(ReflectionUtils.getFieldsValue(bean));
         }
         model.addAttribute("resultOfQueryByDormitoryTypeAndContract", Results4);
 
         return "dormitory/dormitory";
+    }
+
+
+
+    @RequestMapping("/unit-test/to-rate")
+    public String toRate(final HttpServletRequest request, final HttpServletResponse response) {
+        return "dormitory/rate";
     }
 }

@@ -41,6 +41,17 @@ public abstract class BaseBean {
 
     private Timestamp mUpdateTime = new Timestamp(System.currentTimeMillis());
 
+    private Timestamp mCreateTime = null;
+
+
+
+    /**
+     * @return the createTime
+     */
+    public Timestamp getCreateTime() {
+        return mCreateTime;
+    }
+
 
 
     /**
@@ -53,10 +64,20 @@ public abstract class BaseBean {
 
 
     /**
+     * @param pCreateTime
+     *            the createTime to set
+     */
+    public void setCreateTime(final Timestamp pCreateTime) {
+        mCreateTime = pCreateTime;
+    }
+
+
+
+    /**
      * @param pUpdateTime
      *            the updateTime to set
      */
-    public void setUpdateTime(Timestamp pUpdateTime) {
+    public void setUpdateTime(final Timestamp pUpdateTime) {
         mUpdateTime = pUpdateTime;
     }
 

@@ -1,0 +1,2 @@
+INSERT INTO `dormitory`.`line_item_pickup` (`id`,`order_id`,`flight_number`,`city_id`,`pickup_date`,`pickup_type`,`amount`,`currency`,`luggage_amount`,`luggage_size`) VALUES (1,3,'CA140207','1','2014-02-10 00:00:00',1,120.00,'USD',3,0.5);
+COMMIT;

@@ -46,7 +46,7 @@ public class OrderSearchBean {
 
     private OrderType   mOrderType;
 
-    private String      mOrderNumber;
+    private Integer     mOrderNumber;
 
     private Date        mDateFrom;
 
@@ -79,18 +79,24 @@ public class OrderSearchBean {
     /**
      * @return the orderNumber
      */
-    public String getOrderNumber() {
+    public Integer getOrderNumber() {
         return mOrderNumber;
     }
 
 
 
+    /**
+     * @return the orderStatus
+     */
     public OrderStatus getOrderStatus() {
         return mOrderStatus;
     }
 
 
 
+    /**
+     * @return the orderType
+     */
     public OrderType getOrderType() {
         return mOrderType;
     }
@@ -139,18 +145,26 @@ public class OrderSearchBean {
      * @param pOrderNumber
      *            the orderNumber to set
      */
-    public void setOrderNumber(final String pOrderNumber) {
+    public void setOrderNumber(final Integer pOrderNumber) {
         mOrderNumber = pOrderNumber;
     }
 
 
 
+    /**
+     * @param pOrderStatus
+     *            the orderStatus to set
+     */
     public void setOrderStatus(final OrderStatus pOrderStatus) {
         mOrderStatus = pOrderStatus;
     }
 
 
 
+    /**
+     * @param pOrderType
+     *            the orderType to set
+     */
     public void setOrderType(final OrderType pOrderType) {
         mOrderType = pOrderType;
     }
@@ -174,4 +188,5 @@ public class OrderSearchBean {
     public void setUser(final UserBean pUser) {
         mUser = pUser;
     }
+
 }

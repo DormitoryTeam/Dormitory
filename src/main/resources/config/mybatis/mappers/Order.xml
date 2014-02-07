@@ -12,11 +12,10 @@
 		belong_passport, t3.age as belong_age, t3.birthday as belong_birthday, t3.address as belong_address, t3.qq as belong_qq, t3.phone as belong_phone,
 		t4.id as cid, t4.name as contact_name, t4.gender as
 		contact_gender, t4.qq as contact_qq, t4.phone as contact_phone, t4.address as contact_address,
-		t5.id
-		as lid, t5.dormitory_id, t5.amount as li_amount, t5.currency as li_currency, t5.listPrice as li_listPrice,
+		t5.id as lid, t5.dormitory_id, t5.amount as li_amount, t5.currency as li_currency, t5.listPrice as li_listPrice,
 		t6.id as did, t6.city_id, t6.type_id, t6.contract_type_id, t6.name as dname, t6.address as daddress, t6.postcode, t6.listPrice as dlistPrice, t6.salePrice, t6.currency as dcurrency,
 		t6.equipment, t6.service, t6.description, t6.status as dstatus
-		from order t1
+		from `order` t1
 		left join users t2 on t1.user_id = t2.id
 		left join users t3 on t1.belongs_to = t3.id
 		left join order_contact_info t4 on t1.id = t4.order_id
@@ -33,23 +32,18 @@
 		belong_passport, t3.age as belong_age, t3.birthday as belong_birthday, t3.address as belong_address, t3.qq as belong_qq, t3.phone as belong_phone,
 		t4.id as cid, t4.name as contact_name, t4.gender as
 		contact_gender, t4.qq as contact_qq, t4.phone as contact_phone, t4.address as contact_address,
-		t5.id
-		as lid, t5.flight_number, t5.city_id, t5.pickup_date, t5.pickup_type, t5.luggage_amount, t5.luggage_size, t5.amount as li_amount, t5.currency as li_currency,
+		t5.id as lid, t5.flight_number, t5.city_id, t5.pickup_date, t5.pickup_type, t5.luggage_amount, t5.luggage_size, t5.amount as li_amount, t5.currency as li_currency,
 		t6.name as city_name
-		from order t1
+		from `order` t1
 		left join users t2 on t1.user_id = t2.id
 		left join users t3 on t1.belongs_to = t3.id
 		left join order_contact_info t4 on t1.id = t4.order_id
-		left join line_item_dormitory t5 on t1.id = t5.order_id
+		left join line_item_pickup t5 on t1.id = t5.order_id
 		left join city t6 on t5.city_id = t6.id
 	</sql>
 
 	<sql id="where">
 		where 1=1
-	</sql>
-
-	<sql id="where-with-id">
-		t1.id = #{id}
 	</sql>
 
 	<sql id="limit-split-page">
@@ -72,7 +66,7 @@
 			and t1.belongs_to = #{user.id}
 		</if>
 		<if test="orderType != null">
-			and t1.status = #{orderType.name}
+			and t1.type = #{orderType}
 		</if>
 		<if test="pageBean != null">
 			<include refid="limit-split-page" />
@@ -80,7 +74,7 @@
 	</select>
 
 	<select id="queryPickupOrder" resultMap="pickup-order">
-		<include refid="select-dormitory-order" />
+		<include refid="select-pickup-order" />
 		<include refid="where" />
 		<if test="orderNumber != null">
 			and t1.id = #{orderNumber}
@@ -95,7 +89,7 @@
 			and t1.belongs_to = #{user.id}
 		</if>
 		<if test="orderType != null">
-			and t1.status = #{orderType.name}
+			and t1.type = #{orderType}
 		</if>
 		<if test="pageBean != null">
 			<include refid="limit-split-page" />
@@ -103,7 +97,7 @@
 	</select>
 
 	<insert id="saveOrder" keyProperty="id" useGeneratedKeys="true" parameterType="com.noeasy.money.model.OrderBean">
-		insert into order (user_id, belongs_to, type, status, amount, currency) values (
+		insert into `order` (user_id, belongs_to, `type`, status, amount, currency) values (
 		#{user.id,javaType=int,jdbcType=INTEGER},
 		#{belongsTo.id,javaType=int,jdbcType=INTEGER},
 		#{orderType.name,javaType=String,jdbcType=VARCHAR},
@@ -133,7 +127,7 @@
 	</insert>
 
 	<insert id="saveDormitoryLineItem" keyProperty="id" useGeneratedKeys="true" parameterType="com.noeasy.money.model.DormitoryLineItem">
-		insert into line_item_dormitory (order_id, dormitory_id, list_price, amount, currency) values (
+		insert into line_item_dormitory (order_id, dormitory_id, listPrice, amount, currency) values (
 		#{orderId,javaType=int,jdbcType=INTEGER},
 		#{dormitory.id,javaType=int,jdbcType=INTEGER},
 		#{listPrice,javaType=java.math.BigDecimal,jdbcType=DECIMAL},
@@ -147,8 +141,8 @@
 		#{orderId,javaType=int,jdbcType=INTEGER},
 		#{flightNum,javaType=String,jdbcType=VARCHAR},
 		#{cityId,javaType=int,jdbcType=INTEGER},
-		#{pickupDate,javaType=java.util.Date,jdbcType=DATETIME},
-		#{pickupType.name,javaType=String,jdbcType=VARCHAR},
+		#{pickupDate,javaType=java.util.Date,jdbcType=TIMESTAMP},
+		#{pickupType.value,javaType=int,jdbcType=VARCHAR},
 		#{amount,javaType=java.math.BigDecimal,jdbcType=DECIMAL},
 		#{currency,javaType=String,jdbcType=VARCHAR},
 		#{luggageAmount,javaType=int,jdbcType=INTEGER},
@@ -170,8 +164,7 @@
 			<result property="email" column="user_email" />
 			<result property="name" column="user_name" />
 			<result property="gender" column="user_gender" />
-			<result property="password" column="user_passport" />
-			<result property="age" column="user_age" />
+			<result property="passport" column="user_passport" />
 			<result property="birthday" column="user_birthday" />
 			<result property="address" column="user_address" />
 			<result property="qq" column="user_qq" />
@@ -184,8 +177,7 @@
 			<result property="email" column="belong_email" />
 			<result property="name" column="belong_name" />
 			<result property="gender" column="belong_gender" />
-			<result property="password" column="belong_passport" />
-			<result property="age" column="belong_age" />
+			<result property="passport" column="belong_passport" />
 			<result property="birthday" column="belong_birthday" />
 			<result property="address" column="belong_address" />
 			<result property="qq" column="belong_qq" />
@@ -211,7 +203,7 @@
 				<result property="contractId" column="contract_type_id" />
 				<result property="name" column="dname" />
 				<result property="address" column="daddress" />
-				<result property="postcode" column="postcode" />
+				<result property="postCode" column="postcode" />
 				<result property="listPrice" column="dlistPrice" />
 				<result property="salePrice" column="salePrice" />
 				<result property="currency" column="dcurrency" />
@@ -237,8 +229,7 @@
 			<result property="email" column="user_email" />
 			<result property="name" column="user_name" />
 			<result property="gender" column="user_gender" />
-			<result property="password" column="user_passport" />
-			<result property="age" column="user_age" />
+			<result property="passport" column="user_passport" />
 			<result property="birthday" column="user_birthday" />
 			<result property="address" column="user_address" />
 			<result property="qq" column="user_qq" />
@@ -251,8 +242,7 @@
 			<result property="email" column="belong_email" />
 			<result property="name" column="belong_name" />
 			<result property="gender" column="belong_gender" />
-			<result property="password" column="belong_passport" />
-			<result property="age" column="belong_age" />
+			<result property="passport" column="belong_passport" />
 			<result property="birthday" column="belong_birthday" />
 			<result property="address" column="belong_address" />
 			<result property="qq" column="belong_qq" />
@@ -271,7 +261,7 @@
 			<result property="flightNum" column="flight_number" />
 			<result property="cityId" column="city_id" />
 			<result property="landingCity" column="city_name" />
-			<result property="pickupdDate" column="pickup_date" />
+			<result property="pickupDate" column="pickup_date" />
 			<result property="pickupType" column="pickup_type" />
 			<result property="luggageAmount" column="luggage_amount" />
 			<result property="luggageSize" column="luggage_size" />
