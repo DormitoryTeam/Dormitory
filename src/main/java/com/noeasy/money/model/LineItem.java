@@ -39,9 +39,11 @@ import java.math.BigDecimal;
 
 public abstract class LineItem extends BaseBean {
 
+    private int        mId;
+
     private int        mOrderId;
 
-    private BigDecimal mAmout;
+    private BigDecimal mAmount;
 
     private String     mCurrency;
 
@@ -50,10 +52,10 @@ public abstract class LineItem extends BaseBean {
 
 
     /**
-     * @return the amout
+     * @return the amount
      */
-    public BigDecimal getAmout() {
-        return mAmout;
+    public BigDecimal getAmount() {
+        return mAmount;
     }
 
 
@@ -63,6 +65,15 @@ public abstract class LineItem extends BaseBean {
      */
     public String getCurrency() {
         return mCurrency;
+    }
+
+
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return mId;
     }
 
 
@@ -80,11 +91,11 @@ public abstract class LineItem extends BaseBean {
 
 
     /**
-     * @param pAmout
-     *            the amout to set
+     * @param pAmount
+     *            the amount to set
      */
-    public void setAmout(final BigDecimal pAmout) {
-        mAmout = pAmout;
+    public void setAmount(final BigDecimal pAmount) {
+        mAmount = pAmount;
     }
 
 
@@ -95,6 +106,16 @@ public abstract class LineItem extends BaseBean {
      */
     public void setCurrency(final String pCurrency) {
         mCurrency = pCurrency;
+    }
+
+
+
+    /**
+     * @param pId
+     *            the id to set
+     */
+    public void setId(final int pId) {
+        mId = pId;
     }
 
 

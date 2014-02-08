@@ -74,7 +74,7 @@ public class OrderService implements IOrderService {
     @Override
     public List<OrderBean> queryOrder(final OrderSearchBean pOrderSearchBean) {
         List<OrderBean> queryResult = Collections.emptyList();
-        if (pOrderSearchBean.getOrderType().equals(OrderType.DORMIOTRY)) {
+        if (pOrderSearchBean.getOrderType().equals(OrderType.DORMITORY)) {
             queryResult = orderRepository.queryDormitoryOrderPage(pOrderSearchBean);
         } else if (pOrderSearchBean.getOrderType().equals(OrderType.PICKUP)) {
             queryResult = orderRepository.queryPickupOrderPage(pOrderSearchBean);
