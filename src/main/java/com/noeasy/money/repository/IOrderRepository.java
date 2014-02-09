@@ -30,6 +30,7 @@ package com.noeasy.money.repository;
 
 import java.util.List;
 
+import com.noeasy.money.enumeration.OrderStatus;
 import com.noeasy.money.model.LineItem;
 import com.noeasy.money.model.OrderBean;
 import com.noeasy.money.model.OrderContactInfo;
@@ -82,5 +83,13 @@ public interface IOrderRepository {
 
 
     boolean savePickupLineItem(LineItem pLineItem);
+
+
+
+    int updateOrderStatus(Integer pOrderId, OrderStatus pPayment);
+
+
+
+    boolean isPaymentDone(Integer pOrderId);
 
 }

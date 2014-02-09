@@ -32,6 +32,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.noeasy.money.enumeration.OrderStatus;
 import com.noeasy.money.model.DormitoryLineItem;
 import com.noeasy.money.model.LineItem;
 import com.noeasy.money.model.OrderBean;
@@ -154,6 +155,24 @@ public class OrderRepository extends BaseRepository implements IOrderRepository 
     public boolean savePickupLineItem(final LineItem pLineItem) {
         getSqlSession().insert("com.noeasy.money.model.Order.savePickupLineItem", pLineItem);
         return true;
+    }
+
+
+
+    @Override
+    public int updateOrderStatus(Integer pOrderId, OrderStatus pStatus) {
+        OrderBean order = new OrderBean();
+        order.setId(pOrderId);
+        order.setOrderStatus(pStatus);
+        return getSqlSession().update("com.noeasy.money.model.Order.updateOrderStatus", order);
+    }
+
+
+
+    @Override
+    public boolean isPaymentDone(Integer pOrderId) {
+        int count = getSqlSession().selectOne("com.noeasy.money.model.Order.isPaymentDone", pOrderId);
+        return count <= 0;
     }
 
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.noeasy.money.model.Payment">
+	<insert id="savePayment" parameterType="com.noeasy.money.model.PaymentBean">
+		INSERT INTO PAYMENT
+		(order_id, amount, currency, status, third_part_order_id, update_time)
+		VALUES (#{orderId}, #{amount}, #{currency}, #{status.name}, NULL,
+		NOW());
+	</insert>
+
+	<insert id="savePaymentInfo" parameterType="com.noeasy.money.model.PaymentInfoBean">
+		INSERT INTO
+		payment_details
+		(payment_id, type, nvp, status, notify_id, notify_time)
+		VALUE(#{paymentId}, #{type}, #{nvp}, #{status}, #{notifyId}, #{notifyTime});
+	</insert>
+	
+	<select id="isExistNotify" parameterType="com.noeasy.money.model.PaymentInfoBean" resultType="int">
+		SELECT count(id) FROM payment_details WHERE payment_id = #{paymentId} AND notify_id = #{notifyId}
+	</select>
+
+	<update id="updatePaymentStatus" parameterType="com.noeasy.money.model.PaymentBean">
+		UPDATE payment SET
+			status = #{status.name},
+			update_time = now()
+		WHERE id = #{id};
+	</update>
+
+</mapper>

@@ -6,83 +6,96 @@ import com.noeasy.money.enumeration.PaymentInfoType;
 
 public class PaymentInfoBean {
 
-    private Integer         id;
-    private Integer         paymentId;
-    private PaymentInfoType type;
-    private String          nvp;
-    private Date            nofifyTime;
-    private String          nofifyId;
+    private Integer         mId;
+    private Integer         mPaymentId;
+    private PaymentInfoType mType;
+    private String          mNvp;
+    private String          mStatus;
+    private Date            mNotifyTime;
+    private String          mNotifyId;
 
 
 
     public Integer getId() {
-        return id;
+        return mId;
     }
 
 
 
     public void setId(Integer pId) {
-        id = pId;
+        mId = pId;
     }
 
 
 
     public Integer getPaymentId() {
-        return paymentId;
+        return mPaymentId;
     }
 
 
 
     public void setPaymentId(Integer pPaymentId) {
-        paymentId = pPaymentId;
+        mPaymentId = pPaymentId;
     }
 
 
 
     public PaymentInfoType getType() {
-        return type;
+        return mType;
     }
 
 
 
     public void setType(PaymentInfoType pType) {
-        type = pType;
+        mType = pType;
     }
 
 
 
     public String getNvp() {
-        return nvp;
+        return mNvp;
     }
 
 
 
     public void setNvp(String pNvp) {
-        nvp = pNvp;
+        mNvp = pNvp;
     }
 
 
 
-    public Date getNofifyTime() {
-        return nofifyTime;
+    public Date getNotifyTime() {
+        return mNotifyTime;
     }
 
 
 
-    public void setNofifyTime(Date pNofifyTime) {
-        nofifyTime = pNofifyTime;
+    public void setNotifyTime(Date pNotifyTime) {
+        mNotifyTime = pNotifyTime;
     }
 
 
 
-    public String getNofifyId() {
-        return nofifyId;
+    public String getNotifyId() {
+        return mNotifyId;
     }
 
 
 
-    public void setNofifyId(String pNofifyId) {
-        nofifyId = pNofifyId;
+    public void setNotifyId(String pNotifyId) {
+        mNotifyId = pNotifyId;
+    }
+
+
+
+    public String getStatus() {
+        return mStatus;
+    }
+
+
+
+    public void setStatus(String pStatus) {
+        mStatus = pStatus;
     }
 
 }

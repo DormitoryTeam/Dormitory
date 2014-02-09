@@ -149,6 +149,17 @@
 		#{luggageSize,javaType=Double,jdbcType=DECIMAL}
 		)
 	</insert>
+	
+	<select id="isPaymentDone" parameterType="int" resultType="int">
+		SELECT count(id) FROM `order` WHERE id = #{id} AND (status = 'COMMIT' OR status = 'REVIEW' OR status = 'PAYMENT');
+	</select>
+	
+	<update id="updateOrderStatus" parameterType="com.noeasy.money.model.OrderBean">
+		UPDATE `order` SET
+			status = #{orderStatus.name,javaType=String,jdbcType=VARCHAR},
+			update_time = now()
+		WHERE id = #{id}
+	</update>
 
 	<resultMap id="dormitory-order" type="com.noeasy.money.model.OrderBean">
 		<id column="id" property="id" />

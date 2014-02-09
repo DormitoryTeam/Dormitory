@@ -7,36 +7,36 @@ import com.noeasy.money.enumeration.PaymentStatus;
 
 public class PaymentBean {
 
-    private Integer       id;
-    private Integer       orderId;
+    private Integer       mId;
+    private Integer       mOrderId;
     private BigDecimal    mAmount;
-    private String        currency;
-    private PaymentStatus status;
-    private Date          createDate;
-    private Date          updateDate;
+    private String        mCurrency;
+    private PaymentStatus mStatus;
+    private Date          mCreateDate;
+    private Date          mUpdateDate;
 
 
 
     public Integer getId() {
-        return id;
+        return mId;
     }
 
 
 
     public void setId(Integer pId) {
-        id = pId;
+        mId = pId;
     }
 
 
 
     public Integer getOrderId() {
-        return orderId;
+        return mOrderId;
     }
 
 
 
     public void setOrderId(Integer pOrderId) {
-        orderId = pOrderId;
+        mOrderId = pOrderId;
     }
 
 
@@ -54,49 +54,49 @@ public class PaymentBean {
 
 
     public String getCurrency() {
-        return currency;
+        return mCurrency;
     }
 
 
 
     public void setCurrency(String pCurrency) {
-        currency = pCurrency;
+        mCurrency = pCurrency;
     }
 
 
 
     public PaymentStatus getStatus() {
-        return status;
+        return mStatus;
     }
 
 
 
     public void setStatus(PaymentStatus pStatus) {
-        status = pStatus;
+        mStatus = pStatus;
     }
 
 
 
     public Date getCreateDate() {
-        return createDate;
+        return mCreateDate;
     }
 
 
 
     public void setCreateDate(Date pCreateDate) {
-        createDate = pCreateDate;
+        mCreateDate = pCreateDate;
     }
 
 
 
     public Date getUpdateDate() {
-        return updateDate;
+        return mUpdateDate;
     }
 
 
 
     public void setUpdateDate(Date pUpdateDate) {
-        updateDate = pUpdateDate;
+        mUpdateDate = pUpdateDate;
     }
 
 }

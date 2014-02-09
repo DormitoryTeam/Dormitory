@@ -1,10 +1,12 @@
 package com.noeasy.money.service.impl;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.noeasy.money.constant.AlipayConstants;
+import com.noeasy.money.enumeration.OrderStatus;
 import com.noeasy.money.enumeration.PaymentInfoType;
 import com.noeasy.money.enumeration.PaymentStatus;
 import com.noeasy.money.model.OrderBean;
@@ -14,6 +16,7 @@ import com.noeasy.money.model.PaymentInfoBean;
 import com.noeasy.money.repository.IOrderRepository;
 import com.noeasy.money.repository.IPaymentRepository;
 import com.noeasy.money.service.IAlipayService;
+import com.noeasy.money.util.DateUtils;
 import com.noeasy.money.util.payment.AlipayUtils;
 
 public class AlipayService implements IAlipayService {
@@ -27,6 +30,12 @@ public class AlipayService implements IAlipayService {
 
     @Override
     public String gengerateRedirectURL(Integer pOrderId) {
+        // 0. check has finished payment.
+        boolean isPaymentDone = orderRepository.isPaymentDone(pOrderId);
+        if (isPaymentDone) {
+            //TODO: payment done redirectURL
+            return "payment/paymentDone";
+        }
         // 1. get order by orderId;
         OrderSearchBean searchBean = new OrderSearchBean();
         searchBean.setOrderNumber(pOrderId);
@@ -41,10 +50,12 @@ public class AlipayService implements IAlipayService {
         String queryString = AlipayUtils.generateQueryString(nvp);
         // 6. create payment information
         createPaymentInfor(payment, PaymentInfoType.REQUEST, queryString);
-        // 7. compose redirect url.
+        // 7. update order
+        orderRepository.updateOrderStatus(pOrderId, OrderStatus.PAYMENT);
+        // 8. compose redirect url.
         String redirectURL = AlipayUtils.getConfigurableProperty(AlipayConstants.CONFIG_GATEWAY);
         redirectURL += queryString;
-        return redirectURL;
+        return "redirect:" + redirectURL;
     }
 
 
@@ -113,7 +124,6 @@ public class AlipayService implements IAlipayService {
         if (!AlipayUtils.verifySign(pNvp)) {
             return false;
         }
-
         return handleNofity(pNvp, pType);
     }
 
@@ -121,8 +131,46 @@ public class AlipayService implements IAlipayService {
 
     private boolean handleNofity(Map<String, String> pNvp, int pType) {
         boolean isSync = SYNC_NOFITY == pType;
+        PaymentInfoType type = isSync ? PaymentInfoType.SYNC_RESPONSE : PaymentInfoType.ASYNC_RESPONSE; 
+        String outTradeNo = pNvp.get(AlipayConstants.PARAM_NAME_OUT_TRADE_NO);
+        String[] ids = outTradeNo.split(UNDERLINE);
+        String orderIdStr = ids[0];
+        String paymentIdStr = ids[1];
+        Integer orderId = Integer.valueOf(orderIdStr);
+        Integer paymentId = Integer.valueOf(paymentIdStr);
+        String notifyId = pNvp.get(AlipayConstants.PARAM_NAME_NOTIFY_ID);
+        // 1. check notify Id exist
+        boolean isExist = paymentRepository.isExistNotify(paymentId, notifyId);
         
-        return false;
+        if (!isExist) {
+            // 2. create payment info.
+            String nvpStr = AlipayUtils.generateQueryString(pNvp);
+            String notifyTimeStr = pNvp.get(AlipayConstants.PARAM_NAME_NOTIFY_TIME);
+            Date nofityTime = DateUtils.stringToDate(notifyTimeStr, DateUtils.DATE_TIME_FORAMT_RULE);
+            PaymentInfoBean paymentInfo = new PaymentInfoBean();
+            paymentInfo.setNotifyId(notifyId);
+            paymentInfo.setPaymentId(paymentId);
+            paymentInfo.setType(type);
+            paymentInfo.setNotifyTime(nofityTime);
+            paymentInfo.setNvp(nvpStr);
+            paymentRepository.savePaymentInfo(paymentInfo);
+            // 3. update payment status.
+            PaymentStatus paymentStatus = getPaymentStatus(pNvp, isSync);
+            paymentRepository.updatePaymentStatus(paymentId, paymentStatus);
+            // 4. update order status.
+            OrderStatus orderStatus = getOrderStatus(paymentStatus);
+            orderRepository.updateOrderStatus(orderId, orderStatus);
+        }
+        return true;
+    }
+
+
+
+    private OrderStatus getOrderStatus(PaymentStatus pPaymentStatus) {
+        if (PaymentStatus.FINISH == pPaymentStatus) {
+            return OrderStatus.PAYMENT_DONE;
+        }
+        return OrderStatus.PAYMENT;
     }
 
 

@@ -214,10 +214,10 @@ DROP TABLE IF EXISTS `dormitory`.`order` ;
 
 CREATE  TABLE IF NOT EXISTS `dormitory`.`order` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `uesr_id` INT NOT NULL ,
+  `userId` INT NOT NULL ,
   `belongs_to` INT NOT NULL ,
-  `type` INT NOT NULL ,
-  `status` VARCHAR(45) NOT NULL ,
+  `type` VARCHAR(20) NOT NULL ,
+  `status` VARCHAR(20) NOT NULL ,
   `amount` DECIMAL(5,2) NOT NULL ,
   `currency` VARCHAR(3) NOT NULL ,
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
@@ -235,7 +235,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`order_history` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `order_id` INT NOT NULL ,
   `operator_id` INT NOT NULL ,
-  `operation` INT NOT NULL ,
+  `operation` VARCHAR(20) NOT NULL ,
   `operate_time` TIMESTAMP NOT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
@@ -271,7 +271,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`line_item_pickup` (
   `flight_number` VARCHAR(45) NOT NULL ,
   `city_id` VARCHAR(45) NOT NULL ,
   `pickup_date` DATETIME NOT NULL ,
-  `pickup_type` INT NOT NULL ,
+  `pickup_type` VARCHAR(20) NOT NULL ,
   `amount` DECIMAL(5,2) NOT NULL ,
   `currency` VARCHAR(3) NOT NULL ,
   `luggage_amount` INT NULL ,
@@ -291,7 +291,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`line_item_dormitory` (
   `dormitory_id` INT NOT NULL ,
   `create_time` INT NULL ,
   `update_time` INT NULL ,
-  `list_price` DECIMAL(5,2) NOT NULL ,
+  `listPrice` DECIMAL(5,2) NOT NULL ,
   `amount` DECIMAL(5,2) NOT NULL ,
   `currency` VARCHAR(3) NOT NULL ,
   PRIMARY KEY (`id`) )
@@ -404,6 +404,41 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`group_role` (
   `role_id` INT NOT NULL ,
   `create_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_date` TIMESTAMP NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dormitory`.`payment`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dormitory`.`payment` ;
+
+CREATE  TABLE IF NOT EXISTS `dormitory`.`payment` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `order_id` INT NOT NULL ,
+  `amount` DECIMAL NOT NULL ,
+  `currency` VARCHAR(3) NOT NULL ,
+  `status` VARCHAR(20) NOT NULL ,
+  `third_part_order_id` VARCHAR(200) NULL ,
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
+  `update_time` TIMESTAMP NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dormitory`.`payment_details`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dormitory`.`payment_details` ;
+
+CREATE  TABLE IF NOT EXISTS `dormitory`.`payment_details` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `payment_id` INT NOT NULL ,
+  `type` VARCHAR(20) NOT NULL ,
+  `nvp` VARCHAR(1000) NOT NULL ,
+  `status` VARCHAR(45) NOT NULL ,
+  `notify_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
+  `notify_id` VARCHAR(200) NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 

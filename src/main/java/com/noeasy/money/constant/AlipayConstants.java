@@ -21,7 +21,8 @@ public interface AlipayConstants {
     String PARAM_NAME_TRADE_NO         = "trade_no";
     String PARAM_NAME_TRADE_STATUS     = "trade_status";
     String PARAM_NAME_TRADE_IS_SUCCESS = "is_success";
-
+    String PARAM_NAME_NOTIFY_ID        = "notify_id";
+    String PARAM_NAME_NOTIFY_TIME      = "notify_time";
     String VALUE_SERVICE               = "create_direct_pay_by_user";
     String VALUE_PAYMENT_TYPE          = "1";
     String VALUE_SIGN_TYPE             = "MD5";
