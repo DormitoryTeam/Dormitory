@@ -2,21 +2,14 @@ package com.noeasy.money.service;
 
 import java.util.Map;
 
-public interface IPaymentService {
+public interface IAlipayService {
 
     public static final int ASYNC_NOFIFY = 1;
-    public static final int SYNC_NOFITY   = 0;
+    public static final int SYNC_NOFITY  = 0;
 
 
 
-    /**
-     * 1. Use pOrderId to get order information 2. 2. Create a new payment and
-     * paymentInfo object and persistent
-     * 
-     * @param pOrderId
-     * @return
-     */
-    Map<String, String> generateOutboundParameters(String pOrderId);
+    String gengerateRedirectURL(Integer pOrderId);
 
 
 
