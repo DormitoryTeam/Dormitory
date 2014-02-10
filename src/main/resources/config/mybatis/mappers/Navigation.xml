@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.noeasy.money.model.Navigation">
+
+	<select id="queryCountry" resultType="hashmap" parameterType="java.util.Map">
+		select id, name, countrycode as countryCode, status
+		from country
+		where status = 1
+		<if test="id != null">
+			and id = #{id}
+		</if>
+	</select>
+
+	<select id="queryCity" resultType="hashmap" parameterType="java.util.Map">
+		select id, country_id as countryId, name, status
+		from city
+		where status = 1
+		<if test="id != null">
+			and id = #{id}
+		</if>
+		<if test="countryId != null">
+			and country_id = #{countryId}
+		</if>
+	</select>
+
+	<select id="queryCollege" resultType="hashmap" parameterType="java.util.Map">
+		select id, city_id as cityId, name, status, latitude, longitude, status
+		from college
+		where status = 1
+		<if test="id != null">
+			and id = #{id}
+		</if>
+		<if test="cityId != null">
+			and city_id = #{cityId}
+		</if>
+	</select>
+
+</mapper>
