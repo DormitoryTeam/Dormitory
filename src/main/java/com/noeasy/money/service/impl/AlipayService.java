@@ -28,9 +28,10 @@ public class AlipayService implements IAlipayService {
 
     public static final String UNDERLINE = "_";
 
-    @Resource(name = "userRepository")
+    @Resource(name = "orderRepository")
     IOrderRepository           orderRepository;
-    @Resource(name = "userRepository")
+    
+    @Resource(name = "paymentRepository")
     IPaymentRepository         paymentRepository;
 
 
@@ -40,7 +41,7 @@ public class AlipayService implements IAlipayService {
         // 0. check has finished payment.
         boolean isPaymentDone = orderRepository.isPaymentDone(pOrderId);
         if (isPaymentDone) {
-            //TODO: payment done redirectURL
+            // TODO: payment done redirectURL
             return "payment/paymentDone";
         }
         // 1. get order by orderId;
@@ -138,7 +139,7 @@ public class AlipayService implements IAlipayService {
 
     private boolean handleNofity(Map<String, String> pNvp, int pType) {
         boolean isSync = SYNC_NOFITY == pType;
-        PaymentInfoType type = isSync ? PaymentInfoType.SYNC_RESPONSE : PaymentInfoType.ASYNC_RESPONSE; 
+        PaymentInfoType type = isSync ? PaymentInfoType.SYNC_RESPONSE : PaymentInfoType.ASYNC_RESPONSE;
         String outTradeNo = pNvp.get(AlipayConstants.PARAM_NAME_OUT_TRADE_NO);
         String[] ids = outTradeNo.split(UNDERLINE);
         String orderIdStr = ids[0];
@@ -148,7 +149,7 @@ public class AlipayService implements IAlipayService {
         String notifyId = pNvp.get(AlipayConstants.PARAM_NAME_NOTIFY_ID);
         // 1. check notify Id exist
         boolean isExist = paymentRepository.isExistNotify(paymentId, notifyId);
-        
+
         if (!isExist) {
             // 2. create payment info.
             String nvpStr = AlipayUtils.generateQueryString(pNvp);
