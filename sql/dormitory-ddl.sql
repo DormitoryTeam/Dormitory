@@ -214,7 +214,7 @@ DROP TABLE IF EXISTS `dormitory`.`order` ;
 
 CREATE  TABLE IF NOT EXISTS `dormitory`.`order` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `userId` INT NOT NULL ,
+  `user_id` INT NOT NULL ,
   `belongs_to` INT NOT NULL ,
   `type` VARCHAR(20) NOT NULL ,
   `status` VARCHAR(20) NOT NULL ,

@@ -12,4 +12,6 @@ public interface Constants {
     public static final int    DEFAULT_PAGE_SIZE  = 8;
 
     public static final String IMAGE_STORAGE_PATH = "IMAGE/";
+    
+    public static final String URL_SUFFIX = "";
 }

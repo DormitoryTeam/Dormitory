@@ -151,7 +151,7 @@
 	</insert>
 	
 	<select id="isPaymentDone" parameterType="int" resultType="int">
-		SELECT count(id) FROM `order` WHERE id = #{id} AND (status = 'COMMIT' OR status = 'REVIEW' OR status = 'PAYMENT');
+		SELECT count(id) FROM `order` WHERE id = #{id} AND (status = 'PAYMENT_DONE' OR status = 'PASS' OR status = 'SENDING_CONTACT');
 	</select>
 	
 	<update id="updateOrderStatus" parameterType="com.noeasy.money.model.OrderBean">

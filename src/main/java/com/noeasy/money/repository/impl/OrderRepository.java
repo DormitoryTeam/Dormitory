@@ -171,7 +171,7 @@ public class OrderRepository extends BaseRepository implements IOrderRepository 
 
     @Override
     public boolean isPaymentDone(Integer pOrderId) {
-        return getPaymentDoneCount(pOrderId) <= 0;
+        return getPaymentDoneCount(pOrderId) > 0;
     }
 
 

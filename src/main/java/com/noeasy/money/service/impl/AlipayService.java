@@ -27,7 +27,8 @@ import com.noeasy.money.util.payment.AlipayUtils;
 public class AlipayService implements IAlipayService {
 
     public static final String UNDERLINE = "_";
-
+    public static final String PAYMENT_INFO_STATUS_REQUEST = "REQUEST";
+    
     @Resource(name = "orderRepository")
     IOrderRepository           orderRepository;
     
@@ -73,6 +74,7 @@ public class AlipayService implements IAlipayService {
         paymentInfo.setPaymentId(pPayment.getId());
         paymentInfo.setType(pType);
         paymentInfo.setNvp(pNvp);
+        paymentInfo.setStatus(PAYMENT_INFO_STATUS_REQUEST);
         paymentRepository.savePaymentInfo(paymentInfo);
         return paymentInfo;
     }
