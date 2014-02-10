@@ -12,6 +12,7 @@ public class PaymentBean {
     private BigDecimal    mAmount;
     private String        mCurrency;
     private PaymentStatus mStatus;
+    private String        mThirdPartOrderId;
     private Date          mCreateDate;
     private Date          mUpdateDate;
 
@@ -97,6 +98,18 @@ public class PaymentBean {
 
     public void setUpdateDate(Date pUpdateDate) {
         mUpdateDate = pUpdateDate;
+    }
+
+
+
+    public String getThirdPartOrderId() {
+        return mThirdPartOrderId;
+    }
+
+
+
+    public void setThirdPartOrderId(String pThirdPartOrderId) {
+        mThirdPartOrderId = pThirdPartOrderId;
     }
 
 }

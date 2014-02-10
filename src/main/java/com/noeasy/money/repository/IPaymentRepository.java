@@ -14,4 +14,6 @@ public interface IPaymentRepository {
 
     int updatePaymentStatus(Integer pPaymentId, PaymentStatus pStatus);
 
+    int updatePayment(PaymentBean pPayment);
+
 }

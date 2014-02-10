@@ -4,6 +4,7 @@ public interface AlipayConstants {
 
     String CONFIG_PRIVATE_KEY          = "privateKey";
     String CONFIG_GATEWAY              = "gateway";
+    String CONFIG_VALIDATE_SIGN        = "validateSign";
 
     String PARAM_NAME_SERVICE          = "service";
     String PARAM_NAME_PARTNER          = "partner";

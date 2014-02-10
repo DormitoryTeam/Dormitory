@@ -1,6 +1,7 @@
 package com.noeasy.money.util.payment;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.Properties;
 
@@ -22,12 +23,21 @@ public class AlipayUtils {
 
     public static String getConfigurableProperty(String pKey) {
         Properties prop = new Properties();
+        InputStream input = null;
         try {
-            prop.load(AlipayUtils.class.getResourceAsStream(CONFIG_PATH));
+            
+            input = AlipayUtils.class.getResourceAsStream(CONFIG_PATH);
+            prop.load(input);
             return (String) prop.get(pKey);
         } catch (IOException e) {
             logger.error(e.getMessage());
             throw new BaseException(PaymentErrorMetadata.EMPTY_PROPERTY);
+        } finally {
+            try {
+                input.close();
+            } catch (IOException e) {
+                logger.error(e.getMessage());
+            }
         }
 
     }

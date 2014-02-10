@@ -27,5 +27,13 @@
 			update_time = now()
 		WHERE id = #{id};
 	</update>
+	
+	<update id="updatePayment" parameterType="com.noeasy.money.model.PaymentBean">
+		UPDATE payment SET
+			status = #{status.name},
+			third_part_order_id = #{thirdPartOrderId},
+			update_time = now()
+		WHERE id = #{id};
+	</update>
 
 </mapper>

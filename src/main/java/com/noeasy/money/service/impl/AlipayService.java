@@ -131,7 +131,8 @@ public class AlipayService implements IAlipayService {
 
     @Override
     public boolean handleInboundParameters(Map<String, String> pNvp, int pType) {
-        if (!AlipayUtils.verifySign(pNvp)) {
+        boolean validateSign = "true".equals(AlipayUtils.getConfigurableProperty(AlipayConstants.CONFIG_VALIDATE_SIGN));
+        if (validateSign && !AlipayUtils.verifySign(pNvp)) {
             return false;
         }
         return handleNofity(pNvp, pType);
@@ -162,10 +163,20 @@ public class AlipayService implements IAlipayService {
             paymentInfo.setPaymentId(paymentId);
             paymentInfo.setType(type);
             paymentInfo.setNotifyTime(nofityTime);
+            paymentInfo.setStatus(pNvp.get(AlipayConstants.PARAM_NAME_TRADE_STATUS));
             paymentInfo.setNvp(nvpStr);
             paymentRepository.savePaymentInfo(paymentInfo);
+            boolean isPaymentDone = orderRepository.isPaymentDone(orderId);
+            if (isPaymentDone) {
+                return true;
+            }
             // 3. update payment status.
             PaymentStatus paymentStatus = getPaymentStatus(pNvp, isSync);
+            PaymentBean payment = new PaymentBean();
+            payment.setStatus(paymentStatus);
+            payment.setId(paymentId);
+            payment.setThirdPartOrderId(pNvp.get(AlipayConstants.PARAM_NAME_TRADE_NO));
+            paymentRepository.updatePayment(payment);
             paymentRepository.updatePaymentStatus(paymentId, paymentStatus);
             // 4. update order status.
             OrderStatus orderStatus = getOrderStatus(paymentStatus);

@@ -50,4 +50,11 @@ public class PaymentRepository extends BaseRepository implements IPaymentReposit
         return getSqlSession().update("com.noeasy.money.model.Payment.updatePaymentStatus", payment);
     }
 
+
+
+    @Override
+    public int updatePayment(PaymentBean pPayment) {
+        return getSqlSession().update("com.noeasy.money.model.Payment.updatePayment", pPayment);
+    }
+
 }
