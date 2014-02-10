@@ -1,10 +1,14 @@
 package com.noeasy.money.repository.impl;
 
+import org.springframework.stereotype.Repository;
+
 import com.noeasy.money.enumeration.PaymentStatus;
 import com.noeasy.money.model.PaymentBean;
 import com.noeasy.money.model.PaymentInfoBean;
 import com.noeasy.money.repository.IPaymentRepository;
 
+
+@Repository("paymentRepository")
 public class PaymentRepository extends BaseRepository implements IPaymentRepository {
 
     @Override
@@ -25,11 +29,15 @@ public class PaymentRepository extends BaseRepository implements IPaymentReposit
 
     @Override
     public boolean isExistNotify(Integer pPaymentId, String pNotifyId) {
+        return getExistNofityCount(pPaymentId, pNotifyId) > 0;
+    }
+
+    private Integer getExistNofityCount(Integer pPaymentId, String pNotifyId) {
         PaymentInfoBean paymentInfo = new PaymentInfoBean();
         paymentInfo.setPaymentId(pPaymentId);
         paymentInfo.setNotifyId(pNotifyId);
-        int count = getSqlSession().selectOne("com.noeasy.money.model.Payment.isExistNotify", paymentInfo);
-        return count > 0;
+        Integer count = getSqlSession().selectOne("com.noeasy.money.model.Payment.isExistNotify", paymentInfo);
+        return count;
     }
 
 

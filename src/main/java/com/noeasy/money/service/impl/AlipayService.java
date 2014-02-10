@@ -5,6 +5,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
 import com.noeasy.money.constant.AlipayConstants;
 import com.noeasy.money.enumeration.OrderStatus;
 import com.noeasy.money.enumeration.PaymentInfoType;
@@ -19,11 +23,14 @@ import com.noeasy.money.service.IAlipayService;
 import com.noeasy.money.util.DateUtils;
 import com.noeasy.money.util.payment.AlipayUtils;
 
+@Service(value = "alipayService")
 public class AlipayService implements IAlipayService {
 
     public static final String UNDERLINE = "_";
 
+    @Resource(name = "userRepository")
     IOrderRepository           orderRepository;
+    @Resource(name = "userRepository")
     IPaymentRepository         paymentRepository;
 
 

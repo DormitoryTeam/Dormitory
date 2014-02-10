@@ -171,8 +171,14 @@ public class OrderRepository extends BaseRepository implements IOrderRepository 
 
     @Override
     public boolean isPaymentDone(Integer pOrderId) {
-        int count = getSqlSession().selectOne("com.noeasy.money.model.Order.isPaymentDone", pOrderId);
-        return count <= 0;
+        return getPaymentDoneCount(pOrderId) <= 0;
+    }
+
+
+
+    private Integer getPaymentDoneCount(Integer pOrderId) {
+        Integer count = getSqlSession().selectOne("com.noeasy.money.model.Order.isPaymentDone", pOrderId);
+        return count;
     }
 
 }

@@ -4,17 +4,22 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.noeasy.money.service.IAlipayService;
 
 
+@Controller
+@RequestMapping("/payment")
 public class PaymentController {
     
+    @Resource(name = "alipayService")
     IAlipayService alipayService;
     
     @RequestMapping(value = "/jump2alipy.html")
