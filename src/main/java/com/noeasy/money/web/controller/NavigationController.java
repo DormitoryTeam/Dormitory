@@ -123,6 +123,15 @@ public class NavigationController {
             model.addAttribute("cities", cities);
             model.addAttribute("colleges", colleges);
         }
-        return "/home";
+        return "home";
+    }
+
+
+
+    @RequestMapping("/navigator" + Constants.URL_SUFFIX)
+    public String toNavigation(final HttpServletRequest request, final HttpServletResponse response, final Model model) {
+        List<Map<String, Object>> countries = navigationService.queryCountries();
+        model.addAttribute("countries", countries);
+        return "navigation/navigation";
     }
 }

@@ -32,8 +32,9 @@ function loadCollegesByCity() {
 
 function renderOption(selectId, data) {
     var select = $("#" + selectId).empty();
-    if (data != null) {
-        $.each(jQuery.parseJSON(data), function(i, e) {
+    var jsonObject = $.parseJSON(data);
+    if (jsonObject != null) {
+        $.each(jsonObject, function(i, e) {
             select.append("<option value='" + e.id + "'>" + e.name + "</option>");
         })
         if (select.find("option").length <= 0) {
