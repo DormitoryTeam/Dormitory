@@ -36,4 +36,11 @@ public class UserRepository extends BaseRepository implements IUserRepository {
         return getSqlSession().update("com.noeasy.money.model.User.updateUser", pBean);
     }
 
+
+
+    @Override
+    public int resetPassword(UserBean pUser) {
+        return getSqlSession().update("com.noeasy.money.model.User.resetPassword", pUser);
+    }
+
 }

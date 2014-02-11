@@ -20,4 +20,8 @@ public interface IUserRepository {
 
     int updateUser(UserBean pBean);
 
+
+
+    int resetPassword(UserBean pUser);
+
 }

@@ -94,4 +94,30 @@ public class UserService implements IUserService {
         return CollectionUtils.isNotEmpty(matchUsers);
     }
 
+
+
+    @Override
+    public int changePassword(String pLogin, String pOldPassword, String pNewPassword) {
+        boolean isExist = exist(pLogin, pOldPassword);
+        if (!isExist) {
+            return PASSWORD_NOT_MATCH;
+        }
+        UserBean user = new UserBean();
+        user.setLogin(pLogin);
+        user.setPassword(pNewPassword);
+        userRepository.resetPassword(user);
+        return 0;
+    }
+
+
+
+    @Override
+    public boolean resetPassword(String pLogin, String pPassword) {
+        UserBean user = new UserBean();
+        user.setLogin(pLogin);
+        user.setPassword(pPassword);
+        userRepository.resetPassword(user);
+        return true;
+    }
+
 }
