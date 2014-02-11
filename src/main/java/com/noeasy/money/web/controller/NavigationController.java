@@ -38,12 +38,15 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.noeasy.money.constant.Constants;
 import com.noeasy.money.service.INavigationService;
 
 /**
@@ -61,16 +64,16 @@ public class NavigationController {
 
 
 
-    @RequestMapping("/getCity")
+    @RequestMapping("/getCity" + Constants.URL_SUFFIX)
     @ResponseBody
     public String getCity(final HttpServletRequest request, final HttpServletResponse response, final String cityId,
             final String countryId) {
         if (StringUtils.isBlank(cityId)) {
-            List<Map<String, String>> cities = navigationService.queryCities(NumberUtils.toInt(countryId));
+            List<Map<String, Object>> cities = navigationService.queryCities(NumberUtils.toInt(countryId));
             JSONArray cityJson = JSONArray.fromObject(cities);
             return cityJson.toString();
         } else {
-            Map<String, String> city = navigationService.queryCityById(NumberUtils.toInt(cityId),
+            Map<String, Object> city = navigationService.queryCityById(NumberUtils.toInt(cityId),
                     NumberUtils.toInt(countryId));
             JSONObject cityJson = JSONObject.fromObject(city);
             return cityJson.toString();
@@ -79,16 +82,16 @@ public class NavigationController {
 
 
 
-    @RequestMapping("/getCollege")
+    @RequestMapping("/getCollege" + Constants.URL_SUFFIX)
     @ResponseBody
     public String getCollege(final HttpServletRequest request, final HttpServletResponse response,
             final String collegeId, final String cityId) {
         if (StringUtils.isBlank(collegeId)) {
-            List<Map<String, String>> colleges = navigationService.queryColleges(NumberUtils.toInt(cityId));
+            List<Map<String, Object>> colleges = navigationService.queryColleges(NumberUtils.toInt(cityId));
             JSONArray collegeJson = JSONArray.fromObject(colleges);
             return collegeJson.toString();
         } else {
-            Map<String, String> college = navigationService.queryCollegeById(NumberUtils.toInt(collegeId),
+            Map<String, Object> college = navigationService.queryCollegeById(NumberUtils.toInt(collegeId),
                     NumberUtils.toInt(cityId));
             JSONObject collegeJson = JSONObject.fromObject(college);
             return collegeJson.toString();
@@ -97,11 +100,29 @@ public class NavigationController {
 
 
 
-    @RequestMapping("/getCountry")
+    @RequestMapping("/getCountry" + Constants.URL_SUFFIX)
     @ResponseBody
     public String getCountry(final HttpServletRequest request, final HttpServletResponse response) {
-        List<Map<String, String>> countries = navigationService.queryCountries();
+        List<Map<String, Object>> countries = navigationService.queryCountries();
         JSONArray countryJson = JSONArray.fromObject(countries);
         return countryJson.toString();
+    }
+
+
+
+    @RequestMapping("/home" + Constants.URL_SUFFIX)
+    public String toHome(final HttpServletRequest request, final HttpServletResponse response, final Model model) {
+        List<Map<String, Object>> countries = navigationService.queryCountries();
+        if (CollectionUtils.isNotEmpty(countries)) {
+            Integer firstCountryId = (Integer) countries.get(0).get("id");
+            List<Map<String, Object>> cities = navigationService.queryCities(firstCountryId);
+            Integer firstCityId = NumberUtils.toInt(cities.get(0).get("id").toString());
+            List<Map<String, Object>> colleges = navigationService.queryColleges(firstCityId);
+
+            model.addAttribute("countries", countries);
+            model.addAttribute("cities", cities);
+            model.addAttribute("colleges", colleges);
+        }
+        return "/home";
     }
 }

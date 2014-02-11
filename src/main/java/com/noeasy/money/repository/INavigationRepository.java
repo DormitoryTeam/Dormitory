@@ -40,25 +40,25 @@ import java.util.Map;
 
 public interface INavigationRepository {
 
-    List<Map<String, String>> queryCities(Integer pCountryId);
+    List<Map<String, Object>> queryCities(Integer pCountryId);
 
 
 
-    Map<String, String> queryCityById(Integer pCityId, Integer pCountryId);
+    Map<String, Object> queryCityById(Integer pCityId, Integer pCountryId);
 
 
 
-    Map<String, String> queryCollegeById(Integer pCollegeId, Integer pCityId);
+    Map<String, Object> queryCollegeById(Integer pCollegeId, Integer pCityId);
 
 
 
-    List<Map<String, String>> queryColleges(Integer pCityId);
+    List<Map<String, Object>> queryColleges(Integer pCityId);
 
 
 
-    List<Map<String, String>> queryCountries();
+    List<Map<String, Object>> queryCountries();
 
 
 
-    Map<String, String> queryCountryById(Integer pCountryId);
+    Map<String, Object> queryCountryById(Integer pCountryId);
 }

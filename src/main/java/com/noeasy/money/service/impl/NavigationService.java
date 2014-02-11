@@ -65,7 +65,7 @@ public class NavigationService implements INavigationService {
      * @see com.noeasy.money.service.INavigationService#queryCities(java.lang.Integer)
      */
     @Override
-    public List<Map<String, String>> queryCities(final Integer pCountryId) {
+    public List<Map<String, Object>> queryCities(final Integer pCountryId) {
         return navigationRepository.queryCities(pCountryId);
     }
 
@@ -76,7 +76,7 @@ public class NavigationService implements INavigationService {
      *      java.lang.Integer)
      */
     @Override
-    public Map<String, String> queryCityById(final Integer pCityId, final Integer pCountryId) {
+    public Map<String, Object> queryCityById(final Integer pCityId, final Integer pCountryId) {
         return navigationRepository.queryCityById(pCityId, pCountryId);
     }
 
@@ -87,7 +87,7 @@ public class NavigationService implements INavigationService {
      *      java.lang.Integer)
      */
     @Override
-    public Map<String, String> queryCollegeById(final Integer pCollegeId, final Integer pCityId) {
+    public Map<String, Object> queryCollegeById(final Integer pCollegeId, final Integer pCityId) {
         return navigationRepository.queryCollegeById(pCollegeId, pCityId);
     }
 
@@ -97,7 +97,7 @@ public class NavigationService implements INavigationService {
      * @see com.noeasy.money.service.INavigationService#queryColleges(java.lang.Integer)
      */
     @Override
-    public List<Map<String, String>> queryColleges(final Integer pCityId) {
+    public List<Map<String, Object>> queryColleges(final Integer pCityId) {
         return navigationRepository.queryColleges(pCityId);
     }
 
@@ -107,7 +107,7 @@ public class NavigationService implements INavigationService {
      * @see com.noeasy.money.service.INavigationService#queryCountries()
      */
     @Override
-    public List<Map<String, String>> queryCountries() {
+    public List<Map<String, Object>> queryCountries() {
         return navigationRepository.queryCountries();
     }
 
@@ -117,7 +117,7 @@ public class NavigationService implements INavigationService {
      * @see com.noeasy.money.service.INavigationService#queryCountryById(java.lang.Integer)
      */
     @Override
-    public Map<String, String> queryCountryById(final Integer pCountryId) {
+    public Map<String, Object> queryCountryById(final Integer pCountryId) {
         return navigationRepository.queryCountryById(pCountryId);
     }
 
