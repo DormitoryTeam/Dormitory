@@ -66,7 +66,7 @@
 	</sql>
 
 	<sql id="order-by-order-field">
-		order by #{sortBy}
+		order by ${sortBy}
 	</sql>
 
 	<sql id="limit-split-page">

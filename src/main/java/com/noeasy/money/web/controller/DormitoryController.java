@@ -1,13 +1,14 @@
 package com.noeasy.money.web.controller;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -16,14 +17,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitorySearchBean;
 import com.noeasy.money.service.IDormitoryService;
-import com.noeasy.money.util.test.ReflectionUtils;
+import com.noeasy.money.service.INavigationService;
 
 @Controller
 @RequestMapping("/dormitory")
 public class DormitoryController {
 
     @Resource(name = "dormitoryService")
-    IDormitoryService dormitoryService;
+    IDormitoryService  dormitoryService;
+
+    @Resource(name = "navigationService")
+    INavigationService navigationService;
 
 
 
@@ -59,48 +63,40 @@ public class DormitoryController {
 
 
 
-    @RequestMapping("/unit-test/to-dormitory")
-    public String toDormitory(final HttpServletRequest request, final HttpServletResponse response, final Model model) {
-        DormitorySearchBean searchBean1 = new DormitorySearchBean();
-        searchBean1.setId(3);
-        DormitoryBean dormitoryBean1 = dormitoryService.queryDormitory(searchBean1);
-        model.addAttribute("resultOfQueryById", ReflectionUtils.getFieldsValue(dormitoryBean1));
+    @RequestMapping("/dormitory-list")
+    public String toDormitory(final HttpServletRequest request, final HttpServletResponse response, final Model model,
+            final String collegeId, final String cityId, final String keyword, final String sortField,
+            final String sortType) {
+        if (StringUtils.isNotBlank(collegeId) && StringUtils.isNotBlank(cityId)) {
 
-        DormitorySearchBean searchBean2 = new DormitorySearchBean();
-        searchBean2.setCityId(1);
-        List<DormitoryBean> dormitoryBeans2 = dormitoryService.queryDormitoryPage(searchBean2);
-        List<List<String>> Results2 = new ArrayList<List<String>>();
-        for (DormitoryBean bean : dormitoryBeans2) {
-            Results2.add(ReflectionUtils.getFieldsValue(bean));
+            Map<String, Object> city = navigationService.queryCityById(NumberUtils.toInt(cityId), null);
+            Integer countryId = (Integer) city.get("countryId");
+            Map<String, Object> country = navigationService.queryCountryById(countryId);
+            Map<String, Object> college = navigationService.queryCollegeById(NumberUtils.toInt(collegeId), null);
+
+            DormitorySearchBean searchBean = new DormitorySearchBean();
+            searchBean.setCityId(NumberUtils.toInt(cityId));
+            searchBean.setCollegeId(NumberUtils.toInt(collegeId));
+            if (StringUtils.isNoneBlank(keyword)) {
+                searchBean.setKeyword(keyword);
+            }
+            if (StringUtils.isNoneBlank(sortField)) {
+                searchBean.setSortField(sortField);
+                if (StringUtils.isNoneBlank(sortType)) {
+                    searchBean.setSortType(sortType);
+                }
+            }
+
+            List<DormitoryBean> dormitories = dormitoryService.queryDormitoryPage(searchBean);
+
+            model.addAttribute("keyword", keyword);
+            model.addAttribute("sortField", sortField);
+            model.addAttribute("country", country);
+            model.addAttribute("city", city);
+            model.addAttribute("college", college);
+            model.addAttribute("dormitories", dormitories);
         }
-        model.addAttribute("resultOfQueryByCityId", Results2);
-
-        DormitorySearchBean searchBean3 = new DormitorySearchBean();
-        searchBean3.setKeyword("London,");
-        searchBean3.getPageBean().setPageNum(1);
-        searchBean3.getPageBean().setPageSize(20);
-        searchBean3.setSortField("rating");
-        searchBean3.setSortType("desc");
-        searchBean3.setCollegeId(1);
-        List<DormitoryBean> dormitoryBeans3 = dormitoryService.queryDormitoryPage(searchBean3);
-        List<List<String>> Results3 = new ArrayList<List<String>>();
-        for (DormitoryBean bean : dormitoryBeans3) {
-            Results3.add(ReflectionUtils.getFieldsValue(bean));
-        }
-        model.addAttribute("resultOfQueryByKeyword", Results3);
-
-        DormitorySearchBean searchBean4 = new DormitorySearchBean();
-        searchBean4.setContractTypeId(1);
-        searchBean4.setDormitoryTypeId(1);
-        searchBean4.setCollegeId(1);
-        List<DormitoryBean> dormitoryBeans4 = dormitoryService.queryDormitoryPage(searchBean4);
-        List<List<String>> Results4 = new ArrayList<List<String>>();
-        for (DormitoryBean bean : dormitoryBeans4) {
-            Results4.add(ReflectionUtils.getFieldsValue(bean));
-        }
-        model.addAttribute("resultOfQueryByDormitoryTypeAndContract", Results4);
-
-        return "dormitory/dormitory";
+        return "dormitory/dormitory-list";
     }
 
 
