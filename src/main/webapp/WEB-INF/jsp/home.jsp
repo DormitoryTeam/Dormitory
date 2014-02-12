@@ -9,7 +9,7 @@
 <title></title>
 </head>
 <body>
-	<form>
+	<form action="/dormitory/dormitory/dormitory-list.html" method="GET">
 		<table>
 			<tr>
 				<td>Country:</td>

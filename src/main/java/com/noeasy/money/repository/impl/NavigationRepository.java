@@ -125,7 +125,9 @@ public class NavigationRepository extends BaseRepository implements INavigationR
      */
     @Override
     public Map<String, Object> queryCountryById(final Integer pCountryId) {
-        return getSqlSession().selectOne("queryCountry", pCountryId);
+        Map<String, Integer> params = new HashMap<String, Integer>();
+        params.put(ID, pCountryId);
+        return getSqlSession().selectOne("queryCountry", params);
     }
 
 }

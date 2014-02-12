@@ -28,6 +28,7 @@
  */
 package com.noeasy.money.model;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 /**
@@ -63,46 +64,8 @@ public class DormitorySearchBean {
 
 
 
-    /**
-     * @return the id
-     */
-    public Integer getId() {
-        return mId;
-    }
-
-
-
-    /**
-     * @param pId
-     *            the id to set
-     */
-    public void setId(Integer pId) {
-        mId = pId;
-    }
-
-
-
     public DormitorySearchBean() {
         mPageBean = new PageBean();
-    }
-
-
-
-    /**
-     * @return the dormitoryName
-     */
-    public String getDormitoryName() {
-        return mDormitoryName;
-    }
-
-
-
-    /**
-     * @param pDormitoryName
-     *            the dormitoryName to set
-     */
-    public void setDormitoryName(String pDormitoryName) {
-        mDormitoryName = pDormitoryName;
     }
 
 
@@ -117,68 +80,10 @@ public class DormitorySearchBean {
 
 
     /**
-     * @param pCityId
-     *            the cityId to set
-     */
-    public void setCityId(Integer pCityId) {
-        mCityId = pCityId;
-    }
-
-
-
-    /**
      * @return the collegeId
      */
     public Integer getCollegeId() {
         return mCollegeId;
-    }
-
-
-
-    /**
-     * @param pCollegeId
-     *            the collegeId to set
-     */
-    public void setCollegeId(Integer pCollegeId) {
-        mCollegeId = pCollegeId;
-    }
-
-
-
-    /**
-     * @return the keyword
-     */
-    public String getKeyword() {
-        return mKeyword;
-    }
-
-
-
-    /**
-     * @param pKeyword
-     *            the keyword to set
-     */
-    public void setKeyword(String pKeyword) {
-        mKeyword = pKeyword;
-    }
-
-
-
-    /**
-     * @return the priceRange
-     */
-    public Pair<Double, Double> getPriceRange() {
-        return mPriceRange;
-    }
-
-
-
-    /**
-     * @param pPriceRange
-     *            the priceRange to set
-     */
-    public void setPriceRange(Pair<Double, Double> pPriceRange) {
-        mPriceRange = pPriceRange;
     }
 
 
@@ -193,11 +98,10 @@ public class DormitorySearchBean {
 
 
     /**
-     * @param pContractTypeId
-     *            the contractTypeId to set
+     * @return the dormitoryName
      */
-    public void setContractTypeId(Integer pContractTypeId) {
-        mContractTypeId = pContractTypeId;
+    public String getDormitoryName() {
+        return mDormitoryName;
     }
 
 
@@ -212,27 +116,19 @@ public class DormitorySearchBean {
 
 
     /**
-     * @param pDormitoryTypeId
-     *            the dormitoryTypeId to set
+     * @return the id
      */
-    public void setDormitoryTypeId(Integer pDormitoryTypeId) {
-        mDormitoryTypeId = pDormitoryTypeId;
+    public Integer getId() {
+        return mId;
     }
 
 
 
     /**
-     * @return the sortBy
+     * @return the keyword
      */
-    public String getSortBy() {
-        String orderByConditon = null;
-        if (mSortField != null) {
-            orderByConditon = mSortField;
-            if (mSortType != null) {
-                orderByConditon += " " + mSortType;
-            }
-        }
-        return orderByConditon;
+    public String getKeyword() {
+        return mKeyword;
     }
 
 
@@ -247,30 +143,28 @@ public class DormitorySearchBean {
 
 
     /**
-     * @param pPageBean
-     *            the pageBean to set
+     * @return the priceRange
      */
-    public void setPageBean(PageBean pPageBean) {
-        mPageBean = pPageBean;
+    public Pair<Double, Double> getPriceRange() {
+        return mPriceRange;
     }
 
 
 
     /**
-     * @return the sortType
+     * @return the sortBy
      */
-    public String getSortType() {
-        return mSortType;
-    }
-
-
-
-    /**
-     * @param pSortType
-     *            the sortType to set
-     */
-    public void setSortType(String pSortType) {
-        mSortType = pSortType;
+    public String getSortBy() {
+        String orderByConditon = null;
+        if (StringUtils.isNoneBlank(mSortField)) {
+            orderByConditon = mSortField;
+            if (StringUtils.isNoneBlank(mSortType)) {
+                orderByConditon += " " + mSortType;
+            } else {
+                orderByConditon += " ASC";
+            }
+        }
+        return orderByConditon;
     }
 
 
@@ -285,11 +179,120 @@ public class DormitorySearchBean {
 
 
     /**
+     * @return the sortType
+     */
+    public String getSortType() {
+        return mSortType;
+    }
+
+
+
+    /**
+     * @param pCityId
+     *            the cityId to set
+     */
+    public void setCityId(final Integer pCityId) {
+        mCityId = pCityId;
+    }
+
+
+
+    /**
+     * @param pCollegeId
+     *            the collegeId to set
+     */
+    public void setCollegeId(final Integer pCollegeId) {
+        mCollegeId = pCollegeId;
+    }
+
+
+
+    /**
+     * @param pContractTypeId
+     *            the contractTypeId to set
+     */
+    public void setContractTypeId(final Integer pContractTypeId) {
+        mContractTypeId = pContractTypeId;
+    }
+
+
+
+    /**
+     * @param pDormitoryName
+     *            the dormitoryName to set
+     */
+    public void setDormitoryName(final String pDormitoryName) {
+        mDormitoryName = pDormitoryName;
+    }
+
+
+
+    /**
+     * @param pDormitoryTypeId
+     *            the dormitoryTypeId to set
+     */
+    public void setDormitoryTypeId(final Integer pDormitoryTypeId) {
+        mDormitoryTypeId = pDormitoryTypeId;
+    }
+
+
+
+    /**
+     * @param pId
+     *            the id to set
+     */
+    public void setId(final Integer pId) {
+        mId = pId;
+    }
+
+
+
+    /**
+     * @param pKeyword
+     *            the keyword to set
+     */
+    public void setKeyword(final String pKeyword) {
+        mKeyword = pKeyword;
+    }
+
+
+
+    /**
+     * @param pPageBean
+     *            the pageBean to set
+     */
+    public void setPageBean(final PageBean pPageBean) {
+        mPageBean = pPageBean;
+    }
+
+
+
+    /**
+     * @param pPriceRange
+     *            the priceRange to set
+     */
+    public void setPriceRange(final Pair<Double, Double> pPriceRange) {
+        mPriceRange = pPriceRange;
+    }
+
+
+
+    /**
      * @param pSortField
      *            the sortField to set
      */
-    public void setSortField(String pSortField) {
+    public void setSortField(final String pSortField) {
         mSortField = pSortField;
+    }
+
+
+
+    /**
+     * @param pSortType
+     *            the sortType to set
+     */
+    public void setSortType(final String pSortType) {
+        mSortType = pSortType;
     }
 
 }
