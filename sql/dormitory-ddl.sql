@@ -316,6 +316,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`users` (
   `address` VARCHAR(500) NULL ,
   `phone` VARCHAR(20) NULL ,
   `qq` VARCHAR(45) NULL ,
+  `reset_password_sign` VARCHAR(200) NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 

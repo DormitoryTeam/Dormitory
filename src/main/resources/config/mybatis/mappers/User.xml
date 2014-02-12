@@ -23,6 +23,7 @@
 			gender = #{gender},
 			passport = #{passport},
 			birthday = #{birthday},
+			age = #{age},
 			address = #{address},
 			phone = #{phone},
 			qq = #{qq}
@@ -39,7 +40,7 @@
 
 	<select id="queryUser" parameterType="com.noeasy.money.model.UserSearchBean"
 		resultType="com.noeasy.money.model.UserBean">
-		SELECT u.id, u.login, u.password, u.email, u.name, u.gender, u.passport, u.age, u.birthday, u.address, u.phone
+		SELECT u.id, u.login, u.password, u.email, u.name, u.gender, u.passport, u.age, u.birthday, u.address, u.phone, u.qq
 		FROM users AS u LEFT JOIN user_group AS ugroup ON u.id = ugroup.user_id
 		WHERE 1=1
 		<if test="id != null">

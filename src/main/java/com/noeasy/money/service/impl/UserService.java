@@ -120,4 +120,11 @@ public class UserService implements IUserService {
         return true;
     }
 
+
+
+    @Override
+    public int updateUser(UserBean pUser) {
+        return userRepository.updateUser(pUser);
+    }
+
 }
