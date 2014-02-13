@@ -37,4 +37,8 @@ public interface IUserService {
 
 
     boolean resetPassword(String pLogin, String pPassword);
+
+
+
+    int updateUser(UserBean pUser);
 }

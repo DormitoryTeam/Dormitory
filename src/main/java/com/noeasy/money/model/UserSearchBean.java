@@ -1,11 +1,23 @@
 package com.noeasy.money.model;
 
 public class UserSearchBean {
-    String id;
-    String login;
-    String password;
-    String name;
-    String groupId;
+    Integer id;
+    String  login;
+    String  password;
+    String  name;
+    String  groupId;
+
+
+
+    public Integer getId() {
+        return id;
+    }
+
+
+
+    public void setId(Integer pId) {
+        id = pId;
+    }
 
 
 
