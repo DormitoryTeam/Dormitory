@@ -13,6 +13,7 @@ import com.alipay.util.AlipayCore;
 import com.noeasy.money.constant.AlipayConstants;
 import com.noeasy.money.exception.BaseException;
 import com.noeasy.money.exception.PaymentErrorMetadata;
+import com.noeasy.money.util.PropertiesUtils;
 
 public class AlipayUtils {
 
@@ -22,24 +23,7 @@ public class AlipayUtils {
 
 
     public static String getConfigurableProperty(String pKey) {
-        Properties prop = new Properties();
-        InputStream input = null;
-        try {
-            
-            input = AlipayUtils.class.getResourceAsStream(CONFIG_PATH);
-            prop.load(input);
-            return (String) prop.get(pKey);
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-            throw new BaseException(PaymentErrorMetadata.EMPTY_PROPERTY);
-        } finally {
-            try {
-                input.close();
-            } catch (IOException e) {
-                logger.error(e.getMessage());
-            }
-        }
-
+        return PropertiesUtils.getConfigurableProperty(CONFIG_PATH, pKey);
     }
 
 

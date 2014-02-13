@@ -6,6 +6,7 @@ public class UserSearchBean {
     String  password;
     String  name;
     String  groupId;
+    String  sign;
 
 
 
@@ -65,6 +66,18 @@ public class UserSearchBean {
 
     public void setGroupId(String pGroupId) {
         groupId = pGroupId;
+    }
+
+
+
+    public String getSign() {
+        return sign;
+    }
+
+
+
+    public void setSign(String pSign) {
+        sign = pSign;
     }
 
 }

@@ -24,4 +24,8 @@ public interface IUserRepository {
 
     int resetPassword(UserBean pUser);
 
+
+
+    int updateResetPasswordSign(UserBean pUser);
+
 }

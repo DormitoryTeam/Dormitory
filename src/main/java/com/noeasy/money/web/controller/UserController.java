@@ -1,7 +1,6 @@
 package com.noeasy.money.web.controller;
 
 import java.util.List;
-import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +17,7 @@ import com.noeasy.money.model.UserBean;
 import com.noeasy.money.model.UserSearchBean;
 import com.noeasy.money.service.IUserService;
 import com.noeasy.money.util.DateUtils;
+import com.noeasy.money.util.EmailUtils;
 import com.noeasy.money.util.ServletUtils;
 
 @Controller
@@ -153,7 +153,19 @@ public class UserController {
     @RequestMapping(value = "/resetPassword.html")
     public String resetPassword(ModelMap model, HttpServletRequest request, HttpServletResponse response, String login,
             String password, String sign) {
+        // TODO: validate date
+        // String generateDateStr = sign.substring(0, 8);//yyyyMMdd+UUID
+        UserSearchBean searchBean = new UserSearchBean();
+        searchBean.setSign(sign);
+        List<UserBean> users =  userService.queryUser(searchBean);
+        if (CollectionUtils.isEmpty(users)) {
+            model.addAttribute("message", "Invalide sign");
+            return "changePasswordMessage";
+        }
+        UserBean user = users.get(0);
         if (ServletUtils.isGet(request)) {
+            model.addAttribute("sign", sign);
+            model.addAttribute("user", user);
             return "user/resetPasswordFrom";
         }
         boolean sucess = userService.resetPassword(login, password);
@@ -165,9 +177,34 @@ public class UserController {
         return "user/changePasswordMessage";
     }
     
+    @RequestMapping(value = "/sendResetPasswordEmail.html")
     public String sendResetPasswordEmail(ModelMap model, HttpServletRequest request, HttpServletResponse response, String login) {
-        UUID.randomUUID().toString();
-        return null;
+        model.addAttribute("login", login);
+        if (ServletUtils.isGet(request)) {
+            return "user/sendResetPasswordEmailForm";
+        }
+        if (StringUtils.isBlank(login)) {
+            model.addAttribute("message", "Username should not be blank");
+            return "user/changePasswordMessage";
+        }
+        boolean isExist = userService.exist(login);
+        if (!isExist) {
+            model.addAttribute("message", "User not exist");
+            return "user/changePasswordMessage";
+        }
+        UserBean user = userService.generateResetPasswordSign(login);
+        String sign = user.getResetPasswordSign();
+        String from = EmailUtils.getServiceEmail();
+        String fromAlias = EmailUtils.getServiceAlias();
+        String subject = EmailUtils.getSubject();
+        // TODO: URL
+        boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, user.getEmail(), user.getName(), subject, sign);
+        String message = "Send reset password success.";
+        if (!sendSuccess) {
+            message = "Send reset password faild.";
+        }
+        model.addAttribute("message", message);
+        return "user/changePasswordMessage";
     }
 
 }

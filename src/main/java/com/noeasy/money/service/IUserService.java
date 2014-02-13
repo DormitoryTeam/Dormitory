@@ -41,4 +41,8 @@ public interface IUserService {
 
 
     int updateUser(UserBean pUser);
+
+
+
+    UserBean generateResetPasswordSign(String pLogin);
 }

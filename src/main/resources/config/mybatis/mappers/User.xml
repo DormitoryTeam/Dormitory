@@ -37,6 +37,12 @@
 		WHERE login = #{login}
 	</update>
 
+	<update id="updateResetPasswordSign" parameterType="com.noeasy.money.model.UserBean">
+		UPDATE users SET
+			reset_password_sign = resetPasswordSign
+		WHERE login = #{login}
+	</update>
+
 
 	<select id="queryUser" parameterType="com.noeasy.money.model.UserSearchBean"
 		resultType="com.noeasy.money.model.UserBean">
@@ -54,6 +60,9 @@
 		</if>
 		<if test="groupId != null">
 			AND ugroup.group_id = #{groupId}
+		</if>
+		<if test="sign != null">
+			AND u.reset_password_sign = #{sign}
 		</if>
 	</select>
 </mapper>

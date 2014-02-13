@@ -1,9 +1,9 @@
 package com.noeasy.money.service.impl;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -16,8 +16,8 @@ import com.noeasy.money.model.UserBean;
 import com.noeasy.money.model.UserSearchBean;
 import com.noeasy.money.repository.IAuthenticationRepository;
 import com.noeasy.money.repository.IUserRepository;
-import com.noeasy.money.service.IAuthenticationService;
 import com.noeasy.money.service.IUserService;
+import com.noeasy.money.util.DateUtils;
 
 @Service(value = "userService")
 public class UserService implements IUserService {
@@ -125,6 +125,19 @@ public class UserService implements IUserService {
     @Override
     public int updateUser(UserBean pUser) {
         return userRepository.updateUser(pUser);
+    }
+
+
+
+    @Override
+    public UserBean generateResetPasswordSign(String pLogin) {
+        String sign = DateUtils.dateToString(new Date(), DateUtils.SIMPLE_DATE_FROMAT_RULE) + UUID.randomUUID().toString();
+        UserSearchBean searchBean = new UserSearchBean();
+        searchBean.setLogin(pLogin);
+        UserBean user = userRepository.queryUser(searchBean).get(0);
+        user.setResetPasswordSign(sign);
+        userRepository.updateResetPasswordSign(user);
+        return user;
     }
 
 }

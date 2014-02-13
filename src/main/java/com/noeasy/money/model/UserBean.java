@@ -19,6 +19,7 @@ public class UserBean extends BaseBean {
     private String  address;
     private String  phone;
     private String  qq;
+    private String  resetPasswordSign;
 
 
 
@@ -170,6 +171,18 @@ public class UserBean extends BaseBean {
 
     public void setQq(final String pQq) {
         qq = pQq;
+    }
+
+
+
+    public String getResetPasswordSign() {
+        return resetPasswordSign;
+    }
+
+
+
+    public void setResetPasswordSign(String pResetPasswordSign) {
+        resetPasswordSign = pResetPasswordSign;
     }
 
 }

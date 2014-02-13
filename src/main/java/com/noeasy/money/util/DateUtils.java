@@ -14,6 +14,8 @@ public class DateUtils {
     public static final String DEFAULT_DATE_FORMAT_RULE = "yyyy-MM-dd";
 
     public static final String DATE_TIME_FORAMT_RULE    = "yyyy-MM-dd HH:mm:ss";
+    
+    public static final String SIMPLE_DATE_FROMAT_RULE = "yyyyMMdd";
 
 
 
