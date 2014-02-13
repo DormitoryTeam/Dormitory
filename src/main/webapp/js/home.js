@@ -6,7 +6,7 @@ $(function() {
 function loadCitiesByCountry() {
     $.ajax({
         type : "POST",
-        url : "/dormitory/navigation/getCity",
+        url : "/dormitory/navigation/getCity.html",
         data : {
             countryId : this.value
         },
@@ -20,7 +20,7 @@ function loadCitiesByCountry() {
 function loadCollegesByCity() {
     $.ajax({
         type : "POST",
-        url : "/dormitory/navigation/getCollege",
+        url : "/dormitory/navigation/getCollege.html",
         data : {
             cityId : this.value
         },

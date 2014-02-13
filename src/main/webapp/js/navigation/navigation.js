@@ -5,7 +5,7 @@ $(function() {
 function loadCityListByCountry() {
     $.ajax({
         type : "POST",
-        url : "/dormitory/navigation/getCity",
+        url : "/dormitory/navigation/getCity.html",
         data : {
             countryId : $(this).attr("countryId")
         },
@@ -36,9 +36,9 @@ function loadCityListByCountry() {
 function loadCollegeListByCountry() {
     $.ajax({
         type : "POST",
-        url : "/dormitory/navigation/getCollege",
+        url : "/dormitory/navigation/getCollege.html",
         data : {
-        	cityId : $(this).attr("cityId")
+            cityId : $(this).attr("cityId")
         },
         success : function(data) {
             var tbody = $("#tableCollege > tbody").empty();
@@ -51,7 +51,7 @@ function loadCollegeListByCountry() {
                     if (i % 5 == 0) {
                         tbody.append("</tr><tr>");
                     }
-                    tbody.append("<td><a href=\"javascript:void(0);\" class=\"anchorCollege\" collegeId=\"" + e.id + "\">" + e.name + "</a></td>");
+                    tbody.append("<td><a href=\"/dormitory/dormitory/dormitory-list.html?cityId=" + e.cityId + "&collegeId=" + e.id + "\" class=\"anchorCollege\" collegeId=\"" + e.id + "\">" + e.name + "</a></td>");
                 })
                 if (tbody.find("td").length <= 0) {
                     tbody.append("<tr><td>no valid result.</td></tr>");
