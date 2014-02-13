@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.noeasy.money.constant.Constants;
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitorySearchBean;
 import com.noeasy.money.service.IDormitoryService;
@@ -63,10 +64,27 @@ public class DormitoryController {
 
 
 
-    @RequestMapping("/dormitory-list")
-    public String toDormitory(final HttpServletRequest request, final HttpServletResponse response, final Model model,
-            final String collegeId, final String cityId, final String keyword, final String sortField,
-            final String sortType) {
+    @RequestMapping("/dormitory-detail" + Constants.URL_SUFFIX)
+    public String toDormitoryDetail(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final String id) {
+        if (StringUtils.isNotBlank(id)) {
+            DormitorySearchBean searchBean = new DormitorySearchBean();
+            searchBean.setId(NumberUtils.toInt(id));
+            DormitoryBean dormitory = dormitoryService.queryDormitory(searchBean);
+
+            if (dormitory.getId() > 0) {
+                model.addAttribute("dormitory", dormitory);
+            }
+        }
+        return "dormitory/dormitory-detail";
+    }
+
+
+
+    @RequestMapping("/dormitory-list" + Constants.URL_SUFFIX)
+    public String toDormitoryList(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final String collegeId, final String cityId, final String keyword,
+            final String sortField, final String sortType) {
         if (StringUtils.isNotBlank(collegeId) && StringUtils.isNotBlank(cityId)) {
 
             Map<String, Object> city = navigationService.queryCityById(NumberUtils.toInt(cityId), null);

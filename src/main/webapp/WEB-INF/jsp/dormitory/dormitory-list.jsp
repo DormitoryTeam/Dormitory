@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type="text/javascript" src="<c:url value='/js/jquery/jquery-1.4.3.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/js/dormitory/dormitory-list.js' />"></script>
 <title></title>
 </head>
 <body>
@@ -30,13 +31,12 @@
 							<ul>
 								<li>Name: ${dormitory['name']}</li>
 								<li>Addr: ${dormitory['address']}</li>
-								<li>Equip: ${dormitory['equipment']}</li>
-								<li>Serv: ${dormitory['service']}</li>
 								<li>Price: ${dormitory['salePrice']}</li>
 								<li>Rate: ${dormitory['rating']}</li>
 								<li>Dist: ${dormitory['distance']}</li>
-								<li style="display: none;"><hr /></li>
-							</ul></td>
+								<li><input type="button" class="btnDetail" dormitoryId="${dormitory['id']}" value="to detail" /></li>
+							</ul>
+							<hr /></td>
 					</tr>
 				</c:forEach>
 			</c:if>

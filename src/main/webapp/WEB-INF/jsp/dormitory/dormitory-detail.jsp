@@ -8,5 +8,20 @@
 <title></title>
 </head>
 <body>
+	<ul>
+		<li>Name:${dormitory['name']}</li>
+		<li>Address:${dormitory['address']}:</li>
+		<li>ZIP Code:${dormitory['postCode']}</li>
+		<li>Dormitory Type:${dormitory['dormitoryType']}</li>
+		<li>Contract Type:${dormitory['contract']}</li>
+		<li>List Price:${dormitory['listPrice']}</li>
+		<li>Sale Price:${dormitory['salePrice']}</li>
+		<li>Service:${dormitory['service']}</li>
+		<li>Equipment:${dormitory['equipment']}</li>
+		<li>Description:${dormitory['description']}</li>
+		<li>Images:${dormitory['picPath']}</li>
+		<li>Videos:${dormitory['videoPath']}</li>
+		<li>Rating:${dormitory['rating']}</li>
+	</ul>
 </body>
 </html>

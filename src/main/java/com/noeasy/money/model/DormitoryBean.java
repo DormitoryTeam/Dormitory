@@ -28,6 +28,8 @@
  */
 package com.noeasy.money.model;
 
+import java.util.List;
+
 /**
  * <class description>
  * 
@@ -37,28 +39,29 @@ package com.noeasy.money.model;
 
 public class DormitoryBean extends BaseBean {
 
-    private int    mId;
+    private int          mId;
+    private String       mName;
+    private String       mAddress;
+    private String       mPostCode;
+    private String       mEquipment;
+    private String       mService;
+    private Double       mSalePrice;
+    private Double       mListPrice;
+    private String       mCurrency;
+    private Double       mDistance;
+    private Double       mRating;
+    private String       mDescription;
+    private int          mCityId;
+    private String       mCity;
+    private int          mCollegeId;
+    private String       mCollege;
+    private int          mDormitoryTypeId;
 
-    private String mName;
-    private String mAddress;
-    private String mPostCode;
-    private String mEquipment;
-    private String mService;
-    private Double mSalePrice;
-    private Double mListPrice;
-    private String mCurrency;
-    private Double mDistance;
-    private Double mRating;
-    private String mDescription;
-    private int    mCityId;
-
-    private String mCity;
-    private int    mCollegeId;
-    private String mCollege;
-    private int    mDormitoryTypeId;
-    private String mDormitoryType;
-    private int    mContractId;
-    private String mContract;
+    private String       mDormitoryType;
+    private int          mContractId;
+    private String       mContract;
+    private List<String> mPicPath;
+    private List<String> mVideoPath;
 
 
 
@@ -207,6 +210,15 @@ public class DormitoryBean extends BaseBean {
 
 
     /**
+     * @return the picPath
+     */
+    public List<String> getPicPath() {
+        return mPicPath;
+    }
+
+
+
+    /**
      * @return the postCode
      */
     public String getPostCode() {
@@ -238,6 +250,15 @@ public class DormitoryBean extends BaseBean {
      */
     public String getService() {
         return mService;
+    }
+
+
+
+    /**
+     * @return the videoPath
+     */
+    public List<String> getVideoPath() {
+        return mVideoPath;
     }
 
 
@@ -403,6 +424,16 @@ public class DormitoryBean extends BaseBean {
 
 
     /**
+     * @param pPicPath
+     *            the picPath to set
+     */
+    public void setPicPath(final List<String> pPicPath) {
+        mPicPath = pPicPath;
+    }
+
+
+
+    /**
      * @param pPostCode
      *            the postCode to set
      */
@@ -438,6 +469,16 @@ public class DormitoryBean extends BaseBean {
      */
     public void setService(final String pService) {
         mService = pService;
+    }
+
+
+
+    /**
+     * @param pVideoPath
+     *            the videoPath to set
+     */
+    public void setVideoPath(final List<String> pVideoPath) {
+        mVideoPath = pVideoPath;
     }
 
 }
