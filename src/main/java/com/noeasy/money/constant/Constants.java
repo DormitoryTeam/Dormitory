@@ -14,4 +14,12 @@ public interface Constants {
     public static final String IMAGE_STORAGE_PATH = "IMAGE/";
 
     public static final String URL_SUFFIX         = ".html";
+
+    public static final String CONFIG_PATH        = "/config/base.properties";
+
+    public static final String CONFIG_DOMAIN      = "domain";
+
+    public static final String CONFIG_CONTEXT     = "context";
+
+    public static final String SLASH              = "/";
 }

@@ -12,12 +12,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.noeasy.money.constant.Constants;
 import com.noeasy.money.constant.SessionConstants;
 import com.noeasy.money.model.UserBean;
 import com.noeasy.money.model.UserSearchBean;
 import com.noeasy.money.service.IUserService;
 import com.noeasy.money.util.DateUtils;
 import com.noeasy.money.util.EmailUtils;
+import com.noeasy.money.util.PropertiesUtils;
 import com.noeasy.money.util.ServletUtils;
 
 @Controller
@@ -126,15 +128,15 @@ public class UserController {
     @RequestMapping(value = "/changePassword.html")
     public String changePassword(ModelMap model, HttpServletRequest request, HttpServletResponse response,
             String oldPassword, String newPassword) {
-        String login = (String)request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_LOGIN);
+        String login = (String) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_LOGIN);
         if (null == login) {
             return "redirect:/user/login.html";
         }
-        
+
         if (ServletUtils.isGet(request)) {
             return "user/changePasswordForm";
         }
-        
+
         int result = userService.changePassword(login, oldPassword, newPassword);
         String message = "Unkown Issue";
         if (IUserService.PASSWORD_NOT_MATCH == result) {
@@ -157,7 +159,7 @@ public class UserController {
         // String generateDateStr = sign.substring(0, 8);//yyyyMMdd+UUID
         UserSearchBean searchBean = new UserSearchBean();
         searchBean.setSign(sign);
-        List<UserBean> users =  userService.queryUser(searchBean);
+        List<UserBean> users = userService.queryUser(searchBean);
         if (CollectionUtils.isEmpty(users)) {
             model.addAttribute("message", "Invalide sign");
             return "changePasswordMessage";
@@ -176,9 +178,12 @@ public class UserController {
         model.addAttribute("message", message);
         return "user/changePasswordMessage";
     }
-    
+
+
+
     @RequestMapping(value = "/sendResetPasswordEmail.html")
-    public String sendResetPasswordEmail(ModelMap model, HttpServletRequest request, HttpServletResponse response, String login) {
+    public String sendResetPasswordEmail(ModelMap model, HttpServletRequest request, HttpServletResponse response,
+            String login) {
         model.addAttribute("login", login);
         if (ServletUtils.isGet(request)) {
             return "user/sendResetPasswordEmailForm";
@@ -197,8 +202,10 @@ public class UserController {
         String from = EmailUtils.getServiceEmail();
         String fromAlias = EmailUtils.getServiceAlias();
         String subject = EmailUtils.getSubject();
-        // TODO: URL
-        boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, user.getEmail(), user.getName(), subject, sign);
+        String domain = PropertiesUtils.getConfigurableProperty(Constants.CONFIG_PATH, Constants.CONFIG_DOMAIN);
+        String context = PropertiesUtils.getConfigurableProperty(Constants.CONFIG_PATH, Constants.CONFIG_CONTEXT);
+        String resetPasswordURL = domain + Constants.SLASH + context + "/user/resetPassword.html?sign=" + sign;
+        boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, user.getEmail(), user.getName(), subject, resetPasswordURL);
         String message = "Send reset password success.";
         if (!sendSuccess) {
             message = "Send reset password faild.";
