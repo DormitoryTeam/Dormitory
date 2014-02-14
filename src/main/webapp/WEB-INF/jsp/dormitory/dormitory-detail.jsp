@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type="text/javascript" src="<c:url value='/js/jquery/jquery-1.4.3.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/js/dormitory/dormitory-detail.js'/>"></script>
 <title></title>
 </head>
 <body>
@@ -22,6 +23,7 @@
 		<li>Images:${dormitory['picPath']}</li>
 		<li>Videos:${dormitory['videoPath']}</li>
 		<li>Rating:${dormitory['rating']}</li>
+		<li><input type="button" id="btnBookDormitory" value="Book it!" dormitoryId="${dormitory['id']}" /></li>
 	</ul>
 </body>
 </html>
