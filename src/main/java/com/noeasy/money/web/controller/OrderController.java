@@ -28,35 +28,28 @@
  */
 package com.noeasy.money.web.controller;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.noeasy.money.enumeration.Operation;
-import com.noeasy.money.enumeration.OrderStatus;
-import com.noeasy.money.enumeration.OrderType;
+import com.noeasy.money.constant.Constants;
+import com.noeasy.money.constant.SessionConstants;
 import com.noeasy.money.model.DormitoryBean;
-import com.noeasy.money.model.DormitoryLineItem;
-import com.noeasy.money.model.LineItem;
-import com.noeasy.money.model.OrderBean;
-import com.noeasy.money.model.OrderContactInfo;
-import com.noeasy.money.model.OrderSearchBean;
-import com.noeasy.money.model.OrderTail;
-import com.noeasy.money.model.PageBean;
-import com.noeasy.money.model.PickupLineItem;
+import com.noeasy.money.model.DormitorySearchBean;
 import com.noeasy.money.model.UserBean;
+import com.noeasy.money.model.UserSearchBean;
+import com.noeasy.money.service.IDormitoryService;
 import com.noeasy.money.service.IOrderService;
-import com.noeasy.money.util.test.ReflectionUtils;
+import com.noeasy.money.service.IUserService;
 
 /**
  * <class description>
@@ -69,96 +62,35 @@ import com.noeasy.money.util.test.ReflectionUtils;
 public class OrderController {
 
     @Resource(name = "orderService")
-    IOrderService orderService;
+    IOrderService     orderService;
+
+    @Resource(name = "userService")
+    IUserService      userService;
+    @Resource(name = "dormitoryService")
+    IDormitoryService dormitoryService;
 
 
 
-    @RequestMapping("/unit-test/order")
-    public String testOrder(final HttpServletRequest request, final HttpServletResponse response, final Model model,
-            final String orderType) {
-        if (StringUtils.isNoneBlank(orderType)) {
-            UserBean user = new UserBean();
-            user.setId(3);
+    @RequestMapping("/order-fill" + Constants.URL_SUFFIX)
+    public String toOrderFill(final HttpServletRequest request, final HttpServletResponse response, final Model model,
+            final String dormitoryId) {
+        if (StringUtils.isNoneBlank(dormitoryId)) {
+            DormitorySearchBean dormitorySearchBean = new DormitorySearchBean();
+            dormitorySearchBean.setId(NumberUtils.toInt(dormitoryId));
+            DormitoryBean dormitory = dormitoryService.queryDormitory(dormitorySearchBean);
 
-            OrderBean ob = new OrderBean();
-            ob.setUser(user);
-            ob.setBelongsTo(user);
-            ob.setAmount(new BigDecimal(500));
-            String currency = "USD";
-            ob.setCurrency(currency);
-            ob.setOrderType(OrderType.valueOf(orderType));
-            ob.setOrderStatus(OrderStatus.SENDING_CONTACT);
+            Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+            UserSearchBean userSearchBean = new UserSearchBean();
+            userSearchBean.setId(userId != null ? userId : 1);
 
-            OrderContactInfo oci = new OrderContactInfo();
-            oci.setAddress("中和大道一段南 卡斯摩广场");
-            oci.setGender(false);
-            oci.setName("Zinder");
-            oci.setPhone("1366666666");
-            oci.setQQ("12345");
+            List<UserBean> result = userService.queryUser(userSearchBean);
+            if (CollectionUtils.isNotEmpty(result)) {
+                UserBean user = result.get(0);
 
-            ob.setOrderContact(oci);
-            List<LineItem> li = new ArrayList<LineItem>();
-            ob.setLineItems(li);
-            if (OrderType.DORMITORY.equals(ob.getOrderType())) {
-                DormitoryLineItem dli = new DormitoryLineItem();
-                dli.setAmount(new BigDecimal(500));
-                dli.setCurrency(currency);
-                dli.setListPrice(new BigDecimal(500));
-                DormitoryBean db = new DormitoryBean();
-                db.setId(2);
-                dli.setDormitory(db);
-                li.add(dli);
+                model.addAttribute("user", user);
             }
-
-            if (OrderType.PICKUP.equals(ob.getOrderType())) {
-                PickupLineItem pli = new PickupLineItem();
-                pli.setAmount(new BigDecimal(500));
-                pli.setCityId(1);
-                pli.setCurrency(currency);
-                pli.setFlightNum("PICK-UP007");
-                pli.setLandingCity("London");
-                pli.setListPrice(new BigDecimal(500));
-                pli.setLuggageAmount(20);
-                pli.setLuggageSize(0.2d);
-                pli.setPickupType(2);
-                pli.setPickupDate(new Date());
-                li.add(pli);
-            }
-
-            OrderTail ot = new OrderTail();
-            ot.setOperation(Operation.CREATE);
-            ot.setOperator(user);
-            ot.setOperationTime(new Date());
-
-            List<OrderTail> otl = new ArrayList<OrderTail>();
-            otl.add(ot);
-            ob.setTails(otl);
-
-            orderService.placeOrder(ob);
-
-            OrderSearchBean osb = new OrderSearchBean();
-            osb.setOrderNumber(ob.getId());
-            osb.setOrderType(ob.getOrderType());
-            List<OrderBean> orderList = orderService.queryOrder(osb);
-            List<List<String>> result = new ArrayList<List<String>>();
-            for (OrderBean bean : orderList) {
-                result.add(ReflectionUtils.getFieldsValue(bean));
-            }
-
-            model.addAttribute("result", result);
+            model.addAttribute("dormitory", dormitory);
         }
-
-        OrderSearchBean osb = new OrderSearchBean();
-        osb.setOrderType(OrderType.DORMITORY);
-        PageBean pb = new PageBean();
-        osb.setPageBean(pb);
-        List<OrderBean> orderList = orderService.queryOrder(osb);
-        List<List<String>> results = new ArrayList<List<String>>();
-        for (OrderBean bean : orderList) {
-            results.add(ReflectionUtils.getFieldsValue(bean));
-        }
-
-        model.addAttribute("results", results);
-        return "order/order";
+        return "order/order-fill";
     }
 }

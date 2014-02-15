@@ -6,11 +6,14 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.noeasy.money.constant.Constants;
 import com.noeasy.money.constant.SessionConstants;
@@ -31,33 +34,67 @@ public class UserController {
 
 
 
-    @RequestMapping(value = "/register.html")
-    public String register(ModelMap model, HttpServletRequest request, HttpServletResponse response, String login,
-            String password) {
-        if (ServletUtils.isGet(request)) {
-            return "user/registerForm";
+    @RequestMapping(value = "/changePassword.html")
+    public String changePassword(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, final String oldPassword, final String newPassword) {
+        String login = (String) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_LOGIN);
+        if (null == login) {
+            return "redirect:/user/login.html";
         }
-        if (StringUtils.isBlank(login)) {
-            model.addAttribute("message", "username should not be blank");
-            return "user/registerForm";
-        }
-        if (StringUtils.isBlank(password)) {
-            model.addAttribute("message", "password should not be blank");
-            return "user/registerForm";
-        }
-        model.addAttribute("login", login);
-        UserBean user = userService.register(login, password);
-        request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_ID, user.getId());
-        request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_LOGIN, user.getLogin());
 
-        return "redirect:/user/registerSucess";
+        if (ServletUtils.isGet(request)) {
+            return "user/changePasswordForm";
+        }
+
+        int result = userService.changePassword(login, oldPassword, newPassword);
+        String message = "Unkown Issue";
+        if (IUserService.PASSWORD_NOT_MATCH == result) {
+            message = "Password not match";
+
+        }
+        if (IUserService.PASSWORD_CHANGE_SUCCESS == result) {
+            message = "Success";
+        }
+        model.addAttribute("message", message);
+        return "user/changePasswordMessage";
+    }
+
+
+
+    @RequestMapping(value = "/editUserInfo.html")
+    public String editUserInfo(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, final String name, final String gender, final String passport,
+            final String birthday, final String address, final String phone, final String qq) {
+        Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+        if (null == userId) {
+            return "redirect:/user/login.html";
+        }
+        if (ServletUtils.isGet(request)) {
+            UserSearchBean searchBean = new UserSearchBean();
+            searchBean.setId(userId);
+            UserBean user = userService.queryUser(searchBean).get(0);
+            model.addAttribute("user", user);
+            return "user/userInfoForm";
+        }
+        UserBean user = new UserBean();
+        user.setId(userId);
+        user.setName(name);
+        user.setGender("T".equalsIgnoreCase(gender));
+        user.setPassport(passport);
+        user.setBirthday(DateUtils.stringToDate(birthday));
+        user.setAddress(address);
+        user.setPhone(phone);
+        user.setPassport(passport);
+        user.setQq(qq);
+        userService.updateUser(user);
+        return "user/editUserSuccess";
     }
 
 
 
     @RequestMapping(value = "/login.html")
-    public String login(ModelMap model, HttpServletRequest request, HttpServletResponse response, String login,
-            String password) {
+    public String login(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response,
+            final String login, final String password) {
         if (ServletUtils.isGet(request)) {
             return "user/loginForm";
         }
@@ -86,75 +123,54 @@ public class UserController {
 
 
 
-    @RequestMapping(value = "/signout.html")
-    public String signout(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-        request.getSession().removeAttribute(SessionConstants.SESSION_KEY_USER_ID);
-
-        return "redirect:/user/signoutSuccess";
-    }
-
-
-
-    @RequestMapping(value = "/editUserInfo.html")
-    public String editUserInfo(ModelMap model, HttpServletRequest request, HttpServletResponse response, String name,
-            String gender, String passport, String birthday, String address, String phone, String qq) {
-        Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
-        if (null == userId) {
-            return "redirect:/user/login.html";
-        }
-        if (ServletUtils.isGet(request)) {
+    @RequestMapping("/queryUserInfoByEmail" + Constants.URL_SUFFIX)
+    @ResponseBody
+    public String queryUserInfoByEmail(final HttpServletRequest request, final HttpServletResponse response,
+            final String email) {
+        if (StringUtils.isNotBlank(email)) {
             UserSearchBean searchBean = new UserSearchBean();
-            searchBean.setId(userId);
-            UserBean user = userService.queryUser(searchBean).get(0);
-            model.addAttribute("user", user);
-            return "user/userInfoForm";
+            searchBean.setLogin(email);
+            List<UserBean> result = userService.queryUser(searchBean);
+            if (CollectionUtils.isNotEmpty(result)) {
+                UserBean user = result.get(0);
+                user.setPassword("");
+
+                JSONObject userJson = JSONObject.fromObject(user);
+                return userJson.toString();
+            }
         }
-        UserBean user = new UserBean();
-        user.setId(userId);
-        user.setName(name);
-        user.setGender("T".equalsIgnoreCase(gender));
-        user.setPassport(passport);
-        user.setBirthday(DateUtils.stringToDate(birthday));
-        user.setAddress(address);
-        user.setPhone(phone);
-        user.setPassport(passport);
-        user.setQq(qq);
-        userService.updateUser(user);
-        return "user/editUserSuccess";
+        return "";
     }
 
 
 
-    @RequestMapping(value = "/changePassword.html")
-    public String changePassword(ModelMap model, HttpServletRequest request, HttpServletResponse response,
-            String oldPassword, String newPassword) {
-        String login = (String) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_LOGIN);
-        if (null == login) {
-            return "redirect:/user/login.html";
-        }
-
+    @RequestMapping(value = "/register.html")
+    public String register(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response,
+            final String login, final String password) {
         if (ServletUtils.isGet(request)) {
-            return "user/changePasswordForm";
+            return "user/registerForm";
         }
+        if (StringUtils.isBlank(login)) {
+            model.addAttribute("message", "username should not be blank");
+            return "user/registerForm";
+        }
+        if (StringUtils.isBlank(password)) {
+            model.addAttribute("message", "password should not be blank");
+            return "user/registerForm";
+        }
+        model.addAttribute("login", login);
+        UserBean user = userService.register(login, password);
+        request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_ID, user.getId());
+        request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_LOGIN, user.getLogin());
 
-        int result = userService.changePassword(login, oldPassword, newPassword);
-        String message = "Unkown Issue";
-        if (IUserService.PASSWORD_NOT_MATCH == result) {
-            message = "Password not match";
-
-        }
-        if (IUserService.PASSWORD_CHANGE_SUCCESS == result) {
-            message = "Success";
-        }
-        model.addAttribute("message", message);
-        return "user/changePasswordMessage";
+        return "redirect:/user/registerSucess";
     }
 
 
 
     @RequestMapping(value = "/resetPassword.html")
-    public String resetPassword(ModelMap model, HttpServletRequest request, HttpServletResponse response, String login,
-            String password, String sign) {
+    public String resetPassword(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, final String login, final String password, final String sign) {
         // TODO: validate date
         // String generateDateStr = sign.substring(0, 8);//yyyyMMdd+UUID
         UserSearchBean searchBean = new UserSearchBean();
@@ -182,8 +198,8 @@ public class UserController {
 
 
     @RequestMapping(value = "/sendResetPasswordEmail.html")
-    public String sendResetPasswordEmail(ModelMap model, HttpServletRequest request, HttpServletResponse response,
-            String login) {
+    public String sendResetPasswordEmail(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, final String login) {
         model.addAttribute("login", login);
         if (ServletUtils.isGet(request)) {
             return "user/sendResetPasswordEmailForm";
@@ -214,4 +230,12 @@ public class UserController {
         return "user/changePasswordMessage";
     }
 
+
+
+    @RequestMapping(value = "/signout.html")
+    public String signout(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response) {
+        request.getSession().removeAttribute(SessionConstants.SESSION_KEY_USER_ID);
+
+        return "redirect:/user/signoutSuccess";
+    }
 }
