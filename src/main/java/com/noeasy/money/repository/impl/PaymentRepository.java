@@ -13,16 +13,14 @@ public class PaymentRepository extends BaseRepository implements IPaymentReposit
 
     @Override
     public void savePayment(PaymentBean pPayment) {
-        int id = getSqlSession().insert("com.noeasy.money.model.Payment.savePayment", pPayment);
-        pPayment.setId(id);
+        getSqlSession().insert("com.noeasy.money.model.Payment.savePayment", pPayment);
     }
 
 
 
     @Override
     public void savePaymentInfo(PaymentInfoBean pPaymentInfo) {
-        int id = getSqlSession().insert("com.noeasy.money.model.Payment.savePaymentInfo", pPaymentInfo);
-        pPaymentInfo.setId(id);
+        getSqlSession().insert("com.noeasy.money.model.Payment.savePaymentInfo", pPaymentInfo);
     }
 
 

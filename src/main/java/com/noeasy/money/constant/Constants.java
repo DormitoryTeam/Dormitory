@@ -9,17 +9,23 @@ package com.noeasy.money.constant;
  * @author acer
  */
 public interface Constants {
-    public static final int    DEFAULT_PAGE_SIZE  = 8;
+    public static final int    DEFAULT_PAGE_SIZE        = 8;
 
-    public static final String IMAGE_STORAGE_PATH = "IMAGE/";
+    public static final String IMAGE_STORAGE_PATH       = "IMAGE/";
 
-    public static final String URL_SUFFIX         = ".html";
+    public static final String URL_SUFFIX               = ".html";
 
-    public static final String CONFIG_PATH        = "/config/base.properties";
+    public static final String CONFIG_PATH              = "/config/base.properties";
 
-    public static final String CONFIG_DOMAIN      = "domain";
+    public static final String CONFIG_DOMAIN            = "domain";
 
-    public static final String CONFIG_CONTEXT     = "context";
+    public static final String CONFIG_CONTEXT           = "context";
 
-    public static final String SLASH              = "/";
+    public static final String SLASH                    = "/";
+
+    public static final String CONFIG_DEFAULT_PAGE_SIZE = "defaultPageSize";
+
+    public static final String PARAM_CURRENT_PAGE       = "currentPage";
+
+    public static final String PARAM_PAGE_SIZE          = "pageSize";
 }

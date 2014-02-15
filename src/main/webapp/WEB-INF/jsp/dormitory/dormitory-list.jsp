@@ -42,5 +42,6 @@
 			</c:if>
 		</tbody>
 	</table>
+	<jsp:include page="/jsp/utils/pagination.jsp" flush="true"/> 
 </body>
 </html>

@@ -81,4 +81,8 @@ public interface IDormitoryRepository {
 
     Boolean calculateDistance4College(int pCollegeId);
 
+
+
+    Integer queryDormitoryCount(DormitorySearchBean pSearchBean);
+
 }
