@@ -39,7 +39,7 @@
 
 	<update id="updateResetPasswordSign" parameterType="com.noeasy.money.model.UserBean">
 		UPDATE users SET
-			reset_password_sign = resetPasswordSign
+			reset_password_sign = #{resetPasswordSign}
 		WHERE login = #{login}
 	</update>
 

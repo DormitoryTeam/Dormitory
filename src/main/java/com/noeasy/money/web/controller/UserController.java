@@ -22,6 +22,7 @@ import com.noeasy.money.model.UserSearchBean;
 import com.noeasy.money.service.IUserService;
 import com.noeasy.money.util.DateUtils;
 import com.noeasy.money.util.EmailUtils;
+import com.noeasy.money.util.PropertiesUtils;
 import com.noeasy.money.util.ServletUtils;
 
 @Controller
@@ -217,8 +218,10 @@ public class UserController {
         String from = EmailUtils.getServiceEmail();
         String fromAlias = EmailUtils.getServiceAlias();
         String subject = EmailUtils.getSubject();
-        // TODO: URL
-        boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, user.getEmail(), user.getName(), subject, sign);
+        String domain = PropertiesUtils.getConfigurableProperty(Constants.CONFIG_PATH, Constants.CONFIG_DOMAIN);
+        String context = PropertiesUtils.getConfigurableProperty(Constants.CONFIG_PATH, Constants.CONFIG_CONTEXT);
+        String resetPasswordURL = domain + Constants.SLASH + context + "/user/resetPassword.html?sign=" + sign;
+        boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, user.getEmail(), user.getName(), subject, resetPasswordURL);
         String message = "Send reset password success.";
         if (!sendSuccess) {
             message = "Send reset password faild.";
