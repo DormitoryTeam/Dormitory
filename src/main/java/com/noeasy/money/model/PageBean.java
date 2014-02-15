@@ -15,6 +15,15 @@
 
 package com.noeasy.money.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import com.noeasy.money.constant.Constants;
+import com.noeasy.money.util.PropertiesUtils;
+
 /**
  * <class description>
  * 
@@ -24,22 +33,59 @@ package com.noeasy.money.model;
 
 public class PageBean {
 
-    private int mPageNum  = 1;
+    private static final int FIRST_PAGE = 1;
 
-    private int mPageSize = 20;
+    private int              mPageNum   = FIRST_PAGE;
 
-    private int mMaxPageNum;
+    private int              mPageSize;
+
+    private int              mRowTotal;
+
+    private String           mQueryString;
+
+
+
+    public PageBean() {
+        mPageSize = Integer.valueOf(PropertiesUtils.getConfigurableProperty(Constants.CONFIG_PATH,
+                Constants.CONFIG_DEFAULT_PAGE_SIZE));
+    }
+
+
+
+    public PageBean(int pRowTotal) {
+        mPageSize = Integer.valueOf(PropertiesUtils.getConfigurableProperty(Constants.CONFIG_PATH,
+                Constants.CONFIG_DEFAULT_PAGE_SIZE));
+        mRowTotal = pRowTotal;
+    }
 
 
 
     public boolean isFirstPage() {
-        return getPageNum() == 0;
+        return getPageNum() == FIRST_PAGE;
     }
 
 
 
     public boolean isLastPage() {
         return getPageNum() == getMaxPageNum();
+    }
+
+
+
+    public int getNextPage() {
+        if (getPageNum() >= getMaxPageNum()) {
+            return getMaxPageNum();
+        }
+        return getPageNum() + 1;
+    }
+
+
+
+    public int getPrePage() {
+        if (getPageNum() <= FIRST_PAGE) {
+            return FIRST_PAGE;
+        }
+        return getPageNum() - 1;
     }
 
 
@@ -64,6 +110,14 @@ public class PageBean {
      *            the pageNum to set
      */
     public void setPageNum(int pPageNum) {
+        if (pPageNum < FIRST_PAGE) {
+            mPageNum = FIRST_PAGE;
+            return;
+        }
+        if (pPageNum > getMaxPageNum()) {
+            mPageNum = getMaxPageNum();
+            return;
+        }
         mPageNum = pPageNum;
     }
 
@@ -92,17 +146,59 @@ public class PageBean {
      * @return the maxPageNum
      */
     public int getMaxPageNum() {
-        return mMaxPageNum;
+        return (getRowTotal() / getPageSize()) + (0 == getRowTotal() % getPageSize() ? 0 : 1);
     }
 
 
 
-    /**
-     * @param pMaxPageNum
-     *            the maxPageNum to set
-     */
-    public void setMaxPageNum(int pMaxPageNum) {
-        mMaxPageNum = pMaxPageNum;
+    public int getRowTotal() {
+        return mRowTotal;
+    }
+
+
+
+    public void setRowTotal(int pRowTotal) {
+        mRowTotal = pRowTotal;
+    }
+
+
+
+    public String getQueryString() {
+        if (StringUtils.isBlank(mQueryString)) {
+            return "";
+        }
+        Map<String, String> param = new HashMap<String, String>();
+        String[] nvps = mQueryString.split("&");
+        for (String nvp : nvps) {
+            if (StringUtils.isBlank(nvp)) {
+                continue;
+            }
+            String[] paramPair = nvp.split("=");
+            if (null != paramPair && 2 == paramPair.length) {
+                param.put(paramPair[0], paramPair[1]);
+            }
+        }
+        if (MapUtils.isEmpty(param)) {
+            return "";
+        }
+        param.remove(Constants.PARAM_CURRENT_PAGE);
+        param.remove(Constants.PARAM_PAGE_SIZE);
+        String queryString = "";
+        int count = 0;
+        for (Map.Entry<String, String> entry : param.entrySet()) {
+            queryString += entry.getKey() + "=" + entry.getValue();
+            if (count != param.size()) {
+                queryString += "&";
+            }
+        }
+
+        return queryString;
+    }
+
+
+
+    public void setQueryString(String pQueryString) {
+        mQueryString = pQueryString;
     }
 
 }

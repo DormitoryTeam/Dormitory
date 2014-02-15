@@ -130,4 +130,11 @@ public class DormitoryService implements IDormitoryService {
         return dormitoryRepository.queryDormitoryAvgRate(pDormitoryId);
     }
 
+
+
+    @Override
+    public Integer queryDormitoryCount(DormitorySearchBean pSearchBean) {
+        return dormitoryRepository.queryDormitoryCount(pSearchBean);
+    }
+
 }

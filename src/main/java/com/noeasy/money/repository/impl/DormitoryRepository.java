@@ -51,7 +51,7 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
      */
     @Override
     public DormitoryBean queryDormitory(DormitorySearchBean pSearchBean) {
-        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.queryDormitory", pSearchBean);
+        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.queryDormitoryPage", pSearchBean);
     }
 
 
@@ -149,6 +149,13 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
     public Boolean calculateDistance4College(int pCollegeId) {
         getSqlSession().insert("com.noeasy.money.model.Dormitory.calculateDistance4College", pCollegeId);
         return true;
+    }
+
+
+
+    @Override
+    public Integer queryDormitoryCount(DormitorySearchBean pSearchBean) {
+        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.queryDormitoryCount", pSearchBean);
     }
 
 }

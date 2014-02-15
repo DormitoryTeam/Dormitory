@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.noeasy.money.constant.Constants;
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitorySearchBean;
+import com.noeasy.money.model.PageBean;
 import com.noeasy.money.service.IDormitoryService;
 import com.noeasy.money.service.INavigationService;
 
@@ -84,7 +85,7 @@ public class DormitoryController {
     @RequestMapping("/dormitory-list" + Constants.URL_SUFFIX)
     public String toDormitoryList(final HttpServletRequest request, final HttpServletResponse response,
             final Model model, final String collegeId, final String cityId, final String keyword,
-            final String sortField, final String sortType) {
+            final String sortField, final String sortType, String currentPage, String pageSize) {
         if (StringUtils.isNotBlank(collegeId) && StringUtils.isNotBlank(cityId)) {
 
             Map<String, Object> city = navigationService.queryCityById(NumberUtils.toInt(cityId), null);
@@ -104,7 +105,17 @@ public class DormitoryController {
                     searchBean.setSortType(sortType);
                 }
             }
+            int rowTotal = dormitoryService.queryDormitoryCount(searchBean);
 
+            PageBean page = new PageBean(rowTotal);
+            if (StringUtils.isNotBlank(currentPage)) {
+                page.setPageNum(Integer.valueOf(currentPage));
+            }
+            if (StringUtils.isNotBlank(pageSize)) {
+                page.setPageSize(Integer.valueOf(pageSize));
+            }
+            page.setQueryString(request.getQueryString());
+            searchBean.setPageBean(page);
             List<DormitoryBean> dormitories = dormitoryService.queryDormitoryPage(searchBean);
 
             model.addAttribute("keyword", keyword);
@@ -113,6 +124,7 @@ public class DormitoryController {
             model.addAttribute("city", city);
             model.addAttribute("college", college);
             model.addAttribute("dormitories", dormitories);
+            model.addAttribute("page", page);
         }
         return "dormitory/dormitory-list";
     }

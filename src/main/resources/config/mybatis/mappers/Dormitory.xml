@@ -6,24 +6,7 @@
 
 	<!-- Select Dormitory -->
 	<!-- SQL Fraggment -->
-	<sql id="select-dormitory">
-		select t1.id, t1.name, t1.address, t1.postcode, t1.equipment, t1.service, t1.salePrice, t1.listPrice, t1.currency, t1.description, t1.type_id as dormitoryTypeId, t1.city_id as cityId, t1.contract_type_id as contractId,
-		t2.name as dormitoryType, 
-		t3.name as contract, 
-		t4.name as city, 
-		coalesce(avg(t5.score), 0) as rating,
-		t6.media_path as picPath, 
-		t7.media_path as videoPath
-		from dormitory t1
-		left join dormitory_type t2 on t1.type_id = t2.id
-		left join contract_type t3 on t1.contract_type_id = t3.id
-		left join city t4 on t1.city_id = t4.id
-		left join dormitory_rating t5 on t1.id = t5.dormitory_id
-		left join dormitory_media t6 on t1.id = t6.dormitory_id and t6.media_type = 1
-		left join dormitory_media t7 ON t1.id = t7.dormitory_id and t7.media_type = 2
-	</sql>
-
-	<sql id="select-dormitory-page">
+	<sql id="select-dormitory-content">
 		select t1.id, t1.name, t1.address, t1.postcode, t1.equipment, t1.service, t1.salePrice, t1.listPrice, t1.currency, t1.description, t1.type_id as dormitoryTypeId, t1.city_id as cityId, t1.contract_type_id as contractId,
 		t2.name as dormitoryType, 
 		t3.name as contract, 
@@ -31,7 +14,18 @@
 		coalesce(avg(t5.score), 0) as rating,
 		t6.media_path as picPath, 
 		t7.media_path as videoPath,
-		t8.distance
+		ifnull(t8.distance, 0) as distance
+	</sql>
+	
+	
+	<sql id="select-dormitory-count-pre">
+		select count(*) from ( select t1.id
+	</sql>
+	<sql id="select-dormitory-count-post">
+		) as result
+	</sql>
+	
+	<sql id="select-dormitory-table-join">
 		from dormitory t1
 		left join dormitory_type t2 on t1.type_id = t2.id
 		left join contract_type t3 on t1.contract_type_id = t3.id
@@ -82,7 +76,8 @@
 	</sql>
 
 	<select id="queryDormitoryPage" parameterType='com.noeasy.money.model.DormitorySearchBean' resultMap="dormitory">
-		<include refid="select-dormitory-page" />
+		<include refid="select-dormitory-content" />
+		<include refid="select-dormitory-table-join" />
 		<include refid="where" />
 		<if test="id != null">
 			<include refid="where-with-id" />
@@ -103,11 +98,14 @@
 		<if test="sortBy != null">
 			<include refid="order-by-order-field" />
 		</if>
-		<include refid="limit-split-page" />
+		<if test="pageBean != null">
+			<include refid="limit-split-page" />
+		</if>
 	</select>
 
-	<select id="queryDormitory" parameterType='com.noeasy.money.model.DormitorySearchBean' resultMap="dormitory">
-		<include refid="select-dormitory" />
+	<select id="queryDormitoryCount" parameterType='com.noeasy.money.model.DormitorySearchBean'  resultType="int">
+		<include refid="select-dormitory-count-pre" />
+		<include refid="select-dormitory-table-join" />
 		<include refid="where" />
 		<if test="id != null">
 			<include refid="where-with-id" />
@@ -125,8 +123,10 @@
 			<include refid="where-with-keyword" />
 		</if>
 		<include refid="group-by-id" />
+		<include refid="select-dormitory-count-post" />
 	</select>
-	
+
+
 	<resultMap id="dormitory" type="com.noeasy.money.model.DormitoryBean">
 		<id column="id" property="id"/>
 		<result column="name" property="name"/>
