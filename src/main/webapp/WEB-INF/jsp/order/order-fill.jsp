@@ -29,22 +29,22 @@
 			</tr>
 			<tr>
 				<td>Name:</td>
-				<td><input type="text" name="name" value="${user['name']}" /></td>
+				<td><input type="text" id="name" name="name" value="${user['name']}" /></td>
 				<td>Gender:</td>
-				<td><select name="gender">
+				<td><select name="gender" id="gender">
 						<option value="1" <c:if test="${user['gender']}">selected="selected"</c:if>>Male</option>
 						<option value="0" <c:if test="${not user['gender']}">selected="selected"</c:if>>Female</option>
 				</select></td>
 			</tr>
 			<tr>
 				<td>Phone:</td>
-				<td><input type="text" name="phone" value="${user['phone']}" /></td>
+				<td><input type="text" name="phone" id="phone" value="${user['phone']}" /></td>
 				<td>QQ:</td>
-				<td><input type="text" name="QQ" value="${user['qq']}" /></td>
+				<td><input type="text" name="qq" id="qq" value="${user['qq']}" /></td>
 			</tr>
 			<tr>
 				<td>Address:</td>
-				<td colspan="3"><input type="text" name="address" value="${user['address']}" /></td>
+				<td colspan="3"><input type="text" name="address" id="address" value="${user['address']}" /></td>
 			</tr>
 			<tr>
 				<td colspan="4"><hr /></td>
@@ -58,22 +58,22 @@
 			<div id="divOtherUserInfo">
 				<tr>
 					<td>Name:</td>
-					<td><input type="text" name="name" value="" /></td>
+					<td><input type="text" name="othername" id="othername" value="" /></td>
 					<td>Gender:</td>
-					<td><select name="gender">
+					<td><select name="othergender" id="othergender">
 							<option value="1">Male</option>
 							<option value="0">Female</option>
 					</select></td>
 				</tr>
 				<tr>
 					<td>Phone:</td>
-					<td><input type="text" name="phone" value="" /></td>
+					<td><input type="text" name="otherphone" id="otherphone" value="" /></td>
 					<td>QQ:</td>
-					<td><input type="text" name="QQ" value="" /></td>
+					<td><input type="text" name="otherqq" id="otherqq" value="" /></td>
 				</tr>
 				<tr>
 					<td>Address</td>
-					<td colspan="3"><input type="text" name="address" value="" /></td>
+					<td colspan="3"><input type="text" name="otheraddress" id="otheraddress" value="" /></td>
 				</tr>
 			</div>
 		</table>
