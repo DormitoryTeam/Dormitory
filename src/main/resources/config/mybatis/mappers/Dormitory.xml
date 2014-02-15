@@ -7,7 +7,7 @@
 	<!-- Select Dormitory -->
 	<!-- SQL Fraggment -->
 	<sql id="select-dormitory">
-		select t1.id, t1.name, t1.address, t1.postcode, t1.equipment, t1.service, t1.salePrice, t1.listPrice, t1.description, t1.type_id as dormitoryTypeId, t1.city_id as cityId, t1.contract_type_id as contractId,
+		select t1.id, t1.name, t1.address, t1.postcode, t1.equipment, t1.service, t1.salePrice, t1.listPrice, t1.currency, t1.description, t1.type_id as dormitoryTypeId, t1.city_id as cityId, t1.contract_type_id as contractId,
 		t2.name as dormitoryType, 
 		t3.name as contract, 
 		t4.name as city, 
@@ -24,7 +24,7 @@
 	</sql>
 
 	<sql id="select-dormitory-page">
-		select t1.id, t1.name, t1.address, t1.postcode, t1.equipment, t1.service, t1.salePrice, t1.listPrice, t1.description, t1.type_id as dormitoryTypeId, t1.city_id as cityId, t1.contract_type_id as contractId,
+		select t1.id, t1.name, t1.address, t1.postcode, t1.equipment, t1.service, t1.salePrice, t1.listPrice, t1.currency, t1.description, t1.type_id as dormitoryTypeId, t1.city_id as cityId, t1.contract_type_id as contractId,
 		t2.name as dormitoryType, 
 		t3.name as contract, 
 		t4.name as city, 
@@ -136,6 +136,7 @@
 		<result column="service" property="service"/>
 		<result column="salePrice" property="salePrice"/>
 		<result column="listPrice" property="listPrice"/>
+		<result column="currency" property="currency"/>
 		<result column="description" property="description"/>
 		<result column="dormitoryTypeId" property="dormitoryTypeId"/>
 		<result column="cityId" property="cityId"/>

@@ -28,6 +28,8 @@
  */
 package com.noeasy.money.web.controller;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -43,8 +45,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.noeasy.money.constant.Constants;
 import com.noeasy.money.constant.SessionConstants;
+import com.noeasy.money.enumeration.Operation;
+import com.noeasy.money.enumeration.OrderStatus;
+import com.noeasy.money.enumeration.OrderType;
 import com.noeasy.money.model.DormitoryBean;
+import com.noeasy.money.model.DormitoryLineItem;
 import com.noeasy.money.model.DormitorySearchBean;
+import com.noeasy.money.model.LineItem;
+import com.noeasy.money.model.OrderBean;
+import com.noeasy.money.model.OrderContactInfo;
+import com.noeasy.money.model.OrderTail;
 import com.noeasy.money.model.UserBean;
 import com.noeasy.money.model.UserSearchBean;
 import com.noeasy.money.service.IDormitoryService;
@@ -66,14 +76,83 @@ public class OrderController {
 
     @Resource(name = "userService")
     IUserService      userService;
+
     @Resource(name = "dormitoryService")
     IDormitoryService dormitoryService;
 
 
 
-    @RequestMapping("/order-fill" + Constants.URL_SUFFIX)
-    public String toOrderFill(final HttpServletRequest request, final HttpServletResponse response, final Model model,
-            final String dormitoryId) {
+    @RequestMapping("/dormitory-order-place" + Constants.URL_SUFFIX)
+    public String placeDormitoryOrder(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final UserBean user, final boolean orderFor) {
+        DormitoryBean dormitory = (DormitoryBean) request.getSession().getAttribute("dormitory");
+        if (dormitory != null) {
+            OrderBean orderBean = new OrderBean();
+            if (user.getId() == null || user.getId() <= 0) {
+                user.setPassword(System.currentTimeMillis() + "");
+                userService.saveOrUpdate(user);
+            }
+            orderBean.setUser(user);
+
+            UserBean newLitigantUser = new UserBean();
+            newLitigantUser.setName(request.getParameter("othername"));
+            newLitigantUser.setGender(request.getParameter("othergender").equals("1"));
+            newLitigantUser.setQq(request.getParameter("otherqq"));
+            newLitigantUser.setPhone(request.getParameter("otherphone"));
+            newLitigantUser.setAddress(request.getParameter("otheraddress"));
+            if (StringUtils.isNoneBlank(request.getParameter("otherid")) || orderFor) {
+                newLitigantUser.setId(user.getId());
+                newLitigantUser.setLogin(user.getLogin());
+                newLitigantUser.setEmail(user.getEmail());
+            } else {
+                newLitigantUser.setLogin(request.getParameter("otheremail"));
+                newLitigantUser.setEmail(request.getParameter("otheremail"));
+                newLitigantUser.setPassword(System.currentTimeMillis() + "");
+                userService.saveOrUpdate(newLitigantUser);
+            }
+            orderBean.setBelongsTo(newLitigantUser);
+
+            OrderContactInfo contact = new OrderContactInfo();
+            UserBean litigantUser = orderBean.getBelongsTo();
+            contact.setName(litigantUser.getName());
+            contact.setGender(litigantUser.isGender());
+            contact.setPhone(litigantUser.getPhone());
+            contact.setQQ(litigantUser.getQq());
+            contact.setAddress(litigantUser.getAddress());
+            orderBean.setOrderContact(contact);
+
+            OrderTail createOrderRecord = new OrderTail();
+            createOrderRecord.setOperation(Operation.CREATE);
+            createOrderRecord.setOperator(user);
+            List<OrderTail> orderRecords = new ArrayList<OrderTail>();
+            orderRecords.add(createOrderRecord);
+            orderBean.setTails(orderRecords);
+
+            DormitoryLineItem dormitoryLineItem = new DormitoryLineItem();
+            dormitoryLineItem.setDormitory(dormitory);
+            dormitoryLineItem.setAmount(new BigDecimal(dormitory.getSalePrice()));
+            dormitoryLineItem.setCurrency(dormitory.getCurrency());
+            dormitoryLineItem.setListPrice(new BigDecimal(dormitory.getListPrice()));
+            List<LineItem> lineItems = new ArrayList<LineItem>();
+            lineItems.add(dormitoryLineItem);
+            orderBean.setLineItems(lineItems);
+
+            orderBean.setOrderType(OrderType.DORMITORY);
+            orderBean.setAmount(new BigDecimal(dormitory.getSalePrice()));
+            orderBean.setCurrency(dormitory.getCurrency());
+            orderBean.setOrderStatus(OrderStatus.SENDING_CONTACT);
+
+            boolean placeOrderResult = orderService.placeOrder(orderBean);
+            model.addAttribute("result", placeOrderResult);
+        }
+        return "order/dormitory-order-place-result";
+    }
+
+
+
+    @RequestMapping("/dormitory-order-fill" + Constants.URL_SUFFIX)
+    public String toDormitoryOrderFill(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final String dormitoryId) {
         if (StringUtils.isNoneBlank(dormitoryId)) {
             DormitorySearchBean dormitorySearchBean = new DormitorySearchBean();
             dormitorySearchBean.setId(NumberUtils.toInt(dormitoryId));
@@ -81,7 +160,7 @@ public class OrderController {
 
             Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
             UserSearchBean userSearchBean = new UserSearchBean();
-            userSearchBean.setId(userId != null ? userId : 1);
+            userSearchBean.setId(userId != null ? userId : 0);
 
             List<UserBean> result = userService.queryUser(userSearchBean);
             if (CollectionUtils.isNotEmpty(result)) {
@@ -89,8 +168,8 @@ public class OrderController {
 
                 model.addAttribute("user", user);
             }
-            model.addAttribute("dormitory", dormitory);
+            request.getSession().setAttribute("dormitory", dormitory);
         }
-        return "order/order-fill";
+        return "order/dormitory-order-fill";
     }
 }

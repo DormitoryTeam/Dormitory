@@ -1,5 +1,5 @@
 $(function() {
 	$("#btnBookDormitory").bind('click', function() {
-		window.location.href = "/dormitory/order/order-fill.html?dormitoryId=" + $(this).attr('dormitoryId');
+		window.location.href = "/dormitory/order/dormitory-order-fill.html?dormitoryId=" + $(this).attr('dormitoryId');
 	});
 });

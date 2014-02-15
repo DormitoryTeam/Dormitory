@@ -31,7 +31,68 @@ public class UserService implements IUserService {
 
 
     @Override
-    public UserBean register(String pLogin, String pPassword) {
+    public int changePassword(final String pLogin, final String pOldPassword, final String pNewPassword) {
+        boolean isExist = exist(pLogin, pOldPassword);
+        if (!isExist) {
+            return PASSWORD_NOT_MATCH;
+        }
+        UserBean user = new UserBean();
+        user.setLogin(pLogin);
+        user.setPassword(pNewPassword);
+        userRepository.resetPassword(user);
+        return 0;
+    }
+
+
+
+    @Override
+    public boolean exist(final String pLogin) {
+        UserSearchBean searchBean = new UserSearchBean();
+        searchBean.setLogin(pLogin);
+        List<UserBean> matchUsers = userRepository.queryUser(searchBean);
+        return CollectionUtils.isNotEmpty(matchUsers);
+    }
+
+
+
+    @Override
+    public boolean exist(final String pLogin, final String pPassword) {
+        UserSearchBean searchBean = new UserSearchBean();
+        searchBean.setLogin(pLogin);
+        searchBean.setPassword(pPassword);
+        List<UserBean> matchUsers = userRepository.queryUser(searchBean);
+        return CollectionUtils.isNotEmpty(matchUsers);
+    }
+
+
+
+    @Override
+    public UserBean generateResetPasswordSign(final String pLogin) {
+        String sign = DateUtils.dateToString(new Date(), DateUtils.SIMPLE_DATE_FROMAT_RULE)
+                + UUID.randomUUID().toString();
+        UserSearchBean searchBean = new UserSearchBean();
+        searchBean.setLogin(pLogin);
+        UserBean user = userRepository.queryUser(searchBean).get(0);
+        user.setResetPasswordSign(sign);
+        userRepository.updateResetPasswordSign(user);
+        return user;
+    }
+
+
+
+    @Override
+    public List<UserBean> queryUser(final UserSearchBean pSearchBean) {
+        List<UserBean> result = userRepository.queryUser(pSearchBean);
+        if (CollectionUtils.isEmpty(result)) {
+            return Collections.EMPTY_LIST;
+        }
+        return result;
+    }
+
+
+
+    @Override
+    public UserBean register(final String pLogin, final String pPassword) {
         // check user exit or not.
         if (exist(pLogin)) {
             throw new BaseException(UserErrorMetadata.USER_EXIST);
@@ -50,69 +111,7 @@ public class UserService implements IUserService {
 
 
     @Override
-    public boolean exist(String pLogin) {
-        UserSearchBean searchBean = new UserSearchBean();
-        searchBean.setLogin(pLogin);
-        List<UserBean> matchUsers = userRepository.queryUser(searchBean);
-        return CollectionUtils.isNotEmpty(matchUsers);
-    }
-
-
-
-    @Override
-    public boolean saveOrUpdate(UserBean pBean) {
-        if (null == pBean) {
-            throw new BaseException(UserErrorMetadata.NULL_USER_BEAN);
-        }
-        if (null == pBean) {
-            userRepository.saveUser(pBean);
-            return true;
-        }
-        userRepository.updateUser(pBean);
-        return true;
-    }
-
-
-
-    @Override
-    public List<UserBean> queryUser(UserSearchBean pSearchBean) {
-        List<UserBean> result = userRepository.queryUser(pSearchBean);
-        if (CollectionUtils.isEmpty(result)) {
-            return Collections.EMPTY_LIST;
-        }
-        return result;
-    }
-
-
-
-    @Override
-    public boolean exist(String pLogin, String pPassword) {
-        UserSearchBean searchBean = new UserSearchBean();
-        searchBean.setLogin(pLogin);
-        searchBean.setPassword(pPassword);
-        List<UserBean> matchUsers = userRepository.queryUser(searchBean);
-        return CollectionUtils.isNotEmpty(matchUsers);
-    }
-
-
-
-    @Override
-    public int changePassword(String pLogin, String pOldPassword, String pNewPassword) {
-        boolean isExist = exist(pLogin, pOldPassword);
-        if (!isExist) {
-            return PASSWORD_NOT_MATCH;
-        }
-        UserBean user = new UserBean();
-        user.setLogin(pLogin);
-        user.setPassword(pNewPassword);
-        userRepository.resetPassword(user);
-        return 0;
-    }
-
-
-
-    @Override
-    public boolean resetPassword(String pLogin, String pPassword) {
+    public boolean resetPassword(final String pLogin, final String pPassword) {
         UserBean user = new UserBean();
         user.setLogin(pLogin);
         user.setPassword(pPassword);
@@ -123,21 +122,23 @@ public class UserService implements IUserService {
 
 
     @Override
-    public int updateUser(UserBean pUser) {
-        return userRepository.updateUser(pUser);
+    public boolean saveOrUpdate(final UserBean pBean) {
+        if (null == pBean) {
+            throw new BaseException(UserErrorMetadata.NULL_USER_BEAN);
+        }
+        if (null == pBean.getId()) {
+            userRepository.saveUser(pBean);
+            return true;
+        }
+        userRepository.updateUser(pBean);
+        return true;
     }
 
 
 
     @Override
-    public UserBean generateResetPasswordSign(String pLogin) {
-        String sign = DateUtils.dateToString(new Date(), DateUtils.SIMPLE_DATE_FROMAT_RULE) + UUID.randomUUID().toString();
-        UserSearchBean searchBean = new UserSearchBean();
-        searchBean.setLogin(pLogin);
-        UserBean user = userRepository.queryUser(searchBean).get(0);
-        user.setResetPasswordSign(sign);
-        userRepository.updateResetPasswordSign(user);
-        return user;
+    public int updateUser(final UserBean pUser) {
+        return userRepository.updateUser(pUser);
     }
 
 }

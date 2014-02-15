@@ -42,9 +42,9 @@ import com.noeasy.money.model.OrderSearchBean;
 
 public interface IOrderService {
 
-    List<OrderBean> queryOrder(OrderSearchBean pOrderSearchBean);
-
-
-
     boolean placeOrder(OrderBean pOrderBean);
+
+
+
+    List<OrderBean> queryOrder(OrderSearchBean pOrderSearchBean);
 }
