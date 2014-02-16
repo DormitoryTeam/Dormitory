@@ -17,8 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.noeasy.money.constant.Constants;
 import com.noeasy.money.constant.SessionConstants;
+import com.noeasy.money.enumeration.OrderType;
+import com.noeasy.money.model.OrderBean;
+import com.noeasy.money.model.OrderSearchBean;
 import com.noeasy.money.model.UserBean;
 import com.noeasy.money.model.UserSearchBean;
+import com.noeasy.money.service.IOrderService;
 import com.noeasy.money.service.IUserService;
 import com.noeasy.money.util.DateUtils;
 import com.noeasy.money.util.EmailUtils;
@@ -30,7 +34,21 @@ import com.noeasy.money.util.ServletUtils;
 public class UserController {
 
     @Resource(name = "userService")
-    IUserService userService;
+    IUserService  userService;
+
+    @Resource(name = "orderService")
+    IOrderService orderService;
+
+
+
+    @RequestMapping(value = "/home.html")
+    public String home(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response) {
+        Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+        String login = (String) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_LOGIN);
+        model.addAttribute("userId", userId);
+        model.addAttribute("login", login);
+        return "user/home";
+    }
 
 
 
@@ -115,7 +133,7 @@ public class UserController {
             UserBean user = users.get(0);
             request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_ID, user.getId());
             request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_LOGIN, user.getLogin());
-            return "redirect:/user/loginSucess.jsp";
+            return "redirect:/navigation/home.html";
         }
         model.addAttribute("message", "username and passowrd not match");
         return "user/loginForm";
@@ -163,7 +181,7 @@ public class UserController {
         request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_ID, user.getId());
         request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_LOGIN, user.getLogin());
 
-        return "redirect:/user/registerSucess";
+        return "redirect:/user/home.html";
     }
 
 
@@ -221,7 +239,8 @@ public class UserController {
         String domain = PropertiesUtils.getConfigurableProperty(Constants.CONFIG_PATH, Constants.CONFIG_DOMAIN);
         String context = PropertiesUtils.getConfigurableProperty(Constants.CONFIG_PATH, Constants.CONFIG_CONTEXT);
         String resetPasswordURL = domain + Constants.SLASH + context + "/user/resetPassword.html?sign=" + sign;
-        boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, user.getEmail(), user.getName(), subject, resetPasswordURL);
+        boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, user.getEmail(), user.getName(), subject,
+                resetPasswordURL);
         String message = "Send reset password success.";
         if (!sendSuccess) {
             message = "Send reset password faild.";
@@ -236,6 +255,58 @@ public class UserController {
     public String signout(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response) {
         request.getSession().removeAttribute(SessionConstants.SESSION_KEY_USER_ID);
 
-        return "redirect:/user/signoutSuccess";
+        return "redirect:/navigation/home.html";
+    }
+
+
+
+    @RequestMapping(value = "/orderList.html")
+    public String getOrderList(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, String orderType) {
+        Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+        OrderType type = OrderType.getType(orderType);// "D" means dormitory
+        OrderSearchBean searchBean = new OrderSearchBean();
+        searchBean.setOrderType(type);
+        UserBean user = new UserBean();
+        user.setId(userId);
+        searchBean.setUser(user);
+        List<OrderBean> orders = orderService.queryOrder(searchBean);
+        model.addAttribute("orders", orders);
+        model.addAttribute("type", orderType);
+        return "user/orderList";
+    }
+
+
+
+    @RequestMapping(value = "/orderDetails.html")
+    public String getOrderDetails(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, String orderId, String orderType) {
+        Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+        String message = null;
+        model.addAttribute("type", orderType);
+        if (StringUtils.isBlank(orderId)) {
+            message = "orderId is blank";
+            model.addAttribute("message", message);
+            return "user/orderDetails";
+        }
+        if (StringUtils.isBlank(orderType)) {
+            message = "orderType is blank";
+            model.addAttribute("message", message);
+            return "user/orderDetails";
+        }
+        OrderSearchBean searchBean = new OrderSearchBean();
+        UserBean user = new UserBean();
+        user.setId(userId);
+        searchBean.setUser(user);
+        searchBean.setOrderNumber(Integer.valueOf(orderId));
+        searchBean.setOrderType(OrderType.getType(orderType));
+        List<OrderBean> orders = orderService.queryOrder(searchBean);
+        if (CollectionUtils.isEmpty(orders)) {
+            message = "no such order";
+            return "user/orderDetails";
+        }
+        model.addAttribute("order", orders.get(0));
+        model.addAttribute("message", message);
+        return "user/orderDetails";
     }
 }

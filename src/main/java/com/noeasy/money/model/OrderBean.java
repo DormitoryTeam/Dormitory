@@ -29,6 +29,7 @@
 package com.noeasy.money.model;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import com.noeasy.money.enumeration.OrderStatus;
@@ -62,6 +63,8 @@ public class OrderBean extends BaseBean {
     private List<OrderTail>  mTails;
 
     private OrderType        mOrderType;
+
+    private Date             mCreateTime;
 
 
 
@@ -238,4 +241,5 @@ public class OrderBean extends BaseBean {
     public void setUser(final UserBean pUser) {
         mUser = pUser;
     }
+
 }

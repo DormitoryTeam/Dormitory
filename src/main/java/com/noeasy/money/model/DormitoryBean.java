@@ -62,6 +62,7 @@ public class DormitoryBean extends BaseBean {
     private String       mContract;
     private List<String> mPicPath;
     private List<String> mVideoPath;
+    private int          mStatus;
 
 
 
@@ -479,6 +480,18 @@ public class DormitoryBean extends BaseBean {
      */
     public void setVideoPath(final List<String> pVideoPath) {
         mVideoPath = pVideoPath;
+    }
+
+
+
+    public int getStatus() {
+        return mStatus;
+    }
+
+
+
+    public void setStatus(int pStatus) {
+        mStatus = pStatus;
     }
 
 }

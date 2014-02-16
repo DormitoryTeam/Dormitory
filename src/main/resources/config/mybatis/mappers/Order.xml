@@ -14,14 +14,15 @@
 		contact_gender, t4.qq as contact_qq, t4.phone as contact_phone, t4.address as contact_address,
 		t5.id as lid, t5.dormitory_id, t5.amount as li_amount, t5.currency as li_currency, t5.listPrice as li_listPrice,
 		t6.id as did, t6.city_id, t6.type_id, t6.contract_type_id, t6.name as dname, t6.address as daddress, t6.postcode, t6.listPrice as dlistPrice, t6.salePrice, t6.currency as dcurrency,
-		t6.equipment, t6.service, t6.description, t6.status as dstatus
+		t6.equipment, t6.service, t6.description, t6.status as dstatus,
+		t7.name as contract_name
 		from `order` t1
 		left join users t2 on t1.user_id = t2.id
 		left join users t3 on t1.belongs_to = t3.id
 		left join order_contact_info t4 on t1.id = t4.order_id
 		left join line_item_dormitory t5 on t1.id = t5.order_id
-		left join dormitory t6 on
-		t5.dormitory_id = t6.id
+		left join dormitory t6 on t5.dormitory_id = t6.id
+		left join contract_type t7 on t7.id = t6.contract_type_id
 	</sql>
 
 	<sql id="select-pickup-order">
@@ -63,7 +64,7 @@
 			and t1.create_time &lt;= #{dateTo}
 		</if>
 		<if test="user != null">
-			and t1.belongs_to = #{user.id}
+			and (t1.belongs_to = #{user.id} or t1.user_id = #{user.id})
 		</if>
 		<if test="orderType != null">
 			and t1.type = #{orderType}
@@ -86,7 +87,7 @@
 			and t1.create_time &lt;= #{dateTo}
 		</if>
 		<if test="user != null">
-			and t1.belongs_to = #{user.id}
+			and (t1.belongs_to = #{user.id} or t1.user_id = #{user.id})
 		</if>
 		<if test="orderType != null">
 			and t1.type = #{orderType}
@@ -212,6 +213,7 @@
 				<result property="cityId" column="city_id" />
 				<result property="dormitoryTypeId" column="type_id" />
 				<result property="contractId" column="contract_type_id" />
+				<result property="contract" column="contract_name" />
 				<result property="name" column="dname" />
 				<result property="address" column="daddress" />
 				<result property="postCode" column="postcode" />
