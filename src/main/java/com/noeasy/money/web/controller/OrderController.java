@@ -90,27 +90,29 @@ public class OrderController {
             OrderBean orderBean = new OrderBean();
             if (user.getId() == null || user.getId() <= 0) {
                 user.setPassword(System.currentTimeMillis() + "");
+                user.setLogin(user.getEmail());
                 userService.saveOrUpdate(user);
+                orderBean.setBelongsTo(user);
+            } else {
+                UserBean newLitigantUser = new UserBean();
+                newLitigantUser.setName(request.getParameter("othername"));
+                newLitigantUser.setGender(request.getParameter("othergender").equals("1"));
+                newLitigantUser.setQq(request.getParameter("otherqq"));
+                newLitigantUser.setPhone(request.getParameter("otherphone"));
+                newLitigantUser.setAddress(request.getParameter("otheraddress"));
+                if (StringUtils.isNoneBlank(request.getParameter("otherid")) || orderFor) {
+                    newLitigantUser.setId(user.getId());
+                    newLitigantUser.setLogin(user.getLogin());
+                    newLitigantUser.setEmail(user.getEmail());
+                } else {
+                    newLitigantUser.setLogin(request.getParameter("otheremail"));
+                    newLitigantUser.setEmail(request.getParameter("otheremail"));
+                    newLitigantUser.setPassword(System.currentTimeMillis() + "");
+                    userService.saveOrUpdate(newLitigantUser);
+                }
+                orderBean.setBelongsTo(newLitigantUser);
             }
             orderBean.setUser(user);
-
-            UserBean newLitigantUser = new UserBean();
-            newLitigantUser.setName(request.getParameter("othername"));
-            newLitigantUser.setGender(request.getParameter("othergender").equals("1"));
-            newLitigantUser.setQq(request.getParameter("otherqq"));
-            newLitigantUser.setPhone(request.getParameter("otherphone"));
-            newLitigantUser.setAddress(request.getParameter("otheraddress"));
-            if (StringUtils.isNoneBlank(request.getParameter("otherid")) || orderFor) {
-                newLitigantUser.setId(user.getId());
-                newLitigantUser.setLogin(user.getLogin());
-                newLitigantUser.setEmail(user.getEmail());
-            } else {
-                newLitigantUser.setLogin(request.getParameter("otheremail"));
-                newLitigantUser.setEmail(request.getParameter("otheremail"));
-                newLitigantUser.setPassword(System.currentTimeMillis() + "");
-                userService.saveOrUpdate(newLitigantUser);
-            }
-            orderBean.setBelongsTo(newLitigantUser);
 
             OrderContactInfo contact = new OrderContactInfo();
             UserBean litigantUser = orderBean.getBelongsTo();
@@ -160,7 +162,7 @@ public class OrderController {
 
             Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
             UserSearchBean userSearchBean = new UserSearchBean();
-            userSearchBean.setId(userId != null ? userId : 0);
+            userSearchBean.setId(userId != null ? userId : 1);
 
             List<UserBean> result = userService.queryUser(userSearchBean);
             if (CollectionUtils.isNotEmpty(result)) {

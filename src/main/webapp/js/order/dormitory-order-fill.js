@@ -29,11 +29,11 @@ $(function() {
             $("#otherqq").val($("#qq").val());
             $("#otheraddress").val($("#address").val());
             $("#othergender").val($("#gender").val());
-            $("#trOther").hide();
+            $(".trOther").hide();
         } else {
             $(".otheruser").val("");
             $("#othergender").val(0);
-            $("#trOther").show();
+            $(".trOther").show();
         }
     });
 
