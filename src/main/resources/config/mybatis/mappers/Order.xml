@@ -62,7 +62,7 @@
 			and (t1.belongs_to = #{user.id} or t1.user_id = #{user.id})
 			</if>
 			<if test="user.login != null">
-			and (t1.login like CONCAT('%', #{user.login}, '%') or t1.login like CONCAT('%', #{user.login}, '%'))
+			and (t2.login like CONCAT('%', #{user.login}, '%') or t3.login like CONCAT('%', #{user.login}, '%'))
 			</if>
 		</if>
 		<if test="orderType != null">

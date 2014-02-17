@@ -1,4 +1,13 @@
 <table>
+<form action="<c:url value='/admin/order/orderList.html'/>" method="POST">
+orderType: <input type="text" name="orderType" value="${type}"/><br>
+orderNumber: <input type="text" name="orderId" value="${orderId}"/><br>
+username: <input type="text" name="login" value="${login}"/><br>
+date from: <input type="text" name="dateFrom" value="${dateFrom}"/><br>
+date to: <input type="text" name="dateTo" value="${dateTo}"/><br>
+<input type="submit" value="submit"/>
+</form>
+<hr>
 <c:choose>
 <c:when test='${"D" eq type}'>
 	<tr>
@@ -12,7 +21,7 @@
 	</tr>
 	<c:forEach var="order" items="${orders}" varStatus="i">
 	<tr>
-		<td><a href="<c:url value='/user/orderDetails.html?orderId=${order.id}&orderType=${type}'/>">${order.id}</a></td>
+		<td><a href="<c:url value='/admin/order/orderDetails.html?orderId=${order.id}&orderType=${type}'/>">${order.id}</a></td>
 		<td>${order.lineItems[0].dormitory.name}</td>
 		<td>${order.amount}</td>
 		<td>${order.user.login}</td>
