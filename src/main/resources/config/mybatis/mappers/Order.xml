@@ -46,6 +46,29 @@
 	<sql id="where">
 		where 1=1
 	</sql>
+	
+	<sql id="select-dormitory-condition">
+		<if test="orderNumber != null">
+			and t1.id = #{orderNumber}
+		</if>
+		<if test="dateFrom != null">
+			and t1.create_time &gt;= #{dateFrom}
+		</if>
+		<if test="dateTo != null">
+			and t1.create_time &lt;= #{dateTo}
+		</if>
+		<if test="user != null">
+			<if test="user.id != null">
+			and (t1.belongs_to = #{user.id} or t1.user_id = #{user.id})
+			</if>
+			<if test="user.login != null">
+			and (t1.login like CONCAT('%', #{user.login}, '%') or t1.login like CONCAT('%', #{user.login}, '%'))
+			</if>
+		</if>
+		<if test="orderType != null">
+			and t1.type = #{orderType}
+		</if>
+	</sql>
 
 	<sql id="limit-split-page">
 		limit #{pageBean.pageStartIndex}, #{pageBean.pageSize}
@@ -54,21 +77,7 @@
 	<select id="queryDormitoryOrder" resultMap="dormitory-order">
 		<include refid="select-dormitory-order" />
 		<include refid="where" />
-		<if test="orderNumber != null">
-			and t1.id = #{orderNumber}
-		</if>
-		<if test="dateFrom != null">
-			and t1.create_time &gt;= #{dateFrom}
-		</if>
-		<if test="dateTo != null">
-			and t1.create_time &lt;= #{dateTo}
-		</if>
-		<if test="user != null">
-			and (t1.belongs_to = #{user.id} or t1.user_id = #{user.id})
-		</if>
-		<if test="orderType != null">
-			and t1.type = #{orderType}
-		</if>
+		<include refid="select-dormitory-condition" />
 		<if test="pageBean != null">
 			<include refid="limit-split-page" />
 		</if>
@@ -77,21 +86,7 @@
 	<select id="queryPickupOrder" resultMap="pickup-order">
 		<include refid="select-pickup-order" />
 		<include refid="where" />
-		<if test="orderNumber != null">
-			and t1.id = #{orderNumber}
-		</if>
-		<if test="dateFrom != null">
-			and t1.create_time &gt;= #{dateFrom}
-		</if>
-		<if test="dateTo != null">
-			and t1.create_time &lt;= #{dateTo}
-		</if>
-		<if test="user != null">
-			and (t1.belongs_to = #{user.id} or t1.user_id = #{user.id})
-		</if>
-		<if test="orderType != null">
-			and t1.type = #{orderType}
-		</if>
+		<include refid="select-dormitory-condition" />
 		<if test="pageBean != null">
 			<include refid="limit-split-page" />
 		</if>
