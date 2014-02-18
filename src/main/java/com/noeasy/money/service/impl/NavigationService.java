@@ -72,6 +72,16 @@ public class NavigationService implements INavigationService {
 
 
     /**
+     * @see com.noeasy.money.service.INavigationService#queryCitiesInSameCountry(java.lang.Integer)
+     */
+    @Override
+    public List<Map<String, Object>> queryCitiesInSameCountry(final Integer pCityId) {
+        return navigationRepository.queryCitiesInSameCountry(pCityId);
+    }
+
+
+
+    /**
      * @see com.noeasy.money.service.INavigationService#queryCityById(java.lang.Integer,
      *      java.lang.Integer)
      */

@@ -30,6 +30,7 @@ package com.noeasy.money.service.impl;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -96,11 +97,28 @@ public class DormitoryService implements IDormitoryService {
 
 
     /**
+     * @see com.noeasy.money.service.IDormitoryService#queryContractTypes()
+     */
+    @Override
+    public List<Map<String, Object>> queryContractTypes() {
+        return dormitoryRepository.queryContractTypes();
+    }
+
+
+
+    /**
      * @see com.noeasy.money.service.IDormitoryService#queryDormitory(com.noeasy.money.model.DormitorySearchBean)
      */
     @Override
     public DormitoryBean queryDormitory(final DormitorySearchBean pSearchBean) {
         return dormitoryRepository.queryDormitory(pSearchBean);
+    }
+
+
+
+    @Override
+    public Integer queryDormitoryCount(final DormitorySearchBean pSearchBean) {
+        return dormitoryRepository.queryDormitoryCount(pSearchBean);
     }
 
 
@@ -112,6 +130,16 @@ public class DormitoryService implements IDormitoryService {
     public List<DormitoryBean> queryDormitoryPage(final DormitorySearchBean pSearchBean) {
         List<DormitoryBean> queryResult = dormitoryRepository.queryDormitoryPage(pSearchBean);
         return CollectionUtils.isEmpty(queryResult) ? Collections.EMPTY_LIST : queryResult;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.IDormitoryService#queryDormitoryTypes()
+     */
+    @Override
+    public List<Map<String, Object>> queryDormitoryTypes() {
+        return dormitoryRepository.queryDormitoryTypes();
     }
 
 
@@ -132,9 +160,16 @@ public class DormitoryService implements IDormitoryService {
 
 
 
+    /**
+     * @see com.noeasy.money.service.IDormitoryService#updateDormitory(com.noeasy.money.model.DormitoryBean)
+     */
     @Override
-    public Integer queryDormitoryCount(DormitorySearchBean pSearchBean) {
-        return dormitoryRepository.queryDormitoryCount(pSearchBean);
+    public Boolean updateDormitory(final DormitoryBean pDormitory) {
+        if (pDormitory != null && pDormitory.getId() > 0) {
+            int updatedResult = dormitoryRepository.updateDormitory(pDormitory);
+            return updatedResult == 1;
+        }
+        return false;
     }
 
 }

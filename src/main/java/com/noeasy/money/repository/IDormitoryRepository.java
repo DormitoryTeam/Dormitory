@@ -29,6 +29,7 @@
 package com.noeasy.money.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitoryRateBean;
@@ -43,39 +44,7 @@ import com.noeasy.money.model.DormitorySearchBean;
 
 public interface IDormitoryRepository {
 
-    DormitoryBean queryDormitory(DormitorySearchBean pSearchBean);
-
-
-
-    List<DormitoryBean> queryDormitoryPage(DormitorySearchBean pSearchBean);
-
-
-
-    Boolean rateDormitory(DormitoryRateBean pDormitoryRateBean);
-
-
-
-    Double queryDormitoryAvgRate(int pDormitoryId);
-
-
-
-    Boolean clearDistanceResult();
-
-
-
-    Boolean initialDistanceResult();
-
-
-
-    Boolean clearDistanceResult4City(int pCityId);
-
-
-
     Boolean calculateDistance4City(int pCityId);
-
-
-
-    Boolean clearDistanceResult4College(int pCollegeId);
 
 
 
@@ -83,6 +52,50 @@ public interface IDormitoryRepository {
 
 
 
+    Boolean clearDistanceResult();
+
+
+
+    Boolean clearDistanceResult4City(int pCityId);
+
+
+
+    Boolean clearDistanceResult4College(int pCollegeId);
+
+
+
+    Boolean initialDistanceResult();
+
+
+
+    List<Map<String, Object>> queryContractTypes();
+
+
+
+    DormitoryBean queryDormitory(DormitorySearchBean pSearchBean);
+
+
+
+    Double queryDormitoryAvgRate(int pDormitoryId);
+
+
+
     Integer queryDormitoryCount(DormitorySearchBean pSearchBean);
+
+
+
+    List<DormitoryBean> queryDormitoryPage(DormitorySearchBean pSearchBean);
+
+
+
+    List<Map<String, Object>> queryDormitoryTypes();
+
+
+
+    Boolean rateDormitory(DormitoryRateBean pDormitoryRateBean);
+
+
+
+    Integer updateDormitory(DormitoryBean pDormitory);
 
 }

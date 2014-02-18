@@ -30,6 +30,7 @@
 package com.noeasy.money.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitorySearchBean;
@@ -43,11 +44,35 @@ import com.noeasy.money.model.DormitorySearchBean;
 
 public interface IDormitoryService {
 
+    Boolean calculateDistance();
+
+
+
+    Boolean calculateDistance4City(int pCityId);
+
+
+
+    Boolean calculateDistance4College(int pCollegeId);
+
+
+
+    List<Map<String, Object>> queryContractTypes();
+
+
+
     DormitoryBean queryDormitory(DormitorySearchBean pSearchBean);
 
 
 
+    Integer queryDormitoryCount(DormitorySearchBean pSearchBean);
+
+
+
     List<DormitoryBean> queryDormitoryPage(DormitorySearchBean pSearchBean);
+
+
+
+    List<Map<String, Object>> queryDormitoryTypes();
 
 
 
@@ -64,18 +89,6 @@ public interface IDormitoryService {
 
 
 
-    Boolean calculateDistance();
-
-
-
-    Boolean calculateDistance4City(int pCityId);
-
-
-
-    Boolean calculateDistance4College(int pCollegeId);
-
-
-
-    Integer queryDormitoryCount(DormitorySearchBean pSearchBean);
+    Boolean updateDormitory(DormitoryBean pDormitory);
 
 }

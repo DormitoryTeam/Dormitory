@@ -7,24 +7,27 @@
 	<!-- Select Dormitory -->
 	<!-- SQL Fraggment -->
 	<sql id="select-dormitory-content">
-		select t1.id, t1.name, t1.address, t1.postcode, t1.equipment, t1.service, t1.salePrice, t1.listPrice, t1.currency, t1.description, t1.type_id as dormitoryTypeId, t1.city_id as cityId, t1.contract_type_id as contractId,
-		t2.name as dormitoryType, 
-		t3.name as contract, 
-		t4.name as city, 
+		select t1.id, t1.name, t1.address, t1.postcode, t1.equipment, t1.service, t1.salePrice, t1.listPrice, t1.currency, t1.description, t1.type_id as dormitoryTypeId, t1.city_id as cityId, t1.contract_type_id as contractId, t1.latitude, t1.longitude, 
+		t2.name
+		as dormitoryType,
+		t3.name as contract,
+		t4.name as city,
 		coalesce(avg(t5.score), 0) as rating,
-		t6.media_path as picPath, 
-		t7.media_path as videoPath,
-		ifnull(t8.distance, 0) as distance
+		t6.media_path as picPath,
+		t7.media_path as videoPath
+		<if test="collegeId != null">
+			,ifnull(t8.distance, 0) as distance
+		</if>
 	</sql>
-	
-	
+
+
 	<sql id="select-dormitory-count-pre">
 		select count(*) from ( select t1.id
 	</sql>
 	<sql id="select-dormitory-count-post">
 		) as result
 	</sql>
-	
+
 	<sql id="select-dormitory-table-join">
 		from dormitory t1
 		left join dormitory_type t2 on t1.type_id = t2.id
@@ -33,7 +36,10 @@
 		left join dormitory_rating t5 on t1.id = t5.dormitory_id
 		left join dormitory_media t6 on t1.id = t6.dormitory_id and t6.media_type = 1
 		left join dormitory_media t7 ON t1.id = t7.dormitory_id and t7.media_type = 2
-		left join distance_result t8 on t1.id = t8.dormitory_id and t8.college_id = #{collegeId}
+		left join distance_result t8 on t1.id = t8.dormitory_id 
+		<if test="collegeId != null">
+			and t8.college_id = #{collegeId}
+		</if>
 	</sql>
 
 	<sql id="where">
@@ -63,6 +69,14 @@
 		and t1.contract_type_id = #{contractTypeId}
 	</sql>
 
+	<sql id="where-with-dormitory-name">
+		and t1.name like concat('%', #{dormitoryName}, '%')
+	</sql>
+
+	<sql id="where-with-city-name">
+		and t4.name like concat('%', #{cityName}, '%')
+	</sql>
+
 	<sql id="group-by-id">
 		group by t1.id
 	</sql>
@@ -82,8 +96,14 @@
 		<if test="id != null">
 			<include refid="where-with-id" />
 		</if>
+		<if test="dormitoryName != null">
+			<include refid="where-with-dormitory-name" />
+		</if>
 		<if test="cityId != null">
 			<include refid="where-with-city-id" />
+		</if>
+		<if test="cityName != null">
+			<include refid="where-with-city-name" />
 		</if>
 		<if test="dormitoryTypeId != null">
 			<include refid="where-with-dormitory-type" />
@@ -103,15 +123,21 @@
 		</if>
 	</select>
 
-	<select id="queryDormitoryCount" parameterType='com.noeasy.money.model.DormitorySearchBean'  resultType="int">
+	<select id="queryDormitoryCount" parameterType='com.noeasy.money.model.DormitorySearchBean' resultType="int">
 		<include refid="select-dormitory-count-pre" />
 		<include refid="select-dormitory-table-join" />
 		<include refid="where" />
 		<if test="id != null">
 			<include refid="where-with-id" />
 		</if>
+		<if test="dormitoryName != null">
+			<include refid="where-with-dormitory-name" />
+		</if>
 		<if test="cityId != null">
 			<include refid="where-with-city-id" />
+		</if>
+		<if test="cityName != null">
+			<include refid="where-with-city-name" />
 		</if>
 		<if test="dormitoryTypeId != null">
 			<include refid="where-with-dormitory-type" />
@@ -128,31 +154,52 @@
 
 
 	<resultMap id="dormitory" type="com.noeasy.money.model.DormitoryBean">
-		<id column="id" property="id"/>
-		<result column="name" property="name"/>
-		<result column="address" property="address"/>
-		<result column="postcode" property="postCode"/>
-		<result column="equipment" property="equipment"/>
-		<result column="service" property="service"/>
-		<result column="salePrice" property="salePrice"/>
-		<result column="listPrice" property="listPrice"/>
-		<result column="currency" property="currency"/>
-		<result column="description" property="description"/>
-		<result column="dormitoryTypeId" property="dormitoryTypeId"/>
-		<result column="cityId" property="cityId"/>
-		<result column="dormitoryType" property="dormitoryType"/>
-		<result column="contractId" property="contractId"/>
-		<result column="contract" property="contract"/>
-		<result column="city" property="city"/>
-		<result column="distance" property="distance"/>
-		<result column="rating" property="rating"/>
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="address" property="address" />
+		<result column="postcode" property="postCode" />
+		<result column="equipment" property="equipment" />
+		<result column="service" property="service" />
+		<result column="salePrice" property="salePrice" />
+		<result column="listPrice" property="listPrice" />
+		<result column="latitude" property="latitude" />
+		<result column="longitude" property="longitude" />
+		<result column="currency" property="currency" />
+		<result column="description" property="description" />
+		<result column="dormitoryTypeId" property="dormitoryTypeId" />
+		<result column="cityId" property="cityId" />
+		<result column="dormitoryType" property="dormitoryType" />
+		<result column="contractId" property="contractId" />
+		<result column="contract" property="contract" />
+		<result column="city" property="city" />
+		<result column="distance" property="distance" />
+		<result column="rating" property="rating" />
 		<collection ofType="String" property="picPath">
-			<result column="picPath"/>
+			<result column="picPath" />
 		</collection>
 		<collection ofType="String" property="videoPath">
-			<result column="videoPath"/>
+			<result column="videoPath" />
 		</collection>
 	</resultMap>
+	
+	<update id="update-dormitory" parameterType="com.noeasy.money.model.DormitoryBean">
+		update dormitory set 
+			name = #{name},
+			address = #{address},
+			postcode = #{postCode},
+			equipment = #{equipment},
+			service = #{service},
+			listPrice = #{listPrice},
+			salePrice = #{salePrice},
+			latitude = #{latitude},
+			longitude = #{longitude},
+			currency = #{currency},
+			description = #{description},
+			type_id = #{dormitoryTypeId},
+			city_id = #{cityId},
+			contract_type_id = #{contractId}
+		where id = #{id}
+	</update>
 
 	<!-- Rate Dormitory -->
 	<insert id="rate" keyProperty="id" useGeneratedKeys='true' parameterType="com.noeasy.money.model.DormitoryRateBean">
@@ -224,4 +271,12 @@
 		ON p1.city_id = p2.city_id AND p1.college_id = #{collegeId}
 		) t1) t2;
 	</insert>
+	
+	<select id="queryContractType" resultType="hashmap">
+		select id, name from contract_type;
+	</select>
+	
+	<select id="queryDormitoryType" resultType="hashmap">
+		select id, name from dormitory_type;
+	</select>
 </mapper>

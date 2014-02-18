@@ -37,4 +37,13 @@
 		</if>
 	</select>
 
+	<select id="queryCityInSameCountry" resultType="hashmap" parameterType="java.util.Map">
+		select id, country_id as countryId, name, status
+		from city
+		where status = 1
+		and country_id = (
+			select country_id from city where id = #{id} and status = 1
+		)
+	</select>
+
 </mapper>

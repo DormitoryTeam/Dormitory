@@ -60,9 +60,21 @@ public class NavigationRepository extends BaseRepository implements INavigationR
         if (ParamUtils.isValidIdField(pCountryId)) {
             Map<String, Integer> params = new HashMap<String, Integer>();
             params.put(COUNTRY_ID, pCountryId);
-            return getSqlSession().selectList("queryCity", params);
+            return getSqlSession().selectList("com.noeasy.money.model.Navigation.queryCity", params);
         }
-        return getSqlSession().selectList("queryCity");
+        return getSqlSession().selectList("com.noeasy.money.model.Navigation.queryCity");
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.INavigationRepository#queryCitiesInSameCountry(java.lang.Integer)
+     */
+    @Override
+    public List<Map<String, Object>> queryCitiesInSameCountry(final Integer pCityId) {
+        Map<String, Integer> params = new HashMap<String, Integer>();
+        params.put(ID, pCityId);
+        return getSqlSession().selectList("com.noeasy.money.model.Navigation.queryCityInSameCountry", params);
     }
 
 
@@ -76,7 +88,7 @@ public class NavigationRepository extends BaseRepository implements INavigationR
         Map<String, Integer> params = new HashMap<String, Integer>();
         params.put(ID, pCityId);
         params.put(COUNTRY_ID, pCountryId);
-        return getSqlSession().selectOne("queryCity", params);
+        return getSqlSession().selectOne("com.noeasy.money.model.Navigation.queryCity", params);
     }
 
 
@@ -90,7 +102,7 @@ public class NavigationRepository extends BaseRepository implements INavigationR
         Map<String, Integer> params = new HashMap<String, Integer>();
         params.put(ID, pCollegeId);
         params.put(CITY_ID, pCityId);
-        return getSqlSession().selectOne("queryCollege", params);
+        return getSqlSession().selectOne("com.noeasy.money.model.Navigation.queryCollege", params);
     }
 
 
@@ -103,9 +115,9 @@ public class NavigationRepository extends BaseRepository implements INavigationR
         if (ParamUtils.isValidIdField(pCityId)) {
             Map<String, Integer> params = new HashMap<String, Integer>();
             params.put(CITY_ID, pCityId);
-            return getSqlSession().selectList("queryCollege", params);
+            return getSqlSession().selectList("com.noeasy.money.model.Navigation.queryCollege", params);
         }
-        return getSqlSession().selectList("queryCollege");
+        return getSqlSession().selectList("com.noeasy.money.model.Navigation.queryCollege");
     }
 
 
@@ -115,7 +127,7 @@ public class NavigationRepository extends BaseRepository implements INavigationR
      */
     @Override
     public List<Map<String, Object>> queryCountries() {
-        return getSqlSession().selectList("queryCountry");
+        return getSqlSession().selectList("com.noeasy.money.model.Navigation.queryCountry");
     }
 
 
@@ -127,7 +139,7 @@ public class NavigationRepository extends BaseRepository implements INavigationR
     public Map<String, Object> queryCountryById(final Integer pCountryId) {
         Map<String, Integer> params = new HashMap<String, Integer>();
         params.put(ID, pCountryId);
-        return getSqlSession().selectOne("queryCountry", params);
+        return getSqlSession().selectOne("com.noeasy.money.model.Navigation.queryCountry", params);
     }
 
 }

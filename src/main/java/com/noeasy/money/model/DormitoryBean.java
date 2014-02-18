@@ -56,12 +56,13 @@ public class DormitoryBean extends BaseBean {
     private int          mCollegeId;
     private String       mCollege;
     private int          mDormitoryTypeId;
-
     private String       mDormitoryType;
     private int          mContractId;
     private String       mContract;
     private List<String> mPicPath;
     private List<String> mVideoPath;
+    private Double       mLatitude;
+    private Double       mLongitude;
     private int          mStatus;
 
 
@@ -193,10 +194,28 @@ public class DormitoryBean extends BaseBean {
 
 
     /**
+     * @return the latitude
+     */
+    public Double getLatitude() {
+        return mLatitude;
+    }
+
+
+
+    /**
      * @return the listPrice
      */
     public Double getListPrice() {
         return mListPrice;
+    }
+
+
+
+    /**
+     * @return the longitude
+     */
+    public Double getLongitude() {
+        return mLongitude;
     }
 
 
@@ -251,6 +270,12 @@ public class DormitoryBean extends BaseBean {
      */
     public String getService() {
         return mService;
+    }
+
+
+
+    public int getStatus() {
+        return mStatus;
     }
 
 
@@ -405,11 +430,31 @@ public class DormitoryBean extends BaseBean {
 
 
     /**
+     * @param pLatitude
+     *            the latitude to set
+     */
+    public void setLatitude(final Double pLatitude) {
+        mLatitude = pLatitude;
+    }
+
+
+
+    /**
      * @param pListPrice
      *            the listPrice to set
      */
     public void setListPrice(final Double pListPrice) {
         mListPrice = pListPrice;
+    }
+
+
+
+    /**
+     * @param pLongitude
+     *            the longitude to set
+     */
+    public void setLongitude(final Double pLongitude) {
+        mLongitude = pLongitude;
     }
 
 
@@ -474,24 +519,18 @@ public class DormitoryBean extends BaseBean {
 
 
 
+    public void setStatus(final int pStatus) {
+        mStatus = pStatus;
+    }
+
+
+
     /**
      * @param pVideoPath
      *            the videoPath to set
      */
     public void setVideoPath(final List<String> pVideoPath) {
         mVideoPath = pVideoPath;
-    }
-
-
-
-    public int getStatus() {
-        return mStatus;
-    }
-
-
-
-    public void setStatus(int pStatus) {
-        mStatus = pStatus;
     }
 
 }

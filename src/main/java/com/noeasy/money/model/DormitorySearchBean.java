@@ -46,6 +46,8 @@ public class DormitorySearchBean {
 
     private Integer              mCityId;
 
+    private String               mCityName;
+
     private Integer              mCollegeId;
 
     private String               mKeyword;
@@ -75,6 +77,15 @@ public class DormitorySearchBean {
      */
     public Integer getCityId() {
         return mCityId;
+    }
+
+
+
+    /**
+     * @return the cityName
+     */
+    public String getCityName() {
+        return mCityName;
     }
 
 
@@ -193,6 +204,16 @@ public class DormitorySearchBean {
      */
     public void setCityId(final Integer pCityId) {
         mCityId = pCityId;
+    }
+
+
+
+    /**
+     * @param pCityName
+     *            the cityName to set
+     */
+    public void setCityName(final String pCityName) {
+        mCityName = pCityName;
     }
 
 

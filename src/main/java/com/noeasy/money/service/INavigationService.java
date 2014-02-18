@@ -44,6 +44,10 @@ public interface INavigationService {
 
 
 
+    List<Map<String, Object>> queryCitiesInSameCountry(Integer pCityId);
+
+
+
     Map<String, Object> queryCityById(Integer pCityId, Integer pCountryId);
 
 
