@@ -172,4 +172,14 @@ public class DormitoryService implements IDormitoryService {
         return false;
     }
 
+
+
+    @Override
+    public Boolean calculateDistance4Dormitory(int pDormitoryId) {
+        if (dormitoryRepository.clearDistanceResult4Dormitory(pDormitoryId)) {
+            return dormitoryRepository.calculateDistance4Dormitory(pDormitoryId);
+        }
+        return false;
+    }
+
 }

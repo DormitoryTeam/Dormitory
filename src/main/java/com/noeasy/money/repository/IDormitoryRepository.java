@@ -52,6 +52,10 @@ public interface IDormitoryRepository {
 
 
 
+    Boolean calculateDistance4Dormitory(int pDormitoryId);
+
+
+
     Boolean clearDistanceResult();
 
 
@@ -61,6 +65,10 @@ public interface IDormitoryRepository {
 
 
     Boolean clearDistanceResult4College(int pCollegeId);
+
+
+
+    Boolean clearDistanceResult4Dormitory(int pDormitoryId);
 
 
 

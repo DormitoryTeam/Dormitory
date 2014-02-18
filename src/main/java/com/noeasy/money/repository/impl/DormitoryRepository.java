@@ -237,4 +237,20 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
         return result > 0;
     }
 
+
+
+    @Override
+    public Boolean calculateDistance4Dormitory(int pDormitoryId) {
+        getSqlSession().insert("com.noeasy.money.model.Dormitory.calculateDistance4Dormitory", pDormitoryId);
+        return true;
+    }
+
+
+
+    @Override
+    public Boolean clearDistanceResult4Dormitory(int pDormitoryId) {
+        getSqlSession().delete("com.noeasy.money.model.Dormitory.clearDistanceResult4College", pDormitoryId);
+        return true;
+    }
+
 }
