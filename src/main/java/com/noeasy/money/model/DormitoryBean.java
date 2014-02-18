@@ -40,7 +40,9 @@ import java.util.List;
 public class DormitoryBean extends BaseBean {
 
     private int          mId;
+
     private String       mName;
+
     private String       mAddress;
     private String       mPostCode;
     private String       mEquipment;

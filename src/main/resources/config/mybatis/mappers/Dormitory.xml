@@ -187,8 +187,12 @@
 			name = #{name},
 			address = #{address},
 			postcode = #{postCode},
-			equipment = #{equipment},
-			service = #{service},
+			<if test="equipment != ''">
+				equipment = #{equipment},
+			</if>
+			<if test="service != ''">
+				service = #{service},
+			</if>
 			listPrice = #{listPrice},
 			salePrice = #{salePrice},
 			latitude = #{latitude},
@@ -200,6 +204,24 @@
 			contract_type_id = #{contractId}
 		where id = #{id}
 	</update>
+	
+	<insert id="insert-image-path" parameterType="java.util.List">
+		insert into dormitory_media (dormitory_id, media_type, media_path, index) values
+		<foreach collection="list" item="item" index="index" open="" close="" separator=",">
+			(#{item.dormitoryId}, 1, #{item.path}, #{index})
+		</foreach>
+	</insert>
+	
+	<insert id="insert-video-path" parameterType="java.util.List">
+		insert into dormitory_media (dormitory_id, media_type, media_path, index) values
+		<foreach collection="list" item="item" index="index" open="" close="" separator=",">
+			(#{item.dormitoryId}, 2, #{item.path}, #{index})
+		</foreach>
+	</insert>
+	
+	<delete id="remove-media-path" parameterType="int">
+		delete from dormitory_media where dormitory_id = #{dormitoryId};
+	</delete>
 
 	<!-- Rate Dormitory -->
 	<insert id="rate" keyProperty="id" useGeneratedKeys='true' parameterType="com.noeasy.money.model.DormitoryRateBean">

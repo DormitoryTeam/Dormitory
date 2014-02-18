@@ -81,6 +81,12 @@
 					</textarea></td>
 				</tr>
 				<tr>
+					<td>Dormitory Image Path:</td>
+					<td><input type="text" name="picPath" value="${dormitory['picPath'][0]}" /></td>
+					<td><input type="text" name="picPath" value="${dormitory['picPath'][1]}" /></td>
+					<td><input type="text" name="picPath" value="${dormitory['picPath'][2]}" /></td>
+				</tr>
+				<tr>
 					<td><input type="submit" value="Update" />
 				</tr>
 			</tbody>

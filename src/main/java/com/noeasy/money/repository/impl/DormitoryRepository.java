@@ -28,9 +28,12 @@
  */
 package com.noeasy.money.repository.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
 import com.noeasy.money.model.DormitoryBean;
@@ -98,6 +101,16 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
     public Boolean clearDistanceResult4College(final int pCollegeId) {
         getSqlSession().delete("com.noeasy.money.model.Dormitory.clearDistanceResult4College", pCollegeId);
         return true;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#deleteDormitoryMediaPath(java.lang.Integer)
+     */
+    @Override
+    public Boolean deleteDormitoryMediaPath(final Integer pDormitoryId) {
+        return getSqlSession().delete("com.noeasy.money.model.Dormitory.remove-media-path", pDormitoryId) >= 0;
     }
 
 
@@ -186,7 +199,42 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
      */
     @Override
     public Integer updateDormitory(final DormitoryBean pDormitory) {
-        return getSqlSession().update("com.noeasy.money.model.Dormitory.update-dormitory", pDormitory);
+        int result = getSqlSession().update("com.noeasy.money.model.Dormitory.update-dormitory", pDormitory);
+        if (result > 0) {
+            deleteDormitoryMediaPath(pDormitory.getId());
+            if (CollectionUtils.isNotEmpty(pDormitory.getPicPath())) {
+                updateDormitoryMediaPath(pDormitory.getPicPath(), pDormitory.getId(), false);
+            }
+            if (CollectionUtils.isNotEmpty(pDormitory.getVideoPath())) {
+                updateDormitoryMediaPath(pDormitory.getVideoPath(), pDormitory.getId(), true);
+            }
+        }
+        return result;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#updateDormitoryMediaPath(java.util.List,
+     *      java.lang.Integer, boolean)
+     */
+    @Override
+    public Boolean updateDormitoryMediaPath(final List<String> pMediaPath, final Integer pDormitoryId,
+            final boolean pIsVideo) {
+        List<Map<String, Object>> pMediaPathMapList = new ArrayList<Map<String, Object>>();
+        for (String path : pMediaPath) {
+            Map<String, Object> pathMap = new HashMap<String, Object>();
+            pathMap.put("dormitoryId", pDormitoryId);
+            pathMap.put("path", path);
+            pMediaPathMapList.add(pathMap);
+        }
+        int result = 0;
+        if (pIsVideo) {
+            result = getSqlSession().insert("com.noeasy.money.model.Dormitory.insert-video-path", pMediaPathMapList);
+        } else {
+            result = getSqlSession().insert("com.noeasy.money.model.Dormitory.insert-image-path", pMediaPathMapList);
+        }
+        return result > 0;
     }
 
 }

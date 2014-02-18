@@ -64,6 +64,10 @@ public interface IDormitoryRepository {
 
 
 
+    Boolean deleteDormitoryMediaPath(Integer pDormitoryId);
+
+
+
     Boolean initialDistanceResult();
 
 
@@ -97,5 +101,9 @@ public interface IDormitoryRepository {
 
 
     Integer updateDormitory(DormitoryBean pDormitory);
+
+
+
+    Boolean updateDormitoryMediaPath(List<String> pMediaPath, Integer pDormitoryId, boolean pIsVideo);
 
 }
