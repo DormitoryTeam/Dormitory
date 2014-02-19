@@ -72,6 +72,14 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
 
 
 
+    @Override
+    public Boolean calculateDistance4Dormitory(final int pDormitoryId) {
+        getSqlSession().insert("com.noeasy.money.model.Dormitory.calculateDistance4Dormitory", pDormitoryId);
+        return true;
+    }
+
+
+
     /**
      * @see com.noeasy.money.repository.IDormitoryRepository#clearDistanceResult()
      */
@@ -100,6 +108,14 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
     @Override
     public Boolean clearDistanceResult4College(final int pCollegeId) {
         getSqlSession().delete("com.noeasy.money.model.Dormitory.clearDistanceResult4College", pCollegeId);
+        return true;
+    }
+
+
+
+    @Override
+    public Boolean clearDistanceResult4Dormitory(final int pDormitoryId) {
+        getSqlSession().delete("com.noeasy.money.model.Dormitory.clearDistanceResult4Dormitory", pDormitoryId);
         return true;
     }
 
@@ -235,22 +251,6 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
             result = getSqlSession().insert("com.noeasy.money.model.Dormitory.insert-image-path", pMediaPathMapList);
         }
         return result > 0;
-    }
-
-
-
-    @Override
-    public Boolean calculateDistance4Dormitory(int pDormitoryId) {
-        getSqlSession().insert("com.noeasy.money.model.Dormitory.calculateDistance4Dormitory", pDormitoryId);
-        return true;
-    }
-
-
-
-    @Override
-    public Boolean clearDistanceResult4Dormitory(int pDormitoryId) {
-        getSqlSession().delete("com.noeasy.money.model.Dormitory.clearDistanceResult4College", pDormitoryId);
-        return true;
     }
 
 }

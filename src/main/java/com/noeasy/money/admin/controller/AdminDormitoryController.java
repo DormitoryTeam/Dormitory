@@ -71,7 +71,7 @@ public class AdminDormitoryController {
         if (dormitory.getId() > 0) {
             boolean result = dormitoryService.updateDormitory(dormitory);
             if (result) {
-                // TODO need add logic to flush distance
+                dormitoryService.calculateDistance4Dormitory(dormitory.getId());
             }
             model.addAttribute("result", result);
         }
