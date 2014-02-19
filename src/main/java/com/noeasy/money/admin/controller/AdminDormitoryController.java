@@ -86,6 +86,7 @@ public class AdminDormitoryController {
         if (dormitoryId != null) {
             DormitorySearchBean searchBean = new DormitorySearchBean();
             searchBean.setId(dormitoryId);
+            searchBean.setPageBean(null);
             DormitoryBean dormitory = dormitoryService.queryDormitory(searchBean);
 
             List<Map<String, Object>> cities = navigationService.queryCitiesInSameCountry(dormitory.getCityId());
