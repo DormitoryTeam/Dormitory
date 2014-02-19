@@ -206,14 +206,14 @@
 	</update>
 	
 	<insert id="insert-image-path" parameterType="java.util.List">
-		insert into dormitory_media (dormitory_id, media_type, media_path, index) values
+		insert into dormitory_media (dormitory_id, media_type, media_path, `index`) values
 		<foreach collection="list" item="item" index="index" open="" close="" separator=",">
 			(#{item.dormitoryId}, 1, #{item.path}, #{index})
 		</foreach>
 	</insert>
 	
 	<insert id="insert-video-path" parameterType="java.util.List">
-		insert into dormitory_media (dormitory_id, media_type, media_path, index) values
+		insert into dormitory_media (dormitory_id, media_type, media_path, `index`) values
 		<foreach collection="list" item="item" index="index" open="" close="" separator=",">
 			(#{item.dormitoryId}, 2, #{item.path}, #{index})
 		</foreach>
