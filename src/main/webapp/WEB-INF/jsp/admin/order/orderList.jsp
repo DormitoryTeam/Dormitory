@@ -17,7 +17,8 @@ date to: <input type="text" name="dateTo" value="${dateTo}"/><br>
 		<td>Book By</td>
 		<td>Book For</td>
 		<td>Book Time</td>
-		<td>status</td>
+		<td>Status</td>
+		<td>Action</td>
 	</tr>
 	<c:forEach var="order" items="${orders}" varStatus="i">
 	<tr>
@@ -28,6 +29,16 @@ date to: <input type="text" name="dateTo" value="${dateTo}"/><br>
 		<td>${order.belongsTo.login}</td>
 		<td>${order.createTime}</td>
 		<td>${order.orderStatus}</td>
+		<td>
+			<c:choose>
+				<c:when test="${0 eq order.orderStatus.value}"><a href="<c:url value='/admin/order/orderDetails.html?orderId=${order.id}&orderType=${type}'/>">Review</a></c:when>
+				<c:when test="${1 eq order.orderStatus.value}">Waiting for Payment</c:when>
+				<c:when test="${2 eq order.orderStatus.value}">Waiting for Payment</c:when>
+				<c:when test="${3 eq order.orderStatus.value}"><a href="<c:url value='/admin/order/orderDetails.html?orderId=${order.id}&orderType=${type}'/>">Comfirm Payment</a></c:when>
+				<c:when test="${4 eq order.orderStatus.value}"><a href="<c:url value='/admin/order/orderDetails.html?orderId=${order.id}&orderType=${type}'/>">Send Contract</a></c:when>
+				<c:otherwise>FINISH</c:otherwise>
+			</c:choose>
+		</td>
 	<tr>
 	</c:forEach>
 </c:when>

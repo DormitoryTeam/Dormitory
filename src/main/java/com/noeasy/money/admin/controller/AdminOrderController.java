@@ -15,6 +15,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.noeasy.money.constant.SessionConstants;
+import com.noeasy.money.enumeration.OrderStatus;
 import com.noeasy.money.enumeration.OrderType;
 import com.noeasy.money.model.OrderBean;
 import com.noeasy.money.model.OrderSearchBean;
@@ -60,7 +61,7 @@ public class AdminOrderController {
             searchBean.setDateFrom(tDateFrom);
         }
         if (StringUtils.isNotBlank(dateTo)) {
-            Date tDateTo= DateUtils.stringToDate(dateTo);
+            Date tDateTo = DateUtils.stringToDate(dateTo);
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(tDateTo);
             calendar.add(Calendar.DATE, 1);
@@ -103,10 +104,45 @@ public class AdminOrderController {
         List<OrderBean> orders = orderService.queryOrder(searchBean);
         if (CollectionUtils.isEmpty(orders)) {
             message = "no such order";
-            return "user/orderDetails";
+            return "admin/order/orderDetails";
         }
         model.addAttribute("order", orders.get(0));
         model.addAttribute("message", message);
-        return "user/orderDetails";
+        return "admin/order/orderDetails";
+    }
+
+
+
+    @RequestMapping(value = "/updateOrderStatus.html")
+    public String updateOrderStatus(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, String orderId, String nextStatusValue, String orderType) {
+        String message = "Sucess";
+        model.addAttribute("type", orderType);
+        if (StringUtils.isBlank(orderId) || StringUtils.isBlank(nextStatusValue)) {
+            message = "Failed";
+            model.addAttribute("message", message);
+            return "error";
+        }
+        OrderBean order = orderService.queryOrder(Integer.valueOf(orderId), OrderType.getType(orderType));
+        if (null == order) {
+            message = "no such order.";
+            model.addAttribute("message", message);
+            return "error";
+        }
+        
+        if (null == order.getOrderStatus().getNextStatus()) {
+            message = "Order status is null";
+            model.addAttribute("message", message);
+            return "error";
+        }
+        if (Integer.valueOf(nextStatusValue) != order.getOrderStatus().getNextStatus().getValue()) {
+            message = "Invalid order status";
+            model.addAttribute("message", message);
+            return "error";
+        }
+        // TODO SENDING CONTRACT EMAIL
+        orderService.updateOrderStatus(Integer.valueOf(orderId), OrderStatus.valueOf(Integer.valueOf(nextStatusValue)));
+        model.addAttribute("message", message);
+        return "redirect:/admin/order/orderDetails.html?orderId="+ orderId +"&orderType=" + orderType;
     }
 }

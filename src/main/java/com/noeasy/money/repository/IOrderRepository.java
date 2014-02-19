@@ -86,7 +86,7 @@ public interface IOrderRepository {
 
 
 
-    int updateOrderStatus(Integer pOrderId, OrderStatus pPayment);
+    int updateOrderStatus(Integer pOrderId, OrderStatus pStatus);
 
 
 

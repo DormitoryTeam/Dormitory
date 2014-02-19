@@ -30,6 +30,8 @@ package com.noeasy.money.service;
 
 import java.util.List;
 
+import com.noeasy.money.enumeration.OrderStatus;
+import com.noeasy.money.enumeration.OrderType;
 import com.noeasy.money.model.OrderBean;
 import com.noeasy.money.model.OrderSearchBean;
 
@@ -47,4 +49,16 @@ public interface IOrderService {
 
 
     List<OrderBean> queryOrder(OrderSearchBean pOrderSearchBean);
+
+
+
+    OrderBean queryOrder(Integer pOrderId, OrderType type);
+
+
+
+    OrderStatus getNextStatus(Integer pOrderId, OrderType type);
+
+
+
+    int updateOrderStatus(Integer pOrderId, OrderStatus pStatus);
 }

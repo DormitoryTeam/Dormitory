@@ -33,11 +33,14 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
+import com.noeasy.money.enumeration.OrderStatus;
 import com.noeasy.money.enumeration.OrderType;
 import com.noeasy.money.model.OrderBean;
 import com.noeasy.money.model.OrderSearchBean;
+import com.noeasy.money.model.UserBean;
 import com.noeasy.money.repository.IOrderRepository;
 import com.noeasy.money.service.IOrderService;
 
@@ -81,4 +84,38 @@ public class OrderService implements IOrderService {
         }
         return queryResult;
     }
+
+
+
+    @Override
+    public OrderBean queryOrder(Integer pOrderId, OrderType pType) {
+        OrderSearchBean searchBean = new OrderSearchBean();
+        searchBean.setOrderNumber(Integer.valueOf(pOrderId));
+        searchBean.setOrderType(pType);
+        List<OrderBean> orders = queryOrder(searchBean);
+        if (CollectionUtils.isNotEmpty(orders)) {
+            return orders.get(0);
+        }
+        return null;
+    }
+
+
+
+    @Override
+    public OrderStatus getNextStatus(Integer pOrderId, OrderType pType) {
+        OrderBean order = queryOrder(pOrderId, pType);
+        if (null != order && null != order.getOrderStatus()) {
+            return order.getOrderStatus().getNextStatus();
+        }
+        return null;
+    }
+
+
+
+    @Override
+    public int updateOrderStatus(Integer pOrderId, OrderStatus pStatus) {
+        return orderRepository.updateOrderStatus(pOrderId, pStatus);
+        
+    }
+
 }

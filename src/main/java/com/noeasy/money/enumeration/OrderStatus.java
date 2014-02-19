@@ -48,4 +48,30 @@ public enum OrderStatus {
     public int getValue() {
         return this.ordinal();
     }
+    
+    
+    public static OrderStatus valueOf(Integer ordinal) {
+        if (0 > ordinal || values().length -1 < ordinal) {
+            return null;
+        }
+        return values()[ordinal];
+    }
+    
+    public OrderStatus getNextStatus(){
+
+        int ordinal = this.ordinal();
+        if (ordinal == this.values().length -1) {
+            return this;
+        }
+        return this.values()[++ordinal];
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(COMMIT.getNextStatus());
+        System.out.println(REVIEWDE.getNextStatus());
+        System.out.println(PAYMENT.getNextStatus());
+        System.out.println(PAYMENT_DONE.getNextStatus());
+        System.out.println(PASS.getNextStatus());
+        System.out.println(SENDING_CONTACT.getNextStatus());
+    }
 }
