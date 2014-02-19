@@ -28,11 +28,7 @@
  */
 package com.noeasy.money.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
 
 /**
  * <class description>
@@ -43,32 +39,31 @@ import org.apache.commons.collections.CollectionUtils;
 
 public class DormitoryBean extends BaseBean {
 
-    private int                      mId;
-    private String                   mName;
-    private String                   mAddress;
-    private String                   mPostCode;
-    private String                   mEquipment;
-    private String                   mService;
-    private Double                   mSalePrice;
-    private Double                   mListPrice;
-    private String                   mCurrency;
-    private Double                   mDistance;
-    private Double                   mRating;
-    private String                   mDescription;
-    private int                      mCityId;
-    private String                   mCity;
-    private int                      mCollegeId;
-    private String                   mCollege;
-    private int                      mDormitoryTypeId;
-    private String                   mDormitoryType;
-    private int                      mContractId;
-    private String                   mContract;
-    private List<String>             mPicPath;
-    private List<String>             mVideoPath;
-    private Double                   mLatitude;
-    private Double                   mLongitude;
-    private int                      mStatus;
-    private List<DormitoryMediaBean> mMediaPath;
+    private int          mId;
+    private String       mName;
+    private String       mAddress;
+    private String       mPostCode;
+    private String       mEquipment;
+    private String       mService;
+    private Double       mSalePrice;
+    private Double       mListPrice;
+    private String       mCurrency;
+    private Double       mDistance;
+    private Double       mRating;
+    private String       mDescription;
+    private int          mCityId;
+    private String       mCity;
+    private int          mCollegeId;
+    private String       mCollege;
+    private int          mDormitoryTypeId;
+    private String       mDormitoryType;
+    private int          mContractId;
+    private String       mContract;
+    private List<String> mPicPath;
+    private List<String> mVideoPath;
+    private Double       mLatitude;
+    private Double       mLongitude;
+    private int          mStatus;
 
 
 
@@ -226,15 +221,6 @@ public class DormitoryBean extends BaseBean {
 
 
     /**
-     * @return the mediaPath
-     */
-    public List<DormitoryMediaBean> getMediaPath() {
-        return mMediaPath;
-    }
-
-
-
-    /**
      * @return the name
      */
     public String getName() {
@@ -247,18 +233,6 @@ public class DormitoryBean extends BaseBean {
      * @return the picPath
      */
     public List<String> getPicPath() {
-        if (CollectionUtils.isEmpty(mPicPath)) {
-            if (CollectionUtils.isNotEmpty(mMediaPath)) {
-                mPicPath = new ArrayList<String>();
-                for (DormitoryMediaBean mediaBean : mMediaPath) {
-                    if (!mediaBean.isMediaType()) {
-                        mPicPath.add(mediaBean.getMediaPath());
-                    }
-                }
-                return mPicPath;
-            }
-            return Collections.EMPTY_LIST;
-        }
         return mPicPath;
     }
 
@@ -310,22 +284,29 @@ public class DormitoryBean extends BaseBean {
      * @return the videoPath
      */
     public List<String> getVideoPath() {
-        if (CollectionUtils.isEmpty(mPicPath)) {
-            if (CollectionUtils.isNotEmpty(mVideoPath)) {
-                mVideoPath = new ArrayList<String>();
-                for (DormitoryMediaBean mediaBean : mMediaPath) {
-                    if (mediaBean.isMediaType()) {
-                        mVideoPath.add(mediaBean.getMediaPath());
-                    }
-                }
-                return mVideoPath;
-            }
-            return Collections.EMPTY_LIST;
-        }
         return mVideoPath;
     }
 
 
+
+    /**
+     * @return the videoPath
+     */
+    // public List<String> getVideoPath() {
+    // if (CollectionUtils.isEmpty(mPicPath)) {
+    // if (CollectionUtils.isNotEmpty(mVideoPath)) {
+    // mVideoPath = new ArrayList<String>();
+    // for (DormitoryMediaBean mediaBean : mMediaPath) {
+    // if (mediaBean.isMediaType()) {
+    // mVideoPath.add(mediaBean.getMediaPath());
+    // }
+    // }
+    // return mVideoPath;
+    // }
+    // return Collections.EMPTY_LIST;
+    // }
+    // return mVideoPath;
+    // }
 
     /**
      * @param pAddress
@@ -493,16 +474,6 @@ public class DormitoryBean extends BaseBean {
      */
     public void setLongitude(final Double pLongitude) {
         mLongitude = pLongitude;
-    }
-
-
-
-    /**
-     * @param pMediaPath
-     *            the mediaPath to set
-     */
-    public void setMediaPath(final List<DormitoryMediaBean> pMediaPath) {
-        mMediaPath = pMediaPath;
     }
 
 
