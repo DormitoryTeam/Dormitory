@@ -30,6 +30,8 @@ package com.noeasy.money.model;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * <class description>
  * 
@@ -433,7 +435,7 @@ public class DormitoryBean extends BaseBean {
      *            the equipment to set
      */
     public void setEquipment(final String pEquipment) {
-        mEquipment = pEquipment;
+        mEquipment = StringUtils.isBlank(pEquipment) ? null : "";
     }
 
 
@@ -533,7 +535,7 @@ public class DormitoryBean extends BaseBean {
      *            the service to set
      */
     public void setService(final String pService) {
-        mService = pService;
+        mService = StringUtils.isBlank(pService) ? null : "";
     }
 
 

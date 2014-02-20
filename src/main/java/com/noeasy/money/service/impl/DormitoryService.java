@@ -96,6 +96,16 @@ public class DormitoryService implements IDormitoryService {
 
 
 
+    @Override
+    public Boolean calculateDistance4Dormitory(final int pDormitoryId) {
+        if (dormitoryRepository.clearDistanceResult4Dormitory(pDormitoryId)) {
+            return dormitoryRepository.calculateDistance4Dormitory(pDormitoryId);
+        }
+        return false;
+    }
+
+
+
     /**
      * @see com.noeasy.money.service.IDormitoryService#queryContractTypes()
      */
@@ -161,23 +171,18 @@ public class DormitoryService implements IDormitoryService {
 
 
     /**
-     * @see com.noeasy.money.service.IDormitoryService#updateDormitory(com.noeasy.money.model.DormitoryBean)
+     * @see com.noeasy.money.service.IDormitoryService#saveOrUpdateDormitory(com.noeasy.money.model.DormitoryBean)
      */
     @Override
-    public Boolean updateDormitory(final DormitoryBean pDormitory) {
-        if (pDormitory != null && pDormitory.getId() > 0) {
-            int updatedResult = dormitoryRepository.updateDormitory(pDormitory);
-            return updatedResult == 1;
-        }
-        return false;
-    }
-
-
-
-    @Override
-    public Boolean calculateDistance4Dormitory(int pDormitoryId) {
-        if (dormitoryRepository.clearDistanceResult4Dormitory(pDormitoryId)) {
-            return dormitoryRepository.calculateDistance4Dormitory(pDormitoryId);
+    public Boolean saveOrUpdateDormitory(final DormitoryBean pDormitory) {
+        if (pDormitory != null) {
+            if (pDormitory.getId() > 0) {
+                int updatedResult = dormitoryRepository.updateDormitory(pDormitory);
+                return updatedResult == 1;
+            } else {
+                int saveResult = dormitoryRepository.saveDormitory(pDormitory);
+                return saveResult == 1;
+            }
         }
         return false;
     }

@@ -64,5 +64,9 @@ public interface INavigationRepository {
 
 
 
+    Map<String, Object> queryCountryByCityId(Integer pCityId);
+
+
+
     Map<String, Object> queryCountryById(Integer pCountryId);
 }

@@ -205,6 +205,26 @@
 		where id = #{id}
 	</update>
 	
+	<insert id="save-dormitory" keyProperty="id" useGeneratedKeys='true' parameterType="com.noeasy.money.model.DormitoryBean">
+		insert into dormitory (city_id, type_id, contract_type_id, name, address, postcode, listPrice, salePrice, currency, latitude, longitude, equipment, service, description, status) values (
+			#{cityId,javaType=int,jdbcType=INTEGER},
+			#{dormitoryTypeId,javaType=int,jdbcType=INTEGER},
+			#{contractId,javaType=int,jdbcType=INTEGER},
+			#{name,javaType=String,jdbcType=VARCHAR},
+			#{address,javaType=String,jdbcType=VARCHAR},
+			#{postCode,javaType=String,jdbcType=VARCHAR},
+			#{listPrice,javaType=Double,jdbcType=DECIMAL},
+			#{salePrice,javaType=Double,jdbcType=DECIMAL},
+			#{currency,javaType=String,jdbcType=VARCHAR},
+			#{latitude,javaType=Double,jdbcType=INTEGER},
+			#{longitude,javaType=Double,jdbcType=INTEGER},
+			#{equipment,javaType=String,jdbcType=INTEGER},
+			#{service,javaType=String,jdbcType=INTEGER},
+			#{description,javaType=String,jdbcType=VARCHAR},
+			1
+		);
+	</insert>
+	
 	<insert id="insert-image-path" parameterType="java.util.List">
 		insert into dormitory_media (dormitory_id, media_type, media_path, `index`) values
 		<foreach collection="list" item="item" index="index" open="" close="" separator=",">

@@ -108,10 +108,14 @@ public interface IDormitoryRepository {
 
 
 
+    Integer saveDormitory(DormitoryBean pDormitory);
+
+
+
     Integer updateDormitory(DormitoryBean pDormitory);
 
 
 
-    Boolean updateDormitoryMediaPath(List<String> pMediaPath, Integer pDormitoryId, boolean pIsVideo);
+    Boolean saveDormitoryMediaPath(List<String> pMediaPath, Integer pDormitoryId, boolean pIsVideo);
 
 }

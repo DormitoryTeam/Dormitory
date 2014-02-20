@@ -64,6 +64,9 @@ public interface INavigationService {
 
 
 
-    Map<String, Object> queryCountryById(Integer pCountryId);
+    Map<String, Object> queryCountryByCityId(Integer pCityId);
 
+
+
+    Map<String, Object> queryCountryById(Integer pCountryId);
 }

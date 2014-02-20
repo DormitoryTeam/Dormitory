@@ -13,13 +13,13 @@
 		<input type="text" name="cityName" value="${cityName}"/>
 		<input type="text" name="dormitoryName" value="${dormitoryName}"/>
 		<input type="submit" value="search" />
+		<input type="button" id="btnAdd" value="Create Dormitory">
 		<br />
 		<input type="radio" name="sortField" value="distance" <c:if test="${sortField eq 'distance' or empty sortField}">checked</c:if> /> Sort By Distance
 		<input type="radio" name="sortField" value="salePrice" <c:if test="${sortField eq 'salePrice'}">checked</c:if> /> Sort By Price
 		<input type="radio" name="sortField" value="rating" <c:if test="${sortField eq 'rating'}">checked</c:if> /> Sort By Rate
 		<input type="radio" name="sortField" value="sales" <c:if test="${sortField eq 'sales'}">checked</c:if> /> Sort By Sales
 	</form>
-
 	<hr />
 	
 	<table>
