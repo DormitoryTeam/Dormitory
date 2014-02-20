@@ -87,4 +87,11 @@ public class AuthenticationRepository extends BaseRepository implements IAuthent
         return getSqlSession().selectList("com.noeasy.money.model.Authentication.getAuthenticationData");
     }
 
+
+
+    @Override
+    public List<Map<String, String>> getAllGroups() {
+        return getSqlSession().selectList("com.noeasy.money.model.Authentication.getAllGroups");
+    }
+
 }

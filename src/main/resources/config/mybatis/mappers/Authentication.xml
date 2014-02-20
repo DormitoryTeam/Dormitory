@@ -39,7 +39,7 @@
 		resultType="int">
 		SELECT count(*) FROM group_role
 		WHERE group_id = #{groupId}
-		AND role_id = #{roleId}
+		AND role_id = #{roleId};
 	</select>
 
 
@@ -58,6 +58,10 @@
 	<select id="getAuthenticationData" resultType="hashmap">
 		SELECT func.servlet_path_info AS servletLPathInfo, rolefunc.role_id AS roleId
 		FROM functions AS func
-		INNER JOIN role_fuction AS rolefunc ON rolefunc.function_id = func.id
+		INNER JOIN role_fuction AS rolefunc ON rolefunc.function_id = func.id;
+	</select>
+	
+	<select id="getAllGroups" resultType="hashmap">
+		SELECT id, name from groups;
 	</select>
 </mapper>

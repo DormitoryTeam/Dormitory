@@ -103,4 +103,11 @@ public class AuthenticationService implements IAuthenticationService {
         return data;
     }
 
+
+
+    @Override
+    public List<Map<String, String>> getAllGroups() {
+        return repository.getAllGroups();
+    }
+
 }

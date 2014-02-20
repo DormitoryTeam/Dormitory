@@ -1,4 +1,3 @@
-<table>
 <form action="<c:url value='/admin/order/orderList.html'/>" method="POST">
 orderType: <input type="text" name="orderType" value="${type}"/><br>
 orderNumber: <input type="text" name="orderId" value="${orderId}"/><br>
@@ -8,6 +7,7 @@ date to: <input type="text" name="dateTo" value="${dateTo}"/><br>
 <input type="submit" value="submit"/>
 </form>
 <hr>
+<table>
 <c:choose>
 <c:when test='${"D" eq type}'>
 	<tr>

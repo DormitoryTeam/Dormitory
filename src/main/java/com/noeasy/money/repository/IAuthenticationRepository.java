@@ -40,4 +40,7 @@ public interface IAuthenticationRepository {
 
     List<Map<String, String>> getAuthenticationData();
 
+
+
+    List<Map<String, String>> getAllGroups();
 }

@@ -7,6 +7,7 @@ public class UserSearchBean {
     String  name;
     String  groupId;
     String  sign;
+    String  searchKey;
 
 
 
@@ -78,6 +79,18 @@ public class UserSearchBean {
 
     public void setSign(String pSign) {
         sign = pSign;
+    }
+
+
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+
+
+    public void setSearchKey(String pSearchKey) {
+        searchKey = pSearchKey;
     }
 
 }

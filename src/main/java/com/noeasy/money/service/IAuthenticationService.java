@@ -1,5 +1,6 @@
 package com.noeasy.money.service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,4 +27,8 @@ public interface IAuthenticationService {
 
 
     Map<String, Set<Integer>> getAuthenticationData();
+
+
+
+    List<Map<String, String>> getAllGroups();
 }

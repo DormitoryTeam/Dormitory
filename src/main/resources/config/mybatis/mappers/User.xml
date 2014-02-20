@@ -64,5 +64,8 @@
 		<if test="sign != null">
 			AND u.reset_password_sign = #{sign}
 		</if>
+		<if test="searchKey != null">
+			AND (u.id = #{searchKey} OR u.login like CONCAT('%', #{searchKey}, '%'))
+		</if>
 	</select>
 </mapper>
