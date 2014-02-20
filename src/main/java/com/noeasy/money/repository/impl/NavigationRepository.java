@@ -133,6 +133,16 @@ public class NavigationRepository extends BaseRepository implements INavigationR
 
 
     /**
+     * @see com.noeasy.money.repository.INavigationRepository#queryCountryByCityId(java.lang.Integer)
+     */
+    @Override
+    public Map<String, Object> queryCountryByCityId(final Integer pCityId) {
+        return getSqlSession().selectOne("com.noeasy.money.model.Navigation.queryCountryByCityId", pCityId);
+    }
+
+
+
+    /**
      * @see com.noeasy.money.repository.INavigationRepository#queryCountryById(java.lang.Integer)
      */
     @Override

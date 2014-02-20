@@ -53,8 +53,9 @@ public interface IDormitoryService {
 
 
     Boolean calculateDistance4College(int pCollegeId);
-    
-    
+
+
+
     Boolean calculateDistance4Dormitory(int pDormitoryId);
 
 
@@ -92,6 +93,6 @@ public interface IDormitoryService {
 
 
 
-    Boolean updateDormitory(DormitoryBean pDormitory);
+    Boolean saveOrUpdateDormitory(DormitoryBean pDormitory);
 
 }

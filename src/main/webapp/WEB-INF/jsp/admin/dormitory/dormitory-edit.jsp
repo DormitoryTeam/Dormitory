@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type="text/javascript" src="<c:url value='/js/jquery/jquery-1.4.3.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/js/home.js'/>"></script>
 <title></title>
 </head>
 <body>
@@ -19,23 +20,34 @@
 				<tr>
 					<td>Name*:</td>
 					<td><input type="text" name="name" value="${dormitory['name']}" /></td>
-					<td>Post Code:</td>
-					<td><input type="text" name="postCode" value="${dormitory['postCode']}" /></td>
+
 				</tr>
 				<tr>
+					<td>Country:</td>
+					<td><select id="sltCountry" name="countryId">
+							<c:forEach items="${countries}" var="country">
+								<option value="${country['id']}" <c:if test="${country['id'] eq currentCountry['id']}"></c:if>>${country['name']}</option>
+							</c:forEach>
+					</select></td>
 					<td>City*:</td>
-					<td><select name="cityId">
+					<td><select id="sltCity" name="cityId">
 							<c:forEach var="city" items="${cities}">
 								<option value="${city['id']}" <c:if test="${city['id'] eq dormitory['cityId']}">selected="selected"</c:if>>${city['name']}</option>
 							</c:forEach>
 					</select></td>
-					<td>College*:</td>
-					<td><select name="collegeId">
+				</tr>
+
+				<td>College*:</td>
+					<td><select id="sltCollege" name="collegeId">
 							<c:forEach var="college" items="${colleges}">
 								<option value="${college['id']}" <c:if test="${college['id'] eq dormitory['collegeId']}">selected="selected"</c:if>>${college['name']}</option>
 							</c:forEach>
 					</select></td>
+					<td>Post Code:</td>
+					<td><input type="text" name="postCode" value="${dormitory['postCode']}" /></td>
 				</tr>
+				
+				
 				<tr>
 					<td>Contract:</td>
 					<td><select name="contractId">
@@ -87,7 +99,8 @@
 					<td><input type="text" name="picPath" value="${dormitory['picPath'][2]}" /></td>
 				</tr>
 				<tr>
-					<td><input type="submit" value="Update" />
+					<td><input type="submit" value="Update" /></td>
+					<td><a href="${backURL}">Back to list</a></td>
 				</tr>
 			</tbody>
 		</table>

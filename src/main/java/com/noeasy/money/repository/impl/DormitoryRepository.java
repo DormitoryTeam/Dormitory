@@ -211,18 +211,18 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
 
 
     /**
-     * @see com.noeasy.money.repository.IDormitoryRepository#updateDormitory(com.noeasy.money.model.DormitoryBean)
+     * @see com.noeasy.money.repository.IDormitoryRepository#saveDormitory(com.noeasy.money.model.DormitoryBean)
      */
     @Override
-    public Integer updateDormitory(final DormitoryBean pDormitory) {
-        int result = getSqlSession().update("com.noeasy.money.model.Dormitory.update-dormitory", pDormitory);
+    public Integer saveDormitory(final DormitoryBean pDormitory) {
+        int result = getSqlSession().insert("com.noeasy.money.model.Dormitory.save-dormitory", pDormitory);
         if (result > 0) {
             deleteDormitoryMediaPath(pDormitory.getId());
             if (CollectionUtils.isNotEmpty(pDormitory.getPicPath())) {
-                updateDormitoryMediaPath(pDormitory.getPicPath(), pDormitory.getId(), false);
+                saveDormitoryMediaPath(pDormitory.getPicPath(), pDormitory.getId(), false);
             }
             if (CollectionUtils.isNotEmpty(pDormitory.getVideoPath())) {
-                updateDormitoryMediaPath(pDormitory.getVideoPath(), pDormitory.getId(), true);
+                saveDormitoryMediaPath(pDormitory.getVideoPath(), pDormitory.getId(), true);
             }
         }
         return result;
@@ -231,11 +231,11 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
 
 
     /**
-     * @see com.noeasy.money.repository.IDormitoryRepository#updateDormitoryMediaPath(java.util.List,
+     * @see com.noeasy.money.repository.IDormitoryRepository#saveDormitoryMediaPath(java.util.List,
      *      java.lang.Integer, boolean)
      */
     @Override
-    public Boolean updateDormitoryMediaPath(final List<String> pMediaPath, final Integer pDormitoryId,
+    public Boolean saveDormitoryMediaPath(final List<String> pMediaPath, final Integer pDormitoryId,
             final boolean pIsVideo) {
         List<Map<String, Object>> pMediaPathMapList = new ArrayList<Map<String, Object>>();
         for (String path : pMediaPath) {
@@ -251,6 +251,26 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
             result = getSqlSession().insert("com.noeasy.money.model.Dormitory.insert-image-path", pMediaPathMapList);
         }
         return result > 0;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#updateDormitory(com.noeasy.money.model.DormitoryBean)
+     */
+    @Override
+    public Integer updateDormitory(final DormitoryBean pDormitory) {
+        int result = getSqlSession().update("com.noeasy.money.model.Dormitory.update-dormitory", pDormitory);
+        if (result > 0) {
+            deleteDormitoryMediaPath(pDormitory.getId());
+            if (CollectionUtils.isNotEmpty(pDormitory.getPicPath())) {
+                saveDormitoryMediaPath(pDormitory.getPicPath(), pDormitory.getId(), false);
+            }
+            if (CollectionUtils.isNotEmpty(pDormitory.getVideoPath())) {
+                saveDormitoryMediaPath(pDormitory.getVideoPath(), pDormitory.getId(), true);
+            }
+        }
+        return result;
     }
 
 }

@@ -35,7 +35,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,17 +67,39 @@ public class AdminDormitoryController {
 
 
 
-    @RequestMapping("dormitory-update" + Constants.URL_SUFFIX)
+    @RequestMapping("dormitory-save" + Constants.URL_SUFFIX)
     public String dormitoryUpdate(final HttpServletRequest request, final HttpServletResponse response,
             final Model model, final DormitoryBean dormitory) {
-        if (dormitory.getId() > 0) {
-            boolean result = dormitoryService.updateDormitory(dormitory);
-            if (result) {
-                dormitoryService.calculateDistance4Dormitory(dormitory.getId());
-            }
-            model.addAttribute("result", result);
+        boolean result = dormitoryService.saveOrUpdateDormitory(dormitory);
+        if (result) {
+            dormitoryService.calculateDistance4Dormitory(dormitory.getId());
         }
+        model.addAttribute("result", result);
         return "admin/dormitory/dormitory-edit-result";
+    }
+
+
+
+    @RequestMapping("dormitory-add" + Constants.URL_SUFFIX)
+    public String toDormitoryAdd(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final String backURL) {
+        List<Map<String, Object>> countries = navigationService.queryCountries();
+        if (CollectionUtils.isNotEmpty(countries)) {
+            Integer firstCountryId = (Integer) countries.get(0).get("id");
+            List<Map<String, Object>> cities = navigationService.queryCities(firstCountryId);
+            Integer firstCityId = NumberUtils.toInt(cities.get(0).get("id").toString());
+            List<Map<String, Object>> colleges = navigationService.queryColleges(firstCityId);
+            List<Map<String, Object>> contractTypes = dormitoryService.queryContractTypes();
+            List<Map<String, Object>> dormitoryTypes = dormitoryService.queryDormitoryTypes();
+
+            model.addAttribute("backURL", backURL);
+            model.addAttribute("countries", countries);
+            model.addAttribute("cities", cities);
+            model.addAttribute("colleges", colleges);
+            model.addAttribute("contractTypes", contractTypes);
+            model.addAttribute("dormitoryTypes", dormitoryTypes);
+        }
+        return "admin/dormitory/dormitory-add";
     }
 
 
@@ -89,6 +113,8 @@ public class AdminDormitoryController {
             searchBean.setPageBean(null);
             DormitoryBean dormitory = dormitoryService.queryDormitory(searchBean);
 
+            List<Map<String, Object>> countries = navigationService.queryCountries();
+            Map<String, Object> currentCountry = navigationService.queryCountryByCityId(dormitory.getCityId());
             List<Map<String, Object>> cities = navigationService.queryCitiesInSameCountry(dormitory.getCityId());
             List<Map<String, Object>> colleges = navigationService.queryColleges(dormitory.getCityId());
             List<Map<String, Object>> contractTypes = dormitoryService.queryContractTypes();
@@ -96,6 +122,8 @@ public class AdminDormitoryController {
 
             model.addAttribute("dormitory", dormitory);
             model.addAttribute("backURL", backURL);
+            model.addAttribute("countries", countries);
+            model.addAttribute("currentCountry", currentCountry);
             model.addAttribute("cities", cities);
             model.addAttribute("colleges", colleges);
             model.addAttribute("contractTypes", contractTypes);
