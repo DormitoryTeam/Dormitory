@@ -61,4 +61,8 @@ public interface IOrderService {
 
 
     int updateOrderStatus(Integer pOrderId, OrderStatus pStatus);
+
+
+
+    int queryOrderCount(OrderSearchBean pSearchBean);
 }

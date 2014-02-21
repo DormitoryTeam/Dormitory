@@ -92,4 +92,12 @@ public interface IOrderRepository {
 
     boolean isPaymentDone(Integer pOrderId);
 
+
+
+    Integer queryDormitoryOrderCount(OrderSearchBean pSearchBean);
+
+
+
+    Integer queryPickupOrderCount(OrderSearchBean pSearchBean);
+
 }

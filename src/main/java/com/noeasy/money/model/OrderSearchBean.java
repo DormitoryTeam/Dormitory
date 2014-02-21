@@ -57,7 +57,6 @@ public class OrderSearchBean {
     private PageBean    mPageBean;
 
 
-
     /**
      * @return the dateFrom
      */

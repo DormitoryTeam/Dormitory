@@ -66,12 +66,6 @@ public class DormitorySearchBean {
 
 
 
-    public DormitorySearchBean() {
-        mPageBean = new PageBean();
-    }
-
-
-
     /**
      * @return the cityId
      */

@@ -181,4 +181,19 @@ public class OrderRepository extends BaseRepository implements IOrderRepository 
         return count;
     }
 
+
+
+    @Override
+    public Integer queryDormitoryOrderCount(OrderSearchBean pSearchBean) {
+        return getSqlSession().selectOne("com.noeasy.money.model.Order.queryDormitoryOrderCount", pSearchBean);
+    }
+
+
+
+    @Override
+    public Integer queryPickupOrderCount(OrderSearchBean pSearchBean) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
 }

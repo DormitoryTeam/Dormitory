@@ -20,6 +20,7 @@ import com.noeasy.money.constant.SessionConstants;
 import com.noeasy.money.enumeration.OrderType;
 import com.noeasy.money.model.OrderBean;
 import com.noeasy.money.model.OrderSearchBean;
+import com.noeasy.money.model.PageBean;
 import com.noeasy.money.model.UserBean;
 import com.noeasy.money.model.UserSearchBean;
 import com.noeasy.money.service.IOrderService;
@@ -262,7 +263,7 @@ public class UserController {
 
     @RequestMapping(value = "/orderList.html")
     public String getOrderList(final ModelMap model, final HttpServletRequest request,
-            final HttpServletResponse response, String orderType) {
+            final HttpServletResponse response, String orderType, final String currentPage, final String pageSize) {
         Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
         OrderType type = OrderType.getType(orderType);// "D" means dormitory
         OrderSearchBean searchBean = new OrderSearchBean();
@@ -270,9 +271,20 @@ public class UserController {
         UserBean user = new UserBean();
         user.setId(userId);
         searchBean.setUser(user);
+        int rowTotal = orderService.queryOrderCount(searchBean);
+        PageBean page = new PageBean(rowTotal);
+        if (StringUtils.isNotBlank(currentPage)) {
+            page.setPageNum(Integer.valueOf(currentPage));
+        }
+        if (StringUtils.isNotBlank(pageSize)) {
+            page.setPageSize(Integer.valueOf(pageSize));
+        }
+        page.setQueryString(request.getQueryString());
+        searchBean.setPageBean(page);
         List<OrderBean> orders = orderService.queryOrder(searchBean);
         model.addAttribute("orders", orders);
         model.addAttribute("type", orderType);
+        model.addAttribute("page", page);
         return "user/orderList";
     }
 

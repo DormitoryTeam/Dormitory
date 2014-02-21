@@ -3,8 +3,12 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.noeasy.money.model.Order">
-
-	<sql id="select-dormitory-order">
+	
+	<sql id="select-count">
+		select count(*)
+	</sql>
+	
+	<sql id="select-dormitory-order-content">
 		select t1.id, t1.user_id, t1.belongs_to, t1.type as order_type, t1.status as order_status, t1.currency, t1.amount, t1.create_time,
 		t2.id as uid, t2.login as user_login, t2.password as user_password, t2.email as user_email, t2.name as user_name, t2.gender as user_gender, t2.passport as
 		user_passport, t2.age as user_age, t2.birthday as user_birthday, t2.address as user_address, t2.qq as user_qq, t2.phone as user_phone,
@@ -16,6 +20,8 @@
 		t6.id as did, t6.city_id, t6.type_id, t6.contract_type_id, t6.name as dname, t6.address as daddress, t6.postcode, t6.listPrice as dlistPrice, t6.salePrice, t6.currency as dcurrency,
 		t6.equipment, t6.service, t6.description, t6.status as dstatus,
 		t7.name as contract_name
+	</sql>
+	<sql id="select-dormitory-order-table-join">
 		from `order` t1
 		left join users t2 on t1.user_id = t2.id
 		left join users t3 on t1.belongs_to = t3.id
@@ -24,7 +30,7 @@
 		left join dormitory t6 on t5.dormitory_id = t6.id
 		left join contract_type t7 on t7.id = t6.contract_type_id
 	</sql>
-
+	
 	<sql id="select-pickup-order">
 		select t1.id, t1.user_id, t1.belongs_to, t1.type as order_type, t1.status as order_status, t1.currency, t1.amount, t1.create_time,
 		t2.id as uid, t2.login as user_login, t2.password as user_password, t2.email as user_email, t2.name as user_name, t2.gender as user_gender, t2.passport as
@@ -75,12 +81,20 @@
 	</sql>
 
 	<select id="queryDormitoryOrder" resultMap="dormitory-order">
-		<include refid="select-dormitory-order" />
+		<include refid="select-dormitory-order-content" />
+		<include refid="select-dormitory-order-table-join" />
 		<include refid="where" />
 		<include refid="select-dormitory-condition" />
 		<if test="pageBean != null">
 			<include refid="limit-split-page" />
 		</if>
+	</select>
+	
+	<select id="queryDormitoryOrderCount" resultType="int">
+		<include refid="select-count" />
+		<include refid="select-dormitory-order-table-join" />
+		<include refid="where" />
+		<include refid="select-dormitory-condition" />
 	</select>
 
 	<select id="queryPickupOrder" resultMap="pickup-order">

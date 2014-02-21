@@ -118,4 +118,16 @@ public class OrderService implements IOrderService {
         
     }
 
+
+
+    @Override
+    public int queryOrderCount(OrderSearchBean pSearchBean) {
+        if (pSearchBean.getOrderType().equals(OrderType.DORMITORY)) {
+            return orderRepository.queryDormitoryOrderCount(pSearchBean);
+        } else if (pSearchBean.getOrderType().equals(OrderType.PICKUP)) {
+            return orderRepository.queryPickupOrderCount(pSearchBean);
+        }
+        return 0;
+    }
+
 }

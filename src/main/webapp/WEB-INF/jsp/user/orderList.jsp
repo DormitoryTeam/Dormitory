@@ -27,3 +27,4 @@
 </c:otherwise>
 </c:choose>
 </table>
+<jsp:include page="/jsp/utils/pagination.jsp" flush="true"/>
