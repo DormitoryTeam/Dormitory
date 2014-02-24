@@ -4,17 +4,27 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<script type="text/javascript" src="<c:url value='/js/jquery/jquery-1.4.3.min.js'/>"></script>
-<script type="text/javascript" src="<c:url value='/js/home.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/js/jquery/jquery.1.9.1.min.js' />"></script>
+<script type="text/javascript" src="<c:url value='/js/home.js' />"></script>
+<script type="text/javascript" src="<c:url value='/js/admin/dormitory/dormitory-edit.js' />"></script>
+<script type="text/javascript" src="<c:url value='/js/jquery/vendor/jquery.ui.widget.js' />"></script>
+<script type="text/javascript" src="<c:url value='/js/jquery/jquery.iframe-transport.js' />"></script>
+<script type="text/javascript" src="<c:url value='/js/jquery/jquery.fileupload.js' />"></script>
+<script type="text/javascript" src="<c:url value='/bootstrap/js/bootstrap.min.js' />"></script>
+<link type="text/css" rel="stylesheet" href="<c:url value='/bootstrap/css/bootstrap.css' />" />
+<link type="text/css" rel="stylesheet" href="<c:url value='/style/dropzone.css' />" />
+
+<!-- we code these -->
+<link href="css/dropzone.css" type="text/css" rel="stylesheet" />
 <title></title>
 </head>
 <body>
 
-	<form action="/dormitory/admin/dormitory/dormitory-update.html" method="POST">
+	<form action="/dormitory/admin/dormitory/dormitory-save.html" method="POST">
 		<table>
 			<tbody>
 				<tr>
-					<td>DormitoryId:<input type="hidden" name="id" value="${dormitory['id']}" /></td>
+					<td>DormitoryId:<input type="hidden" name="id" id="hidDormitoryId" value="${dormitory['id']}" /></td>
 					<td>${dormitory['id']}</td>
 				</tr>
 				<tr>
@@ -38,16 +48,15 @@
 				</tr>
 
 				<td>College*:</td>
-					<td><select id="sltCollege" name="collegeId">
-							<c:forEach var="college" items="${colleges}">
-								<option value="${college['id']}" <c:if test="${college['id'] eq dormitory['collegeId']}">selected="selected"</c:if>>${college['name']}</option>
-							</c:forEach>
-					</select></td>
-					<td>Post Code:</td>
-					<td><input type="text" name="postCode" value="${dormitory['postCode']}" /></td>
+				<td><select id="sltCollege" name="collegeId">
+						<c:forEach var="college" items="${colleges}">
+							<option value="${college['id']}" <c:if test="${college['id'] eq dormitory['collegeId']}">selected="selected"</c:if>>${college['name']}</option>
+						</c:forEach>
+				</select></td>
+				<td>Post Code:</td>
+				<td><input type="text" name="postCode" value="${dormitory['postCode']}" /></td>
 				</tr>
-				
-				
+
 				<tr>
 					<td>Contract:</td>
 					<td><select name="contractId">
@@ -92,11 +101,40 @@
 						${dormitory['description']}
 					</textarea></td>
 				</tr>
+
 				<tr>
-					<td>Dormitory Image Path:</td>
-					<td><input type="text" name="picPath" value="${dormitory['picPath'][0]}" /></td>
-					<td><input type="text" name="picPath" value="${dormitory['picPath'][1]}" /></td>
-					<td><input type="text" name="picPath" value="${dormitory['picPath'][2]}" /></td>
+					<td>Images:</td>
+					<td>
+						<table id="uploaded-files" class="table" style="width: 500px; padding: 20px;">
+							<tr>
+								<th>#</th>
+								<th>File Name</th>
+								<th>File Size</th>
+								<th>File Type</th>
+								<th>Preview</th>
+							</tr>
+							<c:forEach var="path" items="${dormitory['picPath']}" varStatus="index">
+								<tr>
+									<td>${index.count}</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td><a href="/dormitory/admin/dormitory/dormitory-image-preview.html?dormitoryId=${dormitory['id']}&fileName=${path}"> <img src="/dormitory/admin/dormitory/dormitory-image-preview.html?dormitoryId=${dormitory['id']}&fileName=${path}" /></a></td>
+								</tr>
+							</c:forEach>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4">
+						<div style="width: 500px; padding: 20px;">
+							<input id="fileupload" type="file" name="files[]" data-url="/dormitory/admin/dormitory/dormitory-image-upload.html?dormitoryId=${dormitory['id']}" multiple="multiple">
+							<div id="dropzone" class="fade well">Drop files here</div>
+							<div id="progress" class="progress">
+								<div class="bar" style="width: 0%;"></div>
+							</div>
+						</div>
+					</td>
 				</tr>
 				<tr>
 					<td><input type="submit" value="Update" /></td>
@@ -105,6 +143,8 @@
 			</tbody>
 		</table>
 	</form>
+
+	<hr />
 
 </body>
 </html>

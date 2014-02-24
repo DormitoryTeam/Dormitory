@@ -28,6 +28,12 @@
  */
 package com.noeasy.money.admin.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +46,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.noeasy.money.constant.Constants;
 import com.noeasy.money.model.DormitoryBean;
@@ -48,6 +59,7 @@ import com.noeasy.money.model.DormitorySearchBean;
 import com.noeasy.money.model.PageBean;
 import com.noeasy.money.service.IDormitoryService;
 import com.noeasy.money.service.INavigationService;
+import com.noeasy.money.util.FileUtils;
 
 /**
  * <class description>
@@ -76,6 +88,24 @@ public class AdminDormitoryController {
         }
         model.addAttribute("result", result);
         return "admin/dormitory/dormitory-edit-result";
+    }
+
+
+
+    @RequestMapping(value = "/dormitory-image-preview" + Constants.URL_SUFFIX)
+    public void previewDormitoryUploadImage(final HttpServletResponse response, final Integer dormitoryId,
+            final String fileName) {
+        FileUtils fileUtils = FileUtils.getInstance();
+        File getFile = fileUtils.getFile(fileUtils.createUploadDormitoryImageFolder(dormitoryId), fileName);
+        if (getFile != null) {
+            try {
+                response.setContentType("image/jpeg");
+                response.setHeader("Content-disposition", "attachment; filename=\"" + getFile.getName() + "\"");
+                FileCopyUtils.copy(FileCopyUtils.copyToByteArray(getFile), response.getOutputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
@@ -173,5 +203,37 @@ public class AdminDormitoryController {
         model.addAttribute("dormitoryName", searchBean.getDormitoryName());
 
         return "admin/dormitory/dormitory-management";
+    }
+
+
+
+    @RequestMapping(value = "dormitory-image-upload" + Constants.URL_SUFFIX, method = RequestMethod.POST)
+    @ResponseBody
+    public List<Map<String, Object>> uploadDormitoryImage(final MultipartHttpServletRequest request,
+            final HttpServletResponse response, final Integer dormitoryId) {
+        List<Map<String, Object>> fileMetaList = new ArrayList<Map<String, Object>>();
+        FileUtils fileUtils = FileUtils.getInstance();
+        String curDormitoryUploadFolderPath = fileUtils.createUploadDormitoryImageFolder(dormitoryId);
+        MultipartFile multipartFile = null;
+        HashMap<String, Object> fileMeta = null;
+
+        Iterator<String> itr = request.getFileNames();
+        while (itr.hasNext()) {
+            multipartFile = request.getFile(itr.next());
+            fileMeta = new HashMap<String, Object>();
+            fileMeta.put("name", multipartFile.getOriginalFilename());
+            fileMeta.put("type", multipartFile.getContentType());
+            fileMeta.put("size", multipartFile.getSize() / 1024);
+            try {
+                FileCopyUtils.copy(multipartFile.getBytes(), new FileOutputStream(curDormitoryUploadFolderPath
+                        + FileUtils.SLASH + multipartFile.getOriginalFilename()));
+                System.out.println(">>>" + multipartFile.getOriginalFilename() + ">>>");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            fileMetaList.add(fileMeta);
+        }
+
+        return fileMetaList;
     }
 }
