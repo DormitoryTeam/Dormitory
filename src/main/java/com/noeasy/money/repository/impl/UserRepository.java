@@ -50,4 +50,11 @@ public class UserRepository extends BaseRepository implements IUserRepository {
         return getSqlSession().update("com.noeasy.money.model.User.updateResetPasswordSign", pUser);
     }
 
+
+
+    @Override
+    public Integer queryUserCount(UserSearchBean pSearchBean) {
+        return getSqlSession().selectOne("com.noeasy.money.model.User.queryUserCount", pSearchBean);
+    }
+
 }
