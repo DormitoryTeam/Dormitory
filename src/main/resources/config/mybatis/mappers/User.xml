@@ -43,11 +43,16 @@
 		WHERE login = #{login}
 	</update>
 
-
-	<select id="queryUser" parameterType="com.noeasy.money.model.UserSearchBean"
-		resultType="com.noeasy.money.model.UserBean">
+	<sql id="select-user-count">
 		SELECT u.id, u.login, u.password, u.email, u.name, u.gender, u.passport, u.age, u.birthday, u.address, u.phone, u.qq
+	</sql>
+	<sql id="select-user-content">
+		SELECT u.id, u.login, u.password, u.email, u.name, u.gender, u.passport, u.age, u.birthday, u.address, u.phone, u.qq
+	</sql>
+	<sql id="select-user-table-join">
 		FROM users AS u LEFT JOIN user_group AS ugroup ON u.id = ugroup.user_id
+	</sql>
+	<sql id="select-user-query-condition">
 		WHERE 1=1
 		<if test="id != null">
 			AND u.id = #{id}
@@ -66,6 +71,23 @@
 		</if>
 		<if test="searchKey != null">
 			AND (u.id = #{searchKey} OR u.login like CONCAT('%', #{searchKey}, '%'))
-		</if>
+		</if> 
+	</sql>
+	<sql id="limit-split-page">
+		<if test="page != null">limit #{pageBean.pageStartIndex}, #{pageBean.pageSize}</if>
+	</sql>
+	<select id="queryUser" parameterType="com.noeasy.money.model.UserSearchBean"
+		resultType="com.noeasy.money.model.UserBean">
+		<include refid="select-user-content" />
+		<include refid="select-user-table-join" />
+		<include refid="select-user-query-condition" />
+		<include refid="limit-split-page" />
+	</select>
+	<select id="queryUserCount" parameterType="com.noeasy.money.model.UserSearchBean"
+		resultType="int">
+		<include refid="select-user-count" />
+		<include refid="select-user-table-join" />
+		<include refid="select-user-query-condition" />
+		<include refid="limit-split-page" />
 	</select>
 </mapper>

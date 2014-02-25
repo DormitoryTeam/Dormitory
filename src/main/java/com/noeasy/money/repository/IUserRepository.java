@@ -28,4 +28,8 @@ public interface IUserRepository {
 
     int updateResetPasswordSign(UserBean pUser);
 
+
+
+    Integer queryUserCount(UserSearchBean pSearchBean);
+
 }

@@ -45,4 +45,8 @@ public interface IUserService {
 
 
     UserBean generateResetPasswordSign(String pLogin);
+
+
+
+    Integer queryUserCount(UserSearchBean pSearchBean);
 }

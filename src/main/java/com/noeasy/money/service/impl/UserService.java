@@ -141,4 +141,12 @@ public class UserService implements IUserService {
         return userRepository.updateUser(pUser);
     }
 
+
+
+    @Override
+    public Integer queryUserCount(UserSearchBean pSearchBean) {
+        // TODO Auto-generated method stub
+        return userRepository.queryUserCount(pSearchBean);
+    }
+
 }

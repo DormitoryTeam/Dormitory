@@ -1,14 +1,14 @@
 package com.noeasy.money.model;
 
 public class UserSearchBean {
-    Integer id;
-    String  login;
-    String  password;
-    String  name;
-    String  groupId;
-    String  sign;
-    String  searchKey;
-
+    private Integer id;
+    private String  login;
+    private String  password;
+    private String  name;
+    private String  groupId;
+    private String  sign;
+    private String  searchKey;
+    private PageBean page;
 
 
     public Integer getId() {
@@ -91,6 +91,18 @@ public class UserSearchBean {
 
     public void setSearchKey(String pSearchKey) {
         searchKey = pSearchKey;
+    }
+
+
+
+    public PageBean getPage() {
+        return page;
+    }
+
+
+
+    public void setPage(PageBean pPage) {
+        page = pPage;
     }
 
 }

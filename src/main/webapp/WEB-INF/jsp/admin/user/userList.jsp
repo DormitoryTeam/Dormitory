@@ -20,3 +20,4 @@ group: <input type="text" name="groupId" value="${groupId}"/><br>
 	<tr>
 	</c:forEach>
 </table>
+<jsp:include page="/jsp/utils/pagination.jsp" flush="true"/>
