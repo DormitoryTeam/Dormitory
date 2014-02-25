@@ -121,7 +121,14 @@ public class DormitoryService implements IDormitoryService {
      */
     @Override
     public DormitoryBean queryDormitory(final DormitorySearchBean pSearchBean) {
-        return dormitoryRepository.queryDormitory(pSearchBean);
+        DormitoryBean dormitory = dormitoryRepository.queryDormitory(pSearchBean);
+        if (dormitory.getId() > 0) {
+            List<String> picPath = dormitoryRepository.queryImagePathByDormitoryId(dormitory.getId());
+            dormitory.setPicPath(picPath);
+            List<String> videoPath = dormitoryRepository.queryVideoPathByDormitoryId(dormitory.getId());
+            dormitory.setVideoPath(videoPath);
+        }
+        return dormitory;
     }
 
 

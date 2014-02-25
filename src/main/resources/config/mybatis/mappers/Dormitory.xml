@@ -89,7 +89,7 @@
 	</sql>
 	
 	<sql id="order-by-field">
-		order by ${sortField} asc
+		order by `${sortField}` asc
 	</sql>
 
 	<sql id="limit-split-page">

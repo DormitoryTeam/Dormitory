@@ -207,6 +207,7 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("dormitoryId", pDormitoryId);
         params.put("mediaType", 1);
+        params.put("sortField", "index");
         return getSqlSession().selectList("com.noeasy.money.model.Dormitory.query-media-path", params);
     }
 
@@ -220,6 +221,7 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("dormitoryId", pDormitoryId);
         params.put("mediaType", 2);
+        params.put("sortField", "index");
         return getSqlSession().selectList("com.noeasy.money.model.Dormitory.query-media-path", params);
     }
 
