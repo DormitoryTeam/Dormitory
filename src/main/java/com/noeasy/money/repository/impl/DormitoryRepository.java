@@ -200,6 +200,32 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
 
 
     /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#queryImagePathByDormitoryId(java.lang.Integer)
+     */
+    @Override
+    public List<String> queryImagePathByDormitoryId(final Integer pDormitoryId) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("dormitoryId", pDormitoryId);
+        params.put("mediaType", 1);
+        return getSqlSession().selectList("com.noeasy.money.model.Dormitory.query-media-path", params);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#queryVideoPathByDormitoryId(java.lang.Integer)
+     */
+    @Override
+    public List<String> queryVideoPathByDormitoryId(final Integer pDormitoryId) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("dormitoryId", pDormitoryId);
+        params.put("mediaType", 2);
+        return getSqlSession().selectList("com.noeasy.money.model.Dormitory.query-media-path", params);
+    }
+
+
+
+    /**
      * @see com.noeasy.money.repository.IDormitoryRepository#rateDormitory(com.noeasy.money.model.DormitoryRateBean)
      */
     @Override

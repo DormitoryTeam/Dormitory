@@ -292,25 +292,6 @@ public class DormitoryBean extends BaseBean {
 
 
     /**
-     * @return the videoPath
-     */
-    // public List<String> getVideoPath() {
-    // if (CollectionUtils.isEmpty(mPicPath)) {
-    // if (CollectionUtils.isNotEmpty(mVideoPath)) {
-    // mVideoPath = new ArrayList<String>();
-    // for (DormitoryMediaBean mediaBean : mMediaPath) {
-    // if (mediaBean.isMediaType()) {
-    // mVideoPath.add(mediaBean.getMediaPath());
-    // }
-    // }
-    // return mVideoPath;
-    // }
-    // return Collections.EMPTY_LIST;
-    // }
-    // return mVideoPath;
-    // }
-
-    /**
      * @param pAddress
      *            the address to set
      */
@@ -395,7 +376,7 @@ public class DormitoryBean extends BaseBean {
      *            the description to set
      */
     public void setDescription(final String pDescription) {
-        mDescription = pDescription;
+        mDescription = pDescription == null ? pDescription : pDescription.trim();
     }
 
 

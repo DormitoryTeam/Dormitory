@@ -20,7 +20,7 @@
 </head>
 <body>
 
-	<form action="/dormitory/admin/dormitory/dormitory-save.html" method="POST">
+	<form id="formDormitory" action="/dormitory/admin/dormitory/dormitory-save.html" method="POST">
 		<table>
 			<tbody>
 				<tr>
@@ -97,9 +97,7 @@
 				</tr>
 				<tr>
 					<td>Description:</td>
-					<td colspan="3"><textarea name="description" cols="80" rows="5">
-						${dormitory['description']}
-					</textarea></td>
+					<td colspan="3"><textarea name="description" cols="80" rows="5">${dormitory['description']}</textarea></td>
 				</tr>
 
 				<tr>
@@ -107,19 +105,15 @@
 					<td>
 						<table id="uploaded-files" class="table" style="width: 500px; padding: 20px;">
 							<tr>
-								<th>#</th>
 								<th>File Name</th>
-								<th>File Size</th>
-								<th>File Type</th>
 								<th>Preview</th>
+								<th>Action</th>
 							</tr>
 							<c:forEach var="path" items="${dormitory['picPath']}" varStatus="index">
 								<tr>
-									<td>${index.count}</td>
-									<td></td>
-									<td></td>
-									<td></td>
+									<td><input type="text" name="imageNames" class="fileNames" value="${path}" /></td>
 									<td><a href="/dormitory/admin/dormitory/dormitory-image-preview.html?dormitoryId=${dormitory['id']}&fileName=${path}"> <img src="/dormitory/admin/dormitory/dormitory-image-preview.html?dormitoryId=${dormitory['id']}&fileName=${path}" /></a></td>
+									<td><input type="button" value="Remove" class="btnRemove" fileName="${path}" /></td>
 								</tr>
 							</c:forEach>
 						</table>

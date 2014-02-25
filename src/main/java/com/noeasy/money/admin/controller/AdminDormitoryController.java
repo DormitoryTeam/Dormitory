@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -42,6 +43,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Controller;
@@ -81,12 +83,18 @@ public class AdminDormitoryController {
 
     @RequestMapping("dormitory-save" + Constants.URL_SUFFIX)
     public String dormitoryUpdate(final HttpServletRequest request, final HttpServletResponse response,
-            final Model model, final DormitoryBean dormitory) {
+            final Model model, final DormitoryBean dormitory, final String[] imageNames) {
+        if (ArrayUtils.isNotEmpty(imageNames)) {
+            dormitory.setPicPath(Arrays.asList(imageNames));
+        }
         boolean result = dormitoryService.saveOrUpdateDormitory(dormitory);
         if (result) {
             dormitoryService.calculateDistance4Dormitory(dormitory.getId());
         }
         model.addAttribute("result", result);
+        FileUtils fileUtils = FileUtils.getInstance();
+        fileUtils.removeInvalidFiles(fileUtils.createUploadDormitoryImageFolder(dormitory.getId()),
+                dormitory.getPicPath());
         return "admin/dormitory/dormitory-edit-result";
     }
 

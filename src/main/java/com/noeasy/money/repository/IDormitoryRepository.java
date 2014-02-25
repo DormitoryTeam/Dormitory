@@ -104,6 +104,14 @@ public interface IDormitoryRepository {
 
 
 
+    List<String> queryImagePathByDormitoryId(Integer pDormitoryId);
+
+
+
+    List<String> queryVideoPathByDormitoryId(Integer pDormitoryId);
+
+
+
     Boolean rateDormitory(DormitoryRateBean pDormitoryRateBean);
 
 
@@ -112,10 +120,10 @@ public interface IDormitoryRepository {
 
 
 
-    Integer updateDormitory(DormitoryBean pDormitory);
-
-
-
     Boolean saveDormitoryMediaPath(List<String> pMediaPath, Integer pDormitoryId, boolean pIsVideo);
+
+
+
+    Integer updateDormitory(DormitoryBean pDormitory);
 
 }

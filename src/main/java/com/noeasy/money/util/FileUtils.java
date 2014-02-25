@@ -30,6 +30,7 @@ package com.noeasy.money.util;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -105,10 +106,8 @@ public class FileUtils {
         if (!filePath.exists()) {
             filePath.mkdirs();
         }
-
         if (filePath.isDirectory()) {
             File[] files = filePath.listFiles(new FilenameFilter() {
-
                 @Override
                 public boolean accept(final File pDir, final String pName) {
                     return pName.equals(pFileName);
@@ -151,4 +150,25 @@ public class FileUtils {
         return getUploadFolderPath() + SLASH + getConfigurableProperty(CONFIG_VIDEO_FOLDER);
     }
 
+
+
+    public void removeInvalidFiles(final String pFilePath, final List<String> pValidFileNames) {
+        File filePath = new File(pFilePath);
+        if (!filePath.exists()) {
+            filePath.mkdirs();
+        }
+        if (filePath.isDirectory()) {
+            File[] files = filePath.listFiles(new FilenameFilter() {
+                @Override
+                public boolean accept(final File pDir, final String pName) {
+                    return !pValidFileNames.contains(pName);
+                }
+            });
+            if (ArrayUtils.isNotEmpty(files)) {
+                for (File file : files) {
+                    file.delete();
+                }
+            }
+        }
+    }
 }
