@@ -30,6 +30,8 @@ package com.noeasy.money.model;
 
 import java.util.Date;
 
+import com.noeasy.money.enumeration.PickupType;
+
 /**
  * <class description>
  * 
@@ -39,19 +41,19 @@ import java.util.Date;
 
 public class PickupLineItem extends LineItem {
 
-    private String  mFlightNum;
+    private String     mFlightNum;
 
-    private Integer mCityId;
+    private Integer    mCityId;
 
-    private String  mLandingCity;
+    private String     mLandingCity;
 
-    private Date    mPickupDate;
+    private Date       mPickupDate;
 
-    private int     mPickupType;
+    private PickupType mPickupType;
 
-    private int     mLuggageAmount;
+    private int        mLuggageAmount;
 
-    private double  mLuggageSize;
+    private double     mLuggageSize;
 
 
 
@@ -109,12 +111,16 @@ public class PickupLineItem extends LineItem {
     /**
      * @return the pickupType
      */
-    public int getPickupType() {
+    public PickupType getPickupType() {
         return mPickupType;
     }
 
 
 
+    /**
+     * @param pCityId
+     *            the cityId to set
+     */
     public void setCityId(final Integer pCityId) {
         mCityId = pCityId;
     }
@@ -122,6 +128,12 @@ public class PickupLineItem extends LineItem {
 
 
     /**
+     * public void setCityId(final Integer pCityId) { mCityId = pCityId; }
+     * 
+     * 
+     * 
+     * /**
+     * 
      * @param pFlightNum
      *            the flightNum to set
      */
@@ -175,7 +187,8 @@ public class PickupLineItem extends LineItem {
      * @param pPickupType
      *            the pickupType to set
      */
-    public void setPickupType(final int pPickupType) {
+    public void setPickupType(final PickupType pPickupType) {
         mPickupType = pPickupType;
     }
+
 }

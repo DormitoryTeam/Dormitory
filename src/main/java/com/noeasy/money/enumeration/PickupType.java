@@ -26,51 +26,26 @@
  * THE FOREGOING LIMITATIONS SHALL APPLY EVEN IF THE ANY WARRANTY PROVIDED IN
  * THE MASTER SERVICE AGREEMENT FAILS OF ITS ESSENTIAL PURPOSE.
  */
-package com.noeasy.money.repository;
-
-import java.util.List;
-import java.util.Map;
+package com.noeasy.money.enumeration;
 
 /**
  * <class description>
  * 
  * @author: Yove
- * @version: 1.0, Feb 10, 2014
+ * @version: 1.0, Feb 26, 2014
  */
 
-public interface INavigationRepository {
+public enum PickupType {
 
-    List<Map<String, Object>> queryCities(Integer pCountryId);
+    TAXI, BUS;
 
-
-
-    List<Map<String, Object>> queryCitiesInSameCountry(Integer pCityId);
-
-
-
-    Map<String, Object> queryCityById(Integer pCityId, Integer pCountryId);
+    public String getName() {
+        return this.name();
+    }
 
 
 
-    Map<String, Object> queryCollegeById(Integer pCollegeId, Integer pCityId);
-
-
-
-    List<Map<String, Object>> queryColleges(Integer pCityId);
-
-
-
-    List<Map<String, Object>> queryCountries();
-
-
-
-    Map<String, Object> queryCountryByCityId(Integer pCityId);
-
-
-
-    Map<String, Object> queryCountryById(Integer pCountryId);
-
-
-
-    List<Map<String, Object>> queryFlightByConditions(Integer pCountryId, Integer pCityId, String pFilghtNum);
+    public int getValue() {
+        return this.ordinal();
+    }
 }

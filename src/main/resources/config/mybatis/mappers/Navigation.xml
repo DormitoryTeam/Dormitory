@@ -50,6 +50,22 @@
 		select country.id, country.name, countrycode as countryCode, country.status
 		from country
 		left join city on country.id = city.country_id and city.id
-		where country.status = 1 and city.status = 1 and city.id = #{cityId}
+		where
+		country.status = 1 and city.status = 1 and city.id = #{cityId}
+	</select>
+
+	<select id="queryFlight" resultType="hashmap" parameterType="java.util.Map">
+		select id, country_id as countryId, city_id as cityId, airportCode as flightNum, name, status
+		from airport
+		where status = 1
+		<if test="countryId != null">
+			and country_id = #{countryId}
+		</if>
+		<if test="cityId != null">
+			and city_id = #{cityId}
+		</if>
+		<if test="flightNum != null">
+			and airportCode = #{flightNum}
+		</if>
 	</select>
 </mapper>

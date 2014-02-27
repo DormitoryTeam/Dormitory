@@ -144,6 +144,18 @@ public class NavigationService implements INavigationService {
 
 
     /**
+     * @see com.noeasy.money.service.INavigationService#queryFlightByConditions(java.lang.Integer,
+     *      java.lang.Integer, String)
+     */
+    @Override
+    public List<Map<String, Object>> queryFlightByConditions(final Integer pCountryId, final Integer pCityId,
+            final String pFlightNum) {
+        return navigationRepository.queryFlightByConditions(pCountryId, pCityId, pFlightNum);
+    }
+
+
+
+    /**
      * @param pNavigationRepository
      *            the navigationRepository to set
      */

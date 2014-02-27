@@ -152,4 +152,20 @@ public class NavigationRepository extends BaseRepository implements INavigationR
         return getSqlSession().selectOne("com.noeasy.money.model.Navigation.queryCountry", params);
     }
 
+
+
+    /**
+     * @see com.noeasy.money.repository.INavigationRepository#queryFlightByConditions(java.lang.Integer,
+     *      java.lang.Integer, String)
+     */
+    @Override
+    public List<Map<String, Object>> queryFlightByConditions(final Integer pCountryId, final Integer pCityId,
+            final String pFilghtNum) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put(COUNTRY_ID, pCountryId);
+        params.put(CITY_ID, pCityId);
+        params.put("flightNum", pFilghtNum);
+        return getSqlSession().selectList("com.noeasy.money.model.Navigation.queryFlight", params);
+    }
+
 }

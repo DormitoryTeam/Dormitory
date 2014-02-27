@@ -110,6 +110,17 @@ public class NavigationController {
 
 
 
+    @RequestMapping("/getFlight" + Constants.URL_SUFFIX)
+    @ResponseBody
+    public String getFlight(final HttpServletRequest request, final HttpServletResponse response,
+            final Integer countryId, final Integer cityId) {
+        List<Map<String, Object>> flights = navigationService.queryFlightByConditions(countryId, cityId, null);
+        JSONArray countryJson = JSONArray.fromObject(flights);
+        return countryJson.toString();
+    }
+
+
+
     @RequestMapping("/home" + Constants.URL_SUFFIX)
     public String toHome(final HttpServletRequest request, final HttpServletResponse response, final Model model) {
         List<Map<String, Object>> countries = navigationService.queryCountries();
@@ -134,4 +145,5 @@ public class NavigationController {
         model.addAttribute("countries", countries);
         return "navigation/navigation";
     }
+
 }
