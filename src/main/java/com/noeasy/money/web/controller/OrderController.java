@@ -234,7 +234,7 @@ public class OrderController {
                 lineItems.add(pickupLineItem);
                 orderBean.setLineItems(lineItems);
 
-                orderBean.setCurrency("USD");
+                orderBean.setCurrency("CNY");
                 orderBean.setAmount(new BigDecimal(0));
                 orderBean.setOrderType(OrderType.PICKUP);
                 orderBean.setOrderStatus(OrderStatus.SENDING_CONTACT);
@@ -278,7 +278,7 @@ public class OrderController {
             final Model model) {
         Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
         UserSearchBean userSearchBean = new UserSearchBean();
-        userSearchBean.setId(userId != null ? userId : 1);
+        userSearchBean.setId(userId != null ? userId : 0);
 
         List<UserBean> result = userService.queryUser(userSearchBean);
         if (CollectionUtils.isNotEmpty(result)) {
