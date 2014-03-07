@@ -192,8 +192,14 @@ public class OrderRepository extends BaseRepository implements IOrderRepository 
 
     @Override
     public Integer queryPickupOrderCount(OrderSearchBean pSearchBean) {
-        // TODO Auto-generated method stub
-        return 0;
+        return getSqlSession().selectOne("com.noeasy.money.model.Order.queryPickupOrderCount", pSearchBean);
+    }
+
+
+
+    @Override
+    public Integer updateOrderPrice(OrderBean pOrder) {
+        return getSqlSession().update("com.noeasy.money.model.Order.updateOrderPrice", pOrder);
     }
 
 }

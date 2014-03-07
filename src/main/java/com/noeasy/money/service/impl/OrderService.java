@@ -118,6 +118,12 @@ public class OrderService implements IOrderService {
         
     }
 
+    
+    @Override
+    public int updateOrderPrice(OrderBean order) {
+        return orderRepository.updateOrderPrice(order);
+        
+    }
 
 
     @Override

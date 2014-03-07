@@ -1,5 +1,6 @@
 package com.noeasy.money.admin.controller;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +20,7 @@ import com.noeasy.money.enumeration.OrderStatus;
 import com.noeasy.money.enumeration.OrderType;
 import com.noeasy.money.model.OrderBean;
 import com.noeasy.money.model.OrderSearchBean;
+import com.noeasy.money.model.PageBean;
 import com.noeasy.money.model.UserBean;
 import com.noeasy.money.service.IOrderService;
 import com.noeasy.money.util.DateUtils;
@@ -43,7 +45,7 @@ public class AdminOrderController {
     @RequestMapping(value = "/orderList.html")
     public String getOrderList(final ModelMap model, final HttpServletRequest request,
             final HttpServletResponse response, String orderType, String orderId, String login, String dateFrom,
-            String dateTo) {
+            String dateTo, final String currentPage, final String pageSize) {
         OrderType type = OrderType.getType(orderType);// "D" means dormitory
         OrderSearchBean searchBean = new OrderSearchBean();
         searchBean.setOrderType(type);
@@ -67,6 +69,16 @@ public class AdminOrderController {
             calendar.add(Calendar.DATE, 1);
             searchBean.setDateTo(calendar.getTime());
         }
+        int rowTotal = orderService.queryOrderCount(searchBean);
+        PageBean page = new PageBean(rowTotal);
+        if (StringUtils.isNotBlank(currentPage)) {
+            page.setPageNum(Integer.valueOf(currentPage));
+        }
+        if (StringUtils.isNotBlank(pageSize)) {
+            page.setPageSize(Integer.valueOf(pageSize));
+        }
+        page.setQueryString(request.getQueryString());
+        searchBean.setPageBean(page);
         List<OrderBean> orders = orderService.queryOrder(searchBean);
         model.addAttribute("orders", orders);
         model.addAttribute("type", orderType);
@@ -74,6 +86,7 @@ public class AdminOrderController {
         model.addAttribute("login", login);
         model.addAttribute("dateFrom", dateFrom);
         model.addAttribute("dateTo", dateTo);
+        model.addAttribute("page", page);
         return "admin/order/orderList";
     }
 
@@ -88,12 +101,7 @@ public class AdminOrderController {
         if (StringUtils.isBlank(orderId)) {
             message = "orderId is blank";
             model.addAttribute("message", message);
-            return "user/orderDetails";
-        }
-        if (StringUtils.isBlank(orderType)) {
-            message = "orderType is blank";
-            model.addAttribute("message", message);
-            return "user/orderDetails";
+            return "admin/order/orderDetails";
         }
         OrderSearchBean searchBean = new OrderSearchBean();
         UserBean user = new UserBean();
@@ -142,6 +150,29 @@ public class AdminOrderController {
         }
         // TODO SENDING CONTRACT EMAIL
         orderService.updateOrderStatus(Integer.valueOf(orderId), OrderStatus.valueOf(Integer.valueOf(nextStatusValue)));
+        model.addAttribute("message", message);
+        return "redirect:/admin/order/orderDetails.html?orderId="+ orderId +"&orderType=" + orderType;
+    }
+    
+    @RequestMapping(value = "/updateOrderPrice.html")
+    public String updateOrderPrice(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, String orderId, String price, String orderType) {
+        String message = "Sucess";
+        model.addAttribute("type", orderType);
+        if (StringUtils.isBlank(orderId) || StringUtils.isBlank(price)) {
+            message = "Failed";
+            model.addAttribute("message", message);
+            return "error";
+        }
+        OrderBean order = orderService.queryOrder(Integer.valueOf(orderId), OrderType.getType(orderType));
+        if (null == order) {
+            message = "no such order.";
+            model.addAttribute("message", message);
+            return "error";
+        }
+        BigDecimal amount = new BigDecimal(price);
+        order.setAmount(amount);
+        orderService.updateOrderPrice(order);
         model.addAttribute("message", message);
         return "redirect:/admin/order/orderDetails.html?orderId="+ orderId +"&orderType=" + orderType;
     }

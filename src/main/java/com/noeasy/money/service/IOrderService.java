@@ -65,4 +65,8 @@ public interface IOrderService {
 
 
     int queryOrderCount(OrderSearchBean pSearchBean);
+
+
+
+    int updateOrderPrice(OrderBean pOrder);
 }

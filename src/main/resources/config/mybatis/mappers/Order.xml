@@ -31,7 +31,7 @@
 		left join contract_type t7 on t7.id = t6.contract_type_id
 	</sql>
 	
-	<sql id="select-pickup-order">
+	<sql id="select-pickup-order-content">
 		select t1.id, t1.user_id, t1.belongs_to, t1.type as order_type, t1.status as order_status, t1.currency, t1.amount, t1.create_time,
 		t2.id as uid, t2.login as user_login, t2.password as user_password, t2.email as user_email, t2.name as user_name, t2.gender as user_gender, t2.passport as
 		user_passport, t2.age as user_age, t2.birthday as user_birthday, t2.address as user_address, t2.qq as user_qq, t2.phone as user_phone,
@@ -41,6 +41,9 @@
 		contact_gender, t4.qq as contact_qq, t4.phone as contact_phone, t4.address as contact_address,
 		t5.id as lid, t5.flight_number, t5.city_id, t5.pickup_date, t5.pickup_type, t5.luggage_amount, t5.luggage_size, t5.amount as li_amount, t5.currency as li_currency,
 		t6.name as city_name
+	</sql>
+	
+	<sql id="select-pickup-order-table-join">
 		from `order` t1
 		left join users t2 on t1.user_id = t2.id
 		left join users t3 on t1.belongs_to = t3.id
@@ -53,7 +56,7 @@
 		where 1=1
 	</sql>
 	
-	<sql id="select-dormitory-condition">
+	<sql id="select-order-condition">
 		<if test="orderNumber != null">
 			and t1.id = #{orderNumber}
 		</if>
@@ -84,7 +87,7 @@
 		<include refid="select-dormitory-order-content" />
 		<include refid="select-dormitory-order-table-join" />
 		<include refid="where" />
-		<include refid="select-dormitory-condition" />
+		<include refid="select-order-condition" />
 		<if test="pageBean != null">
 			<include refid="limit-split-page" />
 		</if>
@@ -94,16 +97,23 @@
 		<include refid="select-count" />
 		<include refid="select-dormitory-order-table-join" />
 		<include refid="where" />
-		<include refid="select-dormitory-condition" />
+		<include refid="select-order-condition" />
 	</select>
 
 	<select id="queryPickupOrder" resultMap="pickup-order">
-		<include refid="select-pickup-order" />
+		<include refid="select-pickup-order-content" />
+		<include refid="select-pickup-order-table-join" />
 		<include refid="where" />
-		<include refid="select-dormitory-condition" />
+		<include refid="select-order-condition" />
 		<if test="pageBean != null">
 			<include refid="limit-split-page" />
 		</if>
+	</select>
+	<select id="queryPickupOrderCount" resultType="int">
+		<include refid="select-count" />
+		<include refid="select-pickup-order-table-join" />
+		<include refid="where" />
+		<include refid="select-order-condition" />
 	</select>
 
 	<insert id="saveOrder" keyProperty="id" useGeneratedKeys="true" parameterType="com.noeasy.money.model.OrderBean">
@@ -152,7 +162,7 @@
 		#{flightNum,javaType=String,jdbcType=VARCHAR},
 		#{cityId,javaType=int,jdbcType=INTEGER},
 		#{pickupDate,javaType=java.util.Date,jdbcType=TIMESTAMP},
-		#{pickupType.value,javaType=int,jdbcType=VARCHAR},
+		#{pickupType.name,javaType=String,jdbcType=VARCHAR},
 		#{amount,javaType=java.math.BigDecimal,jdbcType=DECIMAL},
 		#{currency,javaType=String,jdbcType=VARCHAR},
 		#{luggageAmount,javaType=int,jdbcType=INTEGER},
@@ -170,6 +180,13 @@
 			update_time = now()
 		WHERE id = #{id}
 	</update>
+	<update id="updateOrderPrice" parameterType="com.noeasy.money.model.OrderBean">
+		UPDATE `order` SET
+			amount = #{amount},
+			update_time = now()
+		WHERE id = #{id}
+	</update>
+	
 
 	<resultMap id="dormitory-order" type="com.noeasy.money.model.OrderBean">
 		<id column="id" property="id" />
