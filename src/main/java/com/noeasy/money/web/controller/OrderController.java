@@ -152,7 +152,7 @@ public class OrderController {
             orderBean.setOrderType(OrderType.DORMITORY);
             orderBean.setAmount(new BigDecimal(dormitory.getSalePrice()));
             orderBean.setCurrency(dormitory.getCurrency());
-            orderBean.setOrderStatus(OrderStatus.SENDING_CONTACT);
+            orderBean.setOrderStatus(OrderStatus.COMMIT);
 
             boolean placeOrderResult = orderService.placeOrder(orderBean);
             model.addAttribute("result", placeOrderResult);
@@ -237,7 +237,7 @@ public class OrderController {
                 orderBean.setCurrency("CNY");
                 orderBean.setAmount(new BigDecimal(0));
                 orderBean.setOrderType(OrderType.PICKUP);
-                orderBean.setOrderStatus(OrderStatus.SENDING_CONTACT);
+                orderBean.setOrderStatus(OrderStatus.COMMIT);
 
                 boolean placeOrderResult = orderService.placeOrder(orderBean);
                 model.addAttribute("result", placeOrderResult);
