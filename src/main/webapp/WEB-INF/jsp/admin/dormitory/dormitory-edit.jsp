@@ -112,7 +112,7 @@
 							<c:forEach var="path" items="${dormitory['picPath']}" varStatus="index">
 								<tr>
 									<td><input type="text" name="imageNames" class="fileNames" value="${path}" /></td>
-									<td><a href="/dormitory/admin/dormitory/dormitory-image-preview.html?dormitoryId=${dormitory['id']}&fileName=${path}"> <img src="/dormitory/admin/dormitory/dormitory-image-preview.html?dormitoryId=${dormitory['id']}&fileName=${path}" /></a></td>
+									<td><a href="/dormitory/admin/dormitory/dormitory-image-preview.html?fileName=${path}"> <img src="/dormitory/admin/dormitory/dormitory-image-preview.html?fileName=${path}" /></a></td>
 									<td><input type="button" value="Remove" class="btnRemove" fileName="${path}" /></td>
 								</tr>
 							</c:forEach>
@@ -122,7 +122,7 @@
 				<tr>
 					<td colspan="4">
 						<div style="width: 500px; padding: 20px;">
-							<input id="fileupload" type="file" name="files[]" data-url="/dormitory/admin/dormitory/dormitory-image-upload.html?dormitoryId=${dormitory['id']}" multiple="multiple">
+							<input id="fileupload" type="file" name="files[]" data-url="/dormitory/admin/dormitory/dormitory-image-upload.html" multiple="multiple">
 							<div id="dropzone" class="fade well">Drop files here</div>
 							<div id="progress" class="progress">
 								<div class="bar" style="width: 0%;"></div>

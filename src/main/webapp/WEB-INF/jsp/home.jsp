@@ -4,8 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<script type="text/javascript" src="<c:url value='/js/jquery/jquery-1.4.3.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/js/jquery/jquery.1.9.1.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/js/jquery/jquery.slides.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/js/home.js'/>"></script>
+<link type="text/css" rel="stylesheet" href="<c:url value='/style/slides.css' />" />
 <title></title>
 </head>
 <body>
@@ -61,5 +63,15 @@
 			</tr>
 		</table>
 	</form>
+
+	<hr />
+
+	<div class="container">
+		<div id="slides">
+			<c:forEach var="slide" items="${slides}" varStatus="index">
+				<img src="/dormitory/admin/slide-image-preview.html?fileName=${slide['path']}" />
+			</c:forEach>
+		</div>
+	</div>
 </body>
 </html>
