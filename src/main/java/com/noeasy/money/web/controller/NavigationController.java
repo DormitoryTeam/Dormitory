@@ -48,6 +48,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.noeasy.money.constant.Constants;
 import com.noeasy.money.service.INavigationService;
+import com.noeasy.money.service.ISiteService;
 
 /**
  * <class description>
@@ -61,6 +62,9 @@ public class NavigationController {
 
     @Resource(name = "navigationService")
     INavigationService navigationService;
+
+    @Resource(name = "siteService")
+    ISiteService       siteService;
 
 
 
@@ -130,9 +134,12 @@ public class NavigationController {
             Integer firstCityId = NumberUtils.toInt(cities.get(0).get("id").toString());
             List<Map<String, Object>> colleges = navigationService.queryColleges(firstCityId);
 
+            List<Map<String, Object>> slides = siteService.getSlides();
+
             model.addAttribute("countries", countries);
             model.addAttribute("cities", cities);
             model.addAttribute("colleges", colleges);
+            model.addAttribute("slides", slides);
         }
         return "home";
     }

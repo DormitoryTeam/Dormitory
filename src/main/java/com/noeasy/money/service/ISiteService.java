@@ -48,5 +48,9 @@ public interface ISiteService {
 
 
 
+    List<Map<String, Object>> getSlides();
+
+
+
     boolean saveSlide(String pDescription, String pPath, Integer pIndex, Integer pStatus);
 }

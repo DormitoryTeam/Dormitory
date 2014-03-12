@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -100,6 +101,10 @@ public class AdminSlideController {
                     siteService.saveSlide("-", imageNames[i], imageIndexes[i], imageShow[i]);
                 }
                 model.addAttribute("result", true);
+
+                FileUtils fileUtils = FileUtils.getInstance();
+                List<String> validFiles = Arrays.asList(imageNames);
+                fileUtils.removeInvalidFiles(fileUtils.getUploadSlideImagePaht(), validFiles);
             }
         }
         return "admin/site/slide-save-result";

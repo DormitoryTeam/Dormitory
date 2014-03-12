@@ -73,6 +73,16 @@ public class SiteService implements ISiteService {
 
 
     /**
+     * @see com.noeasy.money.service.ISiteService#getSlides()
+     */
+    @Override
+    public List<Map<String, Object>> getSlides() {
+        return siteRepository.getSlides();
+    }
+
+
+
+    /**
      * @see com.noeasy.money.service.ISiteService#saveSlide(java.lang.String,
      *      java.lang.String, java.lang.Integer, java.lang.Integer)
      */

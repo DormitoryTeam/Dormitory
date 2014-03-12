@@ -42,7 +42,7 @@ function appendLastestImagePreview(data) {
     $.each(data.result, function(i, e) {
         var imageURL = "/dormitory/admin/slide-image-preview.html?fileName=" + e.name;
         var row = $("<tr class=\"fileRow\">");
-        row.append($('<td>').html("<input type=\"text\" name=\"imageNames\" class=\"fileNames\" value=\"" + e.name + "\" /><input type=\"hidden\" name=\"imageIndexes\" class=\"fileIndex\" value=\"" + getNextIndex() + "\" />"));
+        row.append($('<td>').html("<input type=\"text\" name=\"imageNames\" readonly=\"readonly\" class=\"fileNames\" value=\"" + e.name + "\" /><input type=\"hidden\" name=\"imageIndexes\" class=\"fileIndex\" value=\"" + getNextIndex() + "\" />"));
         row.append($('<td>').html("<a href='" + imageURL + "'><img src='" + imageURL + "' /></a>"));
         row.append($('<td>').html("<input type=\"button\" value=\"Up ↑\" class=\"btnUp\" />"));
         row.append($('<td>').html("<input type=\"button\" value=\"Down ↓\" class=\"btnDown\" />"));
@@ -111,9 +111,11 @@ function resetIndexes() {
 
 function getNextIndex() {
     var nextIndex = 0;
-    $.each($("td:first>input.fileIndexes"), function(i, e) {
-        var curIndex = parseInt(e.val());
-        // TODO Index = -1 always
+    $.each($("input.fileIndex"), function(i, e) {
+        var curIndex = parseInt($(e).val());
+        if (curIndex === 2147483647) {
+            return true;
+        }
         if (curIndex > nextIndex) {
             nextIndex = curIndex;
         }
