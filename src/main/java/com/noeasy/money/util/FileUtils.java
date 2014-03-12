@@ -47,6 +47,7 @@ public class FileUtils {
     public static final String  CONFIG_IMAGE_FOLDER       = "imageFolder";
     public static final String  CONFIG_VIDEO_FOLDER       = "videoFolder";
     public static final String  CONFIG_DORMITORY          = "dormitoryFolder";
+    public static final String  CONFIG_SLIDE              = "slideFolder";
 
     private static final String CONFIG_PATH               = "/config/upload/upload.properties";
     private static final String PARENT_PATH               = "../";
@@ -72,6 +73,16 @@ public class FileUtils {
 
 
 
+    public String createFolder(final String pFilePath) {
+        File filePath = new File(pFilePath + SLASH);
+        if (!filePath.exists()) {
+            filePath.mkdirs();
+        }
+        return filePath.getAbsolutePath();
+    }
+
+
+
     public String createFolder(final String pFilePath, final String pFolderName) {
         File filePath = new File(pFilePath + SLASH + pFolderName + SLASH);
         if (!filePath.exists()) {
@@ -84,6 +95,12 @@ public class FileUtils {
 
     public String createUploadDormitoryImageFolder(final Integer pDormitoryId) {
         return createFolder(getUploadDormitoryImagePaht(), pDormitoryId.toString());
+    }
+
+
+
+    public String createUploadSlideImageFolder() {
+        return createFolder(getUploadSlideImagePaht());
     }
 
 
@@ -142,6 +159,12 @@ public class FileUtils {
 
     public String getUploadImagePath() {
         return getUploadFolderPath() + SLASH + getConfigurableProperty(CONFIG_IMAGE_FOLDER);
+    }
+
+
+
+    public String getUploadSlideImagePaht() {
+        return getUploadImagePath() + SLASH + getConfigurableProperty(CONFIG_SLIDE);
     }
 
 
