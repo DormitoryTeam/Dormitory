@@ -44,7 +44,7 @@
 	</update>
 
 	<sql id="select-user-count">
-		SELECT u.id, u.login, u.password, u.email, u.name, u.gender, u.passport, u.age, u.birthday, u.address, u.phone, u.qq
+		SELECT COUNT(*)
 	</sql>
 	<sql id="select-user-content">
 		SELECT u.id, u.login, u.password, u.email, u.name, u.gender, u.passport, u.age, u.birthday, u.address, u.phone, u.qq
@@ -74,7 +74,7 @@
 		</if> 
 	</sql>
 	<sql id="limit-split-page">
-		<if test="page != null">limit #{pageBean.pageStartIndex}, #{pageBean.pageSize}</if>
+		<if test="page != null">limit #{page.pageStartIndex}, #{page.pageSize}</if>
 	</sql>
 	<select id="queryUser" parameterType="com.noeasy.money.model.UserSearchBean"
 		resultType="com.noeasy.money.model.UserBean">

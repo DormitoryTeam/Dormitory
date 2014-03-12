@@ -100,4 +100,8 @@ public interface IOrderRepository {
 
     Integer queryPickupOrderCount(OrderSearchBean pSearchBean);
 
+
+
+    Integer updateOrderPrice(OrderBean pOrder);
+
 }

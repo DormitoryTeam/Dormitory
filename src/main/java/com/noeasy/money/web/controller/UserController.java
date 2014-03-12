@@ -301,11 +301,6 @@ public class UserController {
             model.addAttribute("message", message);
             return "user/orderDetails";
         }
-        if (StringUtils.isBlank(orderType)) {
-            message = "orderType is blank";
-            model.addAttribute("message", message);
-            return "user/orderDetails";
-        }
         OrderSearchBean searchBean = new OrderSearchBean();
         UserBean user = new UserBean();
         user.setId(userId);
