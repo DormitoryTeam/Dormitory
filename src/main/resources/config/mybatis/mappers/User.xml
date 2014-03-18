@@ -6,14 +6,14 @@
 	
 	<insert id="register" parameterType="com.noeasy.money.model.UserBean">
 		INSERT INTO USERS(login,
-		password, email)
-		VALUES(#{login}, md5(#{password}), #{login});
+		password, email, create_date, update_date)
+		VALUES(#{login}, md5(#{password}), #{login}, now(), now());
 	</insert>
 
 
 	<insert id="saveUser" keyProperty="id" useGeneratedKeys="true" parameterType="com.noeasy.money.model.UserBean">
-		INSERT INTO users (login, password, email, name, gender, passport, age, birthday, address, phone, qq)
-		VALUES(#{login}, md5(#{password}), #{login}, #{name}, #{gender}, #{passport}, ${age}, #{birthday}, #{address}, #{phone}, #{qq});
+		INSERT INTO users (login, password, email, name, gender, passport, age, birthday, address, phone, qq, create_date, update_date)
+		VALUES(#{login}, md5(#{password}), #{login}, #{name}, #{gender}, #{passport}, ${age}, #{birthday}, #{address}, #{phone}, #{qq}, now(), now());
 	</insert>
 
 
@@ -26,20 +26,23 @@
 			age = #{age},
 			address = #{address},
 			phone = #{phone},
-			qq = #{qq}
+			qq = #{qq},
+			update_date = now()
 		WHERE id = #{id}
 	</update>
 
 
 	<update id="resetPassword" parameterType="com.noeasy.money.model.UserBean">
 		UPDATE users SET
-			password = md5(#{password})
+			password = md5(#{password}),
+			update_date = now()
 		WHERE login = #{login}
 	</update>
 
 	<update id="updateResetPasswordSign" parameterType="com.noeasy.money.model.UserBean">
 		UPDATE users SET
-			reset_password_sign = #{resetPasswordSign}
+			reset_password_sign = #{resetPasswordSign},
+			update_date = now()
 		WHERE login = #{login}
 	</update>
 
@@ -90,4 +93,68 @@
 		<include refid="select-user-query-condition" />
 		<include refid="limit-split-page" />
 	</select>
+	
+	<update id="updateUserInfo" parameterType="com.noeasy.money.model.UserInfoBean">
+		UPDATE user_info SET
+			<if test="name != null">
+			name = #{name},
+			</if>
+			<if test="nationality != null">
+			nationality = #{nationality},
+			</if>
+			<if test="email != null">
+			email = #{email},
+			</if>
+			<if test="qq != null">
+			qq = #{qq}
+			</if>
+			<if test="wechat != null">
+			wechat = #{wechat},
+			</if>
+			<if test="phone != null">
+			phone = #{phone},
+			</if>
+			<if test="country != null">
+			country = #{country},
+			</if>
+			<if test="province != null">
+			province = #{province},
+			</if>
+			<if test="city != null">
+			city = #{city},
+			</if>
+			<if test="address != null">
+			address = #{address},
+			</if>
+			<if test="birthday != null">
+			birthday = #{birthday},
+			</if>
+			<if test="gender != null">
+			gender = #{gender},
+			</if>
+			update_date = now()
+		WHERE id = #{id}
+	</update>
+	<insert id="createUserInfo" keyProperty="id" useGeneratedKeys="true" parameterType="com.noeasy.money.model.UserInfoBean">
+		INSERT INTO user_info (name, nationality, gender, birthday, email, qq, age, wechat, phone, country, province, city, address, create_date, update_date)
+		VALUES(#{name}, #{nationality}, #{gender}, #{birthday}, #{email}, #{qq}, ${age}, #{wechat}, #{phone}, #{country}, #{province}, #{city}, #{address}, now(), now());
+	</insert>
+	<update id="setInfo2User" parameterType="com.noeasy.money.model.UserBean">
+		UPDATE users SET
+			user_info_id = #{info.id},
+			update_date = now()
+		WHERE id = #{id}
+	</update>
+	<update id="setGuaranteeInfo2User" parameterType="com.noeasy.money.model.UserBean">
+		UPDATE users SET
+			guarantee_info_id = #{guaranteeInfo.id},
+			update_date = now()
+		WHERE id = #{id}
+	</update>
+	<update id="setContactPersonInfo2User" parameterType="com.noeasy.money.model.UserBean">
+		UPDATE users SET
+			contact_person_info_id = #{contactPersonInfo.id},
+			update_date = now()
+		WHERE id = #{id}
+	</update>
 </mapper>

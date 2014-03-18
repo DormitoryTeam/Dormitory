@@ -49,4 +49,8 @@ public interface IUserService {
 
 
     Integer queryUserCount(UserSearchBean pSearchBean);
+
+
+
+    void saveUserInfo(UserBean pUser);
 }

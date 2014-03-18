@@ -10,6 +10,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.omg.CORBA.Request;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import com.noeasy.money.model.OrderBean;
 import com.noeasy.money.model.OrderSearchBean;
 import com.noeasy.money.model.PageBean;
 import com.noeasy.money.model.UserBean;
+import com.noeasy.money.model.UserInfoBean;
 import com.noeasy.money.model.UserSearchBean;
 import com.noeasy.money.service.IOrderService;
 import com.noeasy.money.service.IUserService;
@@ -82,31 +84,141 @@ public class UserController {
 
     @RequestMapping(value = "/editUserInfo.html")
     public String editUserInfo(final ModelMap model, final HttpServletRequest request,
-            final HttpServletResponse response, final String name, final String gender, final String passport,
-            final String birthday, final String address, final String phone, final String qq) {
+            final HttpServletResponse response) {
         Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+        String[] forwrdURLs = new String[] { "user/userInfoForm", "user/preferForm", "user/guaranteeForm",
+                "user/contactPersonForm", "user/notesForm" };
         if (null == userId) {
             return "redirect:/user/login.html";
         }
+        String pageStep = request.getParameter(Constants.PARAM_PAGE_STEP);
+        Integer step = Integer.valueOf(0);
+        if (StringUtils.isNotBlank(pageStep)) {
+            step = Integer.valueOf(pageStep);
+            if (step < 0) {
+                step = Integer.valueOf(0);
+            }
+            if (step > 4) {
+                step = Integer.valueOf(4);
+            }
+        }
         if (ServletUtils.isGet(request)) {
+
             UserSearchBean searchBean = new UserSearchBean();
             searchBean.setId(userId);
             UserBean user = userService.queryUser(searchBean).get(0);
             model.addAttribute("user", user);
-            return "user/userInfoForm";
+            String forwordURL = forwrdURLs[step];
+            return forwordURL;
         }
+
+        switch (step) {
+        case 1:
+            // edit user prefer.
+            maintainUserPerfer(request, response);
+            break;
+        case 2:
+            // edit guarantee info.
+            maintainGuarantee(request, response);
+            break;
+        case 3:
+            // edit contact person info.
+            maintainContactPersonInfo(request, response);
+            break;
+        case 4:
+            // edit notes.
+            maintainsNotes(request, response);
+            break;
+        default:
+            // user info.
+            maintainsUserInfo(request, response);
+            break;
+        }
+        Integer nextStep = step + 1;
+        if (nextStep > 4) {
+            return "user/editUserSuccess";
+        } else {
+            return forwrdURLs[nextStep];
+        }
+
+    }
+
+
+
+    private UserInfoBean getUserInfoFromRequest(HttpServletRequest pRequest) {
+        UserInfoBean userInfo = new UserInfoBean();
+        userInfo.setName(pRequest.getParameter("name"));
+        userInfo.setNationality(pRequest.getParameter("nationality"));
+        userInfo.setEmail(pRequest.getParameter("email"));
+        userInfo.setQq(pRequest.getParameter("qq"));
+        userInfo.setWechat(pRequest.getParameter("wechat"));
+        userInfo.setPhone(pRequest.getParameter("phone"));
+        userInfo.setCountry(pRequest.getParameter("country"));
+        userInfo.setProvince(pRequest.getParameter("province"));
+        userInfo.setCity(pRequest.getParameter("city"));
+        userInfo.setAddresss(pRequest.getParameter("address"));
+        String birthdayStr = pRequest.getParameter("birthday");
+        if (StringUtils.isNotBlank(birthdayStr)) {
+            userInfo.setBirthday(DateUtils.stringToDate(birthdayStr));
+        }
+        String genderStr = pRequest.getParameter("gender");
+        if (StringUtils.isNotBlank(genderStr)) {
+            userInfo.setGender(Integer.valueOf(genderStr));
+        }
+        String idStr = pRequest.getParameter("infoId");
+        if (StringUtils.isNotBlank(idStr)) {
+            userInfo.setId(Integer.valueOf(idStr));
+        }
+        return userInfo;
+    }
+
+
+
+    private void maintainsUserInfo(HttpServletRequest pRequest, HttpServletResponse pResponse) {
+        Integer userId = (Integer) pRequest.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
         UserBean user = new UserBean();
         user.setId(userId);
-        user.setName(name);
-        user.setGender("T".equalsIgnoreCase(gender));
-        user.setPassport(passport);
-        user.setBirthday(DateUtils.stringToDate(birthday));
-        user.setAddress(address);
-        user.setPhone(phone);
-        user.setPassport(passport);
-        user.setQq(qq);
-        userService.updateUser(user);
-        return "user/editUserSuccess";
+        UserInfoBean info = getUserInfoFromRequest(pRequest);
+        user.setInfo(info);
+        userService.saveUserInfo(user);
+    }
+
+
+
+    private void maintainsNotes(HttpServletRequest pRequest, HttpServletResponse pResponse) {
+        // TODO Auto-generated method stub
+
+    }
+
+
+
+    private void maintainContactPersonInfo(HttpServletRequest pRequest, HttpServletResponse pResponse) {
+        Integer userId = (Integer) pRequest.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+        UserBean user = new UserBean();
+        user.setId(userId);
+        UserInfoBean contactPersonInfo = getUserInfoFromRequest(pRequest);
+        user.setContactPersonInfo(contactPersonInfo);
+        userService.saveUserInfo(user);
+
+    }
+
+
+
+    private void maintainGuarantee(HttpServletRequest pRequest, HttpServletResponse pResponse) {
+        Integer userId = (Integer) pRequest.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+        UserBean user = new UserBean();
+        user.setId(userId);
+        UserInfoBean guaranteeInfo = getUserInfoFromRequest(pRequest);
+        user.setGuaranteeInfo(guaranteeInfo);
+        userService.saveUserInfo(user);
+
+    }
+
+
+
+    private void maintainUserPerfer(HttpServletRequest pRequest, HttpServletResponse pResponse) {
+        // TODO Auto-generated method stub
+
     }
 
 
@@ -240,7 +352,7 @@ public class UserController {
         String domain = PropertiesUtils.getConfigurableProperty(Constants.CONFIG_PATH, Constants.CONFIG_DOMAIN);
         String context = PropertiesUtils.getConfigurableProperty(Constants.CONFIG_PATH, Constants.CONFIG_CONTEXT);
         String resetPasswordURL = domain + Constants.SLASH + context + "/user/resetPassword.html?sign=" + sign;
-        boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, user.getEmail(), user.getName(), subject,
+        boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, user.getEmail(), user.getAlias(), subject,
                 resetPasswordURL);
         String message = "Send reset password success.";
         if (!sendSuccess) {

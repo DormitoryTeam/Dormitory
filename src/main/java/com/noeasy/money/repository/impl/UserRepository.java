@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.noeasy.money.model.UserBean;
+import com.noeasy.money.model.UserInfoBean;
 import com.noeasy.money.model.UserSearchBean;
 import com.noeasy.money.repository.IUserRepository;
 
@@ -55,6 +56,42 @@ public class UserRepository extends BaseRepository implements IUserRepository {
     @Override
     public Integer queryUserCount(UserSearchBean pSearchBean) {
         return getSqlSession().selectOne("com.noeasy.money.model.User.queryUserCount", pSearchBean);
+    }
+
+
+
+    @Override
+    public void updateUserInfo(UserInfoBean pUserInfo) {
+        getSqlSession().update("com.noeasy.money.model.User.updateUserInfo", pUserInfo);
+    }
+
+
+
+    @Override
+    public Integer createUserInfo(UserInfoBean pUserInfo) {
+        return getSqlSession().insert("com.noeasy.money.model.User.createUserInfo", pUserInfo);
+    }
+
+
+
+    @Override
+    public void setInfo2User(UserBean pUser) {
+        getSqlSession().update("com.noeasy.money.model.User.setInfo2User", pUser);
+
+    }
+
+
+
+    @Override
+    public void setGuaranteeInfo2User(UserBean pUser) {
+        getSqlSession().update("com.noeasy.money.model.User.setGuaranteeInfo2User", pUser);
+    }
+
+
+
+    @Override
+    public void setContactPersonInfo2User(UserBean pUser) {
+        getSqlSession().update("com.noeasy.money.model.User.setContactPersonInfo2User", pUser);
     }
 
 }

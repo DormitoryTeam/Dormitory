@@ -3,6 +3,7 @@ package com.noeasy.money.repository;
 import java.util.List;
 
 import com.noeasy.money.model.UserBean;
+import com.noeasy.money.model.UserInfoBean;
 import com.noeasy.money.model.UserSearchBean;
 
 public interface IUserRepository {
@@ -31,5 +32,27 @@ public interface IUserRepository {
 
 
     Integer queryUserCount(UserSearchBean pSearchBean);
+
+
+
+    void updateUserInfo(UserInfoBean pUserInfo);
+
+
+
+    Integer createUserInfo(UserInfoBean pUserInfo);
+
+
+
+    void setInfo2User(UserBean pUser);
+
+
+
+    void setGuaranteeInfo2User(UserBean pUser);
+
+
+
+    void setContactPersonInfo2User(UserBean pUser);
+
+
 
 }

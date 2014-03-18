@@ -9,9 +9,9 @@
 <title></title>
 </head>
 <body>
-	<form action="/dormitory/admin/dormitory/dormitory-list.html" method="POST">
-		<input type="text" name="cityName" value="${cityName}"/>
-		<input type="text" name="dormitoryName" value="${dormitoryName}"/>
+	<form action="/dormitory/admin/dormitory/dormitory-management.html" method="GET">
+		City:<input type="text" name="cityName" value="${cityName}"/>
+		dormitoryName:<input type="text" name="dormitoryName" value="${dormitoryName}"/>
 		<input type="submit" value="search" />
 		<input type="button" id="btnAdd" value="Create Dormitory">
 		<br />

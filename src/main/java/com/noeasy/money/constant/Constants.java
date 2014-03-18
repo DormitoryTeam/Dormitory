@@ -28,4 +28,15 @@ public interface Constants {
     public static final String PARAM_CURRENT_PAGE       = "currentPage";
 
     public static final String PARAM_PAGE_SIZE          = "pageSize";
+
+    public static final String PARAM_PAGE_STEP          = "pageStep";
+
+    public static final String PARAM_VALUE_STEP2        = "step2";
+
+    public static final String PARAM_VALUE_STEP3        = "step3";
+
+    public static final String PARAM_VALUE_STEP4        = "step4";
+
+    public static final String PARAM_VALUE_STEP5        = "step5";
+
 }

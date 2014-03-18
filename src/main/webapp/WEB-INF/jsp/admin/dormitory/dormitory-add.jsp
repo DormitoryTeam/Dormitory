@@ -82,8 +82,7 @@
 				</tr>
 				<tr>
 					<td>Description:</td>
-					<td colspan="3"><textarea name="description" cols="80" rows="5">
-					</textarea></td>
+					<td colspan="3"><textarea name="description" cols="80" rows="5"></textarea></td>
 				</tr>
 				<tr>
 					<td>Dormitory Image Path:</td>

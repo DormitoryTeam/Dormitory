@@ -1,4 +1,4 @@
-<form action="<c:url value='/admin/order/orderList.html'/>" method="POST">
+<form action="<c:url value='/admin/order/orderList.html'/>" method="GET">
 orderType: <input type="text" name="orderType" value="${type}"/><br>
 orderNumber: <input type="text" name="orderId" value="${orderId}"/><br>
 username: <input type="text" name="login" value="${login}"/><br>

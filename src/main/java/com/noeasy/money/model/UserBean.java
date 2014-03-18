@@ -5,57 +5,34 @@ import java.util.Date;
 
 public class UserBean extends BaseBean {
 
-    private Integer id;
+    private Integer      id;
 
-    private String  login;
+    private String       login;
 
-    private String  name;
+    private String       password;
 
-    private String  password;
-    private String  email;
-    private boolean gender;
-    private String  passport;
-    private Date    birthday;
-    private String  address;
-    private String  phone;
-    private String  qq;
-    private String  resetPasswordSign;
+    private String       alias;
 
+    private String       email;
 
+    private String       resetPasswordSign;
 
-    public String getAddress() {
-        return address;
-    }
+    private UserInfoBean info;
 
+    private UserInfoBean guaranteeInfo;
 
-
-    public int getAge() {
-        if (null == getBirthday()) {
-            return 0;
-        }
-        Calendar birth = Calendar.getInstance();
-        birth.setTime(this.getBirthday());
-        Calendar today = Calendar.getInstance();
-        today.setTime(new Date());
-        return today.get(Calendar.YEAR) - birth.get(Calendar.YEAR);
-    }
-
-
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-
-
-    public String getEmail() {
-        return email;
-    }
+    private UserInfoBean contactPersonInfo;
 
 
 
     public Integer getId() {
         return id;
+    }
+
+
+
+    public void setId(Integer pId) {
+        id = pId;
     }
 
 
@@ -66,17 +43,8 @@ public class UserBean extends BaseBean {
 
 
 
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-
-
-    public String getPassport() {
-        return passport;
+    public void setLogin(String pLogin) {
+        login = pLogin;
     }
 
 
@@ -87,90 +55,20 @@ public class UserBean extends BaseBean {
 
 
 
-    public String getPhone() {
-        return phone;
-    }
-
-
-
-    public String getQq() {
-        return qq;
-    }
-
-
-
-    public boolean isGender() {
-        return gender;
-    }
-
-
-
-    public void setAddress(final String pAddress) {
-        address = pAddress;
-    }
-
-
-
-    public void setBirthday(final Date pBirthday) {
-        birthday = pBirthday;
-    }
-
-
-
-    public void setEmail(final String pEmail) {
-        email = pEmail;
-    }
-
-
-
-    public void setGender(final boolean pGender) {
-        gender = pGender;
-    }
-
-
-
-    public void setId(final Integer pId) {
-        id = pId;
-    }
-
-
-
-    public void setLogin(final String pLogin) {
-        login = pLogin;
-    }
-
-
-
-    /**
-     * @param pName
-     *            the name to set
-     */
-    public void setName(final String pName) {
-        name = pName;
-    }
-
-
-
-    public void setPassport(final String pPassport) {
-        passport = pPassport;
-    }
-
-
-
-    public void setPassword(final String pPassword) {
+    public void setPassword(String pPassword) {
         password = pPassword;
     }
 
 
 
-    public void setPhone(final String pPhone) {
-        phone = pPhone;
+    public String getAlias() {
+        return alias;
     }
 
 
 
-    public void setQq(final String pQq) {
-        qq = pQq;
+    public void setAlias(String pAlias) {
+        alias = pAlias;
     }
 
 
@@ -183,6 +81,54 @@ public class UserBean extends BaseBean {
 
     public void setResetPasswordSign(String pResetPasswordSign) {
         resetPasswordSign = pResetPasswordSign;
+    }
+
+
+
+    public UserInfoBean getInfo() {
+        return info;
+    }
+
+
+
+    public void setInfo(UserInfoBean pInfo) {
+        info = pInfo;
+    }
+
+
+
+    public UserInfoBean getGuaranteeInfo() {
+        return guaranteeInfo;
+    }
+
+
+
+    public void setGuaranteeInfo(UserInfoBean pGuaranteeInfo) {
+        guaranteeInfo = pGuaranteeInfo;
+    }
+
+
+
+    public UserInfoBean getContactPersonInfo() {
+        return contactPersonInfo;
+    }
+
+
+
+    public void setContactPersonInfo(UserInfoBean pContactPersonInfo) {
+        contactPersonInfo = pContactPersonInfo;
+    }
+
+
+
+    public String getEmail() {
+        return email;
+    }
+
+
+
+    public void setEmail(String pEmail) {
+        email = pEmail;
     }
 
 }
