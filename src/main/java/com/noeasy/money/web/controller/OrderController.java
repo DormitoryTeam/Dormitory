@@ -105,11 +105,11 @@ public class OrderController {
                 orderBean.setBelongsTo(user);
             } else {
                 UserBean newLitigantUser = new UserBean();
-                newLitigantUser.setName(request.getParameter("othername"));
-                newLitigantUser.setGender(request.getParameter("othergender").equals("1"));
-                newLitigantUser.setQq(request.getParameter("otherqq"));
-                newLitigantUser.setPhone(request.getParameter("otherphone"));
-                newLitigantUser.setAddress(request.getParameter("otheraddress"));
+//                newLitigantUser.setName(request.getParameter("othername"));
+//                newLitigantUser.setGender(request.getParameter("othergender").equals("1"));
+//                newLitigantUser.setQq(request.getParameter("otherqq"));
+//                newLitigantUser.setPhone(request.getParameter("otherphone"));
+//                newLitigantUser.setAddress(request.getParameter("otheraddress"));
                 if (StringUtils.isNoneBlank(request.getParameter("otherid")) || orderFor) {
                     newLitigantUser.setId(user.getId());
                     newLitigantUser.setLogin(user.getLogin());
@@ -126,11 +126,11 @@ public class OrderController {
 
             OrderContactInfo contact = new OrderContactInfo();
             UserBean litigantUser = orderBean.getBelongsTo();
-            contact.setName(litigantUser.getName());
-            contact.setGender(litigantUser.isGender());
-            contact.setPhone(litigantUser.getPhone());
-            contact.setQQ(litigantUser.getQq());
-            contact.setAddress(litigantUser.getAddress());
+//            contact.setName(litigantUser.getName());
+//            contact.setGender(litigantUser.isGender());
+//            contact.setPhone(litigantUser.getPhone());
+//            contact.setQQ(litigantUser.getQq());
+//            contact.setAddress(litigantUser.getAddress());
             orderBean.setOrderContact(contact);
 
             OrderTail createOrderRecord = new OrderTail();
@@ -195,11 +195,11 @@ public class OrderController {
                     orderBean.setBelongsTo(user);
                 } else {
                     UserBean newLitigantUser = new UserBean();
-                    newLitigantUser.setName(request.getParameter("othername"));
-                    newLitigantUser.setGender(request.getParameter("othergender").equals("1"));
-                    newLitigantUser.setQq(request.getParameter("otherqq"));
-                    newLitigantUser.setPhone(request.getParameter("otherphone"));
-                    newLitigantUser.setAddress(request.getParameter("otheraddress"));
+//                    newLitigantUser.setName(request.getParameter("othername"));
+//                    newLitigantUser.setGender(request.getParameter("othergender").equals("1"));
+//                    newLitigantUser.setQq(request.getParameter("otherqq"));
+//                    newLitigantUser.setPhone(request.getParameter("otherphone"));
+//                    newLitigantUser.setAddress(request.getParameter("otheraddress"));
                     if (StringUtils.isNoneBlank(request.getParameter("otherid")) || orderFor) {
                         newLitigantUser.setId(user.getId());
                         newLitigantUser.setLogin(user.getLogin());
@@ -216,11 +216,11 @@ public class OrderController {
 
                 OrderContactInfo contact = new OrderContactInfo();
                 UserBean litigantUser = orderBean.getBelongsTo();
-                contact.setName(litigantUser.getName());
-                contact.setGender(litigantUser.isGender());
-                contact.setPhone(litigantUser.getPhone());
-                contact.setQQ(litigantUser.getQq());
-                contact.setAddress(litigantUser.getAddress());
+//                contact.setName(litigantUser.getName());
+//                contact.setGender(litigantUser.isGender());
+//                contact.setPhone(litigantUser.getPhone());
+//                contact.setQQ(litigantUser.getQq());
+//                contact.setAddress(litigantUser.getAddress());
                 orderBean.setOrderContact(contact);
 
                 OrderTail createOrderRecord = new OrderTail();
