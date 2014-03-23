@@ -3,14 +3,24 @@
 <h1>Edit User</h1>
 ${message}<br>
 <form action="<c:url value="/user/editUserInfo.html"/>" method="POST" id="loginForm" name="loginForm">
-name: <input name="name" type="text" value="${user.name}" /><br>
-gender: <input name="password" type="text" value="${user.gender}" /><br>
-passport: <input name="passport" type="text" value="${user.passport}" /><br>
-birthday: <input name="birthday" type="text" value="${user.birthday}" /><br>
-address: <input name="address" type="text" value="${user.address}" /><br>
-phone: <input name="phone" type="text" value="${user.phone}" /><br>
-qq: <input name="qq" type="text" value="${user.qq}" /><br>
-<input name="submit" type="submit" value="submit"/>
+<input name="infoId" type="hidden" value="${user.info.id}"/>
+gender: 
+<select name="gender">
+<option value="0" <c:if test="user.info.gender eq 0">selected</c:if>>Mr.</option>
+<option value="1" <c:if test="user.info.gender eq 1">selected</c:if>>Mrs.</option>
+<option value="2" <c:if test="user.info.gender eq 2">selected</c:if>>Miss</option>
+</select><br>
+alias: <input name="alias" type="text" value="${user.alias}" /><br>
+name: <input name="name" type="text" value="${user.info.name}" /><br>
+nationality: <input name="nationality" type="text" value="${user.info.nationality}" /><br>
+birthday: <input name="birthday" type="text" value="<fmt:formatDate value='${user.info.birthday}' pattern='yyyy-MM-dd'/>" /><br>
+email: <input name="email" value="${user.info.email}"/><br>
+qq: <input name="qq" type="text" value="${user.info.qq}" /><br>
+wechat: <input name="wechat" type="text" value="${user.info.wechat}" /><br>
+phone: <input name="phone" type="text" value="${user.info.phone}" /><br>
+address: country <input name="country" type="text" value="${user.info.country}" /> | province <input name="province" type="text" value="${user.info.province}" /> | city <input name="city" type="text" value="${user.info.city}" /> | <input name="address" type="text" value="${user.info.address}" /><br>
+
+<input name="submit" type="submit" value="Next"/>
 </form>
 </body>
 </html>

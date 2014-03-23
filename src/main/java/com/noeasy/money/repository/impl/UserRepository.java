@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.noeasy.money.model.UserBean;
 import com.noeasy.money.model.UserInfoBean;
+import com.noeasy.money.model.UserPreferBean;
 import com.noeasy.money.model.UserSearchBean;
 import com.noeasy.money.repository.IUserRepository;
 
@@ -92,6 +93,28 @@ public class UserRepository extends BaseRepository implements IUserRepository {
     @Override
     public void setContactPersonInfo2User(UserBean pUser) {
         getSqlSession().update("com.noeasy.money.model.User.setContactPersonInfo2User", pUser);
+    }
+
+
+
+    @Override
+    public void updateUserPrefer(UserPreferBean pUserPrefer) {
+        getSqlSession().update("com.noeasy.money.model.User.updateUserPrefer", pUserPrefer);
+        
+    }
+
+
+
+    @Override
+    public Integer createUserPrefer(UserPreferBean pUserPrefer) {
+        return getSqlSession().insert("com.noeasy.money.model.User.createUserPrefer", pUserPrefer);
+    }
+
+
+
+    @Override
+    public void setPrefer2User(UserBean pUser) {
+        getSqlSession().update("com.noeasy.money.model.User.setPrefer2User", pUser);
     }
 
 }

@@ -14,6 +14,7 @@ import com.noeasy.money.exception.BaseException;
 import com.noeasy.money.exception.UserErrorMetadata;
 import com.noeasy.money.model.UserBean;
 import com.noeasy.money.model.UserInfoBean;
+import com.noeasy.money.model.UserPreferBean;
 import com.noeasy.money.model.UserSearchBean;
 import com.noeasy.money.repository.IAuthenticationRepository;
 import com.noeasy.money.repository.IUserRepository;
@@ -172,6 +173,9 @@ public class UserService implements IUserService {
             userInfo = pUser.getContactPersonInfo();
             infoType = INFO_TYPE.CONTACT_PERSON_INFO;
         }
+        if (null == userInfo || null == infoType) {
+            return;
+        }
         if (null == userInfo.getId()) {
             createUserInfo(pUser, userInfo, infoType);
         } else {
@@ -190,8 +194,7 @@ public class UserService implements IUserService {
 
 
     private void createUserInfo(UserBean pUser, UserInfoBean pUserInfo, INFO_TYPE pInfoType) {
-        Integer infoId =  userRepository.createUserInfo(pUserInfo);
-        pUserInfo.setId(infoId);
+        userRepository.createUserInfo(pUserInfo);
         switch (pInfoType.ordinal()) {
         case 0:
             pUser.setInfo(pUserInfo);
@@ -208,6 +211,39 @@ public class UserService implements IUserService {
         default:
             assert false : "Not support this type of UserInfo";
         }
+    }
+
+
+
+    @Override
+    public void saveUserPrefer(UserBean pUser) {
+        if (null == pUser) {
+            return;
+        }
+        UserPreferBean userPrefer = pUser.getPrefer();
+        if (null == userPrefer) {
+            return;
+        }
+        if (null == userPrefer.getId()) {
+            createUserPrefer(userPrefer, pUser);
+        } else {
+            updateUserPrefer(userPrefer);
+        }
+        
+    }
+
+
+
+    private void updateUserPrefer(UserPreferBean pUserPrefer) {
+        userRepository.updateUserPrefer(pUserPrefer);
+    }
+
+
+
+    private void createUserPrefer(UserPreferBean pUserPrefer, UserBean pUser) {
+        userRepository.createUserPrefer(pUserPrefer);
+        pUser.setPrefer(pUserPrefer);
+        userRepository.setPrefer2User(pUser);
     }
 
 }

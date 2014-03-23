@@ -68,8 +68,6 @@ DROP TABLE IF EXISTS `dormitory`.`dormitory` ;
 CREATE  TABLE IF NOT EXISTS `dormitory`.`dormitory` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `city_id` INT NOT NULL ,
-  `type_id` INT NOT NULL ,
-  `contract_type_id` INT NOT NULL ,
   `name` VARCHAR(200) NOT NULL ,
   `address` VARCHAR(500) NULL ,
   `postcode` VARCHAR(200) NULL ,
@@ -78,14 +76,12 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`dormitory` (
   `currency` VARCHAR(3) NULL ,
   `latitude` DECIMAL(10,7) NULL ,
   `longitude` DECIMAL(10,7) NULL ,
-  `equipment` INT NULL ,
-  `service` INT NULL ,
   `description` VARCHAR(500) NULL ,
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_time` TIMESTAMP NULL ,
   `status` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `index_dormitory` (`city_id` ASC, `type_id` ASC, `contract_type_id` ASC) )
+  INDEX `index_dormitory` (`city_id` ASC) )
 ENGINE = InnoDB;
 
 
@@ -99,6 +95,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`dormitory_rating` (
   `dormitory_id` INT NOT NULL ,
   `user_id` INT NOT NULL ,
   `score` INT NOT NULL ,
+  `description` VARCHAR(1000) NULL ,
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_time` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) ,
@@ -107,11 +104,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dormitory`.`dormitory_type`
+-- Table `dormitory`.`room_type`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `dormitory`.`dormitory_type` ;
+DROP TABLE IF EXISTS `dormitory`.`room_type` ;
 
-CREATE  TABLE IF NOT EXISTS `dormitory`.`dormitory_type` (
+CREATE  TABLE IF NOT EXISTS `dormitory`.`room_type` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
@@ -249,11 +246,9 @@ DROP TABLE IF EXISTS `dormitory`.`order_contact_info` ;
 CREATE  TABLE IF NOT EXISTS `dormitory`.`order_contact_info` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `order_id` INT NOT NULL ,
-  `name` VARCHAR(45) NOT NULL ,
-  `gender` INT NOT NULL ,
-  `qq` VARCHAR(15) NULL ,
-  `phone` VARCHAR(20) NULL ,
-  `address` VARCHAR(400) NULL ,
+  `belong_to_user_info_id` INT NULL ,
+  `guarantee_info_id` INT NULL ,
+  `contact_person_info_id` INT NULL ,
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_time` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) )
@@ -276,6 +271,16 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`line_item_pickup` (
   `currency` VARCHAR(3) NOT NULL ,
   `luggage_amount` INT NULL ,
   `luggage_size` DECIMAL(2,1) NULL ,
+  `takeoff_date` DATETIME NULL ,
+  `takeoff_city` VARCHAR(100) NULL ,
+  `arrival_city` VARCHAR(100) NULL ,
+  `arrival_country` VARCHAR(100) NULL ,
+  `arrival_airpot` VARCHAR(100) NULL ,
+  `flight_company` VARCHAR(200) NULL ,
+  `pickup_to_city` VARCHAR(100) NULL ,
+  `pickup_to_address` VARCHAR(500) NULL ,
+  `pickup_to_domritory` VARCHAR(200) NULL ,
+  `pickup_to_postalcode` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
@@ -289,11 +294,14 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`line_item_dormitory` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `order_id` INT NOT NULL ,
   `dormitory_id` INT NOT NULL ,
-  `create_time` INT NULL ,
-  `update_time` INT NULL ,
   `listPrice` DECIMAL(5,2) NOT NULL ,
   `amount` DECIMAL(5,2) NOT NULL ,
   `currency` VARCHAR(3) NOT NULL ,
+  `contract_type_id` INT NOT NULL ,
+  `dormitory_type_id` INT NOT NULL ,
+  `dormitory_info_date` TIMESTAMP NOT NULL ,
+  `create_time` TIMESTAMP NULL ,
+  `update_time` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
@@ -308,15 +316,14 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`users` (
   `login` VARCHAR(200) NOT NULL ,
   `password` VARCHAR(200) NOT NULL ,
   `email` VARCHAR(100) NOT NULL ,
-  `name` VARCHAR(200) NULL ,
-  `gender` INT NULL ,
-  `passport` VARCHAR(45) NULL ,
-  `age` INT NULL ,
-  `birthday` DATETIME NULL ,
-  `address` VARCHAR(500) NULL ,
-  `phone` VARCHAR(20) NULL ,
-  `qq` VARCHAR(45) NULL ,
+  `alias` VARCHAR(200) NULL ,
   `reset_password_sign` VARCHAR(200) NULL ,
+  `user_info_id` INT NULL ,
+  `guarantee_info_id` INT NULL ,
+  `contact_person_info_id` INT NULL ,
+  `user_prefer_id` INT NULL ,
+  `create_date` TIMESTAMP NULL ,
+  `update_date` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
@@ -440,6 +447,129 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`payment_details` (
   `status` VARCHAR(45) NOT NULL ,
   `notify_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `notify_id` VARCHAR(200) NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dormitory`.`Slide`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dormitory`.`Slide` ;
+
+CREATE  TABLE IF NOT EXISTS `dormitory`.`Slide` (
+  `id` INT NOT NULL ,
+  `desc` VARCHAR(400) NULL ,
+  `path` VARCHAR(200) NOT NULL ,
+  `index` INT NOT NULL ,
+  `status` VARCHAR(45) NOT NULL DEFAULT '1' ,
+  PRIMARY KEY (`id`) )
+ENGINE = MyISAM;
+
+
+-- -----------------------------------------------------
+-- Table `dormitory`.`room_info`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dormitory`.`room_info` ;
+
+CREATE  TABLE IF NOT EXISTS `dormitory`.`room_info` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `dormitory_id` VARCHAR(45) NOT NULL ,
+  `room_type_id` VARCHAR(45) NOT NULL ,
+  `equipment` INT NOT NULL ,
+  `service` INT NOT NULL ,
+  `description` VARCHAR(1000) NULL ,
+  `checkin_date` TIMESTAMP NOT NULL ,
+  `orientations` VARCHAR(200) NULL ,
+  `floors` VARCHAR(200) NULL ,
+  `bed_type` VARCHAR(200) NULL ,
+  `house_area` VARCHAR(200) NULL ,
+  `ensuite_bathroom` VARCHAR(45) NULL ,
+  `kitchen_people_number` INT NULL ,
+  `floor_arragement` VARCHAR(45) NULL ,
+  `orientation_arragement` VARCHAR(45) NULL ,
+  `room_language_arragement` VARCHAR(45) NULL ,
+  `status` VARCHAR(45) NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dormitory`.`room_price`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dormitory`.`room_price` ;
+
+CREATE  TABLE IF NOT EXISTS `dormitory`.`room_price` (
+  `id` INT NOT NULL ,
+  `room_info_id` INT NOT NULL ,
+  `contract_type_id` VARCHAR(45) NOT NULL ,
+  `currency` VARCHAR(3) NOT NULL ,
+  `listPrice` DECIMAL NOT NULL ,
+  `salePrice` DECIMAL NOT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dormitory`.`user_info`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dormitory`.`user_info` ;
+
+CREATE  TABLE IF NOT EXISTS `dormitory`.`user_info` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(45) NOT NULL ,
+  `nationality` VARCHAR(45) NOT NULL ,
+  `gender` INT NOT NULL ,
+  `birthday` DATETIME NULL ,
+  `email` VARCHAR(200) NULL ,
+  `qq` VARCHAR(45) NULL ,
+  `wechat` VARCHAR(45) NULL ,
+  `phone` VARCHAR(45) NULL ,
+  `country` VARCHAR(200) NULL ,
+  `province` VARCHAR(200) NULL ,
+  `city` VARCHAR(200) NULL ,
+  `address` VARCHAR(500) NULL ,
+  `create_date` TIMESTAMP NULL ,
+  `update_date` TIMESTAMP NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dormitory`.`user_prefer`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dormitory`.`user_prefer` ;
+
+CREATE  TABLE IF NOT EXISTS `dormitory`.`user_prefer` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `smoke` INT NULL ,
+  `vegetarianism` INT NULL ,
+  `your_grade` INT NULL ,
+  `room_member_grade` INT NULL ,
+  `room_member_gender` VARCHAR(45) NULL ,
+  `major` VARCHAR(200) NULL ,
+  `college` VARCHAR(200) NULL ,
+  `floor` INT NULL ,
+  `orientation` INT NULL ,
+  `graduate_school` VARCHAR(200) NULL ,
+  `need_push` INT NULL ,
+  `read_clause` INT NULL ,
+  `create_date` TIMESTAMP NULL ,
+  `update_date` TIMESTAMP NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dormitory`.`browsing_history`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dormitory`.`browsing_history` ;
+
+CREATE  TABLE IF NOT EXISTS `dormitory`.`browsing_history` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `user_id` INT NOT NULL ,
+  `dormitory_id` INT NOT NULL ,
+  `create_date` TIMESTAMP NULL ,
+  `update_date` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.noeasy.money.model.UserBean;
 import com.noeasy.money.model.UserInfoBean;
+import com.noeasy.money.model.UserPreferBean;
 import com.noeasy.money.model.UserSearchBean;
 
 public interface IUserRepository {
@@ -52,6 +53,18 @@ public interface IUserRepository {
 
 
     void setContactPersonInfo2User(UserBean pUser);
+
+
+
+    void updateUserPrefer(UserPreferBean pUserPrefer);
+
+
+
+    Integer createUserPrefer(UserPreferBean pUserPrefer);
+
+
+
+    void setPrefer2User(UserBean pUser);
 
 
 

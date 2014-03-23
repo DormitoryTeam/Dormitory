@@ -53,4 +53,8 @@ public interface IUserService {
 
 
     void saveUserInfo(UserBean pUser);
+
+
+
+    void saveUserPrefer(UserBean pUser);
 }

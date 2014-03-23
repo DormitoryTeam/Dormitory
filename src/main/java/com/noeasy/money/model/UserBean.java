@@ -1,7 +1,5 @@
 package com.noeasy.money.model;
 
-import java.util.Calendar;
-import java.util.Date;
 
 public class UserBean extends BaseBean {
 
@@ -23,6 +21,7 @@ public class UserBean extends BaseBean {
 
     private UserInfoBean contactPersonInfo;
 
+    private UserPreferBean prefer;
 
 
     public Integer getId() {
@@ -131,4 +130,17 @@ public class UserBean extends BaseBean {
         email = pEmail;
     }
 
+
+
+    public UserPreferBean getPrefer() {
+        return prefer;
+    }
+
+
+
+    public void setPrefer(UserPreferBean pPrefer) {
+        prefer = pPrefer;
+    }
+
+    
 }

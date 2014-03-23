@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.noeasy.money.model.User">
 	
-	<insert id="register" parameterType="com.noeasy.money.model.UserBean">
+	<insert id="register" parameterType="com.noeasy.money.model.UserBean" useGeneratedKeys="true">
 		INSERT INTO USERS(login,
 		password, email, create_date, update_date)
 		VALUES(#{login}, md5(#{password}), #{login}, now(), now());
@@ -50,10 +50,18 @@
 		SELECT COUNT(*)
 	</sql>
 	<sql id="select-user-content">
-		SELECT u.id, u.login, u.password, u.email, u.name, u.gender, u.passport, u.age, u.birthday, u.address, u.phone, u.qq
+		SELECT u.id AS uId, u.login, u.password, U.email, u.alias, u.reset_password_sign AS resetPasswordSign, u.user_info_id, u.guarantee_info_id, u.contact_person_info_id, u.user_prefer_id,
+		info.id AS infoId, info.name, info.nationality, info.gender, info.birthday, info.email AS infoEmail, info.qq, info.wechat, info.phone, info.country, info.province, info.city, info.address,
+		guarantee.id AS guaranteeId, guarantee.name AS guaranteeName, guarantee.nationality AS guaranteeNationality, guarantee.gender AS guaranteeGender, guarantee.birthday AS guaranteeBirthday, guarantee.email AS guaranteeEmail, guarantee.qq AS guaranteeQQ, guarantee.wechat AS guaranteeWechat, guarantee.phone AS guaranteePhone, guarantee.country AS guaranteeCountry, guarantee.province AS guaranteeProvince, guarantee.city AS guaranteeCity, guarantee.address AS guaranteeAddress,
+		contacter.id AS contacterId, contacter.name AS contacterName, contacter.nationality AS contacterNationality, contacter.gender AS contacterGender, contacter.birthday AS contacterBirthday, contacter.email AS contacterEmail, contacter.qq AS contacterQQ, contacter.wechat AS contacterWechat, contacter.phone AS contacterPhone, contacter.country AS contacterCountry, contacter.province AS contacterProvince, contacter.city AS contacterCity, contacter.address AS contacterAddress,
+		prefer.id AS preferId, prefer.smoke, prefer.vegetarianism, prefer.your_grade, prefer.room_member_grade, prefer.room_member_gender, prefer.major, prefer.college, prefer.floor, prefer.orientation,  prefer.graduate_school, prefer.need_push, prefer.read_clause
 	</sql>
 	<sql id="select-user-table-join">
-		FROM users AS u LEFT JOIN user_group AS ugroup ON u.id = ugroup.user_id
+		FROM users AS u
+		LEFT JOIN user_info AS info ON u.user_info_id = info.id
+		LEFT JOIN user_info AS guarantee ON u.guarantee_info_id = guarantee.id
+		LEFT JOIN user_info AS contacter ON u.contact_person_info_id = contacter.id
+		LEFT JOIN user_prefer AS prefer ON u.user_prefer_id = prefer.id
 	</sql>
 	<sql id="select-user-query-condition">
 		WHERE 1=1
@@ -80,7 +88,7 @@
 		<if test="page != null">limit #{page.pageStartIndex}, #{page.pageSize}</if>
 	</sql>
 	<select id="queryUser" parameterType="com.noeasy.money.model.UserSearchBean"
-		resultType="com.noeasy.money.model.UserBean">
+		resultMap="user">
 		<include refid="select-user-content" />
 		<include refid="select-user-table-join" />
 		<include refid="select-user-query-condition" />
@@ -106,7 +114,7 @@
 			email = #{email},
 			</if>
 			<if test="qq != null">
-			qq = #{qq}
+			qq = #{qq},
 			</if>
 			<if test="wechat != null">
 			wechat = #{wechat},
@@ -135,9 +143,9 @@
 			update_date = now()
 		WHERE id = #{id}
 	</update>
-	<insert id="createUserInfo" keyProperty="id" useGeneratedKeys="true" parameterType="com.noeasy.money.model.UserInfoBean">
-		INSERT INTO user_info (name, nationality, gender, birthday, email, qq, age, wechat, phone, country, province, city, address, create_date, update_date)
-		VALUES(#{name}, #{nationality}, #{gender}, #{birthday}, #{email}, #{qq}, ${age}, #{wechat}, #{phone}, #{country}, #{province}, #{city}, #{address}, now(), now());
+	<insert id="createUserInfo" parameterType="com.noeasy.money.model.UserInfoBean" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO user_info (name, nationality, gender, birthday, email, qq, wechat, phone, country, province, city, address, create_date, update_date)
+		VALUES(#{name}, #{nationality}, #{gender}, #{birthday}, #{email}, #{qq}, #{wechat}, #{phone}, #{country}, #{province}, #{city}, #{address}, now(), now());
 	</insert>
 	<update id="setInfo2User" parameterType="com.noeasy.money.model.UserBean">
 		UPDATE users SET
@@ -157,4 +165,124 @@
 			update_date = now()
 		WHERE id = #{id}
 	</update>
+	<update id="updateUserPrefer">
+		UPDATE user_prefer SET
+			<if test="smoke !=null">
+			smoke = #{smoke},
+			</if>
+			<if test="smoke !=null">
+			vegetarianism = #{vegetarianism},
+			</if>
+			<if test="yourGrade !=null">
+			your_grade = #{yourGrade},
+			</if>
+			<if test="roomMemberGrade !=null">
+			room_member_grade = #{roomMemberGrade},
+			</if>
+			<if test="roomMemberGender !=null">
+			room_member_gender = #{roomMemberGender},
+			</if>
+			<if test="major !=null">
+			major = #{major},
+			</if>
+			<if test="college !=null">
+			college = #{college},
+			</if>
+			<if test="floor !=null">
+			floor = #{floor},
+			</if>
+			<if test="orientation !=null">
+			orientation = #{orientation},
+			</if>
+			<if test="graduateSchool !=null">
+			graduate_school = #{graduateSchool},
+			</if>
+			<if test="needPush !=null">
+			need_push = #{needPush},
+			</if>
+			<if test="readClause !=null">
+			read_clause = #{readClause},
+			</if>
+			update_date = now()
+		WHERE id = #{id}
+	</update>
+	<insert id="createUserPrefer" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO user_prefer (smoke, vegetarianism, your_grade, room_member_grade, room_member_gender, major, college, floor, orientation, graduate_school, need_push, read_clause, create_date, update_date)
+		VALUES (#{smoke}, #{vegetarianism}, #{yourGrade}, #{roomMemberGrade}, #{roomMemberGender}, #{major}, #{college}, #{floor}, #{orientation}, #{graduateSchool}, #{needPush}, #{readClause}, now(), now());
+	</insert>
+	<update id="setPrefer2User">
+		UPDATE users SET
+			user_prefer_id = #{prefer.id},
+			update_date = now()
+		WHERE id = #{id}
+	</update>
+	
+	<resultMap id="user" type="com.noeasy.money.model.UserBean">
+		<id column="uId" property="id" />
+		<result property="login" column="login" />
+		<result property="password" column="password" />
+		<result property="email" column="email" />
+		<result property="alias" column="alias" />
+		<result property="resetPasswordSign" column="resetPasswordSign" />
+		<association property="info" column="user_info_id" javaType="com.noeasy.money.model.UserInfoBean">
+			<id property="id" column="infoId" />
+			<result property="name" column="name" />
+			<result property="nationality" column="nationality" />
+			<result property="gender" column="gender" />
+			<result property="birthday" column="birthday" />
+			<result property="email" column="infoEmail" />
+			<result property="qq" column="qq" />
+			<result property="wechat" column="wechat" />
+			<result property="phone" column="phone" />
+			<result property="country" column="country" />
+			<result property="province" column="province" />
+			<result property="city" column="city" />
+			<result property="address" column="address" />
+		</association>
+		<association property="guaranteeInfo" column="guarantee_info_id" javaType="com.noeasy.money.model.UserInfoBean">
+			<id property="id" column="guaranteeId" />
+			<result property="name" column="guaranteeName" />
+			<result property="nationality" column="guaranteeNationality" />
+			<result property="gender" column="guaranteeGender" />
+			<result property="birthday" column="guaranteeBirthday" />
+			<result property="email" column="guaranteeEmail" />
+			<result property="qq" column="guaranteeQQ" />
+			<result property="wechat" column="guaranteeWechat" />
+			<result property="phone" column="guaranteePhone" />
+			<result property="country" column="guaranteeCountry" />
+			<result property="province" column="guaranteeProvince" />
+			<result property="city" column="guaranteeCity" />
+			<result property="address" column="guaranteeAddress" />
+		</association>
+		<association property="contactPersonInfo" column="contact_person_info_id" javaType="com.noeasy.money.model.UserInfoBean">
+			<id property="id" column="contacterId" />
+			<result property="name" column="contacterName" />
+			<result property="nationality" column="contacterNationality" />
+			<result property="gender" column="contacterGender" />
+			<result property="birthday" column="contacterBirthday" />
+			<result property="email" column="contacterEmail" />
+			<result property="qq" column="contacterQQ" />
+			<result property="wechat" column="contacterWechat" />
+			<result property="phone" column="contacterPhone" />
+			<result property="country" column="contacterCountry" />
+			<result property="province" column="contacterProvince" />
+			<result property="city" column="contacterCity" />
+			<result property="address" column="contacterAddress" />
+		</association>
+		<association property="prefer" column="user_prefer_id" javaType="com.noeasy.money.model.UserPreferBean">
+			<id property="id" column="preferId" />
+			<result property="smoke" column="smoke" />
+			<result property="vegetarianism" column="vegetarianism" />
+			<result property="yourGrade" column="your_grade" />
+			<result property="roomMemberGrade" column="room_member_grade" />
+			<result property="roomMemberGender" column="room_member_gender" />
+			<result property="major" column="major" />
+			<result property="college" column="college" />
+			<result property="floor" column="floor" />
+			<result property="orientation" column="orientation" />
+			<result property="graduateSchool" column="graduate_school" />
+			<result property="needPush" column="need_push" />
+			<result property="readClause" column="read_clause" />
+		</association>
+	</resultMap>
 </mapper>

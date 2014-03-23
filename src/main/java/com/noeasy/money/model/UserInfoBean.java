@@ -16,7 +16,7 @@ public class UserInfoBean extends BaseBean {
     private String  country;
     private String  province;
     private String  city;
-    private String  addresss;
+    private String  address;
 
 
 
@@ -164,14 +164,14 @@ public class UserInfoBean extends BaseBean {
 
 
 
-    public String getAddresss() {
-        return addresss;
+    public String getAddress() {
+        return address;
     }
 
 
 
-    public void setAddresss(String pAddresss) {
-        addresss = pAddresss;
+    public void setAddress(String pAddress) {
+        address = pAddress;
     }
 
 
