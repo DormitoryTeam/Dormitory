@@ -28,6 +28,8 @@
  */
 package com.noeasy.money.util;
 
+import org.apache.commons.lang3.math.NumberUtils;
+
 /**
  * <class description>
  * 
@@ -37,6 +39,18 @@ package com.noeasy.money.util;
 
 public class ParamUtils {
 
+    public static int binaryToDecimal(final String pBinaryString) {
+        return Integer.parseInt(pBinaryString, 2);
+    }
+
+
+
+    public static String decimalToBinary(final int pDecimalNumber) {
+        return Integer.toBinaryString(pDecimalNumber);
+    }
+
+
+
     public static boolean isValidIdField(final Integer pId) {
         return pId != null && pId > 0;
     }
@@ -44,7 +58,7 @@ public class ParamUtils {
 
 
     public static boolean isValidIdField(final String pId) {
-        return isValidIdField(org.apache.commons.lang3.math.NumberUtils.toInt(pId));
+        return isValidIdField(NumberUtils.toInt(pId));
     }
 
 }

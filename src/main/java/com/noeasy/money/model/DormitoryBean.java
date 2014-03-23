@@ -30,7 +30,7 @@ package com.noeasy.money.model;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
+import com.noeasy.money.enumeration.DormitoryStatus;
 
 /**
  * <class description>
@@ -39,33 +39,49 @@ import org.apache.commons.lang3.StringUtils;
  * @version: 1.0, Jan 21, 2014
  */
 
-public class DormitoryBean extends BaseBean {
+public class DormitoryBean extends DormitoryRoomBean {
 
-    private int          mId;
-    private String       mName;
-    private String       mAddress;
-    private String       mPostCode;
-    private String       mEquipment;
-    private String       mService;
-    private Double       mSalePrice;
-    private Double       mListPrice;
-    private String       mCurrency;
-    private Double       mDistance;
-    private Double       mRating;
-    private String       mDescription;
-    private int          mCityId;
-    private String       mCity;
-    private int          mCollegeId;
-    private String       mCollege;
-    private int          mDormitoryTypeId;
-    private String       mDormitoryType;
-    private int          mContractId;
-    private String       mContract;
-    private List<String> mPicPath;
-    private List<String> mVideoPath;
-    private Double       mLatitude;
-    private Double       mLongitude;
-    private int          mStatus;
+    private int                mId;
+
+    private String             mName;
+
+    private String             mAddress;
+
+    private String             mPostcode;
+
+    private Double             mSalePrice;
+
+    private Double             mListPrice;
+
+    private String             mCurrency;
+
+    private Double             mDistance;
+
+    private Double             mRating;
+
+    private String             mDescription;
+
+    private int                mCityId;
+
+    private String             mCity;
+
+    private int                mCollegeId;
+
+    private String             mCollege;
+
+    private List<String>       mPicPath;
+
+    private List<String>       mVideoPath;
+
+    private Double             mLatitude;
+
+    private Double             mLongitude;
+
+    private DormitoryStatus    mStatus;
+
+    private DormitoryRateBean  mRate;
+
+    private List<RoomInfoBean> mRooms;
 
 
 
@@ -115,24 +131,6 @@ public class DormitoryBean extends BaseBean {
 
 
     /**
-     * @return the contract
-     */
-    public String getContract() {
-        return mContract;
-    }
-
-
-
-    /**
-     * @return the contractId
-     */
-    public int getContractId() {
-        return mContractId;
-    }
-
-
-
-    /**
      * @return the currency
      */
     public String getCurrency() {
@@ -155,33 +153,6 @@ public class DormitoryBean extends BaseBean {
      */
     public Double getDistance() {
         return mDistance;
-    }
-
-
-
-    /**
-     * @return the dormitoryType
-     */
-    public String getDormitoryType() {
-        return mDormitoryType;
-    }
-
-
-
-    /**
-     * @return the dormitoryTypeId
-     */
-    public int getDormitoryTypeId() {
-        return mDormitoryTypeId;
-    }
-
-
-
-    /**
-     * @return the equipment
-     */
-    public String getEquipment() {
-        return mEquipment;
     }
 
 
@@ -241,10 +212,19 @@ public class DormitoryBean extends BaseBean {
 
 
     /**
-     * @return the postCode
+     * @return the postcode
      */
-    public String getPostCode() {
-        return mPostCode;
+    public String getPostcode() {
+        return mPostcode;
+    }
+
+
+
+    /**
+     * @return the rate
+     */
+    public DormitoryRateBean getRate() {
+        return mRate;
     }
 
 
@@ -259,6 +239,15 @@ public class DormitoryBean extends BaseBean {
 
 
     /**
+     * @return the rooms
+     */
+    public List<RoomInfoBean> getRooms() {
+        return mRooms;
+    }
+
+
+
+    /**
      * @return the salePrice
      */
     public Double getSalePrice() {
@@ -268,15 +257,9 @@ public class DormitoryBean extends BaseBean {
 
 
     /**
-     * @return the service
+     * @return the status
      */
-    public String getService() {
-        return mService;
-    }
-
-
-
-    public int getStatus() {
+    public DormitoryStatus getStatus() {
         return mStatus;
     }
 
@@ -342,26 +325,6 @@ public class DormitoryBean extends BaseBean {
 
 
     /**
-     * @param pContract
-     *            the contract to set
-     */
-    public void setContract(final String pContract) {
-        mContract = pContract;
-    }
-
-
-
-    /**
-     * @param pContractId
-     *            the contractId to set
-     */
-    public void setContractId(final int pContractId) {
-        mContractId = pContractId;
-    }
-
-
-
-    /**
      * @param pCurrency
      *            the currency to set
      */
@@ -376,7 +339,7 @@ public class DormitoryBean extends BaseBean {
      *            the description to set
      */
     public void setDescription(final String pDescription) {
-        mDescription = pDescription == null ? pDescription : pDescription.trim();
+        mDescription = pDescription;
     }
 
 
@@ -387,36 +350,6 @@ public class DormitoryBean extends BaseBean {
      */
     public void setDistance(final Double pDistance) {
         mDistance = pDistance;
-    }
-
-
-
-    /**
-     * @param pDormitoryType
-     *            the dormitoryType to set
-     */
-    public void setDormitoryType(final String pDormitoryType) {
-        mDormitoryType = pDormitoryType;
-    }
-
-
-
-    /**
-     * @param pDormitoryTypeId
-     *            the dormitoryTypeId to set
-     */
-    public void setDormitoryTypeId(final int pDormitoryTypeId) {
-        mDormitoryTypeId = pDormitoryTypeId;
-    }
-
-
-
-    /**
-     * @param pEquipment
-     *            the equipment to set
-     */
-    public void setEquipment(final String pEquipment) {
-        mEquipment = StringUtils.isBlank(pEquipment) ? null : "";
     }
 
 
@@ -482,11 +415,21 @@ public class DormitoryBean extends BaseBean {
 
 
     /**
-     * @param pPostCode
-     *            the postCode to set
+     * @param pPostcode
+     *            the postcode to set
      */
-    public void setPostCode(final String pPostCode) {
-        mPostCode = pPostCode;
+    public void setPostcode(final String pPostcode) {
+        mPostcode = pPostcode;
+    }
+
+
+
+    /**
+     * @param pRate
+     *            the rate to set
+     */
+    public void setRate(final DormitoryRateBean pRate) {
+        mRate = pRate;
     }
 
 
@@ -502,6 +445,16 @@ public class DormitoryBean extends BaseBean {
 
 
     /**
+     * @param pRooms
+     *            the rooms to set
+     */
+    public void setRooms(final List<RoomInfoBean> pRooms) {
+        mRooms = pRooms;
+    }
+
+
+
+    /**
      * @param pSalePrice
      *            the salePrice to set
      */
@@ -512,16 +465,10 @@ public class DormitoryBean extends BaseBean {
 
 
     /**
-     * @param pService
-     *            the service to set
+     * @param pStatus
+     *            the status to set
      */
-    public void setService(final String pService) {
-        mService = StringUtils.isBlank(pService) ? null : "";
-    }
-
-
-
-    public void setStatus(final int pStatus) {
+    public void setStatus(final DormitoryStatus pStatus) {
         mStatus = pStatus;
     }
 

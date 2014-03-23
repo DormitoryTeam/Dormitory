@@ -32,34 +32,50 @@ package com.noeasy.money.model;
  * <class description>
  * 
  * @author: Yove
- * @version: 1.0, Feb 19, 2014
+ * @version: 1.0, Mar 22, 2014
  */
 
-public class DormitoryMediaBean extends BaseBean implements Comparable<DormitoryMediaBean> {
+public class RoomPrice {
 
-    private Integer mId;
-    private Integer mDormitoryId;
-    private boolean mMediaType;
-    private String  mMediaPath;
-    private Integer mIndex;
+    private int    mId;
+
+    private int    mRoomInfoId;
+
+    private String mCurrency;
+
+    private Double mListPrice;
+
+    private Double mSalePrice;
+
+    private int    mContractId;
+
+    private String mContract;
 
 
 
     /**
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     * @return the contract
      */
-    @Override
-    public int compareTo(final DormitoryMediaBean pTarger) {
-        return mIndex < pTarger.getIndex() ? -1 : (mIndex == pTarger.getIndex() ? 0 : 1);
+    public String getContract() {
+        return mContract;
     }
 
 
 
     /**
-     * @return the dormitoryId
+     * @return the contractId
      */
-    public Integer getDormitoryId() {
-        return mDormitoryId;
+    public int getContractId() {
+        return mContractId;
+    }
+
+
+
+    /**
+     * @return the currency
+     */
+    public String getCurrency() {
+        return mCurrency;
     }
 
 
@@ -67,45 +83,65 @@ public class DormitoryMediaBean extends BaseBean implements Comparable<Dormitory
     /**
      * @return the id
      */
-    public Integer getId() {
+    public int getId() {
         return mId;
     }
 
 
 
     /**
-     * @return the index
+     * @return the listPrice
      */
-    public Integer getIndex() {
-        return mIndex;
+    public Double getListPrice() {
+        return mListPrice;
     }
 
 
 
     /**
-     * @return the mediaPath
+     * @return the roomInfoId
      */
-    public String getMediaPath() {
-        return mMediaPath;
+    public int getRoomInfoId() {
+        return mRoomInfoId;
     }
 
 
 
     /**
-     * @return the mediaType
+     * @return the salePrice
      */
-    public boolean isMediaType() {
-        return mMediaType;
+    public Double getSalePrice() {
+        return mSalePrice;
     }
 
 
 
     /**
-     * @param pDormitoryId
-     *            the dormitoryId to set
+     * @param pContract
+     *            the contract to set
      */
-    public void setDormitoryId(final Integer pDormitoryId) {
-        mDormitoryId = pDormitoryId;
+    public void setContract(final String pContract) {
+        mContract = pContract;
+    }
+
+
+
+    /**
+     * @param pContractId
+     *            the contractId to set
+     */
+    public void setContractId(final int pContractId) {
+        mContractId = pContractId;
+    }
+
+
+
+    /**
+     * @param pCurrency
+     *            the currency to set
+     */
+    public void setCurrency(final String pCurrency) {
+        mCurrency = pCurrency;
     }
 
 
@@ -114,38 +150,38 @@ public class DormitoryMediaBean extends BaseBean implements Comparable<Dormitory
      * @param pId
      *            the id to set
      */
-    public void setId(final Integer pId) {
+    public void setId(final int pId) {
         mId = pId;
     }
 
 
 
     /**
-     * @param pIndex
-     *            the index to set
+     * @param pListPrice
+     *            the listPrice to set
      */
-    public void setIndex(final Integer pIndex) {
-        mIndex = pIndex;
+    public void setListPrice(final Double pListPrice) {
+        mListPrice = pListPrice;
     }
 
 
 
     /**
-     * @param pMediaPath
-     *            the mediaPath to set
+     * @param pRoomInfoId
+     *            the roomInfoId to set
      */
-    public void setMediaPath(final String pMediaPath) {
-        mMediaPath = pMediaPath;
+    public void setRoomInfoId(final int pRoomInfoId) {
+        mRoomInfoId = pRoomInfoId;
     }
 
 
 
     /**
-     * @param pMediaType
-     *            the mediaType to set
+     * @param pSalePrice
+     *            the salePrice to set
      */
-    public void setMediaType(final boolean pMediaType) {
-        mMediaType = pMediaType;
+    public void setSalePrice(final Double pSalePrice) {
+        mSalePrice = pSalePrice;
     }
 
 }

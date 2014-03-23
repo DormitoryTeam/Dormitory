@@ -28,35 +28,103 @@
  */
 package com.noeasy.money.model;
 
+import com.noeasy.money.util.ParamUtils;
 
 /**
  * <class description>
  * 
  * @author: Yove
- * @version: 1.0, Jan 27, 2014
+ * @version: 1.0, Mar 23, 2014
  */
 
-public class DormitoryLineItem extends LineItem {
+public class DormitoryRoomBean extends BaseBean {
 
-    private DormitoryBean mDormitory;
+    private String mBinaryService;
+
+    private int    mService;
+
+    private String mBinaryEquipment;
+
+    private int    mEquipment;
 
 
 
     /**
-     * @return the dormitory
+     * @return the binaryEquipment
      */
-    public DormitoryBean getDormitory() {
-        return mDormitory;
+    public String getBinaryEquipment() {
+        return mBinaryEquipment;
     }
 
 
 
     /**
-     * @param pDormitory
-     *            the dormitory to set
+     * @return the binaryService
      */
-    public void setDormitory(final DormitoryBean pDormitory) {
-        mDormitory = pDormitory;
+    public String getBinaryService() {
+        return mBinaryService;
+    }
+
+
+
+    /**
+     * @return the equipment
+     */
+    public int getEquipment() {
+        return mEquipment;
+    }
+
+
+
+    /**
+     * @return the service
+     */
+    public int getService() {
+        return mService;
+    }
+
+
+
+    /**
+     * @param pBinaryEquipment
+     *            the binaryEquipment to set
+     */
+    public void setBinaryEquipment(final String pBinaryEquipment) {
+        mEquipment = ParamUtils.binaryToDecimal(pBinaryEquipment);
+        mBinaryEquipment = pBinaryEquipment;
+    }
+
+
+
+    /**
+     * @param pBinaryService
+     *            the binaryService to set
+     */
+    public void setBinaryService(final String pBinaryService) {
+        mService = ParamUtils.binaryToDecimal(pBinaryService);
+        mBinaryService = pBinaryService;
+    }
+
+
+
+    /**
+     * @param pEquipment
+     *            the equipment to set
+     */
+    public void setEquipment(final int pEquipment) {
+        mBinaryEquipment = ParamUtils.decimalToBinary(pEquipment);
+        mEquipment = pEquipment;
+    }
+
+
+
+    /**
+     * @param pService
+     *            the service to set
+     */
+    public void setService(final int pService) {
+        mBinaryService = ParamUtils.decimalToBinary(pService);
+        mService = pService;
     }
 
 }

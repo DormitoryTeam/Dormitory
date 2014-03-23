@@ -26,37 +26,25 @@
  * THE FOREGOING LIMITATIONS SHALL APPLY EVEN IF THE ANY WARRANTY PROVIDED IN
  * THE MASTER SERVICE AGREEMENT FAILS OF ITS ESSENTIAL PURPOSE.
  */
-package com.noeasy.money.model;
-
+package com.noeasy.money.enumeration;
 
 /**
  * <class description>
  * 
  * @author: Yove
- * @version: 1.0, Jan 27, 2014
+ * @version: 1.0, Mar 22, 2014
  */
 
-public class DormitoryLineItem extends LineItem {
+public enum Orientation {
+    WEST, NORTH, EAST, SOUTH;
 
-    private DormitoryBean mDormitory;
-
-
-
-    /**
-     * @return the dormitory
-     */
-    public DormitoryBean getDormitory() {
-        return mDormitory;
+    public String getName() {
+        return this.name();
     }
 
 
 
-    /**
-     * @param pDormitory
-     *            the dormitory to set
-     */
-    public void setDormitory(final DormitoryBean pDormitory) {
-        mDormitory = pDormitory;
+    public int getValue() {
+        return this.ordinal();
     }
-
 }

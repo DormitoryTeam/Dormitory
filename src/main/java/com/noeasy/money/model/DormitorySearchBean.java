@@ -31,6 +31,7 @@ package com.noeasy.money.model;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
+
 /**
  * <class description>
  * 

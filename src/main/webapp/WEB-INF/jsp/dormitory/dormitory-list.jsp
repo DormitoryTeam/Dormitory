@@ -22,19 +22,48 @@
 	</form>
 	<hr />
 
-	<table>
+	<table style="width:1100px;">
 		<tbody>
 			<c:if test="${not empty dormitories}">
 				<c:forEach var="dormitory" items="${dormitories}" varStatus="i">
 					<tr>
-						<td><img style="float: left;margin-right: 30px;margin-top: 10px;" src="/dormitory/img/dormitory_sample.jpg" />
+						<td><img style="float: left;margin-right:30px;" src="/dormitory/img/dormitory_sample.jpg" />
 							<ul>
-								<li>Name: ${dormitory['name']}</li>
+								<li>Name: ${dormitory['name']} ${dormitory['status']} &nbsp; 
+									<input type="button" class="btnDetail" dormitoryId="${dormitory['id']}" value="to detail" /></li>
 								<li>Addr: ${dormitory['address']}</li>
+								<li>Equipment: ${dormitory['binaryEquipment']}</li>
+								<li>Service: ${dormitory['binaryService']}</li>
 								<li>Price: ${dormitory['salePrice']}</li>
-								<li>Rate: ${dormitory['rating']}</li>
-								<li>Dist: ${dormitory['distance']}</li>
-								<li><input type="button" class="btnDetail" dormitoryId="${dormitory['id']}" value="to detail" /></li>
+								<li>
+									<table>
+										<tbody>
+											<tr>
+												<th>Room</th>
+												<th>Bed Type</th>
+												<th>Checkin Date</th>
+												<th>Sale Price</th>
+												<th>Status</th>
+											</tr>
+											<c:if test="${not empty dormitory['rooms']}">
+												<c:forEach var="room" items="${dormitory['rooms']}" varStatus="j" begin="0" end="1">
+													<c:if test="${not empty room}">
+														<tr>
+															<td>${room['roomType']}</td>
+															<td>${room['bedType']}</td>
+															<td>${room['checkinDateString']}</td>
+															<td>
+																<c:if test="${not empty room['contractPrice'][0]}">
+																	${room['contractPrice'][0]['salePrice']}
+																</c:if>
+															</td>
+															<td>${room['status']}</td>
+														</tr>
+													</c:if>
+												</c:forEach>
+											</c:if>
+										</tbody>
+									</table>
 							</ul>
 							<hr /></td>
 					</tr>

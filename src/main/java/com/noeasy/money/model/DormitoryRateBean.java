@@ -28,6 +28,7 @@
  */
 package com.noeasy.money.model;
 
+
 /**
  * <class description>
  * 
