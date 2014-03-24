@@ -104,7 +104,15 @@ public interface IDormitoryRepository {
 
 
 
+    List<String> queryEquipment();
+
+
+
     List<String> queryImagePathByDormitoryId(Integer pDormitoryId);
+
+
+
+    List<String> queryService();
 
 
 

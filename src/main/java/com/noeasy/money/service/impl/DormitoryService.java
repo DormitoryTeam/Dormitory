@@ -162,6 +162,26 @@ public class DormitoryService implements IDormitoryService {
 
 
     /**
+     * @see com.noeasy.money.service.IDormitoryService#queryEquipment()
+     */
+    @Override
+    public List<String> queryEquipment() {
+        return dormitoryRepository.queryEquipment();
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.IDormitoryService#queryService()
+     */
+    @Override
+    public List<String> queryService() {
+        return dormitoryRepository.queryService();
+    }
+
+
+
+    /**
      * @see com.noeasy.money.service.IDormitoryService#rateDormitory(int, int,
      *      int, boolean)
      */

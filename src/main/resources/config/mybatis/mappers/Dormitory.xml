@@ -3,6 +3,84 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.noeasy.money.model.Dormitory">
+	
+	<sql id="select-dormitory">
+		select
+		t1.id dor_id,
+		t1.name dor_name,
+		t1.address dor_address,
+		t1.postcode dor_postcode,
+		t1.equipment dor_equipment,
+		t1.service dor_service,
+		t1.currency
+		dor_currency,
+		t1.listPrice dor_listPrice,
+		t1.salePrice dor_salePrice,
+		t1.latitude dor_latitude,
+		t1.longitude dor_longitude,
+		t1.description
+		dor_description,
+		t1.city_id dor_cityId,
+		t1.status dor_status,
+		t2.name dor_city,
+		coalesce(avg(t3.score), 0) as rating,
+		t4.id ri_id,
+		t4.dormitory_id
+		ri_dormitoryId,
+		t4.room_type_id ri_roomTypeId,
+		t4.equipment ri_equipment,
+		t4.service ri_service,
+		t4.description as ri_description,
+		t4.checkin_date
+		ri_checkinDate,
+		t4.orientations ri_orientation,
+		t4.floors ri_floors,
+		t4.bed_type ri_bedType,
+		t4.house_area ri_houseArea,
+		t4.ensuite_bathroom
+		ri_ensuitBathroom,
+		t4.kitchen_people_number ri_kitchenPeople,
+		t4.floor_arrangement ri_floorArrange,
+		t4.orientation_arrangement ri_orientationArrange,
+		t4.room_language_arrangement ri_roomLanguageArrange,
+		t4.kitchen_equipment ri_kitchenEquipment,
+		t4.bathroom_equipment ri_bathroomEquipment,
+		t4.status as
+		ri_status,
+		t5.id rp_id,
+		t5.room_info_id rp_roomInfoId,
+		t5.contract_type_id
+		rp_contractId,
+		t5.currency rp_currency,
+		t5.listPrice rp_listPrice,
+		t5.salePrice
+		rp_salePrice,
+		t6.name ri_roomType,
+		t7.name rp_contract
+		<if test="collegeId != null">
+			,ifnull(t8.distance, 0) as distance
+		</if>
+		from
+		dormitory t1
+		left join
+		city t2 on t2.id = t1.city_id
+		left join
+		dormitory_rating t3 on t3.dormitory_id = t1.id
+		left join
+		room_info t4 ON
+		t4.dormitory_id = t1.id
+		left join
+		room_price t5 on t5.room_info_id = t4.id
+		left join
+		room_type t6 on t6.id = t4.room_type_id
+		left join
+		contract_type t7 ON
+		t7.id = t5.contract_type_id
+		<if test="collegeId != null">
+			left join
+			distance_result t8 on t8.dormitory_id = t1.id and t8.college_id = #{collegeId}
+		</if>
+	</sql>
 
 	<sql id="where">
 		where 1=1
@@ -43,7 +121,11 @@
 	</sql>
 
 	<sql id="group-by-room-id">
-		group by t4.id, t5.id
+		group by t4.id
+	</sql>
+	
+	<sql id="group-by-room-price-id">
+		group by t5.id
 	</sql>
 
 	<sql id="group-by-dormitory-id">
@@ -63,76 +145,7 @@
 	</sql>
 
 	<select id="queryDormitoryPage" parameterType='com.noeasy.money.model.DormitorySearchBean' resultMap="dormitory">
-		select
-		t1.id dor_id,
-		t1.name dor_name,
-		t1.address dor_address,
-		t1.postcode dor_postcode,
-		t1.equipment dor_equipment,
-		t1.service dor_service,
-		t1.currency
-		dor_currency,
-		t1.listPrice dor_listPrice,
-		t1.salePrice dor_salePrice,
-		t1.latitude dor_latitude,
-		t1.longitude dor_longitude,
-		t1.description
-		dor_description,
-		t1.city_id dor_cityId,
-		t1.status dor_status,
-		t2.name dor_city,
-		coalesce(avg(t3.score), 0) as rating,
-		t4.id ri_id,
-		t4.dormitory_id ri_dormitoryId,
-		t4.room_type_id ri_roomTypeId,
-		t4.equipment ri_equipment,
-		t4.service ri_service,
-		t4.description as ri_description,
-		t4.checkin_date ri_checkinDate,
-		t4.orientations ri_orientation,
-		t4.floors ri_floors,
-		t4.bed_type ri_bedType,
-		t4.house_area ri_houseArea,
-		t4.ensuite_bathroom ri_ensuitBathroom,
-		t4.kitchen_people_number ri_kitchenPeople,
-		t4.floor_arrangement ri_floorArrange,
-		t4.orientation_arrangement ri_orientationArrange,
-		t4.room_language_arrangement ri_roomLanguageArrange,
-		t4.kitchen_equipment ri_kitchenEquipment,
-		t4.bathroom_equipment ri_bathroomEquipment,
-		t4.status as ri_status,
-		t5.id rp_id,
-		t5.room_info_id rp_roomInfoId,
-		t5.contract_type_id
-		rp_contractId,
-		t5.currency rp_currency,
-		t5.listPrice rp_listPrice,
-		t5.salePrice rp_salePrice,
-		t6.name ri_roomType,
-		t7.name rp_contract
-		<if test="collegeId != null">
-			,ifnull(t8.distance, 0) as distance
-		</if>
-		from
-		dormitory t1
-		left join
-		city t2 on t2.id = t1.city_id
-		left join
-		dormitory_rating t3 on t3.dormitory_id = t1.id
-		left join
-		room_info t4 ON
-		t4.dormitory_id = t1.id
-		left join
-		room_price t5 on t5.room_info_id = t4.id
-		left join
-		room_type t6 on t6.id = t4.room_type_id
-		left join
-		contract_type t7 ON
-		t7.id = t5.contract_type_id
-		<if test="collegeId != null">
-			left join
-			distance_result t8 on t8.dormitory_id = t1.id and t8.college_id = #{collegeId}
-		</if>
+		<include refid="select-dormitory" />
 		<include refid="where" />
 		<if test="id != null">
 			<include refid="where-with-id" />
@@ -157,18 +170,40 @@
 			<include refid="limit-split-page" />
 		</if>
 	</select>
+	
+	<select id="queryDormitory" parameterType='com.noeasy.money.model.DormitorySearchBean' resultMap="dormitory">
+		<include refid="select-dormitory" />
+		<include refid="where" />
+		<if test="id != null">
+			<include refid="where-with-id" />
+		</if>
+		<if test="dormitoryName != null">
+			<include refid="where-with-dormitory-name" />
+		</if>
+		<if test="cityId != null">
+			<include refid="where-with-city-id" />
+		</if>
+		<if test="cityName != null">
+			<include refid="where-with-city-name" />
+		</if>
+		<if test="keyword != null">
+			<include refid="where-with-keyword" />
+		</if>
+		<include refid="group-by-room-price-id" />
+	</select>
 
 	<select id="queryDormitoryCount" parameterType='com.noeasy.money.model.DormitorySearchBean' resultType="int">
 		select count(*)
 		from
-		(select t1.id 
+		(select t1.id
 		from
 		dormitory t1
 		left join
 		city t2 on t2.id = t1.city_id
 		left join
 		dormitory_rating t3 on t3.dormitory_id = t1.id
-		left join
+		left
+		join
 		room_info t4 on
 		t4.dormitory_id =
 		t1.id
@@ -203,35 +238,46 @@
 		) t
 	</select>
 
-	<select id="query-media-path" resultType="string" parameterType="java.util.Map">
-		<include refid="seledct-dormitory-media" />
+	<select id="queryMediaPath" resultType="string" parameterType="java.util.Map">
+		select media_path
+		from dormitory_media
 		<include refid="where" />
 		<include refid="where-with-media-type" />
 		<include refid="order-by-field" />
 	</select>
 
-	<sql id="seledct-dormitory-media">
-		select media_path
-		from dormitory_media
-	</sql>
 
-	<insert id="insert-image-path" parameterType="java.util.List">
+	<insert id="insertImagePath" parameterType="java.util.List">
 		insert into dormitory_media (dormitory_id, media_type, media_path, `index`) values
 		<foreach collection="list" item="item" index="index" open="" close="" separator=",">
 			(#{item.dormitoryId}, 1, #{item.path}, #{index})
 		</foreach>
 	</insert>
 
-	<insert id="insert-video-path" parameterType="java.util.List">
+	<insert id="insertVideoPath" parameterType="java.util.List">
 		insert into dormitory_media (dormitory_id, media_type, media_path, `index`) values
 		<foreach collection="list" item="item" index="index" open="" close="" separator=",">
 			(#{item.dormitoryId}, 2, #{item.path}, #{index})
 		</foreach>
 	</insert>
 
-	<delete id="remove-media-path" parameterType="int">
+	<delete id="removeMediaPath" parameterType="int">
 		delete from dormitory_media where dormitory_id = #{dormitoryId};
 	</delete>
+	
+	<select id="selectService" resultType="string">
+		select service 
+		from service
+		where status = 1
+		order by id asc
+	</select>
+	
+	<select id="selectEquipment" resultType="string">
+		select equipment 
+		from equipment
+		where status = 1
+		order by id asc
+	</select>
 
 	<insert id="rate" keyProperty="id" useGeneratedKeys='true' parameterType="com.noeasy.money.model.DormitoryRateBean">
 		insert into dormitory_rating (dormitory_id, user_id, score,

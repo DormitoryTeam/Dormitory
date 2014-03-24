@@ -26,80 +26,51 @@
  * THE FOREGOING LIMITATIONS SHALL APPLY EVEN IF THE ANY WARRANTY PROVIDED IN
  * THE MASTER SERVICE AGREEMENT FAILS OF ITS ESSENTIAL PURPOSE.
  */
-
-package com.noeasy.money.service;
+package com.noeasy.money.executor.processor;
 
 import java.util.List;
-import java.util.Map;
 
-import com.noeasy.money.model.DormitoryBean;
-import com.noeasy.money.model.DormitorySearchBean;
+import javax.annotation.Resource;
+import javax.servlet.ServletContext;
+
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
+
+import com.noeasy.money.model.DormitoryRoomBean;
+import com.noeasy.money.service.IDormitoryService;
 
 /**
  * <class description>
  * 
  * @author: Yove
- * @version: 1.0, Jan 21, 2014
+ * @version: 1.0, Mar 24, 2014
  */
 
-public interface IDormitoryService {
+public class InstantiationTracingBeanPostProcessor implements ApplicationListener<ContextRefreshedEvent> {
 
-    Boolean calculateDistance();
-
-
-
-    Boolean calculateDistance4City(int pCityId);
-
-
-
-    Boolean calculateDistance4College(int pCollegeId);
-
-
-
-    Boolean calculateDistance4Dormitory(int pDormitoryId);
-
-
-
-    List<Map<String, Object>> queryContractTypes();
-
-
-
-    DormitoryBean queryDormitory(DormitorySearchBean pSearchBean);
-
-
-
-    Integer queryDormitoryCount(DormitorySearchBean pSearchBean);
-
-
-
-    List<DormitoryBean> queryDormitoryPage(DormitorySearchBean pSearchBean);
-
-
-
-    List<Map<String, Object>> queryDormitoryTypes();
-
-
-
-    List<String> queryEquipment();
-
-
-
-    List<String> queryService();
+    @Resource(name = "dormitoryService")
+    IDormitoryService dormitoryService;
 
 
 
     /**
-     * Rate dormitory and return the average rating
-     * 
-     * @param pDormitoryId
-     * @param pUserId
-     * @param pPoint
-     * @param pGetAvg
-     * @return
+     * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
      */
-    Double rateDormitory(int pDormitoryId, int pUserId, int pPoint, boolean pGetAvg);
+    @Override
+    public void onApplicationEvent(final ContextRefreshedEvent pEvent) {
+        // get the parent context
+        WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
+        ServletContext servletContext = webApplicationContext.getServletContext();
 
+        List<String> equipments = dormitoryService.queryEquipment();
+        List<String> services = dormitoryService.queryService();
 
+        DormitoryRoomBean.setEquipmentCount(equipments.size());
+        DormitoryRoomBean.setServiceCount(services.size());
 
-    Boolean saveOrUpdateDormitory(DormitoryBean pDormitory);
+        servletContext.setAttribute("equipments", equipments);
+        servletContext.setAttribute("services", services);
+    }
 }

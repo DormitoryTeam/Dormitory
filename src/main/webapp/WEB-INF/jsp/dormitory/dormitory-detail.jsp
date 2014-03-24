@@ -10,6 +10,7 @@
 <title></title>
 </head>
 <body>
+
 	<form action="/dormitory/order/dormitory-order-fill.html" method="POST">
 		<input type="hidden" name="dormitoryId" value="${dormitory['id']}" />
 		<c:set var="dormitoryId" value="${dormitory['id']}" />
@@ -17,8 +18,26 @@
 		<ul>
 			<li>${dormitory['name']}</li>
 			<li>${dormitory['address']}</li>
-			<li>Service: ${dormitory['binaryService']}</li>
-			<li>Equipment: ${dormitory['binaryEquipment']}</li>
+			<li>
+				Service: 
+				<c:forEach var="binaryService" items="${dormitory['binaryServiceArray']}" varStatus="i">
+ 					<c:if test="${binaryService eq '1'.charAt(0)}">
+ 						<c:if test="${hasOneService > 0}">, </c:if>
+ 						<c:set var="hasOneService" value="1" />
+ 						${services[i['index']]}
+ 					</c:if>
+				</c:forEach>
+			</li>
+			<li>
+				Equipment: 
+				<c:forEach var="binaryEquipment" items="${dormitory['binaryEquipmentArray']}" varStatus="i">
+ 					<c:if test="${binaryEquipment eq '1'.charAt(0)}">
+ 						<c:if test="${hasOneEquipment eq 1}">, </c:if>
+ 						<c:set var="hasOneEquipment" value="1" />
+ 						${equipments[i['index']]}
+ 					</c:if>
+				</c:forEach>
+			</li>
 			<li>Rate:</li>
 		</ul>
 

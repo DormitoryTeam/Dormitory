@@ -39,13 +39,66 @@ import com.noeasy.money.util.ParamUtils;
 
 public class DormitoryRoomBean extends BaseBean {
 
-    private String mBinaryService;
+    private String     mBinaryService;
 
-    private int    mService;
+    private int        mService;
 
-    private String mBinaryEquipment;
+    private String     mBinaryEquipment;
 
-    private int    mEquipment;
+    private int        mEquipment;
+
+    private static int serviceCount   = 0;
+
+    private static int equipmentCount = 0;
+
+
+
+    public static String FilledDigital(final String pString, final int pSize) {
+        int count = pSize - pString.length();
+        StringBuffer frontFilledDigitalStr = new StringBuffer();
+        for (int i = 0; i < count; i++) {
+            frontFilledDigitalStr.append(0);
+        }
+        return frontFilledDigitalStr.append(pString).toString();
+    }
+
+
+
+    /**
+     * @return the equipmentCount
+     */
+    public static int getEquipmentCount() {
+        return equipmentCount;
+    }
+
+
+
+    /**
+     * @return the serviceCount
+     */
+    public static int getServiceCount() {
+        return serviceCount;
+    }
+
+
+
+    /**
+     * @param pEquipmentCount
+     *            the equipmentCount to set
+     */
+    public static void setEquipmentCount(final int pEquipmentCount) {
+        equipmentCount = pEquipmentCount;
+    }
+
+
+
+    /**
+     * @param pServiceCount
+     *            the serviceCount to set
+     */
+    public static void setServiceCount(final int pServiceCount) {
+        serviceCount = pServiceCount;
+    }
 
 
 
@@ -58,11 +111,23 @@ public class DormitoryRoomBean extends BaseBean {
 
 
 
+    public char[] getBinaryEquipmentArray() {
+        return mBinaryEquipment.toCharArray();
+    }
+
+
+
     /**
      * @return the binaryService
      */
     public String getBinaryService() {
         return mBinaryService;
+    }
+
+
+
+    public char[] getBinaryServiceArray() {
+        return mBinaryService.toCharArray();
     }
 
 
@@ -112,7 +177,7 @@ public class DormitoryRoomBean extends BaseBean {
      *            the equipment to set
      */
     public void setEquipment(final int pEquipment) {
-        mBinaryEquipment = ParamUtils.decimalToBinary(pEquipment);
+        mBinaryEquipment = FilledDigital(ParamUtils.decimalToBinary(pEquipment), getEquipmentCount());
         mEquipment = pEquipment;
     }
 
@@ -123,7 +188,7 @@ public class DormitoryRoomBean extends BaseBean {
      *            the service to set
      */
     public void setService(final int pService) {
-        mBinaryService = ParamUtils.decimalToBinary(pService);
+        mBinaryService = FilledDigital(ParamUtils.decimalToBinary(pService), getServiceCount());
         mService = pService;
     }
 

@@ -28,6 +28,7 @@
  */
 package com.noeasy.money.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -291,6 +292,9 @@ public class RoomInfoBean extends DormitoryRoomBean {
      */
     public void setCheckinDate(final Date pCheckinDate) {
         mCheckinDate = pCheckinDate;
+        if (mCheckinDate != null) {
+            setCheckinDateString((new SimpleDateFormat("yyyy-MM-dd")).format(mCheckinDate));
+        }
     }
 
 

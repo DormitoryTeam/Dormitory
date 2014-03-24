@@ -126,7 +126,7 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
      */
     @Override
     public Boolean deleteDormitoryMediaPath(final Integer pDormitoryId) {
-        return getSqlSession().delete("com.noeasy.money.model.Dormitory.remove-media-path", pDormitoryId) >= 0;
+        return getSqlSession().delete("com.noeasy.money.model.Dormitory.removeMediaPath", pDormitoryId) >= 0;
     }
 
 
@@ -157,7 +157,7 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
      */
     @Override
     public DormitoryBean queryDormitory(final DormitorySearchBean pSearchBean) {
-        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.queryDormitoryPage", pSearchBean);
+        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.queryDormitory", pSearchBean);
     }
 
 
@@ -200,6 +200,16 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
 
 
     /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#queryEquipment()
+     */
+    @Override
+    public List<String> queryEquipment() {
+        return getSqlSession().selectList("com.noeasy.money.model.Dormitory.selectEquipment");
+    }
+
+
+
+    /**
      * @see com.noeasy.money.repository.IDormitoryRepository#queryImagePathByDormitoryId(java.lang.Integer)
      */
     @Override
@@ -208,7 +218,17 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
         params.put("dormitoryId", pDormitoryId);
         params.put("mediaType", 1);
         params.put("sortField", "index");
-        return getSqlSession().selectList("com.noeasy.money.model.Dormitory.query-media-path", params);
+        return getSqlSession().selectList("com.noeasy.money.model.Dormitory.queryMediaPath", params);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#queryService()
+     */
+    @Override
+    public List<String> queryService() {
+        return getSqlSession().selectList("com.noeasy.money.model.Dormitory.selectService");
     }
 
 
@@ -222,7 +242,7 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
         params.put("dormitoryId", pDormitoryId);
         params.put("mediaType", 2);
         params.put("sortField", "index");
-        return getSqlSession().selectList("com.noeasy.money.model.Dormitory.query-media-path", params);
+        return getSqlSession().selectList("com.noeasy.money.model.Dormitory.queryMediaPath", params);
     }
 
 
@@ -274,9 +294,9 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
         }
         int result = 0;
         if (pIsVideo) {
-            result = getSqlSession().insert("com.noeasy.money.model.Dormitory.insert-video-path", pMediaPathMapList);
+            result = getSqlSession().insert("com.noeasy.money.model.Dormitory.insertVideoPath", pMediaPathMapList);
         } else {
-            result = getSqlSession().insert("com.noeasy.money.model.Dormitory.insert-image-path", pMediaPathMapList);
+            result = getSqlSession().insert("com.noeasy.money.model.Dormitory.insertImagePath", pMediaPathMapList);
         }
         return result > 0;
     }

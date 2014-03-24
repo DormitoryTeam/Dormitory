@@ -46,6 +46,8 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
+	<bean class="com.noeasy.money.executor.processor.InstantiationTracingBeanPostProcessor"/>  
+
 	<mvc:resources mapping="/js/**" location="/js/" />
 	<mvc:resources mapping="/style/**" location="/style/" />
 	<mvc:resources mapping="/img/**" location="/img/" />
