@@ -23,7 +23,7 @@
 		t1.city_id dor_cityId,
 		t1.status dor_status,
 		t2.name dor_city,
-		coalesce(avg(t3.score), 0) as rating,
+		coalesce(avg(t3.score), 0) dor_rating,
 		t4.id ri_id,
 		t4.dormitory_id
 		ri_dormitoryId,
@@ -396,6 +396,7 @@
 		<result property="equipment" column="dor_equipment" />
 		<result property="service" column="dor_service" />
 		<result property="currency" column="dor_currency" />
+		<result property="rating" column="dor_rating" />
 		<result property="listPrice" column="dor_listPrice" />
 		<result property="salePrice" column="dor_salePrice" />
 		<result property="latitude" column="dor_latitude" />

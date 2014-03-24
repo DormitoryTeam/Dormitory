@@ -38,7 +38,7 @@
  					</c:if>
 				</c:forEach>
 			</li>
-			<li>Rate:</li>
+			<li>Rate: ${dormitory['rating']}</li>
 		</ul>
 
 		<table class="table" style="width:1100px;">

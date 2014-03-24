@@ -53,6 +53,7 @@
 									</c:forEach>
 								</li>
 								<li>Price: ${dormitory['salePrice']}</li>
+								<li>Rating: ${dormitory['rating']}</li>
 								<li>
 									<table>
 										<tbody>
