@@ -92,6 +92,10 @@ public interface IDormitoryRepository {
 
 
 
+    List<Map<String, String>> queryDormitoryBrowseHistory(int pUserId, int pCurrentDormitoryId);
+
+
+
     Integer queryDormitoryCount(DormitorySearchBean pSearchBean);
 
 
@@ -125,6 +129,10 @@ public interface IDormitoryRepository {
 
 
     Integer saveDormitory(DormitoryBean pDormitory);
+
+
+
+    Integer saveDormitoryBrowseHistory(int pUserId, int pDormitoryId);
 
 
 

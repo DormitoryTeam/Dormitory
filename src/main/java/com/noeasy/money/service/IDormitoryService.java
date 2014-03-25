@@ -68,6 +68,10 @@ public interface IDormitoryService {
 
 
 
+    List<Map<String, String>> queryDormitoryBrowseHistory(int pUserId, int pCurrentDormitoryId);
+
+
+
     Integer queryDormitoryCount(DormitorySearchBean pSearchBean);
 
 
@@ -98,6 +102,10 @@ public interface IDormitoryService {
      * @return
      */
     Double rateDormitory(int pDormitoryId, int pUserId, int pPoint, boolean pGetAvg);
+
+
+
+    Integer saveDormitoryBrowseHistory(int pUserId, int pDormitoryId);
 
 
 

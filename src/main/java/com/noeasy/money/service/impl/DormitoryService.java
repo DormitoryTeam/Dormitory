@@ -133,6 +133,17 @@ public class DormitoryService implements IDormitoryService {
 
 
 
+    /**
+     * @see com.noeasy.money.service.IDormitoryService#queryDormitoryBrowseHistory(int,
+     *      int)
+     */
+    @Override
+    public List<Map<String, String>> queryDormitoryBrowseHistory(final int pUserId, final int pCurrentDormitoryId) {
+        return dormitoryRepository.queryDormitoryBrowseHistory(pUserId, pCurrentDormitoryId);
+    }
+
+
+
     @Override
     public Integer queryDormitoryCount(final DormitorySearchBean pSearchBean) {
         return dormitoryRepository.queryDormitoryCount(pSearchBean);
@@ -193,6 +204,17 @@ public class DormitoryService implements IDormitoryService {
             return 0D;
         }
         return dormitoryRepository.queryDormitoryAvgRate(pDormitoryId);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.IDormitoryService#saveDormitoryBrowseHistory(int,
+     *      int)
+     */
+    @Override
+    public Integer saveDormitoryBrowseHistory(final int pUserId, final int pDormitoryId) {
+        return dormitoryRepository.saveDormitoryBrowseHistory(pUserId, pDormitoryId);
     }
 
 

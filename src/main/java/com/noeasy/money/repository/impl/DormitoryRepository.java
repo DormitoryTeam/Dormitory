@@ -40,6 +40,7 @@ import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitoryRateBean;
 import com.noeasy.money.model.DormitorySearchBean;
 import com.noeasy.money.repository.IDormitoryRepository;
+import com.noeasy.money.util.ParamUtils;
 
 /**
  * <class description>
@@ -172,6 +173,24 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
 
 
 
+    /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#queryDormitoryBrowseHistory(int,
+     *      int)
+     */
+    @Override
+    public List<Map<String, String>> queryDormitoryBrowseHistory(final int pUserId, final int pCurrentDormitoryId) {
+        if (ParamUtils.isValidIdField(pUserId)) {
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("userId", pUserId);
+            params.put("id", pCurrentDormitoryId);
+
+            return getSqlSession().selectList("com.noeasy.money.model.Dormitory.selectBrowseHistiory", params);
+        }
+        return null;
+    }
+
+
+
     @Override
     public Integer queryDormitoryCount(final DormitorySearchBean pSearchBean) {
         return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.queryDormitoryCount", pSearchBean);
@@ -274,6 +293,23 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
             }
         }
         return result;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#saveDormitoryBrowseHistory(int,
+     *      int)
+     */
+    @Override
+    public Integer saveDormitoryBrowseHistory(final int pUserId, final int pDormitoryId) {
+        if (ParamUtils.isValidIdField(pUserId) && ParamUtils.isValidIdField(pDormitoryId)) {
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("userId", pUserId);
+            params.put("dormitoryId", pDormitoryId);
+            return getSqlSession().insert("com.noeasy.money.model.Dormitory.insertBrowseHistory", params);
+        }
+        return null;
     }
 
 

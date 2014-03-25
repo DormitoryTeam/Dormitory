@@ -153,5 +153,14 @@
 			</tbody>
 		</table>
 	</form>
+	
+	<hr />
+
+
+	<ol>
+		<c:forEach var="dormitory" items="${history}">
+			<li>${dormitory['name']} + ${dormitory['dormitoryId']}</li>
+		</c:forEach>
+	</ol>
 </body>
 </html>

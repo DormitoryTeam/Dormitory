@@ -278,6 +278,26 @@
 		where status = 1
 		order by id asc
 	</select>
+	
+	<select id="selectBrowseHistiory" resultType="hashmap" parameterType="hashmap">
+		select distinct t1.dormitory_id dormitoryId, t2.name
+		from browsing_history t1
+		left join dormitory t2 on t1.dormitory_id = t2.id
+		where t1.user_id = #{userId}
+		<if test="id != null">
+			and t1.dormitory_id != #{id}
+		</if>
+		order by t1.id desc
+		limit 0, 5
+	</select>
+	
+	<insert id="insertBrowseHistory" keyProperty="id" useGeneratedKeys='true' parameterType="hashmap">
+		insert into browsing_history (dormitory_id, user_id)
+		values (
+		#{dormitoryId,javaType=int,jdbcType=INTEGER},
+		#{userId,javaType=int,jdbcType=INTEGER}
+		)
+	</insert>
 
 	<insert id="rate" keyProperty="id" useGeneratedKeys='true' parameterType="com.noeasy.money.model.DormitoryRateBean">
 		insert into dormitory_rating (dormitory_id, user_id, score,

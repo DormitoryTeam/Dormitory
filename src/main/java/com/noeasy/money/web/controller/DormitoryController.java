@@ -74,7 +74,14 @@ public class DormitoryController {
             DormitoryBean dormitory = dormitoryService.queryDormitory(searchBean);
 
             if (dormitory.getId() > 0) {
+
+                // TODO change to user id from session
+                List<Map<String, String>> browsingHistory = dormitoryService.queryDormitoryBrowseHistory(1,
+                        dormitory.getId());
+                dormitoryService.saveDormitoryBrowseHistory(1, dormitory.getId());
+
                 model.addAttribute("dormitory", dormitory);
+                model.addAttribute("history", browsingHistory);
             }
         }
         return "dormitory/dormitory-detail";
