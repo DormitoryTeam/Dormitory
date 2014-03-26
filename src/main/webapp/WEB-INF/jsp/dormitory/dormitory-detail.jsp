@@ -7,12 +7,15 @@
 <script type="text/javascript" src="<c:url value='/js/jquery/jquery.1.9.1.min.js' />"></script>
 <script type="text/javascript" src="<c:url value='/js/jquery-raty/jquery.raty.min.js' />"></script>
 <script type="text/javascript" src="<c:url value='/bootstrap/js/bootstrap.min.js' />"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB_kVid7UOZocFn8FrrQb4eMXuDK3qsv4s&sensor=false">
 <script type="text/javascript" src="<c:url value='/js/dormitory/dormitory-detail.js' />"></script>
 <link type="text/css" rel="stylesheet" href="<c:url value='/bootstrap/css/bootstrap.css' />" />
-
 <title></title>
 </head>
 <body>
+
+	<input type="hidden" id="dormitoryLatitude" value="${dormitory['latitude']}" />
+	<input type="hidden" id="dormitoryLongitude" value="${dormitory['longitude']}" />
 
 	<form action="/dormitory/order/dormitory-order-fill.html" method="POST">
 		<input type="hidden" name="dormitoryId" value="${dormitory['id']}" />
@@ -195,5 +198,9 @@
 			</tbody>
 		</table>
 	</form>
+	
+	<hr />
+	
+	<div id="map_canvas" style="width:500px; height:500px"></div>
 </body>
 </html>
