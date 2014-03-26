@@ -163,6 +163,16 @@ public class DormitoryService implements IDormitoryService {
 
 
     /**
+     * @see com.noeasy.money.service.IDormitoryService#queryDormitoryRates(int)
+     */
+    @Override
+    public List<DormitoryRateBean> queryDormitoryRates(final int pDormitoryId) {
+        return dormitoryRepository.queryDormitoryRates(pDormitoryId);
+    }
+
+
+
+    /**
      * @see com.noeasy.money.service.IDormitoryService#queryDormitoryTypes()
      */
     @Override
@@ -194,16 +204,14 @@ public class DormitoryService implements IDormitoryService {
 
     /**
      * @see com.noeasy.money.service.IDormitoryService#rateDormitory(int, int,
-     *      int, boolean)
+     *      int, int, java.lang.String, java.lang.String)
      */
     @Override
-    public Double rateDormitory(final int pDormitoryId, final int pUserId, final int pPoint, final boolean pGetAvg) {
-        DormitoryRateBean rate = new DormitoryRateBean(pDormitoryId, pUserId, pPoint);
-        dormitoryRepository.rateDormitory(rate);
-        if (!pGetAvg) {
-            return 0D;
-        }
-        return dormitoryRepository.queryDormitoryAvgRate(pDormitoryId);
+    public boolean rateDormitory(final int pId, final int pDormitoryId, final int pUserId, final int pPoint,
+            final String pComment, final String pAlias) {
+        DormitoryRateBean rate = new DormitoryRateBean(pDormitoryId, pUserId, pPoint, pComment, pAlias);
+        rate.setId(pId);
+        return dormitoryRepository.rateDormitory(rate);
     }
 
 

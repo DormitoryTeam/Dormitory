@@ -28,7 +28,6 @@
  */
 package com.noeasy.money.model;
 
-
 /**
  * <class description>
  * 
@@ -38,13 +37,17 @@ package com.noeasy.money.model;
 
 public class DormitoryRateBean extends BaseBean {
 
-    private int mId;
+    private int    mId;
 
-    private int mUserId;
+    private int    mUserId;
 
-    private int mDormitoryId;
+    private int    mDormitoryId;
 
-    private int mPoint;
+    private int    mPoint;
+
+    private String mComment;
+
+    private String mAlias;
 
 
 
@@ -54,56 +57,32 @@ public class DormitoryRateBean extends BaseBean {
 
 
 
-    /**
-     * @param pUserId
-     * @param pDormitoryId
-     * @param pPoint
-     */
-    public DormitoryRateBean(int pDormitoryId, int pUserId, int pPoint) {
+    public DormitoryRateBean(final int pDormitoryId, final int pUserId, final int pPoint, final String pComment,
+            final String pAlias) {
         super();
         mUserId = pUserId;
         mDormitoryId = pDormitoryId;
         mPoint = pPoint;
-    }
-
-
-
-    //
-
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return mId;
+        mComment = pComment;
+        mAlias = pAlias;
     }
 
 
 
     /**
-     * @param pId
-     *            the id to set
+     * @return the alias
      */
-    public void setId(int pId) {
-        mId = pId;
+    public String getAlias() {
+        return mAlias;
     }
 
 
 
     /**
-     * @return the userId
+     * @return the comment
      */
-    public int getUserId() {
-        return mUserId;
-    }
-
-
-
-    /**
-     * @param pUserId
-     *            the userId to set
-     */
-    public void setUserId(int pUserId) {
-        mUserId = pUserId;
+    public String getComment() {
+        return mComment;
     }
 
 
@@ -118,11 +97,10 @@ public class DormitoryRateBean extends BaseBean {
 
 
     /**
-     * @param pDormitoryId
-     *            the dormitoryId to set
+     * @return the id
      */
-    public void setDormitoryId(int pDormitoryId) {
-        mDormitoryId = pDormitoryId;
+    public int getId() {
+        return mId;
     }
 
 
@@ -136,12 +114,84 @@ public class DormitoryRateBean extends BaseBean {
 
 
 
+    //
+
+    /**
+     * @return the userId
+     */
+    public int getUserId() {
+        return mUserId;
+    }
+
+
+
+    /**
+     * @param pAlias
+     *            the alias to set
+     */
+    public void setAlias(final String pAlias) {
+        mAlias = pAlias;
+    }
+
+
+
+    /**
+     * @param pComment
+     *            the comment to set
+     */
+    public void setComment(final String pComment) {
+        mComment = pComment;
+    }
+
+
+
+    /**
+     * @param pDormitoryId
+     *            the dormitoryId to set
+     */
+    public void setDormitoryId(final int pDormitoryId) {
+        mDormitoryId = pDormitoryId;
+    }
+
+
+
+    /**
+     * @param pId
+     *            the id to set
+     */
+    public void setId(final int pId) {
+        mId = pId;
+    }
+
+
+
     /**
      * @param pPoint
      *            the point to set
      */
-    public void setPoint(int pPoint) {
+    public void setPoint(final int pPoint) {
         mPoint = pPoint;
+    }
+
+
+
+    /**
+     * @param pUserId
+     *            the userId to set
+     */
+    public void setUserId(final int pUserId) {
+        mUserId = pUserId;
+    }
+
+
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "DormitoryRateBean [mId=" + mId + ", mUserId=" + mUserId + ", mDormitoryId=" + mDormitoryId
+                + ", mPoint=" + mPoint + ", mComment=" + mComment + ", mAlias=" + mAlias + "]";
     }
 
 }

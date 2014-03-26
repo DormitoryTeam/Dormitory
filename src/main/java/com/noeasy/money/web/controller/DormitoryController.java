@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.noeasy.money.constant.Constants;
 import com.noeasy.money.model.DormitoryBean;
+import com.noeasy.money.model.DormitoryRateBean;
 import com.noeasy.money.model.DormitorySearchBean;
 import com.noeasy.money.model.PageBean;
 import com.noeasy.money.service.IDormitoryService;
@@ -50,17 +51,14 @@ public class DormitoryController {
 
 
 
-    @RequestMapping("/unit-test/rate")
-    public String testRate(final HttpServletRequest request, final HttpServletResponse response, final Model model,
-            final String dormitoryId, final String userId, final String point) {
-        int iDormitoryId = Integer.parseInt(dormitoryId);
-        int iUserId = Integer.parseInt(userId);
-        int iPoint = Integer.parseInt(point);
-        Double tAvgRateResult = dormitoryService.rateDormitory(iDormitoryId, iUserId, iPoint, true);
-        model.addAttribute("avgRate", tAvgRateResult);
-        model.addAttribute("dormitoryId", dormitoryId);
-        model.addAttribute("userId", userId);
-        return "forward:/dormitory/unit-test/to-rate";
+    @RequestMapping("/rate")
+    public String rate(final HttpServletRequest request, final HttpServletResponse response, final Model model,
+            final Integer id, final Integer dormitoryId, final String alias, final String comment, final Integer point) {
+        if (dormitoryId > 0 && StringUtils.isNoneBlank(comment)) {
+            // TODO change to user id from session
+            dormitoryService.rateDormitory(id, dormitoryId, 1, point, comment, alias);
+        }
+        return "redirect:/dormitory/dormitory-detail.html?id=" + dormitoryId;
     }
 
 
@@ -74,14 +72,24 @@ public class DormitoryController {
             DormitoryBean dormitory = dormitoryService.queryDormitory(searchBean);
 
             if (dormitory.getId() > 0) {
+                int dormitoryId = dormitory.getId();
 
                 // TODO change to user id from session
-                List<Map<String, String>> browsingHistory = dormitoryService.queryDormitoryBrowseHistory(1,
-                        dormitory.getId());
+                List<Map<String, String>> browsingHistory = dormitoryService
+                        .queryDormitoryBrowseHistory(1, dormitoryId);
                 dormitoryService.saveDormitoryBrowseHistory(1, dormitory.getId());
+
+                List<DormitoryRateBean> rates = dormitoryService.queryDormitoryRates(dormitoryId);
+                for (DormitoryRateBean rate : rates) {
+                    if (rate.getId() == 1) {
+                        model.addAttribute("curRate", rate);
+                        break;
+                    }
+                }
 
                 model.addAttribute("dormitory", dormitory);
                 model.addAttribute("history", browsingHistory);
+                model.addAttribute("rates", rates);
             }
         }
         return "dormitory/dormitory-detail";

@@ -164,16 +164,6 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
 
 
     /**
-     * @see com.noeasy.money.repository.IDormitoryRepository#queryDormitoryAvgRate(int)
-     */
-    @Override
-    public Double queryDormitoryAvgRate(final int pDormitoryId) {
-        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.calculateAvgRating", pDormitoryId);
-    }
-
-
-
-    /**
      * @see com.noeasy.money.repository.IDormitoryRepository#queryDormitoryBrowseHistory(int,
      *      int)
      */
@@ -204,6 +194,16 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
     @Override
     public List<DormitoryBean> queryDormitoryPage(final DormitorySearchBean pSearchBean) {
         return getSqlSession().selectList("com.noeasy.money.model.Dormitory.queryDormitoryPage", pSearchBean);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#queryDormitoryRates(int)
+     */
+    @Override
+    public List<DormitoryRateBean> queryDormitoryRates(final int pDormitoryId) {
+        return getSqlSession().selectList("com.noeasy.money.model.Dormitory.selectRates", pDormitoryId);
     }
 
 
@@ -271,7 +271,11 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
      */
     @Override
     public Boolean rateDormitory(final DormitoryRateBean pDormitoryRateBean) {
-        getSqlSession().insert("com.noeasy.money.model.Dormitory.rate", pDormitoryRateBean);
+        if (pDormitoryRateBean.getId() > 0) {
+            getSqlSession().update("com.noeasy.money.model.Dormitory.updateRate", pDormitoryRateBean);
+        } else {
+            getSqlSession().insert("com.noeasy.money.model.Dormitory.rate", pDormitoryRateBean);
+        }
         return true;
     }
 

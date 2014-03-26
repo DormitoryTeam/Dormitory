@@ -88,10 +88,6 @@ public interface IDormitoryRepository {
 
 
 
-    Double queryDormitoryAvgRate(int pDormitoryId);
-
-
-
     List<Map<String, String>> queryDormitoryBrowseHistory(int pUserId, int pCurrentDormitoryId);
 
 
@@ -101,6 +97,10 @@ public interface IDormitoryRepository {
 
 
     List<DormitoryBean> queryDormitoryPage(DormitorySearchBean pSearchBean);
+
+
+
+    List<DormitoryRateBean> queryDormitoryRates(int pDormitoryId);
 
 
 

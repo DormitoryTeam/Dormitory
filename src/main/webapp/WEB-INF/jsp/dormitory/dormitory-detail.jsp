@@ -5,8 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type="text/javascript" src="<c:url value='/js/jquery/jquery.1.9.1.min.js' />"></script>
+<script type="text/javascript" src="<c:url value='/js/jquery-raty/jquery.raty.min.js' />"></script>
 <script type="text/javascript" src="<c:url value='/bootstrap/js/bootstrap.min.js' />"></script>
+<script type="text/javascript" src="<c:url value='/js/dormitory/dormitory-detail.js' />"></script>
 <link type="text/css" rel="stylesheet" href="<c:url value='/bootstrap/css/bootstrap.css' />" />
+
 <title></title>
 </head>
 <body>
@@ -38,7 +41,7 @@
  					</c:if>
 				</c:forEach>
 			</li>
-			<li>Rate: ${dormitory['rating']}</li>
+			<li>Rate: <div id="dormitoryRate" data-score="${dormitory['rating']}"></div></li>
 		</ul>
 
 		<table class="table" style="width:1100px;">
@@ -162,5 +165,35 @@
 			<li>${dormitory['name']} + ${dormitory['dormitoryId']}</li>
 		</c:forEach>
 	</ol>
+	
+	<hr />
+	<ol>
+		<c:forEach var="rate" items="${rates}">
+			<li>${rate}</li>
+		</c:forEach>
+	</ol>
+	<form action="/dormitory/dormitory/rate.html" method="POST">
+		<input type="hidden" name="dormitoryId" value="${dormitory['id']}" />
+		<input type="hidden" name="id" value="${curRate['id']}" />
+		<table>
+			<tbody>
+				<tr>
+					<td>Alias:</td>
+					<td colspan="2"><input type="text" name="alias" value="${curRate.alias}" /></td>
+				</tr>
+				<tr>
+					<td>Comment:</td>
+					<td colspan="2"><textarea rows="5" cols="40" name="comment">
+						${curRate.comment}
+					</textarea></td>
+				</tr>
+				<tr>
+					<td>Rate:</td>
+					<td><div id="rate" data-score="${curRate['point']}"></div></td>
+					<td><input type="submit" value="submit" /></td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
 </body>
 </html>

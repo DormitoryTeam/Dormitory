@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.noeasy.money.model.DormitoryBean;
+import com.noeasy.money.model.DormitoryRateBean;
 import com.noeasy.money.model.DormitorySearchBean;
 
 /**
@@ -80,6 +81,10 @@ public interface IDormitoryService {
 
 
 
+    List<DormitoryRateBean> queryDormitoryRates(int pDormitoryId);
+
+
+
     List<Map<String, Object>> queryDormitoryTypes();
 
 
@@ -92,16 +97,7 @@ public interface IDormitoryService {
 
 
 
-    /**
-     * Rate dormitory and return the average rating
-     * 
-     * @param pDormitoryId
-     * @param pUserId
-     * @param pPoint
-     * @param pGetAvg
-     * @return
-     */
-    Double rateDormitory(int pDormitoryId, int pUserId, int pPoint, boolean pGetAvg);
+    boolean rateDormitory(int pId, int pDormitoryId, int pUserId, int pPoint, String pComment, String pAlias);
 
 
 
