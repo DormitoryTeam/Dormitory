@@ -39,6 +39,7 @@ import org.springframework.stereotype.Repository;
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitoryRateBean;
 import com.noeasy.money.model.DormitorySearchBean;
+import com.noeasy.money.model.RoomInfoBean;
 import com.noeasy.money.repository.IDormitoryRepository;
 import com.noeasy.money.util.ParamUtils;
 
@@ -193,7 +194,28 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
      */
     @Override
     public List<DormitoryBean> queryDormitoryPage(final DormitorySearchBean pSearchBean) {
-        return getSqlSession().selectList("com.noeasy.money.model.Dormitory.queryDormitoryPage", pSearchBean);
+        List<DormitoryBean> dormitories = getSqlSession().selectList(
+                "com.noeasy.money.model.Dormitory.queryDormitoryPage", pSearchBean);
+        List<Integer> dormitoryIds = new ArrayList<Integer>();
+        for (DormitoryBean dormitory : dormitories) {
+            dormitoryIds.add(dormitory.getId());
+        }
+        List<RoomInfoBean> rooms = getSqlSession().selectList("com.noeasy.money.model.Dormitory.queryRoomInfos",
+                dormitoryIds);
+        for (RoomInfoBean room : rooms) {
+            for (DormitoryBean dormitory : dormitories) {
+                if (dormitory.getId() == room.getDormitoryId()) {
+                    int roomCount = dormitory.getRooms().size();
+                    if (roomCount < 2) {
+                        dormitory.getRooms().add(room);
+                    }
+                    if (roomCount == 1) {
+                        break;
+                    }
+                }
+            }
+        }
+        return dormitories;
     }
 
 
