@@ -54,7 +54,7 @@
 		limit #{pageBean.pageStartIndex}, #{pageBean.pageSize}
 	</sql>
 
-	<!-- dormitory & roomInfo###############################################-->
+	<!-- Dormitory ############################################### -->
 
 	<select id="queryDormitoryPage" parameterType='com.noeasy.money.model.DormitorySearchBean' resultMap="dormitory">
 		select
@@ -113,7 +113,7 @@
 			<include refid="limit-split-page" />
 		</if>
 	</select>
-	
+
 	<select id="queryDormitory" parameterType='com.noeasy.money.model.DormitorySearchBean' resultMap="dormitory">
 		select
 		t1.id dor_id,
@@ -217,7 +217,7 @@
 		dormitory t1
 		left join
 		city t2 on t2.id = t1.city_id
-		left outer join
+		left join
 		dormitory_rating t3 on t3.dormitory_id = t1.id
 		<if test="collegeId != null">
 			left join
@@ -239,10 +239,14 @@
 		<if test="keyword != null">
 			<include refid="where-with-keyword" />
 		</if>
+		group by t1.id
 		) t
 	</select>
-	
-	<select id="queryRoomInfos" resultMap="roomInfo">
+
+
+	<!-- RoomInfo #################################################### -->
+
+	<sql id="select-room-info">
 		select
 		t4.id ri_id,
 		t4.dormitory_id
@@ -277,6 +281,10 @@
 		rp_salePrice,
 		t6.name ri_roomType,
 		t7.name rp_contract
+	</sql>
+
+	<select id="queryRoomInfos" resultMap="roomInfo">
+		<include refid="select-room-info" />
 		from
 		room_info t4
 		left join
@@ -285,14 +293,93 @@
 		room_type t6 on t6.id = t4.room_type_id
 		left join
 		contract_type t7 ON
-		t7.id = t5.contract_type_id
+		t7.id =
+		t5.contract_type_id
 		where t4.dormitory_id in
 		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
 			#{item}
 		</foreach>
 	</select>
 
-	<!-- media path ###########################################################-->
+	<select id="queryRoomInfoByDormitory" resultMap="roomInfo" parameterType="int">
+		<include refid="select-room-info" />
+		from
+		room_info t4
+		left join
+		room_price t5 on t5.room_info_id = t4.id
+		left join
+		room_type t6 on t6.id = t4.room_type_id
+		left join
+		contract_type t7 ON
+		t7.id =
+		t5.contract_type_id
+		where t4.dormitory_id = #{dormitoryId}
+	</select>
+
+	<insert id="insertRoomInfo" keyProperty="id" useGeneratedKeys='true' parameterType="com.noeasy.money.model.RoomInfoBean">
+		insert into room_info (dormitory_id, room_type_id,
+		equipment, service, description, checkin_date, orientations, floors, bed_type, house_area,
+		ensuite_bathroom, kitchen_people_number, floor_arrangement, orientation_arrangement, room_language_arrangement, status, kitchen_equipment, bathroom_equipment) values
+		(
+		#{dormitoryId}, #{roomTypeId}, #{equipment}, #{service}, #{description}, #{checkinDate, javaType=Date,jdbcType=TIMESTAMP}, #{orientation},
+		#{floors}, #{bedType},
+		#{houseArea}, #{ensuiteBathroom}, #{kitchenPeople}, #{floorArrange}, #{orientationArrange}, #{roomLanguageArrange}, #{status}, #{kitchenEquipment},
+		#{bathroomEquipment}
+		)
+	</insert>
+
+	<update id="updateRoomInfo" parameterType="com.noeasy.money.model.RoomInfoBean">
+		update room_info set dormitory_id = #{dormitoryId}, room_type_id = #{roomTypeId}, equipment =
+		#{equipment}, service = #{service}, description = #{description}, checkin_date = #{checkinDate, javaType=Date,jdbcType=TIMESTAMP},
+		orientations = #{orientation}, floors = #{floors}, bed_type = #{bedType}, house_area = #{houseArea}, ensuite_bathroom = #{ensuiteBathroom},
+		kitchen_people_number = #{kitchenPeople}, floor_arrangement = #{floorArrange},
+		orientation_arrangement, room_language_arrangement = #{roomLanguageArrange}, status = #{status}, kitchen_equipment = #{kitchenEquipment}, bathroom_equipment =
+		#{bathroomEquipment}
+		where id = #{id}
+	</update>
+
+	<delete id="removeRoomInfos">
+		delete from room_info
+		where id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<delete id="removeRoomInfo" parameterType="int">
+		delete from room_info
+		where id = #{id}
+	</delete>
+
+	<insert id="insertRoomPrice" keyProperty="id" useGeneratedKeys='true' parameterType="com.noeasy.money.model.RoomPrice">
+		insert into room_price (room_info_id, contract_type_id,
+		currency, listPrice, salePrice) values (
+		#{roomInfoId}, #{contractTypeId}, #{currency}, #{lisePrice}, #{salePrice}
+		)
+	</insert>
+
+	<update id="updateRoomPrice" parameterType="com.noeasy.money.model.RoomPrice">
+		update room_price set room_info_id = #{roomInfoId}, contract_type_id = #{contractTypeId}, currency
+		= #{currency}, listPrice = #{lisePrice), salePrice = #{salePrice}
+		where id = #{id}
+	</update>
+
+	<delete id="removeRoomPrices">
+		delete from room_price
+		where id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<delete id="removeRoomPrice" parameterType="int">
+		delete from room_price
+		where id = #{id}
+	</delete>
+
+
+
+	<!-- Media path ########################################################### -->
 
 	<select id="queryMediaPath" resultType="string" parameterType="java.util.Map">
 		select media_path
@@ -320,33 +407,39 @@
 	<delete id="removeMediaPath" parameterType="int">
 		delete from dormitory_media where dormitory_id = #{dormitoryId};
 	</delete>
-	
+
+
+	<!-- Service & Equipment ######################################################## -->
+
 	<select id="selectService" resultType="string">
-		select service 
+		select service
 		from service
 		where status = 1
 		order by id asc
 	</select>
-	
+
 	<select id="selectEquipment" resultType="string">
-		select equipment 
+		select equipment
 		from equipment
 		where status = 1
 		order by id asc
 	</select>
-	
+
+	<!-- BrowseHistory ################################################################ -->
+
 	<select id="selectBrowseHistiory" resultType="hashmap" parameterType="hashmap">
 		select distinct t1.dormitory_id dormitoryId, t2.name
 		from browsing_history t1
 		left join dormitory t2 on t1.dormitory_id = t2.id
-		where t1.user_id = #{userId}
+		where t1.user_id =
+		#{userId}
 		<if test="id != null">
 			and t1.dormitory_id != #{id}
 		</if>
 		order by t1.id desc
 		limit 0, 5
 	</select>
-	
+
 	<insert id="insertBrowseHistory" keyProperty="id" useGeneratedKeys='true' parameterType="hashmap">
 		insert into browsing_history (dormitory_id, user_id)
 		values (
@@ -355,8 +448,11 @@
 		)
 	</insert>
 
+	<!-- Rating & Comment#################################################################### -->
+
 	<insert id="rate" keyProperty="id" useGeneratedKeys='true' parameterType="com.noeasy.money.model.DormitoryRateBean">
-		insert into dormitory_rating (dormitory_id, user_id, alias, score, comment, update_time) values (
+		insert into dormitory_rating (dormitory_id, user_id, alias, score,
+		comment, update_time) values (
 		#{dormitoryId,javaType=int,jdbcType=INTEGER},
 		#{userId,javaType=int,jdbcType=INTEGER},
 		#{alias,javaType=string,jdbcType=VARCHAR},
@@ -365,19 +461,20 @@
 		#{updateTime,javaType=java.sql.Timestamp,jdbcType=TIMESTAMP}
 		)
 	</insert>
-	
+
 	<update id="updateRate" parameterType="com.noeasy.money.model.DormitoryRateBean">
 		update dormitory_rating set score = #{point}, comment = #{comment}, alias = #{alias}
 		where id = #{id}
 	</update>
 
 	<select id="selectRates" parameterType="int" resultMap="dormitoryRate">
-		select id dr_id, dormitory_id dr_dormitoryId, user_id dr_userId, alias dr_alias, score dr_point, comment dr_comment, create_time dr_createTime
+		select id dr_id, dormitory_id dr_dormitoryId, user_id dr_userId, alias dr_alias, score
+		dr_point, comment dr_comment, create_time dr_createTime
 		from dormitory_rating
 		where status = 1 and dormitory_id = #{dormitoryId}
 	</select>
 
-	<!-- Calculate Distance -->
+	<!-- Calculate Distance ################################################################ -->
 	<delete id="clearDistanceResult">
 		DELETE FROM distance_result;
 	</delete>
@@ -469,7 +566,7 @@
 		) t1) t2;
 	</insert>
 
-	<!-- Result Map ###############################################-->
+	<!-- Result Map ############################################### -->
 	<resultMap id="dormitory" type="com.noeasy.money.model.DormitoryBean">
 		<id property="id" column="dor_id" />
 		<result property="name" column="dor_name" />
