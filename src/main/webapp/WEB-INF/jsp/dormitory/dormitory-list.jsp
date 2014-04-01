@@ -83,8 +83,9 @@
 											</c:if>
 										</tbody>
 									</table>
-							</ul>
-							<hr /></td>
+								</li>
+						</ul>
+						<hr /></td>
 					</tr>
 				</c:forEach>
 			</c:if>

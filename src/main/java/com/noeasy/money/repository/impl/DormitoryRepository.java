@@ -40,6 +40,7 @@ import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitoryRateBean;
 import com.noeasy.money.model.DormitorySearchBean;
 import com.noeasy.money.model.RoomInfoBean;
+import com.noeasy.money.model.RoomPrice;
 import com.noeasy.money.repository.IDormitoryRepository;
 import com.noeasy.money.util.ParamUtils;
 
@@ -231,16 +232,6 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
 
 
     /**
-     * @see com.noeasy.money.repository.IDormitoryRepository#queryDormitoryTypes()
-     */
-    @Override
-    public List<Map<String, Object>> queryDormitoryTypes() {
-        return getSqlSession().selectList("com.noeasy.money.model.Dormitory.queryDormitoryType");
-    }
-
-
-
-    /**
      * @see com.noeasy.money.repository.IDormitoryRepository#queryEquipment()
      */
     @Override
@@ -260,6 +251,16 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
         params.put("mediaType", 1);
         params.put("sortField", "index");
         return getSqlSession().selectList("com.noeasy.money.model.Dormitory.queryMediaPath", params);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#queryRoomTypes()
+     */
+    @Override
+    public List<Map<String, Object>> queryRoomTypes() {
+        return getSqlSession().selectList("com.noeasy.money.model.Dormitory.queryRoomType");
     }
 
 
@@ -308,8 +309,12 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
      */
     @Override
     public Integer saveDormitory(final DormitoryBean pDormitory) {
-        int result = getSqlSession().insert("com.noeasy.money.model.Dormitory.save-dormitory", pDormitory);
+        int result = getSqlSession().insert("com.noeasy.money.model.Dormitory.saveDormitory", pDormitory);
         if (result > 0) {
+            for (RoomInfoBean room : pDormitory.getRooms()) {
+                room.setDormitoryId(pDormitory.getId());
+                saveRoomInfo(room);
+            }
             deleteDormitoryMediaPath(pDormitory.getId());
             if (CollectionUtils.isNotEmpty(pDormitory.getPicPath())) {
                 saveDormitoryMediaPath(pDormitory.getPicPath(), pDormitory.getId(), false);
@@ -366,12 +371,43 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
 
 
     /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#saveRoomInfo(com.noeasy.money.model.RoomInfoBean)
+     */
+    @Override
+    public Integer saveRoomInfo(final RoomInfoBean pRoom) {
+        int result = getSqlSession().insert("com.noeasy.money.model.Dormitory.saveRoomInfo", pRoom);
+        if (result > 0) {
+            for (RoomPrice roomPrice : pRoom.getContractPrice()) {
+                roomPrice.setRoomInfoId(pRoom.getId());
+                saveRoomPrice(roomPrice);
+            }
+        }
+        return result;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#saveRoomPrice(com.noeasy.money.model.RoomPrice)
+     */
+    @Override
+    public Integer saveRoomPrice(final RoomPrice pRoomPrice) {
+        return getSqlSession().insert("com.noeasy.money.model.Dormitory.saveRoomPrice", pRoomPrice);
+    }
+
+
+
+    /**
      * @see com.noeasy.money.repository.IDormitoryRepository#updateDormitory(com.noeasy.money.model.DormitoryBean)
      */
     @Override
     public Integer updateDormitory(final DormitoryBean pDormitory) {
         int result = getSqlSession().update("com.noeasy.money.model.Dormitory.update-dormitory", pDormitory);
         if (result > 0) {
+            for (RoomInfoBean room : pDormitory.getRooms()) {
+                updateRoomInfo(room);
+            }
+            // update the media path
             deleteDormitoryMediaPath(pDormitory.getId());
             if (CollectionUtils.isNotEmpty(pDormitory.getPicPath())) {
                 saveDormitoryMediaPath(pDormitory.getPicPath(), pDormitory.getId(), false);
@@ -381,6 +417,32 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
             }
         }
         return result;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#updateRoomInfo(com.noeasy.money.model.RoomInfoBean)
+     */
+    @Override
+    public Integer updateRoomInfo(final RoomInfoBean pRoom) {
+        int result = getSqlSession().update("com.noeasy.money.model.Dormitory.updateRoomInfo", pRoom);
+        if (result > 0) {
+            for (RoomPrice roomPrice : pRoom.getContractPrice()) {
+                updateRoomPrice(roomPrice);
+            }
+        }
+        return result;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#updateRoomPrice(com.noeasy.money.model.RoomPrice)
+     */
+    @Override
+    public Integer updateRoomPrice(final RoomPrice pRoomPrice) {
+        return getSqlSession().update("com.noeasy.money.model.Dormitory.updateRoomPrice", pRoomPrice);
     }
 
 }

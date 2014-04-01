@@ -34,6 +34,8 @@ import java.util.Map;
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitoryRateBean;
 import com.noeasy.money.model.DormitorySearchBean;
+import com.noeasy.money.model.RoomInfoBean;
+import com.noeasy.money.model.RoomPrice;
 
 /**
  * <class description>
@@ -104,15 +106,15 @@ public interface IDormitoryRepository {
 
 
 
-    List<Map<String, Object>> queryDormitoryTypes();
-
-
-
     List<String> queryEquipment();
 
 
 
     List<String> queryImagePathByDormitoryId(Integer pDormitoryId);
+
+
+
+    List<Map<String, Object>> queryRoomTypes();
 
 
 
@@ -140,6 +142,22 @@ public interface IDormitoryRepository {
 
 
 
+    Integer saveRoomInfo(RoomInfoBean pRoom);
+
+
+
+    Integer saveRoomPrice(RoomPrice pRoomPrice);
+
+
+
     Integer updateDormitory(DormitoryBean pDormitory);
+
+
+
+    Integer updateRoomInfo(RoomInfoBean pRoom);
+
+
+
+    Integer updateRoomPrice(RoomPrice pRoomPrice);
 
 }

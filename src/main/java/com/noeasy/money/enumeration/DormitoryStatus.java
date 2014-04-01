@@ -39,6 +39,16 @@ public enum DormitoryStatus {
 
     HAS_VACANCY, NO_VACANCY, INVISIBILITY;
 
+    private static Object[] allStatus = new Object[] { NO_VACANCY, HAS_VACANCY, INVISIBILITY };
+
+
+
+    public static Object[] getAllStatus() {
+        return allStatus;
+    }
+
+
+
     public String getName() {
         return this.name();
     }

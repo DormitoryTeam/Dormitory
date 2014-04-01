@@ -28,12 +28,16 @@
  */
 package com.noeasy.money.model;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
+import com.noeasy.money.enumeration.DormitoryStatus;
 import com.noeasy.money.enumeration.Orientation;
-import com.noeasy.money.enumeration.RoomStatus;
 
 /**
  * <class description>
@@ -58,7 +62,7 @@ public class RoomInfoBean extends DormitoryRoomBean {
 
     private String          mCheckinDateString;
 
-    private List<RoomPrice> mContractPrice;
+    private List<RoomPrice> mContractPrice = new ArrayList<RoomPrice>();
 
     private Orientation     mOrientation;
 
@@ -82,7 +86,13 @@ public class RoomInfoBean extends DormitoryRoomBean {
 
     private String          mBathroomEquipment;
 
-    private RoomStatus      mStatus;
+    private DormitoryStatus mStatus;
+
+
+
+    public RoomInfoBean() {
+
+    }
 
 
 
@@ -224,7 +234,7 @@ public class RoomInfoBean extends DormitoryRoomBean {
     /**
      * @return the status
      */
-    public RoomStatus getStatus() {
+    public DormitoryStatus getStatus() {
         return mStatus;
     }
 
@@ -293,7 +303,7 @@ public class RoomInfoBean extends DormitoryRoomBean {
     public void setCheckinDate(final Date pCheckinDate) {
         mCheckinDate = pCheckinDate;
         if (mCheckinDate != null) {
-            setCheckinDateString((new SimpleDateFormat("yyyy-MM-dd")).format(mCheckinDate));
+            mCheckinDateString = (new SimpleDateFormat("yyyy-MM-dd")).format(mCheckinDate);
         }
     }
 
@@ -305,6 +315,13 @@ public class RoomInfoBean extends DormitoryRoomBean {
      */
     public void setCheckinDateString(final String pCheckinDateString) {
         mCheckinDateString = pCheckinDateString;
+        if (StringUtils.isNoneBlank(mCheckinDateString)) {
+            try {
+                mCheckinDate = (new SimpleDateFormat("yyyy-MM-dd")).parse(mCheckinDateString);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
@@ -463,7 +480,7 @@ public class RoomInfoBean extends DormitoryRoomBean {
      * @param pStatus
      *            the status to set
      */
-    public void setStatus(final RoomStatus pStatus) {
+    public void setStatus(final DormitoryStatus pStatus) {
         mStatus = pStatus;
     }
 

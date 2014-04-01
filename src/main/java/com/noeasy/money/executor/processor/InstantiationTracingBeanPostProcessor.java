@@ -29,6 +29,7 @@
 package com.noeasy.money.executor.processor;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
@@ -38,6 +39,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.noeasy.money.enumeration.DormitoryStatus;
 import com.noeasy.money.model.DormitoryRoomBean;
 import com.noeasy.money.service.IDormitoryService;
 
@@ -66,11 +68,18 @@ public class InstantiationTracingBeanPostProcessor implements ApplicationListene
 
         List<String> equipments = dormitoryService.queryEquipment();
         List<String> services = dormitoryService.queryService();
+        List<Map<String, Object>> contractTypes = dormitoryService.queryContractTypes();
+        List<Map<String, Object>> roomTypes = dormitoryService.queryRoomTypes();
+        Object[] allDormitoryStatus = DormitoryStatus.getAllStatus();
 
         DormitoryRoomBean.setEquipmentCount(equipments.size());
         DormitoryRoomBean.setServiceCount(services.size());
 
         servletContext.setAttribute("equipments", equipments);
         servletContext.setAttribute("services", services);
+        servletContext.setAttribute("contractTypes", contractTypes);
+        servletContext.setAttribute("roomTypes", roomTypes);
+        servletContext.setAttribute("allDormitoryStatus", allDormitoryStatus);
+
     }
 }

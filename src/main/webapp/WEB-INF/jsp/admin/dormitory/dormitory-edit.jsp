@@ -5,7 +5,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type="text/javascript" src="<c:url value='/js/jquery/jquery.1.9.1.min.js' />"></script>
-<script type="text/javascript" src="<c:url value='/js/home.js' />"></script>
 <script type="text/javascript" src="<c:url value='/js/admin/dormitory/dormitory-edit.js' />"></script>
 <script type="text/javascript" src="<c:url value='/js/jquery/vendor/jquery.ui.widget.js' />"></script>
 <script type="text/javascript" src="<c:url value='/js/jquery/jquery.iframe-transport.js' />"></script>
@@ -13,63 +12,44 @@
 <script type="text/javascript" src="<c:url value='/bootstrap/js/bootstrap.min.js' />"></script>
 <link type="text/css" rel="stylesheet" href="<c:url value='/bootstrap/css/bootstrap.css' />" />
 <link type="text/css" rel="stylesheet" href="<c:url value='/style/dropzone.css' />" />
-
-<!-- we code these -->
 <link href="css/dropzone.css" type="text/css" rel="stylesheet" />
 <title></title>
 </head>
 <body>
-
+	<br />
 	<form id="formDormitory" action="/dormitory/admin/dormitory/dormitory-save.html" method="POST">
-		<table>
+		<input type="hidden" name="id" id="hidDormitoryId" value="${empty dormitory['id'] ? 0 : dormitory['id']}" />
+		<table class="table table-hover table-bordered table-striped" style="width:1000px">
 			<tbody>
 				<tr>
-					<td>DormitoryId:<input type="hidden" name="id" id="hidDormitoryId" value="${dormitory['id']}" /></td>
+					<td>DormitoryId</td>
 					<td>${dormitory['id']}</td>
-				</tr>
-				<tr>
 					<td>Name*:</td>
 					<td><input type="text" name="name" value="${dormitory['name']}" /></td>
-
 				</tr>
 				<tr>
 					<td>Country:</td>
 					<td><select id="sltCountry" name="countryId">
-							<c:forEach items="${countries}" var="country">
-								<option value="${country['id']}" <c:if test="${country['id'] eq currentCountry['id']}"></c:if>>${country['name']}</option>
-							</c:forEach>
+						<c:forEach items="${countries}" var="country">
+							<option value="${country['id']}" <c:if test="${country['id'] eq currentCountry['id']}"></c:if>>${country['name']}</option>
+						</c:forEach>
 					</select></td>
 					<td>City*:</td>
 					<td><select id="sltCity" name="cityId">
-							<c:forEach var="city" items="${cities}">
-								<option value="${city['id']}" <c:if test="${city['id'] eq dormitory['cityId']}">selected="selected"</c:if>>${city['name']}</option>
-							</c:forEach>
+						<c:forEach var="city" items="${cities}">
+							<option value="${city['id']}" <c:if test="${city['id'] eq dormitory['cityId']}">selected="selected"</c:if>>${city['name']}</option>
+						</c:forEach>
 					</select></td>
 				</tr>
-
-				<td>College*:</td>
-				<td><select id="sltCollege" name="collegeId">
+				<tr>
+					<td>College*:</td>
+					<td><select id="sltCollege" name="collegeId">
 						<c:forEach var="college" items="${colleges}">
 							<option value="${college['id']}" <c:if test="${college['id'] eq dormitory['collegeId']}">selected="selected"</c:if>>${college['name']}</option>
 						</c:forEach>
-				</select></td>
-				<td>Post Code:</td>
-				<td><input type="text" name="postCode" value="${dormitory['postCode']}" /></td>
-				</tr>
-
-				<tr>
-					<td>Contract:</td>
-					<td><select name="contractId">
-							<c:forEach var="contractType" items="${contractTypes}">
-								<option value="${contractType['id']}" <c:if test="${contractType['id'] eq dormitory['contractId']}">selected="selected"</c:if>>${contractType['name']}</option>
-							</c:forEach>
 					</select></td>
-					<td>Dormitory Type:</td>
-					<td><select name="dormitoryTypeId">
-							<c:forEach var="dormitoryType" items="${dormitoryTypes}">
-								<option value="${dormitoryType['id']}" <c:if test="${dormitoryType['id'] eq dormitory['dormitoryTypeId']}">selected="selected"</c:if>>${dormitoryType['name']}</option>
-							</c:forEach>
-					</select></td>
+					<td>Post Code:</td>
+					<td><input type="text" name="postcode" value="${dormitory['postcode']}" /></td>
 				</tr>
 				<tr>
 					<td>Latitude:</td>
@@ -97,48 +77,110 @@
 				</tr>
 				<tr>
 					<td>Description:</td>
-					<td colspan="3"><textarea name="description" cols="80" rows="5">${dormitory['description']}</textarea></td>
-				</tr>
-
-				<tr>
-					<td>Images:</td>
-					<td>
-						<table id="uploaded-files" class="table" style="width: 500px; padding: 20px;">
-							<tr>
-								<th>File Name</th>
-								<th>Preview</th>
-								<th>Action</th>
-							</tr>
-							<c:forEach var="path" items="${dormitory['picPath']}" varStatus="index">
-								<tr>
-									<td><input type="text" name="imageNames" class="fileNames" value="${path}" /></td>
-									<td><a href="/dormitory/admin/dormitory/dormitory-image-preview.html?fileName=${path}"> <img src="/dormitory/admin/dormitory/dormitory-image-preview.html?fileName=${path}" /></a></td>
-									<td><input type="button" value="Remove" class="btnRemove" fileName="${path}" /></td>
-								</tr>
-							</c:forEach>
-						</table>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="4">
-						<div style="width: 500px; padding: 20px;">
-							<input id="fileupload" type="file" name="files[]" data-url="/dormitory/admin/dormitory/dormitory-image-upload.html" multiple="multiple">
-							<div id="dropzone" class="fade well">Drop files here</div>
-							<div id="progress" class="progress">
-								<div class="bar" style="width: 0%;"></div>
-							</div>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td><input type="submit" value="Update" /></td>
-					<td><a href="${backURL}">Back to list</a></td>
+					<td colspan="3"><textarea name="description" cols="600" rows="5">${dormitory['description']}</textarea></td>
 				</tr>
 			</tbody>
 		</table>
+
+		<table class="table table-hover table-bordered" style="width:1000px">
+			<tbody>
+				<c:set var="contractCount" value="${fn:length(contractTypes)}" />
+				<c:forEach var="roomType" items="${roomTypes}" varStatus="i">
+					<c:set var="curRoom" value="${emptyRoom}" />
+					<c:forEach var="room" items="${dormitory['rooms']}">
+						<c:if test="${roomType['id'] eq room['roomTypeId']}">
+							<c:set var="curRoom" value="${room}" />
+						</c:if>
+					</c:forEach>
+					
+					<tr class="success">
+						<td>RoomType</td>
+						<td>Status</td>
+						<td>CheckinDate</td>
+						<td>HouseArea</td>
+						<td>BedType</td>
+						<td>EnsuitBathroom</td>
+						<td>KitchenPeople</td>
+						<td>OrientationArrange</td>
+						<td>RoomLanguageArrange</td>
+						<td>BathroomEquipment</td>
+						<td>KitchenEquipment</td>
+					</tr>
+					<tr>
+						<th rowspan="${contractCount+2}">${roomType['name']}</th>
+						<td>
+							<input type="hidden" name="rooms[${i['index']}].id" value="${curRoom['id']}" />
+							<input type="hidden" name="rooms[${i['index']}].roomTypeId" value="${roomType['id']}" />
+							<select name="rooms[${i['index']}].status">
+							<c:forEach var="status" items="${allDormitoryStatus}">
+								<option value="${status['name']}" ${status eq curRoom['status'] ? 'selected' : ''}>${status['name']}</option>
+							</c:forEach>
+						</select></td>
+						<td><input type="text" name="rooms[${i['index']}].checkinDateString" value="${curRoom['checkinDateString']}" /></td>
+						<td><input type="text" name="rooms[${i['index']}].houseArea" value="${curRoom['houseArea']}" /></td>
+						<td><input type="text" name="rooms[${i['index']}].bedType" value="${curRoom['bedType']}" /></td>
+						<td><input type="text" name="rooms[${i['index']}].ensuitBathroom" value="${curRoom['ensuitBathroom']}" /></td>
+						<td><input type="text" name="rooms[${i['index']}].kitchenPeople" value="${curRoom['kitchenPeople']}" /></td>
+						<td><input type="text" name="rooms[${i['index']}].orientationArrange" value="${curRoom['orientationArrange']}" /></td>
+						<td><input type="text" name="rooms[${i['index']}].roomLanguageArrange" value="${curRoom['roomLanguageArrange']}" /></td>
+						<td><input type="text" name="rooms[${i['index']}].bathroomEquipment" value="${curRoom['bathroomEquipment']}" /></td>
+						<td><input type="text" name="rooms[${i['index']}].kitchenEquipment" value="${curRoom['kitchenEquipment']}" /></td>
+					</tr>
+					<tr class="warning">
+						<td>Contract</td>
+						<td>Active</td>
+						<td>Currency</td>
+						<td>ListPrice</td>
+						<td>SalePrice</td>
+					</tr>
+					<c:forEach var="contract" items="${contractTypes}" varStatus="j">
+						<c:set var="curPrice" value="${emptyPrice}" />
+						<c:forEach var="price" items="${curRoom['contractPrice']}">
+							<c:if test="${contract['id'] eq price['contractId']}">
+								<c:set var="curPrice" value="${price}" />
+							</c:if>
+						</c:forEach>
+						<tr>
+							<td>${contract['name']}
+								<input type="hidden" name="prices[${contractCount*i['index']+j['index']}].id" value="${curPrice['id']}" />
+								<input type="hidden" name="prices[${contractCount*i['index']+j['index']}].roomInfoId" value="${curRoom['id']}" />
+								<input type="hidden" name="prices[${contractCount*i['index']+j['index']}].contractId" value="${contract['id']}" />
+							</td>
+							<td><input type="checkbox" name="prices[${contractCount*i['index']+j['index']}].status" value="1" ${curPrice['status'] == 1 ? 'checked' : ''} /></td>
+							<td><input type="text" name="prices[${contractCount*i['index']+j['index']}].currency" value="${curPrice['currency']}" /></td>
+							<td><input type="text" name="prices[${contractCount*i['index']+j['index']}].listPrice" value="${empty curPrice['listPrice'] ? 0.0 : curPrice['listPrice']}" /></td>
+							<td><input type="text" name="prices[${contractCount*i['index']+j['index']}].salePrice" value="${empty curPrice['salePrice'] ? 0.0 : curPrice['salePrice']}" /></td>
+						</tr>
+					</c:forEach>
+				</c:forEach>
+			</tbody>
+		</table>
+
+		<hr />
+		<div style="width: 500px; padding: 20px;">
+			<input id="fileupload" type="file" name="files[]" data-url="/dormitory/admin/dormitory/dormitory-image-upload.html" multiple="multiple">
+			<div id="dropzone" class="fade well">Drop files here</div>
+			<div id="progress" class="progress">
+				<div class="bar" style="width: 0%;"></div>
+			</div>
+		</div>
+		<table id="uploaded-files" class="table table-hover table-bordered" style="width: 500px; padding: 20px;">
+			<tr>
+				<th>File Name</th>
+				<th>Preview</th>
+				<th>Action</th>
+			</tr>
+			<c:forEach var="path" items="${dormitory['picPath']}" varStatus="index">
+				<tr>
+					<td><input type="text" name="imageNames" class="fileNames" value="${path}" /></td>
+					<td><a href="/dormitory/admin/dormitory/dormitory-image-preview.html?fileName=${path}"> <img src="/dormitory/admin/dormitory/dormitory-image-preview.html?fileName=${path}" /></a></td>
+					<td><input type="button" value="Remove" class="btnRemove" fileName="${path}" /></td>
+				</tr>
+			</c:forEach>
+		</table>
+
+		<hr />
+		<input type="submit" value="Update" /> <a href="${backURL}">Back to list</a>
 	</form>
-
-	<hr />
-
 </body>
 </html>

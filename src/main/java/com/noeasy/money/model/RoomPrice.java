@@ -51,6 +51,8 @@ public class RoomPrice {
 
     private String mContract;
 
+    private int    mStatus;
+
 
 
     /**
@@ -112,6 +114,15 @@ public class RoomPrice {
      */
     public Double getSalePrice() {
         return mSalePrice;
+    }
+
+
+
+    /**
+     * @return the status
+     */
+    public int getStatus() {
+        return mStatus;
     }
 
 
@@ -182,6 +193,16 @@ public class RoomPrice {
      */
     public void setSalePrice(final Double pSalePrice) {
         mSalePrice = pSalePrice;
+    }
+
+
+
+    /**
+     * @param pStatus
+     *            the status to set
+     */
+    public void setStatus(final int pStatus) {
+        mStatus = pStatus;
     }
 
 }

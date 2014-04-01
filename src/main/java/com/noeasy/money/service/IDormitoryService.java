@@ -85,7 +85,7 @@ public interface IDormitoryService {
 
 
 
-    List<Map<String, Object>> queryDormitoryTypes();
+    List<Map<String, Object>> queryRoomTypes();
 
 
 

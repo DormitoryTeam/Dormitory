@@ -43,7 +43,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Controller;
@@ -59,6 +59,8 @@ import com.noeasy.money.constant.Constants;
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitorySearchBean;
 import com.noeasy.money.model.PageBean;
+import com.noeasy.money.model.RoomInfoBean;
+import com.noeasy.money.model.RoomPrice;
 import com.noeasy.money.service.IDormitoryService;
 import com.noeasy.money.service.INavigationService;
 import com.noeasy.money.util.FileUtils;
@@ -83,10 +85,22 @@ public class AdminDormitoryController {
 
     @RequestMapping("dormitory-save" + Constants.URL_SUFFIX)
     public String dormitoryUpdate(final HttpServletRequest request, final HttpServletResponse response,
-            final Model model, final DormitoryBean dormitory, final String[] imageNames) {
-        if (ArrayUtils.isNotEmpty(imageNames)) {
-            dormitory.setPicPath(Arrays.asList(imageNames));
+            final Model model, final DormitoryBean dormitory, final AdminDormitoryParamVector paramVector) {
+        if (ArrayUtils.isNotEmpty(paramVector.getImageNames())) {
+            dormitory.setPicPath(Arrays.asList(paramVector.getImageNames()));
         }
+
+        int roomTypeCount = ((List) request.getSession().getServletContext().getAttribute("roomTypes")).size();
+        int contractCount = ((List) request.getSession().getServletContext().getAttribute("contractTypes")).size();
+
+        for (int i = 0; i < roomTypeCount; i++) {
+            RoomInfoBean room = dormitory.getRooms().get(i);
+            for (int j = 0; j < contractCount; j++) {
+                RoomPrice price = paramVector.getPrices().get(i * contractCount + j);
+                room.getContractPrice().add(price);
+            }
+        }
+
         boolean result = dormitoryService.saveOrUpdateDormitory(dormitory);
         if (result) {
             dormitoryService.calculateDistance4Dormitory(dormitory.getId());
@@ -95,6 +109,7 @@ public class AdminDormitoryController {
         FileUtils fileUtils = FileUtils.getInstance();
         fileUtils.removeInvalidFiles(fileUtils.createUploadDormitoryImageFolder(dormitory.getId()),
                 dormitory.getPicPath());
+
         return "admin/dormitory/dormitory-edit-result";
     }
 
@@ -128,7 +143,7 @@ public class AdminDormitoryController {
             Integer firstCityId = NumberUtils.toInt(cities.get(0).get("id").toString());
             List<Map<String, Object>> colleges = navigationService.queryColleges(firstCityId);
             List<Map<String, Object>> contractTypes = dormitoryService.queryContractTypes();
-            List<Map<String, Object>> dormitoryTypes = dormitoryService.queryDormitoryTypes();
+            List<Map<String, Object>> dormitoryTypes = dormitoryService.queryRoomTypes();
 
             model.addAttribute("backURL", backURL);
             model.addAttribute("countries", countries);
@@ -136,8 +151,10 @@ public class AdminDormitoryController {
             model.addAttribute("colleges", colleges);
             model.addAttribute("contractTypes", contractTypes);
             model.addAttribute("dormitoryTypes", dormitoryTypes);
+            model.addAttribute("emptyRoom", new RoomInfoBean());
+            model.addAttribute("emptyPrice", new RoomPrice());
         }
-        return "admin/dormitory/dormitory-add";
+        return "admin/dormitory/dormitory-edit";
     }
 
 
@@ -155,8 +172,6 @@ public class AdminDormitoryController {
             Map<String, Object> currentCountry = navigationService.queryCountryByCityId(dormitory.getCityId());
             List<Map<String, Object>> cities = navigationService.queryCitiesInSameCountry(dormitory.getCityId());
             List<Map<String, Object>> colleges = navigationService.queryColleges(dormitory.getCityId());
-            List<Map<String, Object>> contractTypes = dormitoryService.queryContractTypes();
-            List<Map<String, Object>> dormitoryTypes = dormitoryService.queryDormitoryTypes();
 
             model.addAttribute("dormitory", dormitory);
             model.addAttribute("backURL", backURL);
@@ -164,8 +179,9 @@ public class AdminDormitoryController {
             model.addAttribute("currentCountry", currentCountry);
             model.addAttribute("cities", cities);
             model.addAttribute("colleges", colleges);
-            model.addAttribute("contractTypes", contractTypes);
-            model.addAttribute("dormitoryTypes", dormitoryTypes);
+            model.addAttribute("emptyRoom", new RoomInfoBean());
+            model.addAttribute("emptyPrice", new RoomPrice());
+            model.addAttribute("emptyDormitory", new DormitoryBean());
         }
         return "admin/dormitory/dormitory-edit";
     }

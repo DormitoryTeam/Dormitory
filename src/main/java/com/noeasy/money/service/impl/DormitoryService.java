@@ -173,11 +173,11 @@ public class DormitoryService implements IDormitoryService {
 
 
     /**
-     * @see com.noeasy.money.service.IDormitoryService#queryDormitoryTypes()
+     * @see com.noeasy.money.service.IDormitoryService#queryRoomTypes()
      */
     @Override
-    public List<Map<String, Object>> queryDormitoryTypes() {
-        return dormitoryRepository.queryDormitoryTypes();
+    public List<Map<String, Object>> queryRoomTypes() {
+        return dormitoryRepository.queryRoomTypes();
     }
 
 
