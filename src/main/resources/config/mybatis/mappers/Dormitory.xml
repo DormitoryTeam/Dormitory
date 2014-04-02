@@ -357,7 +357,7 @@
 		#{equipment}, service = #{service}, description = #{description}, checkin_date = #{checkinDate, javaType=Date,jdbcType=TIMESTAMP},
 		orientations = #{orientation}, floors = #{floors}, bed_type = #{bedType}, house_area = #{houseArea}, ensuite_bathroom = #{ensuitBathroom},
 		kitchen_people_number = #{kitchenPeople}, floor_arrangement = #{floorArrange},
-		orientation_arrangement, room_language_arrangement = #{roomLanguageArrange}, status = #{status}, kitchen_equipment = #{kitchenEquipment}, bathroom_equipment =
+		orientation_arrangement = #{orientationArrange}, room_language_arrangement = #{roomLanguageArrange}, `status` = #{status}, kitchen_equipment = #{kitchenEquipment}, bathroom_equipment =
 		#{bathroomEquipment}
 		where id = #{id}
 	</update>
@@ -384,7 +384,7 @@
 
 	<update id="updateRoomPrice" parameterType="com.noeasy.money.model.RoomPrice">
 		update room_price set room_info_id = #{roomInfoId}, contract_type_id = #{contractId}, currency
-		= #{currency}, listPrice = #{listPrice), salePrice = #{salePrice}, status = #{status}
+		= #{currency}, listPrice = #{listPrice}, salePrice = #{salePrice}, status = #{status}
 		where id = #{id}
 	</update>
 

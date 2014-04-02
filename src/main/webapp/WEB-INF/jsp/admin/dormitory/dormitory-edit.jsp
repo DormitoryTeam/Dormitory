@@ -71,9 +71,20 @@
 				</tr>
 				<tr>
 					<td>Service:</td>
-					<td><input type="text" name="service" value="${dormitory['service']}" /></td>
+					<td colspan="3">
+						<c:forEach var="service" items="${services}" varStatus="i">
+							<input type="checkbox" name="inputService" value="${i['index']}"
+								${dormitory['binaryServiceArray'][i['index']] eq '1'.charAt(0) ? 'checked=\"true\"' : ''}" /> ${service} &nbsp;
+						</c:forEach>
+					</td>
+				</tr><tr>
 					<td>Equipment:</td>
-					<td><input type="text" name="equipment" value="${dormitory['equipment']}" /></td>
+					<td colspan="3">
+						<c:forEach var="equipment" items="${equipments}" varStatus="i">
+							<input type="checkbox" name="inputEquipment" value="${i['index']}"
+								${dormitory['binaryEquipmentArray'][i['index']] eq '1'.charAt(0) ? 'checked=\"true\"' : ''}" /> ${equipment} &nbsp;
+						</c:forEach>
+					</td>
 				</tr>
 				<tr>
 					<td>Description:</td>

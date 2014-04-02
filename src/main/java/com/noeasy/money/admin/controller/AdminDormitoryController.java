@@ -86,12 +86,18 @@ public class AdminDormitoryController {
     @RequestMapping("dormitory-save" + Constants.URL_SUFFIX)
     public String dormitoryUpdate(final HttpServletRequest request, final HttpServletResponse response,
             final Model model, final DormitoryBean dormitory, final AdminDormitoryParamVector paramVector) {
-        if (ArrayUtils.isNotEmpty(paramVector.getImageNames())) {
-            dormitory.setPicPath(Arrays.asList(paramVector.getImageNames()));
-        }
 
         int roomTypeCount = ((List) request.getSession().getServletContext().getAttribute("roomTypes")).size();
         int contractCount = ((List) request.getSession().getServletContext().getAttribute("contractTypes")).size();
+        int equipmentCount = ((List) request.getSession().getServletContext().getAttribute("equipments")).size();
+        int serviceCount = ((List) request.getSession().getServletContext().getAttribute("services")).size();
+
+        dormitory.setBinaryService(paramVector.getService(serviceCount));
+        dormitory.setBinaryEquipment(paramVector.getEquipment(equipmentCount));
+
+        if (ArrayUtils.isNotEmpty(paramVector.getImageNames())) {
+            dormitory.setPicPath(Arrays.asList(paramVector.getImageNames()));
+        }
 
         for (int i = 0; i < roomTypeCount; i++) {
             RoomInfoBean room = dormitory.getRooms().get(i);

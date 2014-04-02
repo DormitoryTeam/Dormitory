@@ -402,7 +402,7 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
      */
     @Override
     public Integer updateDormitory(final DormitoryBean pDormitory) {
-        int result = getSqlSession().update("com.noeasy.money.model.Dormitory.update-dormitory", pDormitory);
+        int result = getSqlSession().update("com.noeasy.money.model.Dormitory.updateDormitory", pDormitory);
         if (result > 0) {
             for (RoomInfoBean room : pDormitory.getRooms()) {
                 updateRoomInfo(room);
