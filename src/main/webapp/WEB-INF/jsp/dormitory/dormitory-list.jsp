@@ -29,8 +29,10 @@
 					<tr>
 						<td><img style="float: left;margin-right:30px;" src="/dormitory/img/dormitory_sample.jpg" />
 							<ul>
-								<li>Name: ${dormitory['name']} ${dormitory['status']} &nbsp; 
-									<input type="button" class="btnDetail" dormitoryId="${dormitory['id']}" value="to detail" /></li>
+								<li>Name: ${dormitory['name']} ${dormitory['status']} 
+								<c:if test="${not empty dormitory['rooms']}">
+									&nbsp; <input type="button" class="btnDetail" dormitoryId="${dormitory['id']}" value="to detail" /></li>
+								</c:if>
 								<li>Addr: ${dormitory['address']}</li>
 								<li>
 									Service: 
@@ -80,6 +82,11 @@
 														</tr>
 													</c:if>
 												</c:forEach>
+											</c:if>
+											<c:if test="${empty dormitory['rooms']}">
+												<tr>
+													<td colspan="4">No valid room data.</td>
+												</tr>
 											</c:if>
 										</tbody>
 									</table>
