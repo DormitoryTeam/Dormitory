@@ -36,6 +36,7 @@ import java.util.Map;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
+import com.noeasy.money.enumeration.DormitoryStatus;
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitoryRateBean;
 import com.noeasy.money.model.DormitorySearchBean;
@@ -205,7 +206,8 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
                 dormitoryIds);
         for (RoomInfoBean room : rooms) {
             for (DormitoryBean dormitory : dormitories) {
-                if (dormitory.getId() == room.getDormitoryId()) {
+                if (dormitory.getId() == room.getDormitoryId()
+                        && !DormitoryStatus.INVISIBILITY.equals(room.getStatus())) {
                     int roomCount = dormitory.getRooms().size();
                     if (roomCount < 2) {
                         dormitory.getRooms().add(room);

@@ -15,6 +15,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.noeasy.money.constant.Constants;
+import com.noeasy.money.enumeration.DormitoryStatus;
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitoryRateBean;
 import com.noeasy.money.model.DormitorySearchBean;
@@ -51,7 +52,7 @@ public class DormitoryController {
 
 
 
-    @RequestMapping("/rate")
+    @RequestMapping("/rate" + Constants.URL_SUFFIX)
     public String rate(final HttpServletRequest request, final HttpServletResponse response, final Model model,
             final Integer id, final Integer dormitoryId, final String alias, final String comment, final Integer point) {
         if (dormitoryId > 0 && StringUtils.isNoneBlank(comment)) {
@@ -69,6 +70,8 @@ public class DormitoryController {
         if (StringUtils.isNotBlank(id)) {
             DormitorySearchBean searchBean = new DormitorySearchBean();
             searchBean.setId(NumberUtils.toInt(id));
+            searchBean.setExcludeStatus(DormitoryStatus.INVISIBILITY);
+            searchBean.setExcludeRoomStatus(DormitoryStatus.INVISIBILITY);
             DormitoryBean dormitory = dormitoryService.queryDormitory(searchBean);
 
             if (dormitory.getId() > 0) {
@@ -120,6 +123,8 @@ public class DormitoryController {
                     searchBean.setSortType(sortType);
                 }
             }
+            searchBean.setExcludeStatus(DormitoryStatus.INVISIBILITY);
+            searchBean.setExcludeRoomStatus(DormitoryStatus.INVISIBILITY);
             int rowTotal = dormitoryService.queryDormitoryCount(searchBean);
 
             PageBean page = new PageBean(rowTotal);
@@ -144,10 +149,4 @@ public class DormitoryController {
         return "dormitory/dormitory-list";
     }
 
-
-
-    @RequestMapping("/unit-test/to-rate")
-    public String toRate(final HttpServletRequest request, final HttpServletResponse response) {
-        return "dormitory/rate";
-    }
 }

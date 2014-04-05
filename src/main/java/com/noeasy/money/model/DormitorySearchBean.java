@@ -31,6 +31,7 @@ package com.noeasy.money.model;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.noeasy.money.enumeration.DormitoryStatus;
 
 /**
  * <class description>
@@ -64,6 +65,14 @@ public class DormitorySearchBean {
     private String               mSortField;
 
     private PageBean             mPageBean;
+
+    private DormitoryStatus      mStatus;
+
+    private DormitoryStatus      mExcludeStatus;
+
+    private DormitoryStatus      mRoomStatus;
+
+    private DormitoryStatus      mExcludeRoomStatus;
 
 
 
@@ -122,6 +131,24 @@ public class DormitorySearchBean {
 
 
     /**
+     * @return the excludeRoomStatus
+     */
+    public DormitoryStatus getExcludeRoomStatus() {
+        return mExcludeRoomStatus;
+    }
+
+
+
+    /**
+     * @return the excludeStatus
+     */
+    public DormitoryStatus getExcludeStatus() {
+        return mExcludeStatus;
+    }
+
+
+
+    /**
      * @return the id
      */
     public Integer getId() {
@@ -158,6 +185,15 @@ public class DormitorySearchBean {
 
 
     /**
+     * @return the roomStatus
+     */
+    public DormitoryStatus getRoomStatus() {
+        return mRoomStatus;
+    }
+
+
+
+    /**
      * @return the sortBy
      */
     public String getSortBy() {
@@ -189,6 +225,15 @@ public class DormitorySearchBean {
      */
     public String getSortType() {
         return mSortType;
+    }
+
+
+
+    /**
+     * @return the status
+     */
+    public DormitoryStatus getStatus() {
+        return mStatus;
     }
 
 
@@ -254,6 +299,26 @@ public class DormitorySearchBean {
 
 
     /**
+     * @param pExcludeRoomStatus
+     *            the excludeRoomStatus to set
+     */
+    public void setExcludeRoomStatus(final DormitoryStatus pExcludeRoomStatus) {
+        mExcludeRoomStatus = pExcludeRoomStatus;
+    }
+
+
+
+    /**
+     * @param pExcludeStatus
+     *            the excludeStatus to set
+     */
+    public void setExcludeStatus(final DormitoryStatus pExcludeStatus) {
+        mExcludeStatus = pExcludeStatus;
+    }
+
+
+
+    /**
      * @param pId
      *            the id to set
      */
@@ -294,6 +359,16 @@ public class DormitorySearchBean {
 
 
     /**
+     * @param pRoomStatus
+     *            the roomStatus to set
+     */
+    public void setRoomStatus(final DormitoryStatus pRoomStatus) {
+        mRoomStatus = pRoomStatus;
+    }
+
+
+
+    /**
      * @param pSortField
      *            the sortField to set
      */
@@ -309,6 +384,16 @@ public class DormitorySearchBean {
      */
     public void setSortType(final String pSortType) {
         mSortType = pSortType;
+    }
+
+
+
+    /**
+     * @param pStatus
+     *            the status to set
+     */
+    public void setStatus(final DormitoryStatus pStatus) {
+        mStatus = pStatus;
     }
 
 }
