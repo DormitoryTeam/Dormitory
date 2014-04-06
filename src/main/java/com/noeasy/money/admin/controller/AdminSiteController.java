@@ -42,7 +42,7 @@ public class AdminSiteController {
     @RequestMapping("/article-add-or-update" + Constants.URL_SUFFIX)
     public String toArticleAddOrUpdate(final HttpServletRequest request, final HttpServletResponse response,
             final Model model, final String backURL, final Integer id) {
-        RichTextBean article = null;
+        RichTextBean article = new RichTextBean();
         if (ParamUtils.isValidIdField(id)) {
             article = siteService.queryArticle(id);
         }

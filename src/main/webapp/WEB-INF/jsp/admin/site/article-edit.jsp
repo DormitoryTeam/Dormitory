@@ -22,8 +22,8 @@
 <body>
 	<br />
 	<form id="form" action="/dormitory/admin/site/article-save.html" method="POST">
-		<input type="hidden" name="userId" value="${article['userId']}" />
 		<input type="hidden" name="id" value="${article['id']}" />
+		<input type="hidden" name="userId" value="${article['userId']}" />
 		<input id="iptTextBody" type="hidden" name="textBody" value="" />
 		
 		<div class="container">
