@@ -31,6 +31,8 @@ package com.noeasy.money.service;
 import java.util.List;
 import java.util.Map;
 
+import com.noeasy.money.model.RichTextBean;
+
 /**
  * <class description>
  * 
@@ -44,11 +46,23 @@ public interface ISiteService {
 
 
 
-    List<Map<String, Object>> getAllSlides();
+    List<Map<String, Object>> queryAllSlides();
 
 
 
-    List<Map<String, Object>> getSlides();
+    List<Map<String, Object>> querySlides();
+
+
+
+    RichTextBean queryArticle(int pId);
+
+
+
+    List<RichTextBean> queryArticlePage();
+
+
+
+    boolean saveOrUpdateArticle(RichTextBean pRichTextBean);
 
 
 

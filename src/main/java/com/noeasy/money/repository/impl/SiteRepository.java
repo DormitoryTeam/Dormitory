@@ -34,6 +34,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.noeasy.money.model.RichTextBean;
 import com.noeasy.money.repository.ISiteRepository;
 
 /**
@@ -56,21 +57,51 @@ public class SiteRepository extends BaseRepository implements ISiteRepository {
 
 
     /**
-     * @see com.noeasy.money.repository.ISiteRepository#getAllSlides()
+     * @see com.noeasy.money.repository.ISiteRepository#queryAllSlides()
      */
     @Override
-    public List<Map<String, Object>> getAllSlides() {
+    public List<Map<String, Object>> queryAllSlides() {
         return getSqlSession().selectList("com.noeasy.money.model.Site.selectAllSlide");
     }
 
 
 
     /**
-     * @see com.noeasy.money.repository.ISiteRepository#getSlides()
+     * @see com.noeasy.money.repository.ISiteRepository#queryArticle(int)
      */
     @Override
-    public List<Map<String, Object>> getSlides() {
+    public RichTextBean queryArticle(final int pId) {
+        return getSqlSession().selectOne("com.noeasy.money.model.Site.selectArticle", pId);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.ISiteRepository#queryArticlePage()
+     */
+    @Override
+    public List<RichTextBean> queryArticlePage() {
+        return getSqlSession().selectList("com.noeasy.money.model.Site.selectArticlePage");
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.ISiteRepository#querySlides()
+     */
+    @Override
+    public List<Map<String, Object>> querySlides() {
         return getSqlSession().selectList("com.noeasy.money.model.Site.selectSlide");
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.ISiteRepository#saveArticle(com.noeasy.money.model.RichTextBean)
+     */
+    @Override
+    public boolean saveArticle(final RichTextBean pRichTextBean) {
+        return getSqlSession().insert("com.noeasy.money.model.Site.saveArticle", pRichTextBean) > 0;
     }
 
 
@@ -87,6 +118,16 @@ public class SiteRepository extends BaseRepository implements ISiteRepository {
         params.put("index", pIndex);
         params.put("status", pStatus);
         return getSqlSession().insert("com.noeasy.money.model.Site.insertSlide", params) > 0;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.ISiteRepository#updateArticle(com.noeasy.money.model.RichTextBean)
+     */
+    @Override
+    public boolean updateArticle(final RichTextBean pRichTextBean) {
+        return getSqlSession().update("com.noeasy.money.model.Site.updateArticle", pRichTextBean) > 0;
     }
 
 

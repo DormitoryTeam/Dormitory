@@ -271,8 +271,7 @@
 		name = #{name},
 		address = #{address},
 		postcode = #{postcode},
-		equipment =
-		#{equipment},
+		equipment = #{equipment},
 		service = #{service},
 		listPrice = #{listPrice},
 		salePrice = #{salePrice},

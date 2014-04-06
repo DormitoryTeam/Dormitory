@@ -115,7 +115,7 @@ public class AdminSlideController {
     @RequestMapping("/slide-management" + Constants.URL_SUFFIX)
     public String toSlideManagement(final HttpServletRequest request, final HttpServletResponse response,
             final Model model) {
-        List<Map<String, Object>> slides = siteService.getAllSlides();
+        List<Map<String, Object>> slides = siteService.queryAllSlides();
         model.addAttribute("slides", slides);
         return "admin/site/slide-management";
     }

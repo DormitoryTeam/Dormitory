@@ -31,6 +31,8 @@ package com.noeasy.money.repository;
 import java.util.List;
 import java.util.Map;
 
+import com.noeasy.money.model.RichTextBean;
+
 /**
  * <class description>
  * 
@@ -44,11 +46,23 @@ public interface ISiteRepository {
 
 
 
-    List<Map<String, Object>> getAllSlides();
+    List<Map<String, Object>> queryAllSlides();
 
 
 
-    List<Map<String, Object>> getSlides();
+    RichTextBean queryArticle(int pId);
+
+
+
+    List<RichTextBean> queryArticlePage();
+
+
+
+    List<Map<String, Object>> querySlides();
+
+
+
+    boolean saveArticle(RichTextBean pRichTextBean);
 
 
 
@@ -56,6 +70,9 @@ public interface ISiteRepository {
 
 
 
-    boolean updateSlide(Integer pId, String pDescription, Integer pIndex, String pStatus);
+    boolean updateArticle(RichTextBean pRichTextBean);
 
+
+
+    boolean updateSlide(Integer pId, String pDescription, Integer pIndex, String pStatus);
 }

@@ -40,8 +40,29 @@
 		where id = #{id}
 	</update>
 
-
 	<delete id="deleteSlide">
 		delete from slide
 	</delete>
+	
+	<select id="selectArticlePage" resultType="com.noeasy.money.model.RichTextBean">
+		select id, user_id userId, title, text textBody, create_time createTime, status
+		from article
+	</select>
+	
+	<select id="selectArticle" resultType="com.noeasy.money.model.RichTextBean" parameterType="int">
+		select id, user_id userId, title, text textBody, create_time createTime, status
+		from article
+		where id = #{id}
+	</select>
+	
+	<insert id="saveArticle" useGeneratedKeys="true" keyProperty="id" parameterType="com.noeasy.money.model.RichTextBean">
+		insert into article (user_id, title, text, status) values (
+			#{userId}, #{title}, #{textBody}, #{status}
+		)
+	</insert>
+	
+	<update id="updateArticle" parameterType="com.noeasy.money.model.RichTextBean">
+		update article set user_id = #{userId}, title = #{title}, text = #{textBody}, status = #{status}
+		where id = #{id}
+	</update>
 </mapper>

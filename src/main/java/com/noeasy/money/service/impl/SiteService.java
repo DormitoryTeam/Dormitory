@@ -35,6 +35,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.noeasy.money.model.RichTextBean;
 import com.noeasy.money.repository.ISiteRepository;
 import com.noeasy.money.service.ISiteService;
 
@@ -63,21 +64,55 @@ public class SiteService implements ISiteService {
 
 
     /**
-     * @see com.noeasy.money.service.ISiteService#getAllSlides()
+     * @see com.noeasy.money.service.ISiteService#queryAllSlides()
      */
     @Override
-    public List<Map<String, Object>> getAllSlides() {
-        return siteRepository.getAllSlides();
+    public List<Map<String, Object>> queryAllSlides() {
+        return siteRepository.queryAllSlides();
     }
 
 
 
     /**
-     * @see com.noeasy.money.service.ISiteService#getSlides()
+     * @see com.noeasy.money.service.ISiteService#queryArticle(int)
      */
     @Override
-    public List<Map<String, Object>> getSlides() {
-        return siteRepository.getSlides();
+    public RichTextBean queryArticle(final int pId) {
+        return siteRepository.queryArticle(pId);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.ISiteService#queryArticlePage()
+     */
+    @Override
+    public List<RichTextBean> queryArticlePage() {
+        return siteRepository.queryArticlePage();
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.ISiteService#querySlides()
+     */
+    @Override
+    public List<Map<String, Object>> querySlides() {
+        return siteRepository.querySlides();
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.ISiteService#saveOrUpdateArticle(com.noeasy.money.model.RichTextBean)
+     */
+    @Override
+    public boolean saveOrUpdateArticle(final RichTextBean pRichTextBean) {
+        if (pRichTextBean.getId() == 0) {
+            return siteRepository.saveArticle(pRichTextBean);
+        } else {
+            return siteRepository.updateArticle(pRichTextBean);
+        }
     }
 
 

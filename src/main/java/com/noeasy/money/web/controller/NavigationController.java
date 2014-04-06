@@ -134,7 +134,7 @@ public class NavigationController {
             Integer firstCityId = NumberUtils.toInt(cities.get(0).get("id").toString());
             List<Map<String, Object>> colleges = navigationService.queryColleges(firstCityId);
 
-            List<Map<String, Object>> slides = siteService.getSlides();
+            List<Map<String, Object>> slides = siteService.querySlides();
 
             model.addAttribute("countries", countries);
             model.addAttribute("cities", cities);
