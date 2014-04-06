@@ -22,8 +22,13 @@
 		<table class="table table-hover table-bordered table-striped" style="width:1000px">
 			<tbody>
 				<tr>
-					<td>DormitoryId</td>
-					<td>${dormitory['id']}</td>
+					<td>Dormitory Status</td>
+					<td><select name="status">
+							<c:forEach var="status" items="${allDormitoryStatus}">
+								<option value="${status['name']}" ${status eq dormitory['status'] ? 'selected' : ''}>${status['name']}</option>
+							</c:forEach>
+						</select>
+					</td>
 					<td>Name*:</td>
 					<td><input type="text" name="name" value="${dormitory['name']}" /></td>
 				</tr>

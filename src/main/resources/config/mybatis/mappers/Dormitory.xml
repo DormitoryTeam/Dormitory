@@ -278,10 +278,10 @@
 		salePrice = #{salePrice},
 		latitude = #{latitude},
 		longitude = #{longitude},
-		currency =
-		#{currency},
+		currency = #{currency},
 		description = #{description},
-		city_id = #{cityId}
+		city_id = #{cityId},
+		status = #{status}
 		where
 		id = #{id}
 	</update>
