@@ -28,7 +28,6 @@
  */
 package com.noeasy.money.model;
 
-
 /**
  * <class description>
  * 
@@ -39,6 +38,10 @@ package com.noeasy.money.model;
 public class DormitoryLineItem extends LineItem {
 
     private DormitoryBean mDormitory;
+
+    private RoomInfoBean  roomInfo;
+
+    private ContractType  contractType;
 
 
 
@@ -57,6 +60,30 @@ public class DormitoryLineItem extends LineItem {
      */
     public void setDormitory(final DormitoryBean pDormitory) {
         mDormitory = pDormitory;
+    }
+
+
+
+    public RoomInfoBean getRoomInfo() {
+        return roomInfo;
+    }
+
+
+
+    public void setRoomInfo(RoomInfoBean pRoomInfo) {
+        roomInfo = pRoomInfo;
+    }
+
+
+
+    public ContractType getContractType() {
+        return contractType;
+    }
+
+
+
+    public void setContractType(ContractType pContractType) {
+        contractType = pContractType;
     }
 
 }

@@ -31,11 +31,13 @@ package com.noeasy.money.repository;
 import java.util.List;
 
 import com.noeasy.money.enumeration.OrderStatus;
+import com.noeasy.money.model.DormitoryLineItem;
 import com.noeasy.money.model.LineItem;
 import com.noeasy.money.model.OrderBean;
 import com.noeasy.money.model.OrderContactInfo;
 import com.noeasy.money.model.OrderSearchBean;
 import com.noeasy.money.model.OrderTail;
+import com.noeasy.money.model.PickupLineItem;
 
 /**
  * <class description>
@@ -103,5 +105,21 @@ public interface IOrderRepository {
 
 
     Integer updateOrderPrice(OrderBean pOrder);
+
+
+
+    void updateOrder(OrderBean pOrder);
+
+
+
+    OrderBean findOrderById(Integer pId);
+
+
+
+    void updateDormitoryLineItem(DormitoryLineItem pDormitoryItem);
+
+
+
+    void updatePickupLineItem(PickupLineItem pPickupItem);
 
 }

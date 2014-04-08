@@ -35,6 +35,8 @@ import java.util.Map;
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitoryRateBean;
 import com.noeasy.money.model.DormitorySearchBean;
+import com.noeasy.money.model.RoomInfoBean;
+import com.noeasy.money.model.RoomPrice;
 
 /**
  * <class description>
@@ -106,4 +108,16 @@ public interface IDormitoryService {
 
 
     Boolean saveOrUpdateDormitory(DormitoryBean pDormitory);
+
+
+
+    DormitoryBean findDormitoryById(Integer pDormitoryId);
+
+
+
+    RoomInfoBean findRoomInfoById(Integer pRoomInfoId);
+
+
+
+    RoomPrice findRoomPrice(Integer pRoomInfoId, Integer pContractId);
 }

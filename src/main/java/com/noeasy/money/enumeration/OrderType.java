@@ -4,7 +4,7 @@ public enum OrderType {
 
     DORMITORY, PICKUP;
 
-    private static final String TYPE_DORMITORY = "D";
+    public static final String TYPE_DORMITORY = "D";
 
 
 

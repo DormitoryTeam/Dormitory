@@ -3,75 +3,101 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.noeasy.money.model.Order">
-	
+
 	<sql id="select-count">
 		select count(*)
 	</sql>
-	
+
 	<sql id="select-dormitory-order-content">
-		select t1.id, t1.user_id, t1.belongs_to, t1.type as order_type, t1.status as order_status, t1.currency, t1.amount, t1.create_time,
-		t2.id as uid, t2.login as user_login, t2.password as user_password, t2.email as user_email, t2.name as user_name, t2.gender as user_gender, t2.passport as
-		user_passport, t2.age as user_age, t2.birthday as user_birthday, t2.address as user_address, t2.qq as user_qq, t2.phone as user_phone,
-		t3.id as bid, t3.login as belong_login, t3.password as belong_password, t3.email as belong_email, t3.name as belong_name, t3.gender as belong_gender, t3.passport as
-		belong_passport, t3.age as belong_age, t3.birthday as belong_birthday, t3.address as belong_address, t3.qq as belong_qq, t3.phone as belong_phone,
-		t4.id as cid, t4.name as contact_name, t4.gender as
-		contact_gender, t4.qq as contact_qq, t4.phone as contact_phone, t4.address as contact_address,
-		t5.id as lid, t5.dormitory_id, t5.amount as li_amount, t5.currency as li_currency, t5.listPrice as li_listPrice,
-		t6.id as did, t6.city_id, t6.type_id, t6.contract_type_id, t6.name as dname, t6.address as daddress, t6.postcode, t6.listPrice as dlistPrice, t6.salePrice, t6.currency as dcurrency,
-		t6.equipment, t6.service, t6.description, t6.status as dstatus,
-		t7.name as contract_name
+		select o.id as order_id, o.type as order_type, o.status as order_status, o.amount as order_amount, o.currency as order_currency, o.create_time as order_create_time,
+		placer.id as placer_id, placer.login as placer_login, placer.email as placer_email, placer.alias as placer_alias,
+		belong_to.id as bt_id, belong_to.login as bt_login, belong_to.email as bt_email, belong_to.alias as bt_alias,
+		order_contact.id as contact_id, order_contact.order_id as contact_order_id,
+		user_info.id as bti_id, user_info.name as bti_name, user_info.nationality as bti_nationality, user_info.gender as bti_gender, user_info.birthday as bti_birthday, user_info.email as bti_email, user_info.qq as bti_qq, user_info.wechat as bti_wechat, user_info.phone as bti_phone, user_info.country as bti_country, user_info.province as bti_province, user_info.city as bti_city, user_info.address as bti_address,
+		guarantee_info.id as gi_id, guarantee_info.name as gi_name, guarantee_info.nationality as gi_nationality, guarantee_info.gender as gi_gender, guarantee_info.birthday as gi_birthday, guarantee_info.email as gi_email, guarantee_info.qq as gi_qq, guarantee_info.wechat as gi_wechat, guarantee_info.phone as gi_phone, guarantee_info.country as gi_country, guarantee_info.province as gi_province, guarantee_info.city as gi_city, guarantee_info.address as gi_address,
+		contact_info.id as ci_id, contact_info.name as ci_name, contact_info.nationality as ci_nationality, contact_info.gender as ci_gender, contact_info.birthday as ci_birthday, contact_info.email as ci_email, contact_info.qq as ci_qq, contact_info.wechat as ci_wechat, contact_info.phone as ci_phone, contact_info.country as ci_country, contact_info.province as ci_province, contact_info.city as ci_city, contact_info.address as ci_address,
+		item.id as lid, item.amount as li_amount, item.currency as li_currency,
+		dormitory.id as dormitory_id, dormitory.city_id as dormitory_city_id, dormitory.name as dormitory_name, dormitory.address as dormitory_address, dormitory.postcode as dormitory_postcode, dormitory.listPrice as dormitory_listPrice, dormitory.salePrice as dormitory_salePrice, dormitory.currency as dormitory_currency, dormitory.equipment as dormitory_equipment, dormitory.service as dormitory_service, dormitory.description as dormitory_description, dormitory.status as dormitory_status,
+		room_info.id as ri_id, room_info.dormitory_id as ri_dormitory_id, room_info.room_type_id as ri_room_type_id, room_info.description as ri_description, room_info.checkin_date as ri_checkin_date, room_info.orientations as ri_orientations, room_info.floors as ri_floors, room_info.bed_type as ri_bed_type, room_info.house_area as ri_house_area, room_info.ensuite_bathroom as ri_ensuite_bathroom, room_info.kitchen_people_number as ri_kitchen_people_number, room_info.floor_arrangement as ri_floor_arrangement, room_info.orientation_arrangement as ri_orientation_arrangement, room_info.room_language_arrangement as ri_language_arrangement, room_info.kitchen_equipment as ri_kitchen_equipment, room_info.bathroom_equipment as ri_bathroom_equipment, room_info.status as ri_status,
+		room_type.name as ri_room_type,
+		contract_type.id as ct_id, contract_type.name as ct_name
 	</sql>
 	<sql id="select-dormitory-order-table-join">
-		from `order` t1
-		left join users t2 on t1.user_id = t2.id
-		left join users t3 on t1.belongs_to = t3.id
-		left join order_contact_info t4 on t1.id = t4.order_id
-		left join line_item_dormitory t5 on t1.id = t5.order_id
-		left join dormitory t6 on t5.dormitory_id = t6.id
-		left join contract_type t7 on t7.id = t6.contract_type_id
+		from `order` as o
+		left join users as placer on placer.id = o.user_id 
+		left join users as belong_to on belong_to.id = o.belongs_to
+		left join order_contact_info as order_contact on order_contact.order_id = o.id
+		left join user_info as user_info on user_info.id = order_contact.belong_to_user_info_id
+		left join user_info as guarantee_info on guarantee_info.id = order_contact.guarantee_info_id
+		left join user_info as contact_info on contact_info.id = order_contact.contact_person_info_id
+		left join user_prefer as prefer on prefer.id = order_contact.prefer_id
+		left join line_item_dormitory as item on item.order_id = o.id
+		left join dormitory as dormitory on dormitory.id = item.dormitory_id
+		left join room_info as room_info on room_info.id = item.room_info_id
+		left join room_type as room_type on room_info.room_type_id = room_type.id
+		left join contract_type as contract_type on contract_type.id = item.contract_type_id
 	</sql>
-	
+
 	<sql id="select-pickup-order-content">
-		select t1.id, t1.user_id, t1.belongs_to, t1.type as order_type, t1.status as order_status, t1.currency, t1.amount, t1.create_time,
-		t2.id as uid, t2.login as user_login, t2.password as user_password, t2.email as user_email, t2.name as user_name, t2.gender as user_gender, t2.passport as
-		user_passport, t2.age as user_age, t2.birthday as user_birthday, t2.address as user_address, t2.qq as user_qq, t2.phone as user_phone,
-		t3.id as bid, t3.login as belong_login, t3.password as belong_password, t3.email as belong_email, t3.name as belong_name, t3.gender as belong_gender, t3.passport as
-		belong_passport, t3.age as belong_age, t3.birthday as belong_birthday, t3.address as belong_address, t3.qq as belong_qq, t3.phone as belong_phone,
-		t4.id as cid, t4.name as contact_name, t4.gender as
-		contact_gender, t4.qq as contact_qq, t4.phone as contact_phone, t4.address as contact_address,
-		t5.id as lid, t5.flight_number, t5.city_id, t5.pickup_date, t5.pickup_type, t5.luggage_amount, t5.luggage_size, t5.amount as li_amount, t5.currency as li_currency,
+		select t1.id, t1.user_id, t1.belongs_to, t1.type as
+		order_type, t1.status as order_status, t1.currency, t1.amount,
+		t1.create_time,
+		t2.id as uid, t2.login as user_login, t2.password as
+		user_password, t2.email as user_email, t2.name as user_name, t2.gender
+		as user_gender, t2.passport as
+		user_passport, t2.age as user_age,
+		t2.birthday as user_birthday, t2.address as user_address, t2.qq as
+		user_qq, t2.phone as user_phone,
+		t3.id as bid, t3.login as
+		belong_login, t3.password as belong_password, t3.email as
+		belong_email, t3.name as belong_name, t3.gender as belong_gender,
+		t3.passport as
+		belong_passport, t3.age as belong_age, t3.birthday as
+		belong_birthday, t3.address as belong_address, t3.qq as belong_qq,
+		t3.phone as belong_phone,
+		t4.id as cid, t4.name as contact_name,
+		t4.gender as
+		contact_gender, t4.qq as contact_qq, t4.phone as
+		contact_phone, t4.address as contact_address,
+		t5.id as lid,
+		t5.flight_number, t5.city_id, t5.pickup_date, t5.pickup_type,
+		t5.luggage_amount, t5.luggage_size, t5.amount as li_amount,
+		t5.currency as li_currency,
 		t6.name as city_name
 	</sql>
-	
+
 	<sql id="select-pickup-order-table-join">
 		from `order` t1
 		left join users t2 on t1.user_id = t2.id
 		left join users t3 on t1.belongs_to = t3.id
-		left join order_contact_info t4 on t1.id = t4.order_id
-		left join line_item_pickup t5 on t1.id = t5.order_id
+		left join
+		order_contact_info t4 on t1.id = t4.order_id
+		left join line_item_pickup
+		t5 on t1.id = t5.order_id
 		left join city t6 on t5.city_id = t6.id
 	</sql>
 
 	<sql id="where">
 		where 1=1
 	</sql>
-	
+
 	<sql id="select-order-condition">
 		<if test="orderNumber != null">
-			and t1.id = #{orderNumber}
+			and o.id = #{orderNumber}
 		</if>
 		<if test="dateFrom != null">
-			and t1.create_time &gt;= #{dateFrom}
+			and o.create_time &gt;= #{dateFrom}
 		</if>
 		<if test="dateTo != null">
-			and t1.create_time &lt;= #{dateTo}
+			and o.create_time &lt;= #{dateTo}
 		</if>
 		<if test="user != null">
 			<if test="user.id != null">
-			and (t1.belongs_to = #{user.id} or t1.user_id = #{user.id})
+				and (o.belongs_to = #{user.id} or o.user_id = #{user.id})
 			</if>
 			<if test="user.login != null">
-			and (t2.login like CONCAT('%', #{user.login}, '%') or t3.login like CONCAT('%', #{user.login}, '%'))
+				and (placer.login like CONCAT('%', #{user.login}, '%') or belong_to.login like
+				CONCAT('%', #{user.login}, '%'))
 			</if>
 		</if>
 		<if test="orderType != null">
@@ -92,7 +118,7 @@
 			<include refid="limit-split-page" />
 		</if>
 	</select>
-	
+
 	<select id="queryDormitoryOrderCount" resultType="int">
 		<include refid="select-count" />
 		<include refid="select-dormitory-order-table-join" />
@@ -116,8 +142,10 @@
 		<include refid="select-order-condition" />
 	</select>
 
-	<insert id="saveOrder" keyProperty="id" useGeneratedKeys="true" parameterType="com.noeasy.money.model.OrderBean">
-		insert into `order` (user_id, belongs_to, `type`, status, amount, currency) values (
+	<insert id="saveOrder" keyProperty="id" useGeneratedKeys="true"
+		parameterType="com.noeasy.money.model.OrderBean">
+		insert into `order` (user_id, belongs_to, `type`,
+		status, amount, currency) values (
 		#{user.id,javaType=int,jdbcType=INTEGER},
 		#{belongsTo.id,javaType=int,jdbcType=INTEGER},
 		#{orderType.name,javaType=String,jdbcType=VARCHAR},
@@ -127,37 +155,51 @@
 		)
 	</insert>
 
-	<insert id="saveOrderContactInfo" keyProperty="id" useGeneratedKeys="true" parameterType="com.noeasy.money.model.OrderContactInfo">
-		insert into order_contact_info (order_id, name, gender, qq, phone, address) values (
+	<insert id="saveOrderContactInfo" keyProperty="id"
+		useGeneratedKeys="true" parameterType="com.noeasy.money.model.OrderContactInfo">
+		insert into order_contact_info
+		(order_id, belong_to_user_info_id, guarantee_info_id, contact_person_info_id, prefer_id, update_time) values (
 		#{orderId,javaType=int,jdbcType=INTEGER},
-		#{name,javaType=String,jdbcType=INTEGER},
-		#{gender,javaType=boolean,jdbcType=INTEGER},
-		#{QQ,javaType=String,jdbcType=VARCHAR},
-		#{phone,javaType=String,jdbcType=VARCHAR},
-		#{address,javaType=String,jdbcType=VARCHAR}
+		#{belongsToInfo,javaType=int,jdbcType=INTEGER},
+		#{guaranteeInfo,javaType=int,jdbcType=INTEGER},
+		#{contactPersonInfo,javaType=int,jdbcType=INTEGER},
+		#{prefer,javaType=int,jdbcType=INTEGER},
+		now()
 		)
 	</insert>
 
-	<insert id="saveOrderHistory" keyProperty="id" useGeneratedKeys="true" parameterType="com.noeasy.money.model.OrderTail">
-		insert into order_history (order_id, operator_id, operation) values (
+	<insert id="saveOrderHistory" keyProperty="id" useGeneratedKeys="true"
+		parameterType="com.noeasy.money.model.OrderTail">
+		insert into order_history (order_id, operator_id,
+		operation) values (
 		#{orderId,javaType=int,jdbcType=INTEGER},
 		#{operator.id,javaType=int,jdbcType=INTEGER},
 		#{operation.name,javaType=String,jdbcType=VARCHAR}
 		)
 	</insert>
 
-	<insert id="saveDormitoryLineItem" keyProperty="id" useGeneratedKeys="true" parameterType="com.noeasy.money.model.DormitoryLineItem">
-		insert into line_item_dormitory (order_id, dormitory_id, listPrice, amount, currency) values (
+	<insert id="saveDormitoryLineItem" keyProperty="id"
+		useGeneratedKeys="true" parameterType="com.noeasy.money.model.DormitoryLineItem">
+		insert into line_item_dormitory
+		(order_id, dormitory_id, room_info_id, contract_type_id, listPrice, amount, currency, dormitory_info_date, create_time, update_time) values (
 		#{orderId,javaType=int,jdbcType=INTEGER},
 		#{dormitory.id,javaType=int,jdbcType=INTEGER},
+		#{roomInfo.id,javaType=int,jdbcType=INTEGER},
+		#{contractType.id,javaType=int,jdbcType=INTEGER},
 		#{listPrice,javaType=java.math.BigDecimal,jdbcType=DECIMAL},
 		#{amount,javaType=java.math.BigDecimal,jdbcType=DECIMAL},
-		#{currency,javaType=String,jdbcType=VARCHAR}
+		#{currency,javaType=String,jdbcType=VARCHAR},
+		now(),
+		now(),
+		now()
 		)
 	</insert>
 
-	<insert id="savePickupLineItem" keyProperty="id" useGeneratedKeys="true" parameterType="com.noeasy.money.model.PickupLineItem">
-		insert into line_item_pickup (order_id, flight_number, city_id, pickup_date, pickup_type, amount, currency, luggage_amount, luggage_size) values (
+	<insert id="savePickupLineItem" keyProperty="id"
+		useGeneratedKeys="true" parameterType="com.noeasy.money.model.PickupLineItem">
+		insert into line_item_pickup
+		(order_id, flight_number, city_id, pickup_date, pickup_type, amount,
+		currency, luggage_amount, luggage_size) values (
 		#{orderId,javaType=int,jdbcType=INTEGER},
 		#{flightNum,javaType=String,jdbcType=VARCHAR},
 		#{cityId,javaType=int,jdbcType=INTEGER},
@@ -169,87 +211,218 @@
 		#{luggageSize,javaType=Double,jdbcType=DECIMAL}
 		)
 	</insert>
-	
+
 	<select id="isPaymentDone" parameterType="int" resultType="int">
-		SELECT count(id) FROM `order` WHERE id = #{id} AND (status = 'PAYMENT_DONE' OR status = 'PASS' OR status = 'SENDING_CONTACT');
+		SELECT count(id) FROM `order` WHERE id = #{id} AND (status =
+		'PAYMENT_DONE' OR status = 'PASS' OR status = 'SENDING_CONTACT');
 	</select>
-	
+
 	<update id="updateOrderStatus" parameterType="com.noeasy.money.model.OrderBean">
 		UPDATE `order` SET
-			status = #{orderStatus.name,javaType=String,jdbcType=VARCHAR},
-			update_time = now()
+		status = #{orderStatus.name,javaType=String,jdbcType=VARCHAR},
+		update_time = now()
 		WHERE id = #{id}
 	</update>
 	<update id="updateOrderPrice" parameterType="com.noeasy.money.model.OrderBean">
 		UPDATE `order` SET
+		amount = #{amount},
+		update_time = now()
+		WHERE id = #{id}
+	</update>
+	<update id="updateOrder" parameterType="com.noeasy.money.model.OrderBean">
+		UPDATE `order` SET
+		<if test="amount != null">
 			amount = #{amount},
-			update_time = now()
+		</if>
+		<if test="orderType != null">
+			type = #{orderType},
+		</if>
+		<if test="user != null">
+			user_id = #{user.id},
+		</if>
+		<if test="belongsTo != null">
+			belongs_to = #{belongsTo.id},
+		</if>
+		update_time = now()
+		WHERE id = #{id}
+	</update>
+	<update id="updateDormitoryLineItem" parameterType="com.noeasy.money.model.DormitoryLineItem">
+		UPDATE line_item_dormitory SET
+		<if test="orderId != null">
+			order_id = #{orderId},
+		</if>
+		<if test="dormitory != null and dormitory.id != null">
+			dormitory_id = #{dormitory.id},
+		</if>
+		<if test="roomInfo != null and roomInfo.id != null">
+			room_info_id = #{roomInfo.id},
+		</if>
+		<if test="contractType != null and contractType.id != null">
+			contract_type_id = #{contractType.id},
+		</if>
+		<if test="listPrice != null">
+			listPrice = #{listPrice},
+		</if>
+		<if test="amount != null">
+			amount = #{amount},
+		</if>
+		<if test="currency != null">
+			currency = #{currency},
+		</if>
+		update_time = now()
 		WHERE id = #{id}
 	</update>
 	
 
+	<resultMap id="belongToInfo" type="com.noeasy.money.model.UserInfoBean">
+		<id property="id" column="bti_id" />
+		<result property="name" column="bti_name" />
+		<result property="nationality" column="bti_nationality" />
+		<result property="gender" column="bti_gender" />
+		<result property="birthday" column="bti_birthday" />
+		<result property="email" column="bti_email" />
+		<result property="qq" column="bti_qq" />
+		<result property="wechat" column="bti_wechat" />
+		<result property="phone" column="bti_phone" />
+		<result property="country" column="bti_country" />
+		<result property="province" column="bti_province" />
+		<result property="city" column="bti_city" />
+		<result property="address" column="bti_address" />
+	</resultMap>
+
+	<resultMap id="contactInfo" type="com.noeasy.money.model.UserInfoBean">
+		<id property="id" column="ci_id" />
+		<result property="name" column="ci_name" />
+		<result property="nationality" column="ci_nationality" />
+		<result property="gender" column="ci_gender" />
+		<result property="birthday" column="ci_birthday" />
+		<result property="email" column="ci_email" />
+		<result property="qq" column="ci_qq" />
+		<result property="wechat" column="ci_wechat" />
+		<result property="phone" column="ci_phone" />
+		<result property="country" column="ci_country" />
+		<result property="province" column="ci_province" />
+		<result property="city" column="ci_city" />
+		<result property="address" column="ci_address" />
+	</resultMap>
+
+	<resultMap id="guaranteeInfo" type="com.noeasy.money.model.UserInfoBean">
+		<id property="id" column="gi_id" />
+		<result property="name" column="gi_name" />
+		<result property="nationality" column="gi_nationality" />
+		<result property="gender" column="gi_gender" />
+		<result property="birthday" column="gi_birthday" />
+		<result property="email" column="gi_email" />
+		<result property="qq" column="gi_qq" />
+		<result property="wechat" column="gi_wechat" />
+		<result property="phone" column="gi_phone" />
+		<result property="country" column="gi_country" />
+		<result property="province" column="gi_province" />
+		<result property="city" column="gi_city" />
+		<result property="address" column="gi_address" />
+	</resultMap>
+
+	<resultMap id="placer" type="com.noeasy.money.model.UserBean">
+		<id property="id" column="placer_id" />
+		<result property="login" column="placer_login" />
+		<result property="alias" column="placer_alias" />
+		<result property="email" column="placer_email" />
+	</resultMap>
+
+	<resultMap id="belongTo" type="com.noeasy.money.model.UserBean">
+		<id property="id" column="bt_id" />
+		<result property="login" column="bt_login" />
+		<result property="alias" column="bt_alias" />
+		<result property="email" column="bt_email" />
+	</resultMap>
+
+	<resultMap id="userPrefer" type="com.noeasy.money.model.UserPreferBean">
+		<id property="id" column="prefer_id" />
+		<result property="smoke" column="prefer_smoke" />
+		<result property="vegetarianism" column="prefer_vegetarianism" />
+		<result property="yourGrade" column="prefer_yourGrade" />
+		<result property="roomMemberGrade" column="prefer_roomMemberGrade" />
+		<result property="roomMemberGender" column="prefer_roomMemberGender" />
+		<result property="major" column="prefer_major" />
+		<result property="college" column="prefer_college" />
+		<result property="floor" column="prefer_floor" />
+		<result property="orientation" column="prefer_orientation" />
+		<result property="graduateSchool" column="prefer_graduateSchool" />
+		<result property="needPush" column="prefer_needPush" />
+		<result property="readClause" column="prefer_readClause" />
+	</resultMap>
+
+	<resultMap id="orderContact" type="com.noeasy.money.model.OrderContactInfo">
+		<id property="id" column="contact_id" />
+		<result property="orderId" column="contact_order_id" />
+		<association property="belongsToInfo" column="bti_id"
+			resultMap="belongToInfo" />
+		<association property="guaranteeInfo" column="gi_id"
+			resultMap="guaranteeInfo" />
+		<association property="contactPersonInfo" column="ci_id"
+			resultMap="contactInfo" />
+		<association property="prefer" column="prefer_id"
+			resultMap="userPrefer" />
+	</resultMap>
+
 	<resultMap id="dormitory-order" type="com.noeasy.money.model.OrderBean">
-		<id column="id" property="id" />
+		<id column="id" property="order_id" />
 		<result property="orderType" column="order_type" />
 		<result property="orderStatus" column="order_status" />
-		<result property="currency" column="currency" />
-		<result property="amount" column="amount" />
-		<result property="createTime" column="create_time" />
-		<association property="user" column="user_id" javaType="com.noeasy.money.model.UserBean">
-			<id property="id" column="uid" />
-			<result property="login" column="user_login" />
-			<result property="password" column="user_password" />
-			<result property="email" column="user_email" />
-			<result property="name" column="user_name" />
-			<result property="gender" column="user_gender" />
-			<result property="passport" column="user_passport" />
-			<result property="birthday" column="user_birthday" />
-			<result property="address" column="user_address" />
-			<result property="qq" column="user_qq" />
-			<result property="phone" column="user_phone" />
-		</association>
-		<association property="belongsTo" column="belongs_to" javaType="com.noeasy.money.model.UserBean">
-			<id property="id" column="bid" />
-			<result property="login" column="belong_login" />
-			<result property="password" column="belong_password" />
-			<result property="email" column="belong_email" />
-			<result property="name" column="belong_name" />
-			<result property="gender" column="belong_gender" />
-			<result property="passport" column="belong_passport" />
-			<result property="birthday" column="belong_birthday" />
-			<result property="address" column="belong_address" />
-			<result property="qq" column="belong_qq" />
-			<result property="phone" column="belong_phone" />
-		</association>
-		<association property="orderContact" column="cid" javaType="com.noeasy.money.model.OrderContactInfo">
-			<id property="id" column="cid" />
-			<result property="name" column="contact_name" />
-			<result property="gender" column="contact_gender" />
-			<result property="QQ" column="contact_qq" />
-			<result property="phone" column="contact_phone" />
-			<result property="address" column="contact_address" />
-		</association>
-		<collection property="lineItems" ofType="com.noeasy.money.model.DormitoryLineItem">
+		<result property="currency" column="order_currency" />
+		<result property="amount" column="order_amount" />
+		<result property="createTime" column="order_create_time" />
+		<association property="user" column="placer_id" resultMap="placer" />
+		<association property="belongsTo" column="bt_id"
+			resultMap="belongTo" />
+		<association property="orderContact" column="cid"
+			resultMap="orderContact" />
+		<collection property="lineItems"
+			ofType="com.noeasy.money.model.DormitoryLineItem">
 			<id property="id" column="lid" />
 			<result property="amount" column="li_amount" />
 			<result property="listPrice" column="li_listPrice" />
 			<result property="currency" column="li_currency" />
-			<association property="dormitory" column="dormitory_id" javaType="com.noeasy.money.model.DormitoryBean">
-				<id property="id" column="did" />
-				<result property="cityId" column="city_id" />
-				<result property="dormitoryTypeId" column="type_id" />
-				<result property="contractId" column="contract_type_id" />
-				<result property="contract" column="contract_name" />
-				<result property="name" column="dname" />
-				<result property="address" column="daddress" />
-				<result property="postCode" column="postcode" />
-				<result property="listPrice" column="dlistPrice" />
-				<result property="salePrice" column="salePrice" />
-				<result property="currency" column="dcurrency" />
-				<result property="equipment" column="equipment" />
-				<result property="service" column="service" />
-				<result property="description" column="description" />
-				<result property="status" column="dstatus" />
+			<association property="dormitory" column="dormitory_id"
+				javaType="com.noeasy.money.model.DormitoryBean">
+				<id property="id" column="dormitory_id" />
+				<result property="cityId" column="dormitory_city_id" />
+				<result property="name" column="dormitory_name" />
+				<result property="address" column="dormitory_address" />
+				<result property="postCode" column="dormitory_postcode" />
+				<result property="listPrice" column="dormitory_listPrice" />
+				<result property="salePrice" column="dormitory_salePrice" />
+				<result property="currency" column="dormitory_currency" />
+				<result property="equipment" column="dormitory_equipment" />
+				<result property="service" column="dormitory_service" />
+				<result property="description" column="dormitory_description" />
+				<result property="status" column="dormitory_status" />
+			</association>
+			<association property="roomInfo" column="ri_id"
+				javaType="com.noeasy.money.model.RoomInfoBean">
+				<id property="id" column="ri_id" />
+				<result property="dormitoryId" column="ri_dormitory_id" />
+				<result property="roomTypeId" column="ri_room_type_id" />
+				<result property="roomType" column="ri_room_type" />
+				<result property="description" column="ri_description" />
+				<result property="checkinDate" column="ri_checkin_date" />
+				<result property="orientation" column="ri_orientations" />
+				<result property="floors" column="ri_floors" />
+				<result property="bedType" column="ri_bed_type" />
+				<result property="houseArea" column="ri_house_area" />
+				<result property="ensuitBathroom" column="ri_ensuite_bathroom" />
+				<result property="kitchenPeople" column="ri_kitchen_people_number" />
+				<result property="floorArrange" column="ri_floor_arrangement" />
+				<result property="orientationArrange" column="ri_orientation_arrangement" />
+				<result property="roomLanguageArrange" column="ri_language_arrangement" />
+				<result property="kitchenEquipment" column="ri_kitchen_equipment" />
+				<result property="bathroomEquipment" column="ri_bathroom_equipment" />
+				<result property="status" column="ri_status" />
+			</association>
+			<association property="contractType" column="ct_id"
+				javaType="com.noeasy.money.model.ContractType">
+				<id property="id" column="ct_id" />
+				<result property="name" column="ct_name" />
 			</association>
 		</collection>
 	</resultMap>
@@ -261,41 +434,13 @@
 		<result property="currency" column="currency" />
 		<result property="amount" column="amount" />
 		<result property="createTime" column="create_time" />
-		<association property="user" column="user_id" javaType="com.noeasy.money.model.UserBean">
-			<id property="id" column="uid" />
-			<result property="login" column="user_login" />
-			<result property="password" column="user_password" />
-			<result property="email" column="user_email" />
-			<result property="name" column="user_name" />
-			<result property="gender" column="user_gender" />
-			<result property="passport" column="user_passport" />
-			<result property="birthday" column="user_birthday" />
-			<result property="address" column="user_address" />
-			<result property="qq" column="user_qq" />
-			<result property="phone" column="user_phone" />
-		</association>
-		<association property="belongsTo" column="belongs_to" javaType="com.noeasy.money.model.UserBean">
-			<id property="id" column="bid" />
-			<result property="login" column="belong_login" />
-			<result property="password" column="belong_password" />
-			<result property="email" column="belong_email" />
-			<result property="name" column="belong_name" />
-			<result property="gender" column="belong_gender" />
-			<result property="passport" column="belong_passport" />
-			<result property="birthday" column="belong_birthday" />
-			<result property="address" column="belong_address" />
-			<result property="qq" column="belong_qq" />
-			<result property="phone" column="belong_phone" />
-		</association>
-		<association property="orderContact" column="cid" javaType="com.noeasy.money.model.OrderContactInfo">
-			<id property="id" column="cid" />
-			<result property="name" column="contact_name" />
-			<result property="gender" column="contact_gender" />
-			<result property="QQ" column="contact_qq" />
-			<result property="phone" column="contact_phone" />
-			<result property="address" column="contact_address" />
-		</association>
-		<collection property="lineItems" ofType="com.noeasy.money.model.PickupLineItem">
+		<association property="user" column="placer_id" resultMap="placer" />
+		<association property="belongsTo" column="bt_id"
+			resultMap="belongTo" />
+		<association property="orderContact" column="cid"
+			resultMap="orderContact" />
+		<collection property="lineItems"
+			ofType="com.noeasy.money.model.PickupLineItem">
 			<id property="id" column="lid" />
 			<result property="flightNum" column="flight_number" />
 			<result property="cityId" column="city_id" />

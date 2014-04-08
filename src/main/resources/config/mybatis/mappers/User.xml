@@ -217,6 +217,34 @@
 		WHERE id = #{id}
 	</update>
 	
+	<update id="setInfo2Order">
+		UPDATE order_contact_info SET
+			belong_to_user_info_id = #{belongsToInfo.id},
+			update_time = now()
+		WHERE id = #{id}
+	</update>
+	
+	<update id="setGuaranteeInfo2Order">
+		UPDATE order_contact_info SET
+			guarantee_info_id = #{guaranteeInfo.id},
+			update_time = now()
+		WHERE id = #{id}
+	</update>
+	
+	<update id="setContactPersonInfo2Order">
+		UPDATE order_contact_info SET
+			contact_person_info_id = #{contactPersonInfo.id},
+			update_time = now()
+		WHERE id = #{id}
+	</update>
+	
+	<update id="setPrefer2Order">
+		UPDATE order_contact_info SET
+			prefer_id = #{prefer.id},
+			update_time = now()
+		WHERE id = #{id}
+	</update>
+	
 	<resultMap id="user" type="com.noeasy.money.model.UserBean">
 		<id column="uId" property="id" />
 		<result property="login" column="login" />

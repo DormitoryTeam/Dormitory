@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.noeasy.money.exception.BaseException;
 import com.noeasy.money.exception.UserErrorMetadata;
+import com.noeasy.money.model.OrderContactInfo;
 import com.noeasy.money.model.UserBean;
 import com.noeasy.money.model.UserInfoBean;
 import com.noeasy.money.model.UserPreferBean;
@@ -30,14 +31,12 @@ public class UserService implements IUserService {
     @Resource(name = "authenticationRepository")
     private IAuthenticationRepository authenticationRepository;
 
-    enum INFO_TYPE {
-        USER_INFO, GUARANTEE_INFO, CONTACT_PERSON_INFO;
-    }
+   
 
     @Override
     public int changePassword(final String pLogin, final String pOldPassword, final String pNewPassword) {
         boolean isExist = exist(pLogin, pOldPassword);
-        if (!isExist) {
+        if (!isExist) {    
             return PASSWORD_NOT_MATCH;
         }
         UserBean user = new UserBean();
@@ -91,6 +90,21 @@ public class UserService implements IUserService {
             return Collections.EMPTY_LIST;
         }
         return result;
+    }
+    
+    
+    @Override
+    public UserBean  findUserById(Integer pUserId) {
+        if (null == pUserId) {
+            return null;
+        }
+        UserSearchBean searchBean = new UserSearchBean();
+        searchBean.setId(pUserId);
+        List<UserBean> users = queryUser(searchBean);
+        if (CollectionUtils.isEmpty(users)) {
+            return null;
+        }
+        return users.get(0);
     }
 
 
@@ -246,4 +260,98 @@ public class UserService implements IUserService {
         userRepository.setPrefer2User(pUser);
     }
 
+
+
+    @Override
+    public void saveUserInfo(OrderContactInfo contactInfo, INFO_TYPE infoType) {
+        if (null == contactInfo) {
+            return;
+        }
+        UserInfoBean userInfo = null;
+        if (INFO_TYPE.USER_INFO == infoType) {
+            userInfo = contactInfo.getBelongsToInfo();
+        }
+        if (INFO_TYPE.GUARANTEE_INFO == infoType) {
+            userInfo = contactInfo.getGuaranteeInfo();
+        }
+        if (INFO_TYPE.CONTACT_PERSON_INFO == infoType) {
+            userInfo = contactInfo.getContactPersonInfo();
+            ;
+        }
+        if (null == userInfo) {
+            return;
+        }
+        if (null == userInfo.getId()) {
+            createUserInfo(contactInfo, userInfo, infoType);
+        } else {
+            updateUserInfo(userInfo);
+        }
+        
+    }
+
+
+
+    private void createUserInfo(OrderContactInfo pContactInfo, UserInfoBean pUserInfo, INFO_TYPE pInfoType) {
+        userRepository.createUserInfo(pUserInfo);
+        switch (pInfoType.ordinal()) {
+        case 0:
+            pContactInfo.setBelongsToInfo(pUserInfo);
+            userRepository.setInfo2Order(pContactInfo);
+            break;
+        case 1:
+            pContactInfo.setGuaranteeInfo(pUserInfo);
+            userRepository.setGuaranteeInfo2Order(pContactInfo);
+            break;
+        case 2:
+            pContactInfo.setContactPersonInfo(pUserInfo);
+            userRepository.setContactPersonInfo2Order(pContactInfo);
+            break;
+        default:
+            assert false : "Not support this type of UserInfo";
+        }
+        
+    }
+
+
+
+    @Override
+    public void saveUserPrder(OrderContactInfo contactInfo) {
+        if (null == contactInfo) {
+            return;
+        }
+        UserPreferBean userPrefer = contactInfo.getPrefer();
+        if (null == userPrefer) {
+            return;
+        }
+        if (null == userPrefer.getId()) {
+            createUserPrefer(userPrefer, contactInfo);
+        } else {
+            updateUserPrefer(userPrefer);
+        }
+        
+    }
+
+
+
+    private void createUserPrefer(UserPreferBean pUserPrefer, OrderContactInfo pContactInfo) {
+        userRepository.createUserPrefer(pUserPrefer);
+        pContactInfo.setPrefer(pUserPrefer);
+        userRepository.setPrefer2Order(pContactInfo);
+        
+    }
+
+
+
+    @Override
+    public UserBean findUserByLogin(String pLogin) {
+        UserSearchBean searchBean = new UserSearchBean();
+        searchBean.setLogin(pLogin);
+        List<UserBean> matchUsers = userRepository.queryUser(searchBean);
+        if (CollectionUtils.isNotEmpty(matchUsers)) {
+            return matchUsers.get(0); 
+        }
+        return null;
+    }
+
+    
 }

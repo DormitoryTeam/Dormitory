@@ -645,8 +645,57 @@
 		p2.dormitory_id = #{dormitoryId}
 		) t1) t2;
 	</insert>
-
+	<select id="findRoomInfoById" resultMap="roomInfo2" parameterType="int">
+		select room_info.id as ri_id, room_info.dormitory_id as ri_dormitory_id, room_info.room_type_id as ri_room_type_id, 
+		room_info.description as ri_description, room_info.checkin_date as ri_checkin_date, room_info.orientations as ri_orientations, 
+		room_info.floors as ri_floors, room_info.bed_type as ri_bed_type, room_info.house_area as ri_house_area, room_info.ensuite_bathroom as ri_ensuite_bathroom, 
+		room_info.kitchen_people_number as ri_kitchen_people_number, room_info.floor_arrangement as ri_floor_arrangement, 
+		room_info.orientation_arrangement as ri_orientation_arrangement, room_info.room_language_arrangement as ri_language_arrangement, 
+		room_info.kitchen_equipment as ri_kitchen_equipment, room_info.bathroom_equipment as ri_bathroom_equipment, room_info.status as ri_status 
+		from room_info
+		where id = #{id}
+	</select>
+	
+	<select id="findRoomPrice" resultMap="roomPrice2" parameterType="com.noeasy.money.model.RoomPriceSearchBean">
+		select room_price.id, room_info_id, contract_type_id, currency, listPrice, salePrice, contract_type.name as contract
+		from room_price
+		inner join contract_type on room_price.contract_type_id = contract_type.id
+		where status = 1 and room_info_id = #{roomInfoId} and contract_type_id = #{contractId}
+	</select>
+	
 	<!-- Result Map ############################################### -->
+	<resultMap id="roomPrice2" type="com.noeasy.money.model.RoomPrice">
+		<id property="id" column="id" />
+		<result property="roomInfoId" column="room_info_id" />
+		<result property="contractId" column="contract_type_id" />
+		<result property="currency" column="currency" />
+		<result property="listPrice" column="listPrice" />
+		<result property="salePrice" column="salePrice" />
+		<result property="contract" column="contract" />
+	</resultMap>
+	
+	<resultMap id="roomInfo2" type="com.noeasy.money.model.RoomInfoBean">
+		<id property="id" column="ri_id" />
+		<result property="dormitoryId" column="ri_dormitory_id" />
+		<result property="roomTypeId" column="ri_room_type_id" />
+		<result property="roomType" column="ri_room_type" />
+		<result property="description" column="ri_description" />
+		<result property="checkinDate" column="ri_checkin_date" />
+		<result property="orientation" column="ri_orientations" />
+		<result property="floors" column="ri_floors" />
+		<result property="bedType" column="ri_bed_type" />
+		<result property="houseArea" column="ri_house_area" />
+		<result property="ensuitBathroom" column="ri_ensuite_bathroom" />
+		<result property="kitchenPeople" column="ri_kitchen_people_number" />
+		<result property="floorArrange" column="ri_floor_arrangement" />
+		<result property="orientationArrange" column="ri_orientation_arrangement" />
+		<result property="roomLanguageArrange" column="ri_language_arrangement" />
+		<result property="kitchenEquipment" column="ri_kitchen_equipment" />
+		<result property="bathroomEquipment" column="ri_bathroom_equipment" />
+		<result property="status" column="ri_status" />
+	</resultMap>
+	
+	
 	<resultMap id="dormitory" type="com.noeasy.money.model.DormitoryBean">
 		<id property="id" column="dor_id" />
 		<result property="name" column="dor_name" />

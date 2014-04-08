@@ -28,6 +28,7 @@
  */
 package com.noeasy.money.service.impl;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,9 +39,13 @@ import org.springframework.stereotype.Service;
 
 import com.noeasy.money.enumeration.OrderStatus;
 import com.noeasy.money.enumeration.OrderType;
+import com.noeasy.money.model.DormitoryLineItem;
+import com.noeasy.money.model.LineItem;
 import com.noeasy.money.model.OrderBean;
+import com.noeasy.money.model.OrderContactInfo;
 import com.noeasy.money.model.OrderSearchBean;
-import com.noeasy.money.model.UserBean;
+import com.noeasy.money.model.PickupLineItem;
+import com.noeasy.money.repository.IDormitoryRepository;
 import com.noeasy.money.repository.IOrderRepository;
 import com.noeasy.money.service.IOrderService;
 
@@ -55,6 +60,8 @@ public class OrderService implements IOrderService {
 
     @Resource(name = "orderRepository")
     private IOrderRepository orderRepository;
+    
+    private IDormitoryRepository dormitoryRepository;
 
 
 
@@ -115,15 +122,17 @@ public class OrderService implements IOrderService {
     @Override
     public int updateOrderStatus(Integer pOrderId, OrderStatus pStatus) {
         return orderRepository.updateOrderStatus(pOrderId, pStatus);
-        
+
     }
 
-    
+
+
     @Override
     public int updateOrderPrice(OrderBean order) {
         return orderRepository.updateOrderPrice(order);
-        
+
     }
+
 
 
     @Override
@@ -134,6 +143,82 @@ public class OrderService implements IOrderService {
             return orderRepository.queryPickupOrderCount(pSearchBean);
         }
         return 0;
+    }
+
+
+
+    @Override
+    public OrderBean findOrderById(Integer id) {
+        return orderRepository.findOrderById(id);
+    }
+
+
+
+    @Override
+    public void createOrder(OrderBean pOrder) {
+        // create Order
+        orderRepository.saveOrder(pOrder);
+        OrderContactInfo contactInfo = pOrder.getOrderContact();
+        contactInfo.setOrderId(pOrder.getId());
+        // create orderContact and related to order
+        orderRepository.saveOrderContactInfo(contactInfo);
+        List<LineItem> items = pOrder.getLineItems();
+        if (CollectionUtils.isEmpty(items)) {
+            throw new RuntimeException("no line item on order.");
+        }
+        LineItem item = items.get(0);
+        item.setOrderId(pOrder.getId());
+        if (OrderType.DORMITORY == pOrder.getOrderType()) {
+            orderRepository.saveDormitoryLineItem(item);
+        } else {
+            orderRepository.savePickupLineItem(item);
+        }
+    }
+
+
+
+    @Override
+    public void updateOrder(OrderBean pOrder) {
+        List<LineItem> items = pOrder.getLineItems();
+        BigDecimal amount = new BigDecimal("0.00");
+        BigDecimal listPrice = new BigDecimal("0.00");
+        if(CollectionUtils.isNotEmpty(items)) {
+            for (LineItem item : items) {
+                amount = amount.add(item.getAmount());
+            }
+        }
+        pOrder.setAmount(amount);
+        // calculate order price
+        orderRepository.updateOrder(pOrder);
+        // update order(price, type, belongsTo, user)
+
+    }
+
+
+
+    @Override
+    public void updateLineItem(OrderBean pOrder) {
+        // create lineItem and related to order.
+        List<LineItem> items = pOrder.getLineItems();
+        if (CollectionUtils.isEmpty(items)) {
+            return;
+        }
+        LineItem item = items.get(0);
+        if (null != item && null != item.getId()) {
+            item.setCurrency(pOrder.getCurrency());
+            if (OrderType.DORMITORY == pOrder.getOrderType()) {
+                DormitoryLineItem dormitoryItem = (DormitoryLineItem)item;
+                //TODO: FIX BUG. update Dormitory item.
+                orderRepository.updateDormitoryLineItem(dormitoryItem);
+            } else {
+                PickupLineItem pickupItem = (PickupLineItem)item;
+             // TODO Use pick up default price.
+                pickupItem.setAmount(BigDecimal.valueOf(0));
+                pickupItem.setListPrice(BigDecimal.valueOf(0));
+                orderRepository.updatePickupLineItem(pickupItem);
+            }
+        }
+        
     }
 
 }

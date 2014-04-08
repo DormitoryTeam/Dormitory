@@ -17,8 +17,34 @@ $(function() {
 		path : '../style/img'
 	});
 	
+	$(".btnBookDormitory").each(function(i, e) {
+		$(e).click(function() {
+			var bookContainer = $("#chooseContract");
+			bookContainer.empty();
+			var roomId = $(this).attr("roomId");
+			$("#roomInfoId").val(roomId);
+			var contracts = room_contracts[roomId];
+			for (var i in contracts) {
+				var bookHTML = '<div>#name#: #pice# <input type="button" contractId="#id#" class="bookNowbtn" value="Book Now"/></div>';
+				console.log("id: " + contracts[i].id + "; name: " + contracts[i].name + "; salePrice: " + contracts[i].salePrice + "; currency: " + contracts[i].currency);
+				bookHTML = bookHTML.replace("#name#", contracts[i].name);
+				bookHTML = bookHTML.replace("#pice#", contracts[i].salePrice);
+				bookHTML = bookHTML.replace("#id#", contracts[i].id);
+				var bookDIV = $(bookHTML);
+				bookContainer.append(bookDIV);
+			}
+			$(document).on("click",".bookNowbtn",function(){
+				var contractId = $(this).attr("contractId");
+				console.log("contractId: " + contractId);
+				$("#contractId").val(contractId);
+				$("#placeOrderForm").submit();
+			});
+		
+		}); 
+	});
 	initialize();
 });
+
 
 function initialize() {
 

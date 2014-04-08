@@ -42,6 +42,7 @@ import com.noeasy.money.model.DormitoryRateBean;
 import com.noeasy.money.model.DormitorySearchBean;
 import com.noeasy.money.model.RoomInfoBean;
 import com.noeasy.money.model.RoomPrice;
+import com.noeasy.money.model.RoomPriceSearchBean;
 import com.noeasy.money.repository.IDormitoryRepository;
 import com.noeasy.money.util.ParamUtils;
 
@@ -445,6 +446,20 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
     @Override
     public Integer updateRoomPrice(final RoomPrice pRoomPrice) {
         return getSqlSession().update("com.noeasy.money.model.Dormitory.updateRoomPrice", pRoomPrice);
+    }
+
+
+
+    @Override
+    public RoomInfoBean findRoomInfoById(Integer pRoomInfoId) {
+        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.findRoomInfoById", pRoomInfoId);
+    }
+
+
+
+    @Override
+    public RoomPrice findRoomPrice(RoomPriceSearchBean seachBean) {
+        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.findRoomPrice", seachBean);
     }
 
 }

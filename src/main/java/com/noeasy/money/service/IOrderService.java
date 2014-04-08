@@ -69,4 +69,20 @@ public interface IOrderService {
 
 
     int updateOrderPrice(OrderBean pOrder);
+
+
+
+    OrderBean findOrderById(Integer pValueOf);
+
+
+
+    void createOrder(OrderBean pOrder);
+
+
+
+    void updateOrder(OrderBean pOrder);
+
+
+
+    void updateLineItem(OrderBean pOrder);
 }

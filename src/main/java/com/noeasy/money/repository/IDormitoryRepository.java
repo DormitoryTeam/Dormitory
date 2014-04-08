@@ -36,6 +36,7 @@ import com.noeasy.money.model.DormitoryRateBean;
 import com.noeasy.money.model.DormitorySearchBean;
 import com.noeasy.money.model.RoomInfoBean;
 import com.noeasy.money.model.RoomPrice;
+import com.noeasy.money.model.RoomPriceSearchBean;
 
 /**
  * <class description>
@@ -159,5 +160,13 @@ public interface IDormitoryRepository {
 
 
     Integer updateRoomPrice(RoomPrice pRoomPrice);
+
+
+
+    RoomInfoBean findRoomInfoById(Integer pRoomInfoId);
+
+
+
+    RoomPrice findRoomPrice(RoomPriceSearchBean seachBean);
 
 }

@@ -9,34 +9,33 @@ package com.noeasy.money.constant;
  * @author acer
  */
 public interface Constants {
-    public static final int    DEFAULT_PAGE_SIZE        = 8;
+    int    DEFAULT_PAGE_SIZE        = 8;
 
-    public static final String IMAGE_STORAGE_PATH       = "IMAGE/";
+    String IMAGE_STORAGE_PATH       = "IMAGE/";
 
-    public static final String URL_SUFFIX               = ".html";
+    String URL_SUFFIX               = ".html";
 
-    public static final String CONFIG_PATH              = "/config/base.properties";
+    String CONFIG_PATH              = "/config/base.properties";
 
-    public static final String CONFIG_DOMAIN            = "domain";
+    String CONFIG_DOMAIN            = "domain";
 
-    public static final String CONFIG_CONTEXT           = "context";
+    String CONFIG_CONTEXT           = "context";
 
-    public static final String SLASH                    = "/";
+    String SLASH                    = "/";
 
-    public static final String CONFIG_DEFAULT_PAGE_SIZE = "defaultPageSize";
+    String CONFIG_DEFAULT_PAGE_SIZE = "defaultPageSize";
 
-    public static final String PARAM_CURRENT_PAGE       = "currentPage";
+    String PARAM_CURRENT_PAGE       = "currentPage";
+    String PARAM_PAGE_SIZE          = "pageSize";
+    String PARAM_PAGE_STEP          = "pageStep";
+    String PARAM_COMMAND            = "command";
+    String PARAM_ORDER_ID           = "orderId";
+    String PARMA_ORDER_TYPE         = "orderType";
+    String PARAM_LINE_ITEM_ID       = "lineItemId";
+    String PARAM_ROOM_INFO_ID       = "roomInfoId";
+    String PARAM_DORMITORY_ID       = "dormitoryId";
+    String PARAM_CONTRACT_ID        = "contractId";
 
-    public static final String PARAM_PAGE_SIZE          = "pageSize";
-
-    public static final String PARAM_PAGE_STEP          = "pageStep";
-
-    public static final String PARAM_VALUE_STEP2        = "step2";
-
-    public static final String PARAM_VALUE_STEP3        = "step3";
-
-    public static final String PARAM_VALUE_STEP4        = "step4";
-
-    public static final String PARAM_VALUE_STEP5        = "step5";
+    String PARAM_VALUE_COMMAND_SAVE = "SAVE";
 
 }

@@ -37,123 +37,89 @@ package com.noeasy.money.model;
 
 public class OrderContactInfo extends BaseBean {
 
-    private int     mId;
+    private Integer            mId;
 
-    private int     mOrderId;
+    private Integer            mOrderId;
 
-    private String  mName;
+    private UserInfoBean   belongsToInfo;
 
-    private boolean mGender;
+    private UserInfoBean   guaranteeInfo;
 
-    private String  mQQ;
+    private UserInfoBean   contactPersonInfo;
 
-    private String  mPhone;
-
-    private String  mAddress;
+    private UserPreferBean prefer;
 
 
 
-    /**
-     * @return the address
-     */
-    public String getAddress() {
-        return mAddress;
-    }
-
-
-
-    /**
-     * @return the id
-     */
-    public int getId() {
+    public Integer getId() {
         return mId;
     }
 
 
 
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return mName;
-    }
-
-
-
-    public int getOrderId() {
-        return mOrderId;
-    }
-
-
-
-    public String getPhone() {
-        return mPhone;
-    }
-
-
-
-    public String getQQ() {
-        return mQQ;
-    }
-
-
-
-    public boolean isGender() {
-        return mGender;
-    }
-
-
-
-    /**
-     * @param pAddress
-     *            the address to set
-     */
-    public void setAddress(final String pAddress) {
-        mAddress = pAddress;
-    }
-
-
-
-    public void setGender(final boolean pGender) {
-        mGender = pGender;
-    }
-
-
-
-    /**
-     * @param pId
-     *            the id to set
-     */
-    public void setId(final int pId) {
+    public void setId(Integer pId) {
         mId = pId;
     }
 
 
 
-    /**
-     * @param pName
-     *            the name to set
-     */
-    public void setName(final String pName) {
-        mName = pName;
+    public Integer getOrderId() {
+        return mOrderId;
     }
 
 
 
-    public void setOrderId(final int pOrderId) {
+    public void setOrderId(Integer pOrderId) {
         mOrderId = pOrderId;
     }
 
 
 
-    public void setPhone(final String pPhone) {
-        mPhone = pPhone;
+    public UserInfoBean getBelongsToInfo() {
+        return belongsToInfo;
     }
 
 
 
-    public void setQQ(final String pQQ) {
-        mQQ = pQQ;
+    public void setBelongsToInfo(UserInfoBean pBelongsToInfo) {
+        belongsToInfo = pBelongsToInfo;
     }
 
+
+
+    public UserInfoBean getGuaranteeInfo() {
+        return guaranteeInfo;
+    }
+
+
+
+    public void setGuaranteeInfo(UserInfoBean pGuaranteeInfo) {
+        guaranteeInfo = pGuaranteeInfo;
+    }
+
+
+
+    public UserInfoBean getContactPersonInfo() {
+        return contactPersonInfo;
+    }
+
+
+
+    public void setContactPersonInfo(UserInfoBean pContactPersonInfo) {
+        contactPersonInfo = pContactPersonInfo;
+    }
+
+
+
+    public UserPreferBean getPrefer() {
+        return prefer;
+    }
+
+
+
+    public void setPrefer(UserPreferBean pPrefer) {
+        prefer = pPrefer;
+    }
+
+    
 }

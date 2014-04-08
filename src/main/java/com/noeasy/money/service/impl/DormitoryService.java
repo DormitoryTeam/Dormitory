@@ -40,6 +40,9 @@ import org.springframework.stereotype.Service;
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitoryRateBean;
 import com.noeasy.money.model.DormitorySearchBean;
+import com.noeasy.money.model.RoomInfoBean;
+import com.noeasy.money.model.RoomPrice;
+import com.noeasy.money.model.RoomPriceSearchBean;
 import com.noeasy.money.repository.IDormitoryRepository;
 import com.noeasy.money.service.IDormitoryService;
 
@@ -242,6 +245,32 @@ public class DormitoryService implements IDormitoryService {
             }
         }
         return false;
+    }
+
+
+
+    @Override
+    public DormitoryBean findDormitoryById(Integer pDormitoryId) {
+        DormitorySearchBean searchBean = new DormitorySearchBean();
+        searchBean.setId(pDormitoryId);
+        return dormitoryRepository.queryDormitory(searchBean);
+    }
+
+
+
+    @Override
+    public RoomInfoBean findRoomInfoById(Integer pRoomInfoId) {
+        return dormitoryRepository.findRoomInfoById(pRoomInfoId);
+    }
+
+
+
+    @Override
+    public RoomPrice findRoomPrice(Integer pRoomInfoId, Integer pContractId) {
+        RoomPriceSearchBean searchBean = new RoomPriceSearchBean();
+        searchBean.setContractId(pContractId);
+        searchBean.setRoomInfoId(pRoomInfoId);
+        return dormitoryRepository.findRoomPrice(searchBean);
     }
 
 }

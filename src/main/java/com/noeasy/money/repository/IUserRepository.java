@@ -2,6 +2,7 @@ package com.noeasy.money.repository;
 
 import java.util.List;
 
+import com.noeasy.money.model.OrderContactInfo;
 import com.noeasy.money.model.UserBean;
 import com.noeasy.money.model.UserInfoBean;
 import com.noeasy.money.model.UserPreferBean;
@@ -68,4 +69,17 @@ public interface IUserRepository {
 
 
 
+    void setInfo2Order(OrderContactInfo pContactInfo);
+
+
+
+    void setGuaranteeInfo2Order(OrderContactInfo pContactInfo);
+
+
+
+    void setContactPersonInfo2Order(OrderContactInfo pContactInfo);
+
+
+
+    void setPrefer2Order(OrderContactInfo pContactInfo);
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.noeasy.money.model.OrderContactInfo;
 import com.noeasy.money.model.UserBean;
 import com.noeasy.money.model.UserInfoBean;
 import com.noeasy.money.model.UserPreferBean;
@@ -100,7 +101,7 @@ public class UserRepository extends BaseRepository implements IUserRepository {
     @Override
     public void updateUserPrefer(UserPreferBean pUserPrefer) {
         getSqlSession().update("com.noeasy.money.model.User.updateUserPrefer", pUserPrefer);
-        
+
     }
 
 
@@ -115,6 +116,36 @@ public class UserRepository extends BaseRepository implements IUserRepository {
     @Override
     public void setPrefer2User(UserBean pUser) {
         getSqlSession().update("com.noeasy.money.model.User.setPrefer2User", pUser);
+    }
+
+
+
+    @Override
+    public void setInfo2Order(OrderContactInfo pContactInfo) {
+        getSqlSession().update("com.noeasy.money.model.User.setInfo2Order", pContactInfo);
+
+    }
+
+
+
+    @Override
+    public void setGuaranteeInfo2Order(OrderContactInfo pContactInfo) {
+        getSqlSession().update("com.noeasy.money.model.User.setGuaranteeInfo2Order", pContactInfo);
+
+    }
+
+
+
+    @Override
+    public void setContactPersonInfo2Order(OrderContactInfo pContactInfo) {
+        getSqlSession().update("com.noeasy.money.model.User.setContactPersonInfo2Order", pContactInfo);
+    }
+
+
+
+    @Override
+    public void setPrefer2Order(OrderContactInfo pContactInfo) {
+        getSqlSession().update("com.noeasy.money.model.User.setPrefer2Order", pContactInfo);
     }
 
 }

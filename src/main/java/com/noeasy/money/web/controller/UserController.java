@@ -59,7 +59,7 @@ public class UserController {
     public String changePassword(final ModelMap model, final HttpServletRequest request,
             final HttpServletResponse response, final String oldPassword, final String newPassword) {
         String login = (String) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_LOGIN);
-        if (null == login) {
+        if (!ServletUtils.isLogin(request)) {
             return "redirect:/user/login.html";
         }
 
@@ -85,12 +85,12 @@ public class UserController {
     @RequestMapping(value = "/editUserInfo.html")
     public String editUserInfo(final ModelMap model, final HttpServletRequest request,
             final HttpServletResponse response) {
+        if (!ServletUtils.isLogin(request)) {
+            return "redirect:/user/login.html";
+        }
         Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
         String[] forwrdURLs = new String[] { "user/userInfoForm", "user/preferForm", "user/guaranteeForm",
                 "user/contactPersonForm", "user/notesForm" };
-        if (null == userId) {
-            return "redirect:/user/login.html";
-        }
         String pageStep = request.getParameter(Constants.PARAM_PAGE_STEP);
         Integer step = Integer.valueOf(0);
         if (StringUtils.isNotBlank(pageStep)) {
@@ -102,9 +102,7 @@ public class UserController {
                 step = Integer.valueOf(4);
             }
         }
-        UserSearchBean searchBean = new UserSearchBean();
-        searchBean.setId(userId);
-        UserBean user = userService.queryUser(searchBean).get(0);
+        UserBean user = userService.findUserById(userId);
         model.addAttribute("user", user);
         if (ServletUtils.isGet(request)) {
             String forwordURL = forwrdURLs[step];
@@ -144,40 +142,12 @@ public class UserController {
 
 
 
-    private UserInfoBean getUserInfoFromRequest(HttpServletRequest pRequest) {
-        UserInfoBean userInfo = new UserInfoBean();
-        userInfo.setName(pRequest.getParameter("name"));
-        userInfo.setNationality(pRequest.getParameter("nationality"));
-        userInfo.setEmail(pRequest.getParameter("email"));
-        userInfo.setQq(pRequest.getParameter("qq"));
-        userInfo.setWechat(pRequest.getParameter("wechat"));
-        userInfo.setPhone(pRequest.getParameter("phone"));
-        userInfo.setCountry(pRequest.getParameter("country"));
-        userInfo.setProvince(pRequest.getParameter("province"));
-        userInfo.setCity(pRequest.getParameter("city"));
-        userInfo.setAddress(pRequest.getParameter("address"));
-        String birthdayStr = pRequest.getParameter("birthday");
-        if (StringUtils.isNotBlank(birthdayStr)) {
-            userInfo.setBirthday(DateUtils.stringToDate(birthdayStr));
-        }
-        String genderStr = pRequest.getParameter("gender");
-        if (StringUtils.isNotBlank(genderStr)) {
-            userInfo.setGender(Integer.valueOf(genderStr));
-        }
-        String idStr = pRequest.getParameter("infoId");
-        if (StringUtils.isNotBlank(idStr)) {
-            userInfo.setId(Integer.valueOf(idStr));
-        }
-        return userInfo;
-    }
-
-
 
     private void maintainsUserInfo(HttpServletRequest pRequest, HttpServletResponse pResponse) {
         Integer userId = (Integer) pRequest.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
         UserBean user = new UserBean();
         user.setId(userId);
-        UserInfoBean info = getUserInfoFromRequest(pRequest);
+        UserInfoBean info = ServletUtils.getUserInfoFromRequest(pRequest);
         user.setInfo(info);
         userService.saveUserInfo(user);
     }
@@ -185,7 +155,7 @@ public class UserController {
 
 
     private void maintainsNotes(HttpServletRequest pRequest, HttpServletResponse pResponse) {
-        UserPreferBean userPrefer = getUserPerferFromRequest(pRequest, pResponse);
+        UserPreferBean userPrefer = ServletUtils.getUserPerferFromRequest(pRequest);
         Integer userId = (Integer) pRequest.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
         UserBean user = new UserBean();
         user.setId(userId);
@@ -199,7 +169,7 @@ public class UserController {
         Integer userId = (Integer) pRequest.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
         UserBean user = new UserBean();
         user.setId(userId);
-        UserInfoBean contactPersonInfo = getUserInfoFromRequest(pRequest);
+        UserInfoBean contactPersonInfo = ServletUtils.getUserInfoFromRequest(pRequest);
         user.setContactPersonInfo(contactPersonInfo);
         userService.saveUserInfo(user);
 
@@ -211,7 +181,7 @@ public class UserController {
         Integer userId = (Integer) pRequest.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
         UserBean user = new UserBean();
         user.setId(userId);
-        UserInfoBean guaranteeInfo = getUserInfoFromRequest(pRequest);
+        UserInfoBean guaranteeInfo = ServletUtils.getUserInfoFromRequest(pRequest);
         user.setGuaranteeInfo(guaranteeInfo);
         userService.saveUserInfo(user);
 
@@ -220,7 +190,7 @@ public class UserController {
 
 
     private void maintainUserPerfer(HttpServletRequest pRequest, HttpServletResponse pResponse) {
-        UserPreferBean userPrefer = getUserPerferFromRequest(pRequest, pResponse);
+        UserPreferBean userPrefer = ServletUtils.getUserPerferFromRequest(pRequest);
         Integer userId = (Integer) pRequest.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
         UserBean user = new UserBean();
         user.setId(userId);
@@ -230,70 +200,7 @@ public class UserController {
 
 
 
-    private UserPreferBean getUserPerferFromRequest(HttpServletRequest pRequest, HttpServletResponse pResponse) {
-        UserPreferBean userPrefer = new UserPreferBean();
-
-        String preferIdStr = pRequest.getParameter("preferId");
-        if (StringUtils.isNotBlank(preferIdStr)) {
-            userPrefer.setId(Integer.valueOf(preferIdStr));
-        }
-        String smokeStr = pRequest.getParameter("smoke");
-        if (StringUtils.isNotBlank(smokeStr)) {
-            if ("Y".equalsIgnoreCase(smokeStr)) {
-                userPrefer.setSmoke(Boolean.TRUE);
-            } else {
-                userPrefer.setSmoke(Boolean.FALSE);
-            }
-        }
-
-        String vegetarianismStr = pRequest.getParameter("vegetarianism");
-        if (StringUtils.isNotBlank(vegetarianismStr)) {
-            if ("Y".equalsIgnoreCase(vegetarianismStr)) {
-                userPrefer.setVegetarianism(Boolean.TRUE);
-            } else {
-                userPrefer.setVegetarianism(Boolean.FALSE);
-            }
-        }
-
-        userPrefer.setYourGrade(pRequest.getParameter("yourGrade"));
-        userPrefer.setRoomMemberGrade(pRequest.getParameter("roomMemberGrade"));
-        String roomMemberGenderStr = pRequest.getParameter("roomMemberGender");
-        if (StringUtils.isBlank(roomMemberGenderStr)) {
-            userPrefer.setRoomMemberGender(Integer.valueOf(0));
-        } else {
-            userPrefer.setRoomMemberGender(Integer.valueOf(roomMemberGenderStr));
-        }
-        userPrefer.setMajor(pRequest.getParameter("major"));
-        userPrefer.setCollege(pRequest.getParameter("college"));
-        userPrefer.setFloor(pRequest.getParameter("floor"));
-        String orientationStr = pRequest.getParameter("orientation");
-        if (StringUtils.isBlank(orientationStr)) {
-            userPrefer.setOrientation(Integer.valueOf(0));
-        } else {
-            userPrefer.setOrientation(Integer.valueOf(orientationStr));
-        }
-
-        userPrefer.setGraduateSchool(pRequest.getParameter("graduateSchool"));
-
-        String needPushStr = pRequest.getParameter("needPush");
-        if (StringUtils.isNotBlank(needPushStr)) {
-            if ("Y".equalsIgnoreCase(needPushStr)) {
-                userPrefer.setNeedPush(Boolean.TRUE);
-            } else {
-                userPrefer.setNeedPush(Boolean.FALSE);
-            }
-        }
-
-        String readClause = pRequest.getParameter("readClause");
-        if (StringUtils.isNotBlank(readClause)) {
-            if ("Y".equalsIgnoreCase(readClause)) {
-                userPrefer.setReadClause(Boolean.TRUE);
-            } else {
-                userPrefer.setReadClause(Boolean.FALSE);
-            }
-        }
-        return userPrefer;
-    }
+    
 
 
 

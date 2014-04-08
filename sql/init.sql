@@ -49,3 +49,9 @@ INSERT INTO `dormitory`.`room_info` (`id`,`dormitory_id`,`room_type_id`,`equipme
 INSERT INTO `dormitory`.`room_info` (`id`,`dormitory_id`,`room_type_id`,`equipment`,`service`,`description`,`checkin_date`,`orientations`,`floors`,`bed_type`,`house_area`,`ensuite_bathroom`,`kitchen_people_number`,`floor_arrangement`,`orientation_arrangement`,`room_language_arrangement`,`status`) VALUES (14,'7','4',0,0,NULL,'2014-03-20 22:47:37','EAST','1,3,5','120cm','12m','1',4,'0','1','0','HAS_VACANCY');
 INSERT INTO `dormitory`.`room_info` (`id`,`dormitory_id`,`room_type_id`,`equipment`,`service`,`description`,`checkin_date`,`orientations`,`floors`,`bed_type`,`house_area`,`ensuite_bathroom`,`kitchen_people_number`,`floor_arrangement`,`orientation_arrangement`,`room_language_arrangement`,`status`) VALUES (15,'8','5',0,0,NULL,'2014-03-20 22:47:37','SOUTH','1,3,5','120cm','12m','1',5,'0','1','0','HAS_VACANCY');
 INSERT INTO `dormitory`.`room_info` (`id`,`dormitory_id`,`room_type_id`,`equipment`,`service`,`description`,`checkin_date`,`orientations`,`floors`,`bed_type`,`house_area`,`ensuite_bathroom`,`kitchen_people_number`,`floor_arrangement`,`orientation_arrangement`,`room_language_arrangement`,`status`) VALUES (16,'8','1',0,0,NULL,'2014-03-20 22:47:37','SOUTH','1,3,5','120cm','12m','1',1,'0','1','0','HAS_VACANCY');
+
+
+/* Room Price */
+INSERT INTO `dormitory`.`room_price` (`id`, `room_info_id`, `contract_type_id`, `currency`, `listPrice`, `salePrice`, `status`, `create_time`, `update_time`) VALUES (1, 1, 1, 'USD', 50, 50, 1, now(), now());
+INSERT INTO `dormitory`.`room_price` (`id`, `room_info_id`, `contract_type_id`, `currency`, `listPrice`, `salePrice`, `status`, `create_time`, `update_time`) VALUES (2, 1, 2, 'USD', 60, 60, 1, now(), now());
+INSERT INTO `dormitory`.`room_price` (`id`, `room_info_id`, `contract_type_id`, `currency`, `listPrice`, `salePrice`, `status`, `create_time`, `update_time`) VALUES (3, 1, 3, 'USD', 80, 80, 1, now(), now());

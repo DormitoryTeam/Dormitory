@@ -39,9 +39,9 @@ import java.math.BigDecimal;
 
 public abstract class LineItem extends BaseBean {
 
-    private int        mId;
+    private Integer    mId;
 
-    private int        mOrderId;
+    private Integer    mOrderId;
 
     private BigDecimal mAmount;
 
@@ -72,7 +72,7 @@ public abstract class LineItem extends BaseBean {
     /**
      * @return the id
      */
-    public int getId() {
+    public Integer getId() {
         return mId;
     }
 
@@ -84,7 +84,7 @@ public abstract class LineItem extends BaseBean {
 
 
 
-    public int getOrderId() {
+    public Integer getOrderId() {
         return mOrderId;
     }
 
@@ -114,7 +114,7 @@ public abstract class LineItem extends BaseBean {
      * @param pId
      *            the id to set
      */
-    public void setId(final int pId) {
+    public void setId(final Integer pId) {
         mId = pId;
     }
 
@@ -126,7 +126,7 @@ public abstract class LineItem extends BaseBean {
 
 
 
-    public void setOrderId(final int pOrderId) {
+    public void setOrderId(final Integer pOrderId) {
         mOrderId = pOrderId;
     }
 }

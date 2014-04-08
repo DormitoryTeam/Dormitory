@@ -48,11 +48,11 @@ import com.noeasy.money.enumeration.Orientation;
 
 public class RoomInfoBean extends DormitoryRoomBean {
 
-    private int             mId;
+    private Integer         mId;
 
-    private int             mDormitoryId;
+    private Integer         mDormitoryId;
 
-    private int             mRoomTypeId;
+    private Integer         mRoomTypeId;
 
     private String          mRoomType;
 
@@ -153,7 +153,7 @@ public class RoomInfoBean extends DormitoryRoomBean {
     /**
      * @return the dormitoryId
      */
-    public int getDormitoryId() {
+    public Integer getDormitoryId() {
         return mDormitoryId;
     }
 
@@ -180,7 +180,7 @@ public class RoomInfoBean extends DormitoryRoomBean {
     /**
      * @return the id
      */
-    public int getId() {
+    public Integer getId() {
         return mId;
     }
 
@@ -225,7 +225,7 @@ public class RoomInfoBean extends DormitoryRoomBean {
     /**
      * @return the roomTypeId
      */
-    public int getRoomTypeId() {
+    public Integer getRoomTypeId() {
         return mRoomTypeId;
     }
 
@@ -350,7 +350,7 @@ public class RoomInfoBean extends DormitoryRoomBean {
      * @param pDormitoryId
      *            the dormitoryId to set
      */
-    public void setDormitoryId(final int pDormitoryId) {
+    public void setDormitoryId(final Integer pDormitoryId) {
         mDormitoryId = pDormitoryId;
     }
 
@@ -400,7 +400,7 @@ public class RoomInfoBean extends DormitoryRoomBean {
      * @param pId
      *            the id to set
      */
-    public void setId(final int pId) {
+    public void setId(final Integer pId) {
         mId = pId;
     }
 
@@ -470,7 +470,7 @@ public class RoomInfoBean extends DormitoryRoomBean {
      * @param pRoomTypeId
      *            the roomTypeId to set
      */
-    public void setRoomTypeId(final int pRoomTypeId) {
+    public void setRoomTypeId(final Integer pRoomTypeId) {
         mRoomTypeId = pRoomTypeId;
     }
 

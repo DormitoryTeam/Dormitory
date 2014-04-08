@@ -202,4 +202,36 @@ public class OrderRepository extends BaseRepository implements IOrderRepository 
         return getSqlSession().update("com.noeasy.money.model.Order.updateOrderPrice", pOrder);
     }
 
+
+
+    @Override
+    public void updateOrder(OrderBean pOrder) {
+        getSqlSession().update("com.noeasy.money.model.Order.updateOrder", pOrder);
+        
+    }
+
+
+
+    @Override
+    public OrderBean findOrderById(Integer pId) {
+        getSqlSession().selectOne("com.noeasy.money.model.Order.findOrderById", pId);
+        return null;
+    }
+
+
+
+    @Override
+    public void updateDormitoryLineItem(DormitoryLineItem pDormitoryItem) {
+        getSqlSession().update("com.noeasy.money.model.Order.updateDormitoryLineItem", pDormitoryItem);
+        
+    }
+
+
+
+    @Override
+    public void updatePickupLineItem(PickupLineItem pPickupItem) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }
