@@ -11,7 +11,6 @@
 <script type="text/javascript" src="<c:url value='/bootstrap/js/bootstrap.min.js' />"></script>
 <script type="text/javascript" src="<c:url value='/js/google-code-prettify/prettify.js' />"></script>
 <script type="text/javascript" src="<c:url value='/js/jquery-rte/bootstrap-wysiwyg.js' />"></script>
-<script type="text/javascript" src="<c:url value='/js/admin/site/article.js' />"></script>
 <%-- <link type="text/css" rel="stylesheet" href="<c:url value='/bootstrap/css/bootstrap.css' />" /> --%>
 <link type="text/css" rel="stylesheet" href="<c:url value='/js/google-code-prettify/prettify.css' />" />
 <link type="text/css" rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" />
@@ -85,5 +84,7 @@
 			</div>
 		</div>
 	</form>
+	
+	<script type="text/javascript" src="<c:url value='/js/admin/site/article.js' />"></script>
 </body>
 </html>
