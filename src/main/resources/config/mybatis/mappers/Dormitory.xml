@@ -17,9 +17,7 @@
 	</sql>
 
 	<sql id="where-with-keyword">
-		and (t1.name like concat('%', #{keyword}, '%') or t1.address like concat('%', #{keyword}, '%')
-		or t1.postcode like concat('%', #{keyword},
-		'%') or t1.description like concat('%', #{keyword}, '%'))
+		and (t1.name like concat('%', #{keyword}, '%') or t1.address like concat('%', #{keyword}, '%') or t1.postcode like concat('%', #{keyword}, '%') or t1.description like concat('%', #{keyword}, '%'))
 	</sql>
 
 	<sql id="where-with-dormitory-type">
@@ -64,14 +62,12 @@
 		t1.postcode dor_postcode,
 		t1.equipment dor_equipment,
 		t1.service dor_service,
-		t1.currency
-		dor_currency,
+		t1.currency dor_currency,
 		t1.listPrice dor_listPrice,
 		t1.salePrice dor_salePrice,
 		t1.latitude dor_latitude,
 		t1.longitude dor_longitude,
-		t1.description
-		dor_description,
+		t1.description dor_description,
 		t1.city_id dor_cityId,
 		t1.status dor_status,
 		t2.name dor_city,
@@ -128,14 +124,12 @@
 		t1.postcode dor_postcode,
 		t1.equipment dor_equipment,
 		t1.service dor_service,
-		t1.currency
-		dor_currency,
+		t1.currency dor_currency,
 		t1.listPrice dor_listPrice,
 		t1.salePrice dor_salePrice,
 		t1.latitude dor_latitude,
 		t1.longitude dor_longitude,
-		t1.description
-		dor_description,
+		t1.description dor_description,
 		t1.city_id dor_cityId,
 		t1.status dor_status,
 		t2.name dor_city,
@@ -147,22 +141,19 @@
 		t4.equipment ri_equipment,
 		t4.service ri_service,
 		t4.description as ri_description,
-		t4.checkin_date
-		ri_checkinDate,
+		t4.checkin_date ri_checkinDate,
 		t4.orientations ri_orientation,
 		t4.floors ri_floors,
 		t4.bed_type ri_bedType,
 		t4.house_area ri_houseArea,
-		t4.ensuite_bathroom
-		ri_ensuitBathroom,
+		t4.ensuite_bathroom ri_ensuitBathroom,
 		t4.kitchen_people_number ri_kitchenPeople,
 		t4.floor_arrangement ri_floorArrange,
 		t4.orientation_arrangement ri_orientationArrange,
 		t4.room_language_arrangement ri_roomLanguageArrange,
 		t4.kitchen_equipment ri_kitchenEquipment,
 		t4.bathroom_equipment ri_bathroomEquipment,
-		t4.status
-		ri_status,
+		t4.status ri_status,
 		t5.id rp_id,
 		t5.room_info_id rp_roomInfoId,
 		t5.contract_type_id rp_contractId,
@@ -223,6 +214,7 @@
 		<if test="excludeRoomStatus != null">
 			and t4.status != #{excludeRoomStatus}
 		</if>
+		and t5.status = 1
 		group by t5.id
 	</select>
 
@@ -268,40 +260,37 @@
 
 	<update id="updateDormitory" parameterType="com.noeasy.money.model.DormitoryBean">
 		update dormitory set
-		name = #{name},
-		address = #{address},
-		postcode = #{postcode},
-		equipment = #{equipment},
-		service = #{service},
-		listPrice = #{listPrice},
-		salePrice = #{salePrice},
-		latitude = #{latitude},
-		longitude = #{longitude},
-		currency = #{currency},
-		description = #{description},
-		city_id = #{cityId},
-		status = #{status}
-		where
-		id = #{id}
+			name = #{name},
+			address = #{address},
+			postcode = #{postcode},
+			equipment = #{equipment},
+			service = #{service},
+			listPrice = #{listPrice},
+			salePrice = #{salePrice},
+			latitude = #{latitude},
+			longitude = #{longitude},
+			currency = #{currency},
+			description = #{description},
+			city_id = #{cityId},
+			status = #{status}
+		where id = #{id}
 	</update>
 
 	<insert id="saveDormitory" keyProperty="id" useGeneratedKeys='true' parameterType="com.noeasy.money.model.DormitoryBean">
-		insert into dormitory (city_id, name, address, postcode,
-		listPrice, salePrice, currency, latitude, longitude, equipment,
-		service, description, status) values (
-		#{cityId,javaType=int,jdbcType=INTEGER},
-		#{name,javaType=String,jdbcType=VARCHAR},
-		#{address,javaType=String,jdbcType=VARCHAR},
-		#{postcode,javaType=String,jdbcType=VARCHAR},
-		#{listPrice,javaType=Double,jdbcType=DECIMAL},
-		#{salePrice,javaType=Double,jdbcType=DECIMAL},
-		#{currency,javaType=String,jdbcType=VARCHAR},
-		#{latitude,javaType=Double,jdbcType=INTEGER},
-		#{longitude,javaType=Double,jdbcType=INTEGER},
-		#{equipment,javaType=int,jdbcType=INTEGER},
-		#{service,javaType=int,jdbcType=INTEGER},
-		#{description,javaType=String,jdbcType=VARCHAR},
-		#{status}
+		insert into dormitory (city_id, name, address, postcode, listPrice, salePrice, currency, latitude, longitude, equipment, service, description, status) values (
+			#{cityId,javaType=int,jdbcType=INTEGER},
+			#{name,javaType=String,jdbcType=VARCHAR},
+			#{address,javaType=String,jdbcType=VARCHAR},
+			#{postcode,javaType=String,jdbcType=VARCHAR},
+			#{listPrice,javaType=Double,jdbcType=DECIMAL},
+			#{salePrice,javaType=Double,jdbcType=DECIMAL},
+			#{currency,javaType=String,jdbcType=VARCHAR},
+			#{latitude,javaType=Double,jdbcType=INTEGER},
+			#{longitude,javaType=Double,jdbcType=INTEGER},
+			#{equipment,javaType=int,jdbcType=INTEGER},
+			#{service,javaType=int,jdbcType=INTEGER},
+			#{description,javaType=String,jdbcType=VARCHAR},
+			#{status}
 		);
 	</insert>
 
@@ -348,16 +337,17 @@
 		left join
 		room_type t6 on t6.id = t4.room_type_id
 		left join
-		contract_type t7 ON
-		t7.id =
-		t5.contract_type_id
+		contract_type t7 on t7.id = t5.contract_type_id
 		where t4.dormitory_id in
-		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+		<foreach item="item" index="index" collection="dormitoryIds" open="(" separator="," close=")">
 			#{item}
 		</foreach>
+		<if test="status != null">
+			and t5.status = #{status}
+		</if>
 	</select>
 
-	<select id="queryRoomInfoByDormitory" resultMap="roomInfo" parameterType="int">
+	<select id="queryRoomInfoByDormitory" resultMap="roomInfo" parameterType="map">
 		<include refid="select-room-info" />
 		from
 		room_info t4
@@ -366,9 +356,7 @@
 		left join
 		room_type t6 on t6.id = t4.room_type_id
 		left join
-		contract_type t7 ON
-		t7.id =
-		t5.contract_type_id
+		contract_type t7 on t7.id = t5.contract_type_id
 		where t4.dormitory_id = #{dormitoryId}
 		<if test="status != null">
 			and t4.status = #{roomStatus}
@@ -379,31 +367,49 @@
 	</select>
 
 	<insert id="saveRoomInfo" keyProperty="id" useGeneratedKeys='true' parameterType="com.noeasy.money.model.RoomInfoBean">
-		insert into room_info (dormitory_id, room_type_id,
-		equipment,
-		service, description, checkin_date, orientations, floors, bed_type, house_area,
-		ensuite_bathroom, kitchen_people_number, floor_arrangement,
-		orientation_arrangement, room_language_arrangement, status, kitchen_equipment, bathroom_equipment) values
-		(
-		#{dormitoryId}, #{roomTypeId},
-		#{equipment}, #{service}, #{description}, #{checkinDate, javaType=Date,jdbcType=TIMESTAMP}, #{orientation},
-		#{floors}, #{bedType},
-		#{houseArea},
-		#{ensuitBathroom}, #{kitchenPeople}, #{floorArrange}, #{orientationArrange}, #{roomLanguageArrange}, #{status}, #{kitchenEquipment},
-		#{bathroomEquipment}
+		insert into room_info (dormitory_id, room_type_id, equipment, service, description, checkin_date, orientations, floors, bed_type, house_area,
+			ensuite_bathroom, kitchen_people_number, floor_arrangement, orientation_arrangement, room_language_arrangement, status, kitchen_equipment, bathroom_equipment) values (
+			#{dormitoryId},
+			#{roomTypeId},
+			#{equipment},
+			#{service},
+			#{description},
+			#{checkinDate, javaType=Date,jdbcType=TIMESTAMP},
+			#{orientation},
+			#{floors},
+			#{bedType},
+			#{houseArea},
+			#{ensuitBathroom},
+			#{kitchenPeople},
+			#{floorArrange},
+			#{orientationArrange},
+			#{roomLanguageArrange},
+			#{status},
+			#{kitchenEquipment},
+			#{bathroomEquipment}
 		)
 	</insert>
 
 	<update id="updateRoomInfo" parameterType="com.noeasy.money.model.RoomInfoBean">
-		update room_info set dormitory_id = #{dormitoryId}, room_type_id = #{roomTypeId}, equipment =
-		#{equipment}, service = #{service}, description = #{description}, checkin_date = #{checkinDate, javaType=Date,jdbcType=TIMESTAMP},
-		orientations =
-		#{orientation}, floors = #{floors}, bed_type = #{bedType}, house_area = #{houseArea}, ensuite_bathroom = #{ensuitBathroom},
-		kitchen_people_number =
-		#{kitchenPeople}, floor_arrangement = #{floorArrange},
-		orientation_arrangement = #{orientationArrange}, room_language_arrangement =
-		#{roomLanguageArrange}, `status` = #{status}, kitchen_equipment = #{kitchenEquipment}, bathroom_equipment =
-		#{bathroomEquipment}
+		update room_info set 
+			dormitory_id = #{dormitoryId},
+			room_type_id = #{roomTypeId},
+			equipment = #{equipment},
+			service = #{service},
+			description = #{description},
+			checkin_date = #{checkinDate, javaType=Date,jdbcType=TIMESTAMP},
+			orientations = #{orientation},
+			floors = #{floors},
+			bed_type = #{bedType},
+			house_area = #{houseArea},
+			ensuite_bathroom = #{ensuitBathroom},
+			kitchen_people_number = #{kitchenPeople},
+			floor_arrangement = #{floorArrange},
+			orientation_arrangement = #{orientationArrange},
+			room_language_arrangement = #{roomLanguageArrange},
+			`status` = #{status},
+			kitchen_equipment = #{kitchenEquipment},
+			bathroom_equipment = #{bathroomEquipment}
 		where id = #{id}
 	</update>
 
@@ -416,21 +422,23 @@
 	</delete>
 
 	<delete id="removeRoomInfo" parameterType="int">
-		delete from room_info
-		where id = #{id}
+		delete from room_info where id = #{id}
 	</delete>
 
 	<insert id="saveRoomPrice" keyProperty="id" useGeneratedKeys='true' parameterType="com.noeasy.money.model.RoomPrice">
-		insert into room_price (room_info_id, contract_type_id,
-		currency, listPrice, salePrice, status) values (
-		#{roomInfoId}, #{contractId}, #{currency}, #{listPrice}, #{salePrice}, #{status}
+		insert into room_price (room_info_id, contract_type_id, currency, listPrice, salePrice, status) values (
+			#{roomInfoId}, #{contractId}, #{currency}, #{listPrice}, #{salePrice}, #{status}
 		)
 	</insert>
 
 	<update id="updateRoomPrice" parameterType="com.noeasy.money.model.RoomPrice">
-		update room_price set room_info_id = #{roomInfoId}, contract_type_id = #{contractId}, currency
-		=
-		#{currency}, listPrice = #{listPrice}, salePrice = #{salePrice}, status = #{status}
+		update room_price set 
+			room_info_id = #{roomInfoId},
+			contract_type_id = #{contractId},
+			currency = #{currency},
+			listPrice = #{listPrice},
+			salePrice = #{salePrice},
+			status = #{status}
 		where id = #{id}
 	</update>
 
@@ -446,7 +454,6 @@
 		delete from room_price
 		where id = #{id}
 	</delete>
-
 
 
 	<!-- Media path ########################################################### -->
@@ -521,35 +528,34 @@
 	</select>
 
 	<insert id="insertBrowseHistory" keyProperty="id" useGeneratedKeys='true' parameterType="hashmap">
-		insert into browsing_history (dormitory_id, user_id)
-		values (
-		#{dormitoryId,javaType=int,jdbcType=INTEGER},
-		#{userId,javaType=int,jdbcType=INTEGER}
+		insert into browsing_history (dormitory_id, user_id) values (
+			#{dormitoryId,javaType=int,jdbcType=INTEGER}, #{userId,javaType=int,jdbcType=INTEGER}
 		)
 	</insert>
 
 	<!-- Rating & Comment#################################################################### -->
 
 	<insert id="rate" keyProperty="id" useGeneratedKeys='true' parameterType="com.noeasy.money.model.DormitoryRateBean">
-		insert into dormitory_rating (dormitory_id, user_id, alias, score,
-		comment, update_time) values (
-		#{dormitoryId,javaType=int,jdbcType=INTEGER},
-		#{userId,javaType=int,jdbcType=INTEGER},
-		#{alias,javaType=string,jdbcType=VARCHAR},
-		#{point,javaType=int,jdbcType=INTEGER},
-		#{comment,javaType=string,jdbcType=VARCHAR},
-		#{updateTime,javaType=java.sql.Timestamp,jdbcType=TIMESTAMP}
+		insert into dormitory_rating (dormitory_id, user_id, alias, score, comment, update_time) values (
+			#{dormitoryId,javaType=int,jdbcType=INTEGER},
+			#{userId,javaType=int,jdbcType=INTEGER},
+			#{alias,javaType=string,jdbcType=VARCHAR},
+			#{point,javaType=int,jdbcType=INTEGER},
+			#{comment,javaType=string,jdbcType=VARCHAR},
+			#{updateTime,javaType=java.sql.Timestamp,jdbcType=TIMESTAMP}
 		)
 	</insert>
 
 	<update id="updateRate" parameterType="com.noeasy.money.model.DormitoryRateBean">
-		update dormitory_rating set score = #{point}, comment = #{comment}, alias = #{alias}
+		update dormitory_rating set
+			score = #{point},
+			comment = #{comment},
+			alias = #{alias}
 		where id = #{id}
 	</update>
 
 	<select id="selectRates" parameterType="int" resultMap="dormitoryRate">
-		select id dr_id, dormitory_id dr_dormitoryId, user_id dr_userId, alias dr_alias, score
-		dr_point, comment dr_comment, create_time dr_createTime
+		select id dr_id, dormitory_id dr_dormitoryId, user_id dr_userId, alias dr_alias, score dr_point, comment dr_comment, create_time dr_createTime
 		from dormitory_rating
 		where status = 1 and dormitory_id = #{dormitoryId}
 	</select>
