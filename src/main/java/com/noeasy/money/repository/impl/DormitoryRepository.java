@@ -136,6 +136,20 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
 
 
 
+    @Override
+    public RoomInfoBean findRoomInfoById(final Integer pRoomInfoId) {
+        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.findRoomInfoById", pRoomInfoId);
+    }
+
+
+
+    @Override
+    public RoomPrice findRoomPrice(final RoomPriceSearchBean seachBean) {
+        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.findRoomPrice", seachBean);
+    }
+
+
+
     /**
      * @see com.noeasy.money.repository.IDormitoryRepository#initialDistanceResult()
      */
@@ -203,8 +217,12 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
         for (DormitoryBean dormitory : dormitories) {
             dormitoryIds.add(dormitory.getId());
         }
+
+        Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("dormitoryIds", dormitoryIds);
+        parameters.put("status", 1);
         List<RoomInfoBean> rooms = getSqlSession().selectList("com.noeasy.money.model.Dormitory.queryRoomInfos",
-                dormitoryIds);
+                parameters);
         for (RoomInfoBean room : rooms) {
             for (DormitoryBean dormitory : dormitories) {
                 if (dormitory.getId() == room.getDormitoryId()
@@ -446,20 +464,6 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
     @Override
     public Integer updateRoomPrice(final RoomPrice pRoomPrice) {
         return getSqlSession().update("com.noeasy.money.model.Dormitory.updateRoomPrice", pRoomPrice);
-    }
-
-
-
-    @Override
-    public RoomInfoBean findRoomInfoById(Integer pRoomInfoId) {
-        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.findRoomInfoById", pRoomInfoId);
-    }
-
-
-
-    @Override
-    public RoomPrice findRoomPrice(RoomPriceSearchBean seachBean) {
-        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.findRoomPrice", seachBean);
     }
 
 }
