@@ -119,10 +119,9 @@ public class UserService implements IUserService {
         bean.setLogin(pLogin);
         bean.setPassword(pPassword);
         // save register information.
-        int userId = userRepository.register(bean);
-        bean.setId(userId);
+        userRepository.register(bean);
         // assign front user group to current user.
-        authenticationRepository.addUser2Group(userId, IAuthenticationRepository.FRONT_USER_GROUP_ID);
+        authenticationRepository.addUser2Group(bean.getId(), IAuthenticationRepository.FRONT_USER_GROUP_ID);
         return bean;
     }
 

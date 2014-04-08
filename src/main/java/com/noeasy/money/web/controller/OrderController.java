@@ -121,21 +121,26 @@ public class OrderController {
         if (ServletUtils.isGet(request)) {
             switch (step) {
             case 0:
-                //FIXME: create new order in there is no order id in request
-                ensureOrderSession(request);
+                // FIXME: create new order in there is no order id in request
+                ensureOrderSession(request, model);
+                break;
             default:
                 if (isExpired(request)) {
                     // TODO: message
                     return forwrdURLs[0];
+                } else {
+                    OrderBean order = ServletUtils.getOrderFromSession(request);
+                    model.addAttribute("order", order);
                 }
+                break;
             }
-            
 
             return forwrdURLs[step];
         } else {
+            OrderBean order = ServletUtils.getOrderFromSession(request);
+            model.addAttribute("order", order);
             String command = request.getParameter(Constants.PARAM_COMMAND);
             if (Constants.PARAM_VALUE_COMMAND_SAVE.equalsIgnoreCase(command)) {
-                OrderBean order = ServletUtils.getOrderFromSession(request);
                 if (null == order) {
                     // TODO: session expired. redirect to place order page. show
                     // error message.
@@ -173,12 +178,12 @@ public class OrderController {
             Integer roomInfoId = Integer.valueOf(roomInfoIdStr);
             RoomInfoBean roomInfo = dormitoryService.findRoomInfoById(roomInfoId);
             model.addAttribute("roomInfo", roomInfo);
-            
+
             String contractIdStr = request.getParameter(Constants.PARAM_CONTRACT_ID);
             if (StringUtils.isNotBlank(contractIdStr)) {
                 Integer contractId = Integer.valueOf(contractIdStr);
                 RoomPrice price = dormitoryService.findRoomPrice(roomInfoId, contractId);
-                model.addAttribute("price", price);                
+                model.addAttribute("price", price);
             }
         }
     }
@@ -278,7 +283,7 @@ public class OrderController {
 
 
 
-    private void ensureOrderSession(HttpServletRequest pRequest) {
+    private void ensureOrderSession(HttpServletRequest pRequest, final Model model) {
         // 1. if no order in session
         // 1.1 if no orderId parameter, just create an new orderBean and set it
         // to session.
@@ -289,36 +294,48 @@ public class OrderController {
         // 2.1 if has orderId parameter and orderId neq order.id user id find
         // order and set it to session.
         String orderId = pRequest.getParameter(Constants.PARAM_ORDER_ID);
-        OrderBean order = ServletUtils.getOrderFromSession(pRequest);
-        if (null == order) {
-            if (StringUtils.isNotBlank(orderId)) {
-                order = orderService.findOrderById(Integer.valueOf(orderId));
-            } else {
-                order = new OrderBean();
-                order.setOrderContact(new OrderContactInfo());
-                order.setOrderStatus(OrderStatus.INITIAL);
-                maintainsOrderType(pRequest, order);
-                order.setLineItems(new ArrayList<LineItem>());
-                LineItem item = null;
+        OrderBean order = null;
+        if (StringUtils.isNotBlank(orderId)) {
+            // TODO Check placer and belongs to 
+            order = orderService.findOrderById(Integer.valueOf(orderId));
+            if (null != order) {
+                model.addAttribute("user", order.getUser());
                 if (OrderType.DORMITORY == order.getOrderType()) {
-                    item = new DormitoryLineItem();
+                    List<LineItem> items = order.getLineItems();
+                    if (CollectionUtils.isNotEmpty(items)) {
+                        DormitoryLineItem dormtiroyItem = (DormitoryLineItem)items.get(0);
+                        if (null != dormtiroyItem) {
+                            model.addAttribute("dormitory", dormtiroyItem.getDormitory());
+                            model.addAttribute("roomInfo", dormtiroyItem.getRoomInfo());
+                            if(null != dormtiroyItem.getContractType() && null != dormtiroyItem.getRoomInfo()) {
+                                RoomPrice price = dormitoryService.findRoomPrice(dormtiroyItem.getRoomInfo().getId(), dormtiroyItem.getContractType().getId());
+                                model.addAttribute("price", price);
+                            }
+                        }
+                    }
                 } else {
-                    item = new PickupLineItem();
+                    // TODO: pickup
                 }
-                order.getLineItems().add(item);
-                // TODO: currency
-                order.setCurrency("");
-                order.setAmount(new BigDecimal("0"));
             }
-            ServletUtils.setOrder2Session(pRequest, order);
+            model.addAttribute("order", order);
         } else {
-            if (StringUtils.isNotBlank(orderId)) {
-                if (!Integer.valueOf(orderId).equals(order.getId())) {
-                    order = orderService.findOrderById(Integer.valueOf(orderId));
-                    ServletUtils.setOrder2Session(pRequest, order);
-                }
+            order = new OrderBean();
+            order.setOrderContact(new OrderContactInfo());
+            order.setOrderStatus(OrderStatus.INITIAL);
+            maintainsOrderType(pRequest, order);
+            order.setLineItems(new ArrayList<LineItem>());
+            LineItem item = null;
+            if (OrderType.DORMITORY == order.getOrderType()) {
+                item = new DormitoryLineItem();
+            } else {
+                item = new PickupLineItem();
             }
+            order.getLineItems().add(item);
+            // TODO: currency
+            order.setCurrency("");
+            order.setAmount(new BigDecimal("0"));
         }
+        ServletUtils.setOrder2Session(pRequest, order);
     }
 
 
@@ -438,7 +455,8 @@ public class OrderController {
             }
             dormitoryItem.setRoomInfo(new RoomInfoBean());
             dormitoryItem.getRoomInfo().setId(Integer.valueOf(roomInfoIdStr));
-            RoomPrice price = dormitoryService.findRoomPrice(dormitoryItem.getRoomInfo().getId(), dormitoryItem.getContractType().getId());
+            RoomPrice price = dormitoryService.findRoomPrice(dormitoryItem.getRoomInfo().getId(), dormitoryItem
+                    .getContractType().getId());
             dormitoryItem.setAmount(new BigDecimal(price.getSalePrice()));
             dormitoryItem.setListPrice(new BigDecimal(price.getListPrice()));
             dormitoryItem.setCurrency(price.getCurrency());

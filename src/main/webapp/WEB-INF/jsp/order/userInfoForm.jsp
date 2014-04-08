@@ -81,7 +81,7 @@ phone: <input name="phone" type="text" value="${phone}" /><br>
 <c:set var="address" value="${user.info.address}" />
 </c:if>
 
-address: country <input name="country" type="text" value="${country}" /> | province <input name="province" type="text" value="${province}" /> | city <input name="city" type="text" value="${user.info.city}" /> | <input name="address" type="text" value="${user.info.address}" /><br>
+address: country <input name="country" type="text" value="${country}" /> | province <input name="province" type="text" value="${province}" /> | city <input name="city" type="text" value="${city}" /> | <input name="address" type="text" value="${address}" /><br>
 
 <input name="submit" type="submit" value="Next"/>
 </form>
