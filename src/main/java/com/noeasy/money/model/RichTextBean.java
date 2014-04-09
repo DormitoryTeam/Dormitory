@@ -21,6 +21,8 @@ public class RichTextBean extends BaseBean {
 
     private String             mStatus;
 
+    private String             mType;
+
 
 
     /**
@@ -55,6 +57,15 @@ public class RichTextBean extends BaseBean {
      */
     public String getTitle() {
         return mTitle;
+    }
+
+
+
+    /**
+     * @return the type
+     */
+    public String getType() {
+        return mType;
     }
 
 
@@ -104,6 +115,16 @@ public class RichTextBean extends BaseBean {
      */
     public void setTitle(final String pTitle) {
         mTitle = pTitle;
+    }
+
+
+
+    /**
+     * @param pType
+     *            the type to set
+     */
+    public void setType(final String pType) {
+        mType = pType;
     }
 
 

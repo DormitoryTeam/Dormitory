@@ -11,11 +11,11 @@
 <script type="text/javascript" src="<c:url value='/bootstrap/js/bootstrap.min.js' />"></script>
 <script type="text/javascript" src="<c:url value='/js/google-code-prettify/prettify.js' />"></script>
 <script type="text/javascript" src="<c:url value='/js/jquery-rte/bootstrap-wysiwyg.js' />"></script>
-<%-- <link type="text/css" rel="stylesheet" href="<c:url value='/bootstrap/css/bootstrap.css' />" /> --%>
+<link type="text/css" rel="stylesheet" href="<c:url value='/bootstrap/css/bootstrap.css' />" />
 <link type="text/css" rel="stylesheet" href="<c:url value='/js/google-code-prettify/prettify.css' />" />
 <link type="text/css" rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" />
-<link type="text/css" rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" />
-<link type="text/css" rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" />
+<link type="text/css" rel="stylesheet" href="<c:url value='/js/jquery-rte/bootstrap-combined.no-icons.min.css' />" />
+<link type="text/css" rel="stylesheet" href="<c:url value='/js/jquery-rte/bootstrap-responsive.min.css' />" />
 <link type="text/css" rel="stylesheet" href="<c:url value='/js/jquery-rte/index.css' />" />
 </head>
 <body>
