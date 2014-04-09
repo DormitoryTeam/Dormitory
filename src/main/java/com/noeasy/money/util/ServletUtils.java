@@ -117,18 +117,14 @@ public class ServletUtils {
         userPrefer.setYourGrade(pRequest.getParameter("yourGrade"));
         userPrefer.setRoomMemberGrade(pRequest.getParameter("roomMemberGrade"));
         String roomMemberGenderStr = pRequest.getParameter("roomMemberGender");
-        if (StringUtils.isBlank(roomMemberGenderStr)) {
-            userPrefer.setRoomMemberGender(Integer.valueOf(0));
-        } else {
+        if (StringUtils.isNotBlank(roomMemberGenderStr)) {
             userPrefer.setRoomMemberGender(Integer.valueOf(roomMemberGenderStr));
         }
         userPrefer.setMajor(pRequest.getParameter("major"));
         userPrefer.setCollege(pRequest.getParameter("college"));
         userPrefer.setFloor(pRequest.getParameter("floor"));
         String orientationStr = pRequest.getParameter("orientation");
-        if (StringUtils.isBlank(orientationStr)) {
-            userPrefer.setOrientation(Integer.valueOf(0));
-        } else {
+        if (StringUtils.isNotBlank(orientationStr)) {
             userPrefer.setOrientation(Integer.valueOf(orientationStr));
         }
 

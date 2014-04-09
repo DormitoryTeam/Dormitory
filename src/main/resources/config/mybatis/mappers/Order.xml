@@ -20,7 +20,8 @@
 		dormitory.id as dormitory_id, dormitory.city_id as dormitory_city_id, dormitory.name as dormitory_name, dormitory.address as dormitory_address, dormitory.postcode as dormitory_postcode, dormitory.listPrice as dormitory_listPrice, dormitory.salePrice as dormitory_salePrice, dormitory.currency as dormitory_currency, dormitory.equipment as dormitory_equipment, dormitory.service as dormitory_service, dormitory.description as dormitory_description, dormitory.status as dormitory_status,
 		room_info.id as ri_id, room_info.dormitory_id as ri_dormitory_id, room_info.room_type_id as ri_room_type_id, room_info.description as ri_description, room_info.checkin_date as ri_checkin_date, room_info.orientations as ri_orientations, room_info.floors as ri_floors, room_info.bed_type as ri_bed_type, room_info.house_area as ri_house_area, room_info.ensuite_bathroom as ri_ensuite_bathroom, room_info.kitchen_people_number as ri_kitchen_people_number, room_info.floor_arrangement as ri_floor_arrangement, room_info.orientation_arrangement as ri_orientation_arrangement, room_info.room_language_arrangement as ri_language_arrangement, room_info.kitchen_equipment as ri_kitchen_equipment, room_info.bathroom_equipment as ri_bathroom_equipment, room_info.status as ri_status,
 		room_type.name as ri_room_type,
-		contract_type.id as ct_id, contract_type.name as ct_name
+		contract_type.id as ct_id, contract_type.name as ct_name,
+		prefer.id as prefer_id, prefer.smoke as prefer_smoke, prefer.vegetarianism as prefer_vegetarianism, prefer.your_grade as prefer_your_grade, prefer.room_member_grade as prefer_room_member_grade, prefer.room_member_gender as prefer_room_member_gender, prefer.major as prefer_major, prefer.college as prefer_college, prefer.floor as prefer_floor, prefer.orientation as prefer_orientation, prefer.graduate_school as prefer_graduate_school, prefer.need_push as prefer_need_push, prefer.read_clause as prefer_read_clause
 	</sql>
 	<sql id="select-dormitory-order-table-join">
 		from `order` as o
@@ -273,6 +274,12 @@
 		WHERE id = #{id}
 	</update>
 	
+	<select id="findOrderById" parameterType="int" resultMap="dormitory-order">
+		<include refid="select-dormitory-order-content" />
+		<include refid="select-dormitory-order-table-join" />
+		WHERE o.id = #{id}
+	</select>
+	
 
 	<resultMap id="belongToInfo" type="com.noeasy.money.model.UserInfoBean">
 		<id property="id" column="bti_id" />
@@ -321,6 +328,22 @@
 		<result property="city" column="gi_city" />
 		<result property="address" column="gi_address" />
 	</resultMap>
+	
+	<resultMap id="userPrefer" type="com.noeasy.money.model.UserPreferBean">
+		<id property="id" column="prefer_id" />
+		<result property="smoke" column="prefer_smoke" />
+		<result property="vegetarianism" column="prefer_vegetarianism" />
+		<result property="yourGrade" column="prefer_your_grade" />
+		<result property="roomMemberGrade" column="prefer_room_member_grade" />
+		<result property="roomMemberGender" column="prefer_room_member_gender" />
+		<result property="major" column="prefer_major" />
+		<result property="college" column="prefer_college" />
+		<result property="floor" column="prefer_floor" />
+		<result property="orientation" column="prefer_orientation" />
+		<result property="graduateSchool" column="prefer_graduate_school" />
+		<result property="needPush" column="prefer_need_push" />
+		<result property="readClause" column="prefer_read_clause" />
+	</resultMap>
 
 	<resultMap id="placer" type="com.noeasy.money.model.UserBean">
 		<id property="id" column="placer_id" />
@@ -334,22 +357,6 @@
 		<result property="login" column="bt_login" />
 		<result property="alias" column="bt_alias" />
 		<result property="email" column="bt_email" />
-	</resultMap>
-
-	<resultMap id="userPrefer" type="com.noeasy.money.model.UserPreferBean">
-		<id property="id" column="prefer_id" />
-		<result property="smoke" column="prefer_smoke" />
-		<result property="vegetarianism" column="prefer_vegetarianism" />
-		<result property="yourGrade" column="prefer_yourGrade" />
-		<result property="roomMemberGrade" column="prefer_roomMemberGrade" />
-		<result property="roomMemberGender" column="prefer_roomMemberGender" />
-		<result property="major" column="prefer_major" />
-		<result property="college" column="prefer_college" />
-		<result property="floor" column="prefer_floor" />
-		<result property="orientation" column="prefer_orientation" />
-		<result property="graduateSchool" column="prefer_graduateSchool" />
-		<result property="needPush" column="prefer_needPush" />
-		<result property="readClause" column="prefer_readClause" />
 	</resultMap>
 
 	<resultMap id="orderContact" type="com.noeasy.money.model.OrderContactInfo">
@@ -366,7 +373,7 @@
 	</resultMap>
 
 	<resultMap id="dormitory-order" type="com.noeasy.money.model.OrderBean">
-		<id column="id" property="order_id" />
+		<id property="id" column="order_id" />
 		<result property="orderType" column="order_type" />
 		<result property="orderStatus" column="order_status" />
 		<result property="currency" column="order_currency" />
@@ -389,7 +396,7 @@
 				<result property="cityId" column="dormitory_city_id" />
 				<result property="name" column="dormitory_name" />
 				<result property="address" column="dormitory_address" />
-				<result property="postCode" column="dormitory_postcode" />
+				<result property="postcode" column="dormitory_postcode" />
 				<result property="listPrice" column="dormitory_listPrice" />
 				<result property="salePrice" column="dormitory_salePrice" />
 				<result property="currency" column="dormitory_currency" />

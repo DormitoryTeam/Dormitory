@@ -13,7 +13,7 @@ major: <input name="major" type="text" value="${user.prefer.major}" /><br>
 college: <input name="college" value="${user.prefer.college}"/><br>
 room member gender: <input name="roomMemberGender" type="radio" value="0" <c:if test="${0 eq user.prefer.roomMemberGender}">checked</c:if> />Mix <input name="roomMemberGender" type="radio" value="1" <c:if test="${1 eq user.prefer.roomMemberGender}">checked</c:if> /> Boy only<input name="roomMemberGender" type="radio" value="2" <c:if test="${2 eq user.prefer.roomMemberGender}">checked</c:if> />Girl only<input name="roomMemberGender" type="radio" value="3" <c:if test="${3 eq user.prefer.roomMemberGender}">checked</c:if> />not care<br>
 floor: <input name="floor" type="text" value="${user.prefer.floor}" /><br>
-orientation: <input name="orientation" type="radio" value="0" />East<input name="orientation" type="radio" value="1" />West<input name="orientation" type="radio" value="2" />South<input name="orientation" type="radio" value="3" />North<br>
+orientation: <input name="orientation" type="radio" value="0" <c:if test="${0 eq user.prefer.orientation}">checked</c:if> />East<input name="orientation" type="radio" value="1" <c:if test="${1 eq user.prefer.orientation}">checked</c:if> />West<input name="orientation" type="radio" value="2" <c:if test="${2 eq user.prefer.orientation}">checked</c:if> />South<input name="orientation" type="radio" value="3" <c:if test="${3 eq user.prefer.orientation}">checked</c:if> />North<br>
 graduateSchool: <input name="graduateSchool" type="text" value="${user.prefer.graduateSchool}" /><br>
 <input name="submit" type="submit" value="Next"/>
 </form>

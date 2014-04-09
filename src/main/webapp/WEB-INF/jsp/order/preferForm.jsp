@@ -61,13 +61,20 @@ room member gender: <input name="roomMemberGender" type="radio" value="0" <c:if 
 </c:if>
 floor: <input name="floor" type="text" value="${floor}" /><br>
 
-orientation: <input name="orientation" type="radio" value="0" />East<input name="orientation" type="radio" value="1" />West<input name="orientation" type="radio" value="2" />South<input name="orientation" type="radio" value="3" />North<br>
+
+<c:set var="orientation" value="${order.orderContact.prefer.orientation}" />
+<c:if test="${null == orientation}">
+<c:set var="orientation" value="${user.prefer.orientation}" />
+</c:if>
+orientation: <input name="orientation" type="radio" value="0" <c:if test="${0 eq orientation}">checked</c:if> />East<input name="orientation" type="radio" value="1" <c:if test="${1 eq orientation}">checked</c:if>/>West<input name="orientation" type="radio" value="2" <c:if test="${2 eq orientation}">checked</c:if> />South<input name="orientation" type="radio" value="3" <c:if test="${3 eq orientation}">checked</c:if> />North<br>
 
 <c:set var="graduateSchool" value="${order.orderContact.prefer.graduateSchool}" />
 <c:if test="${null == graduateSchool}">
 <c:set var="graduateSchool" value="${user.prefer.graduateSchool}" />
 </c:if>
 graduateSchool: <input name="graduateSchool" type="text" value="${graduateSchool}" /><br>
+<input type="hidden" name="needPush" value="${order.orderContact.prefer.needPush ? "Y" : "N"}" />
+<input type="hidden" name="readClause" value="${order.orderContact.prefer.readClause ? "Y" : "N"}" />
 <input name="submit" type="submit" value="Next"/>
 </form>
 </body>

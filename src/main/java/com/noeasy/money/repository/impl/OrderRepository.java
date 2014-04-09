@@ -214,8 +214,7 @@ public class OrderRepository extends BaseRepository implements IOrderRepository 
 
     @Override
     public OrderBean findOrderById(Integer pId) {
-        getSqlSession().selectOne("com.noeasy.money.model.Order.findOrderById", pId);
-        return null;
+        return getSqlSession().selectOne("com.noeasy.money.model.Order.findOrderById", pId);
     }
 
 
