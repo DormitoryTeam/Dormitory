@@ -44,7 +44,7 @@
  					</c:if>
 				</c:forEach>
 			</li>
-			<li>Rate: <div id="dormitoryRate" data-score="${dormitory['rating']}"></div></li>
+			<li>Rate: <div style="display:inline;" id="dormitoryRate" data-score="${dormitory['rating']}"></div></li>
 		</ul>
 
 		<table class="table" style="width:1100px;">
