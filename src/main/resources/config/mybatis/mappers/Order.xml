@@ -200,7 +200,7 @@
 		useGeneratedKeys="true" parameterType="com.noeasy.money.model.PickupLineItem">
 		insert into line_item_pickup
 		(order_id, flight_number, city_id, pickup_date, pickup_type, amount,
-		currency, luggage_amount, luggage_size) values (
+		currency, luggage_amount, luggage_size, takeoff_date, takeoff_city, arrival_city, arrival_country, arrival_airport, flight_company, pickup_to_city, pickup_to_address, pickup_to_dormitory, pickup_to_postalcode) values (
 		#{orderId,javaType=int,jdbcType=INTEGER},
 		#{flightNum,javaType=String,jdbcType=VARCHAR},
 		#{cityId,javaType=int,jdbcType=INTEGER},
@@ -209,7 +209,17 @@
 		#{amount,javaType=java.math.BigDecimal,jdbcType=DECIMAL},
 		#{currency,javaType=String,jdbcType=VARCHAR},
 		#{luggageAmount,javaType=int,jdbcType=INTEGER},
-		#{luggageSize,javaType=Double,jdbcType=DECIMAL}
+		#{luggageSize,javaType=Double,jdbcType=DECIMAL},
+		#{takeOffDate,javaType=java.util.Date,jdbcType=TIMESTAMP},
+		#{takeOffCity,javaType=String,jdbcType=VARCHAR},
+		#{arrivalCity,javaType=String,jdbcType=VARCHAR},
+		#{arrivalCountry,javaType=String,jdbcType=VARCHAR},
+		#{arrivalAirport,javaType=String,jdbcType=VARCHAR},
+		#{flightCompany,javaType=String,jdbcType=VARCHAR},
+		#{pickup2City,javaType=String,jdbcType=VARCHAR},
+		#{pickup2Address,javaType=String,jdbcType=VARCHAR},
+		#{pickup2Dormitory,javaType=String,jdbcType=VARCHAR},
+		#{pickup2Postalcode,javaType=String,jdbcType=VARCHAR}
 		)
 	</insert>
 
@@ -271,6 +281,39 @@
 			currency = #{currency},
 		</if>
 		update_time = now()
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updatePickupLineItem" parameterType="com.noeasy.money.model.PickupLineItem">
+		UPDATE line_item_pickup SET
+		<if test="listPrice != null">
+			listPrice = #{listPrice},
+		</if>
+		<if test="amount != null">
+			amount = #{amount},
+		</if>
+		<if test="currency != null">
+			currency = #{currency},
+		</if>
+		<if test="flightNum != null">
+		flight_number = #{flightNum},
+		</if>
+		<if test="cityId != null">city_id= #{cityId},</if>
+		<if test="pickupDate != null">pickup_date = #{pickupDate},</if>
+		<if test="pickupType != null">pickup_type= #{pickupType},</if>
+		<if test="luggageAmount != null">luggage_amount = #{luggageAmount},</if>
+		<if test="luggageSize != null">luggage_size = #{luggageSize},</if>
+		<if test="takeOffDate != null">takeoff_date = #{takeOffDate},</if>
+		<if test="takeOffCity != null">takeoff_city = #{takeOffCity},</if>
+		<if test="arrivalCity != null">arrival_city = #{arrivalCity},</if>
+		<if test="arrivalCountry != null">arrival_country = #{arrivalCountry},</if>
+		<if test="arrivalAirport != null">arrival_airport = #{arrivalAirport},</if>
+		<if test="flightCompany != null">flight_company = #{flightCompany},</if>
+		<if test="pickup2City != null">pickup_to_city = #{pickup2City},</if>
+		<if test="pickup2Address != null">pickup_to_address = #{pickup2Address},</if>
+		<if test="pickup2Dormitory != null">pickup_to_dormitory = #{pickup2Dormitory},</if>
+		<if test="pickup2Postalcode != null">pickup_to_postalcode= #{pickup2Postalcode},</if>
+		order_id = #{orderId}
 		WHERE id = #{id}
 	</update>
 	

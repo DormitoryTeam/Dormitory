@@ -229,7 +229,7 @@ public class OrderRepository extends BaseRepository implements IOrderRepository 
 
     @Override
     public void updatePickupLineItem(PickupLineItem pPickupItem) {
-        // TODO Auto-generated method stub
+        getSqlSession().update("com.noeasy.money.model.Order.updatePickupLineItem", pPickupItem);
         
     }
 

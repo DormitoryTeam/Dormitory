@@ -41,154 +41,242 @@ import com.noeasy.money.enumeration.PickupType;
 
 public class PickupLineItem extends LineItem {
 
-    private String     mFlightNum;
+    private String     flightNum;
 
-    private Integer    mCityId;
+    private Integer    cityId;
 
-    private String     mLandingCity;
+    private String     landingCity;
 
-    private Date       mPickupDate;
+    private Date       pickupDate;
 
-    private PickupType mPickupType;
+    private PickupType pickupType;
 
-    private int        mLuggageAmount;
+    private int        luggageAmount;
 
-    private double     mLuggageSize;
+    private double     luggageSize;
+
+    private Date       takeOffDate;
+
+    private String     takeOffCity;
+
+    private String     arrivalCity;
+
+    private String     arrivalCountry;
+
+    private String     arrivalAirport;
+
+    private String     flightCompany;
+
+    private String     pickup2City;
+
+    private String     pickup2Address;
+
+    private String     pickup2Dormitory;
+
+    private String     pickup2Postalcode;
+
+
+
+    public String getFlightNum() {
+        return flightNum;
+    }
+
+
+
+    public void setFlightNum(String pFlightNum) {
+        flightNum = pFlightNum;
+    }
 
 
 
     public Integer getCityId() {
-        return mCityId;
+        return cityId;
     }
 
 
 
-    /**
-     * @return the flightNum
-     */
-    public String getFlightNum() {
-        return mFlightNum;
+    public void setCityId(Integer pCityId) {
+        cityId = pCityId;
     }
 
 
 
-    /**
-     * @return the landingCity
-     */
     public String getLandingCity() {
-        return mLandingCity;
+        return landingCity;
     }
 
 
 
-    /**
-     * @return the luggageAmount
-     */
-    public int getLuggageAmount() {
-        return mLuggageAmount;
+    public void setLandingCity(String pLandingCity) {
+        landingCity = pLandingCity;
     }
 
 
 
-    /**
-     * @return the luggageSize
-     */
-    public double getLuggageSize() {
-        return mLuggageSize;
-    }
-
-
-
-    /**
-     * @return the pickupDate
-     */
     public Date getPickupDate() {
-        return mPickupDate;
+        return pickupDate;
     }
 
 
 
-    /**
-     * @return the pickupType
-     */
+    public void setPickupDate(Date pPickupDate) {
+        pickupDate = pPickupDate;
+    }
+
+
+
     public PickupType getPickupType() {
-        return mPickupType;
+        return pickupType;
     }
 
 
 
-    /**
-     * @param pCityId
-     *            the cityId to set
-     */
-    public void setCityId(final Integer pCityId) {
-        mCityId = pCityId;
+    public void setPickupType(PickupType pPickupType) {
+        pickupType = pPickupType;
     }
 
 
 
-    /**
-     * public void setCityId(final Integer pCityId) { mCityId = pCityId; }
-     * 
-     * 
-     * 
-     * /**
-     * 
-     * @param pFlightNum
-     *            the flightNum to set
-     */
-    public void setFlightNum(final String pFlightNum) {
-        mFlightNum = pFlightNum;
+    public int getLuggageAmount() {
+        return luggageAmount;
     }
 
 
 
-    /**
-     * @param pLandingCity
-     *            the landingCity to set
-     */
-    public void setLandingCity(final String pLandingCity) {
-        mLandingCity = pLandingCity;
+    public void setLuggageAmount(int pLuggageAmount) {
+        luggageAmount = pLuggageAmount;
     }
 
 
 
-    /**
-     * @param pLuggageAmount
-     *            the luggageAmount to set
-     */
-    public void setLuggageAmount(final int pLuggageAmount) {
-        mLuggageAmount = pLuggageAmount;
+    public double getLuggageSize() {
+        return luggageSize;
     }
 
 
 
-    /**
-     * @param pLuggageSize
-     *            the luggageSize to set
-     */
-    public void setLuggageSize(final double pLuggageSize) {
-        mLuggageSize = pLuggageSize;
+    public void setLuggageSize(double pLuggageSize) {
+        luggageSize = pLuggageSize;
     }
 
 
 
-    /**
-     * @param pPickupDate
-     *            the pickupDate to set
-     */
-    public void setPickupDate(final Date pPickupDate) {
-        mPickupDate = pPickupDate;
+    public Date getTakeOffDate() {
+        return takeOffDate;
     }
 
 
 
-    /**
-     * @param pPickupType
-     *            the pickupType to set
-     */
-    public void setPickupType(final PickupType pPickupType) {
-        mPickupType = pPickupType;
+    public void setTakeOffDate(Date pTakeOffDate) {
+        takeOffDate = pTakeOffDate;
+    }
+
+
+
+    public String getTakeOffCity() {
+        return takeOffCity;
+    }
+
+
+
+    public void setTakeOffCity(String pTakeOffCity) {
+        takeOffCity = pTakeOffCity;
+    }
+
+
+
+    public String getArrivalCity() {
+        return arrivalCity;
+    }
+
+
+
+    public void setArrivalCity(String pArrivalCity) {
+        arrivalCity = pArrivalCity;
+    }
+
+
+
+    public String getArrivalCountry() {
+        return arrivalCountry;
+    }
+
+
+
+    public void setArrivalCountry(String pArrivalCountry) {
+        arrivalCountry = pArrivalCountry;
+    }
+
+
+
+    public String getArrivalAirport() {
+        return arrivalAirport;
+    }
+
+
+
+    public void setArrivalAirport(String pArrivalAirport) {
+        arrivalAirport = pArrivalAirport;
+    }
+
+
+
+    public String getFlightCompany() {
+        return flightCompany;
+    }
+
+
+
+    public void setFlightCompany(String pFlightCompany) {
+        flightCompany = pFlightCompany;
+    }
+
+
+
+    public String getPickup2City() {
+        return pickup2City;
+    }
+
+
+
+    public void setPickup2City(String pPickup2City) {
+        pickup2City = pPickup2City;
+    }
+
+
+
+    public String getPickup2Address() {
+        return pickup2Address;
+    }
+
+
+
+    public void setPickup2Address(String pPickup2Address) {
+        pickup2Address = pPickup2Address;
+    }
+
+
+
+    public String getPickup2Dormitory() {
+        return pickup2Dormitory;
+    }
+
+
+
+    public void setPickup2Dormitory(String pPickup2Dormitory) {
+        pickup2Dormitory = pPickup2Dormitory;
+    }
+
+
+
+    public String getPickup2Postalcode() {
+        return pickup2Postalcode;
+    }
+
+
+
+    public void setPickup2Postalcode(String pPickup2Postalcode) {
+        pickup2Postalcode = pPickup2Postalcode;
     }
 
 }

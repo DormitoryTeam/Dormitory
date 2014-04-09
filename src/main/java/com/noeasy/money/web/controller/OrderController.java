@@ -75,6 +75,7 @@ import com.noeasy.money.service.INavigationService;
 import com.noeasy.money.service.IOrderService;
 import com.noeasy.money.service.IUserService;
 import com.noeasy.money.service.IUserService.INFO_TYPE;
+import com.noeasy.money.util.DateUtils;
 import com.noeasy.money.util.ServletUtils;
 
 /**
@@ -103,8 +104,7 @@ public class OrderController {
 
     @RequestMapping("/dormitory-place-order" + Constants.URL_SUFFIX)
     public String placeOrder(final HttpServletRequest request, final HttpServletResponse response, final Model model) {
-        String[] forwrdURLs = new String[] { "order/userInfoForm", "order/preferForm", "order/guaranteeForm",
-                "order/contactPersonForm", "order/notesForm" };
+        String[] forwrdURLs = getForwrdURLs(request);
         int maxStep = forwrdURLs.length - 1;
         String pageStep = request.getParameter(Constants.PARAM_PAGE_STEP);
         Integer step = Integer.valueOf(0);
@@ -121,7 +121,6 @@ public class OrderController {
         if (ServletUtils.isGet(request)) {
             switch (step) {
             case 0:
-                // FIXME: create new order in there is no order id in request
                 ensureOrderSession(request, model);
                 break;
             default:
@@ -146,10 +145,11 @@ public class OrderController {
                     // error message.
                     return "";
                 }
-                maitainSissionOrder(request, step);
+                maintainSessionOrder(request, step);
+
                 return forwrdURLs[step];
             } else {
-                maitainSissionOrder(request, step);
+                maintainSessionOrder(request, step);
                 if (step + 1 > maxStep) {
                     return forwrdURLs[maxStep];
                 }
@@ -160,7 +160,31 @@ public class OrderController {
 
 
 
+    private void maintainSessionOrder(HttpServletRequest pRequest, Integer pStep) {
+        if (isDormitoryOrder(pRequest)) {
+            maitainSissionDormitoryOrder(pRequest, pStep);
+        } else {
+            maintainSessionPickUpOrder(pRequest, pStep);
+        }
+
+    }
+
+
+
+    private String[] getForwrdURLs(final HttpServletRequest request) {
+        if (isDormitoryOrder(request)) {
+            return new String[] { "order/userInfoForm", "order/preferForm", "order/guaranteeForm",
+                    "order/contactPersonForm", "order/notesForm" };
+        }
+        return new String[] { "order/userInfoForm", "order/flightInfoForm", "order/destinationInfoForm",
+                "order/luggageInfoForm" };
+    }
+
+
+
     private void maintainsModel(final HttpServletRequest request, final Model model) {
+        String orderType = request.getParameter("orderType");
+        model.addAttribute("orderType", orderType);
         Integer userId = ServletUtils.getUserId(request);
         if (null != userId) {
             UserBean user = userService.findUserById(userId);
@@ -190,7 +214,99 @@ public class OrderController {
 
 
 
-    private void maitainSissionOrder(HttpServletRequest pRequest, int step) {
+    private void maintainSessionPickUpOrder(HttpServletRequest pRequest, Integer pStep) {
+        switch (pStep) {
+        case 0:
+            // 1. persistance orderContact(persistence order, order contact,
+            // lineItem)
+            persistenceOrder(pRequest);
+            // 2. maintain contact info.(userInfo)
+            maintainsUserInfo(pRequest);
+            // 3. maintain line item,placer and belongTo,
+            maintainsOrder(pRequest);
+            break;
+        case 1:
+            // flight
+            maintainFlightInfo(pRequest);
+            break;
+        case 2:
+            // destination
+            maintainDestinationInfo(pRequest);
+            break;
+        case 3:
+            maintainLuggage(pRequest);
+            break;
+        }
+
+    }
+
+
+
+    private PickupLineItem getPickupItemFromSesssion(HttpServletRequest pRequest) {
+        OrderBean order = ServletUtils.getOrderFromSession(pRequest);
+        if (null == order) {
+            throw new RuntimeException("no order in session");
+        }
+        if (OrderType.PICKUP != order.getOrderType()) {
+            throw new RuntimeException("not pick up order");
+        }
+        List<LineItem> items = order.getLineItems();
+        if (CollectionUtils.isEmpty(items)) {
+            throw new RuntimeException("not pick up item in order");
+        }
+        return (PickupLineItem) items.get(0);
+    }
+
+
+
+    private void maintainDestinationInfo(HttpServletRequest pRequest) {
+        PickupLineItem item = getPickupItemFromSesssion(pRequest);
+        String takeOffDateStr = pRequest.getParameter("takeOffDate");
+        if (StringUtils.isNotBlank(takeOffDateStr)) {
+            item.setTakeOffDate(DateUtils.stringToDate(takeOffDateStr));
+        }
+        item.setTakeOffCity(pRequest.getParameter("takeOffCity"));
+        String pickupDateStr = pRequest.getParameter("pickupDate");
+        if (StringUtils.isNotBlank(pickupDateStr)) {
+            item.setPickupDate(DateUtils.stringToDate(pickupDateStr));
+        }
+        item.setArrivalCity(pRequest.getParameter("arrivalCity"));
+        item.setArrivalCountry(pRequest.getParameter("arrivalCountry"));
+        item.setArrivalAirport(pRequest.getParameter("arrivalAirport"));
+        item.setFlightCompany(pRequest.getParameter("flightCompany"));
+        item.setFlightNum(pRequest.getParameter("flightNumber"));
+        orderService.updateLineItem(ServletUtils.getOrderFromSession(pRequest));
+    }
+
+
+
+    private void maintainFlightInfo(HttpServletRequest pRequest) {
+        PickupLineItem item = getPickupItemFromSesssion(pRequest);
+        item.setPickup2City(pRequest.getParameter("pickup2City"));
+        item.setPickup2Address(pRequest.getParameter("pickup2Address"));
+        item.setPickup2Dormitory(pRequest.getParameter("pickup2Dormitory"));
+        item.setPickup2Postalcode(pRequest.getParameter("pickup2Postalcode"));
+        orderService.updateLineItem(ServletUtils.getOrderFromSession(pRequest));
+    }
+
+
+
+    private void maintainLuggage(HttpServletRequest pRequest) {
+        PickupLineItem item = getPickupItemFromSesssion(pRequest);
+        String luggageAmount = pRequest.getParameter("luggageAmount");
+        if (StringUtils.isNotBlank(luggageAmount)) {
+            item.setLuggageAmount(Integer.valueOf(luggageAmount));
+        }
+        String luggageSize = pRequest.getParameter("luggageSize");
+        if (StringUtils.isNotBlank(luggageSize)) {
+            item.setLuggageSize(Double.valueOf(luggageSize));
+        }
+        orderService.updateLineItem(ServletUtils.getOrderFromSession(pRequest));
+    }
+
+
+
+    private void maitainSissionDormitoryOrder(HttpServletRequest pRequest, int step) {
 
         switch (step) {
         case 0:
@@ -296,26 +412,28 @@ public class OrderController {
         String orderId = pRequest.getParameter(Constants.PARAM_ORDER_ID);
         OrderBean order = null;
         if (StringUtils.isNotBlank(orderId)) {
-            // TODO Check placer and belongs to 
-            order = orderService.findOrderById(Integer.valueOf(orderId));
-            if (null != order) {
-                model.addAttribute("user", order.getUser());
-                if (OrderType.DORMITORY == order.getOrderType()) {
+            if (isDormitoryOrder(pRequest)) {
+                // FIXME: Check placer and belongs to
+                order = orderService.findOrderById(Integer.valueOf(orderId));
+                if (null != order) {
+                    // FIXME check this line is need nor not.
+                    model.addAttribute("user", order.getUser());
                     List<LineItem> items = order.getLineItems();
                     if (CollectionUtils.isNotEmpty(items)) {
-                        DormitoryLineItem dormtiroyItem = (DormitoryLineItem)items.get(0);
+                        DormitoryLineItem dormtiroyItem = (DormitoryLineItem) items.get(0);
                         if (null != dormtiroyItem) {
                             model.addAttribute("dormitory", dormtiroyItem.getDormitory());
                             model.addAttribute("roomInfo", dormtiroyItem.getRoomInfo());
-                            if(null != dormtiroyItem.getContractType() && null != dormtiroyItem.getRoomInfo()) {
-                                RoomPrice price = dormitoryService.findRoomPrice(dormtiroyItem.getRoomInfo().getId(), dormtiroyItem.getContractType().getId());
+                            if (null != dormtiroyItem.getContractType() && null != dormtiroyItem.getRoomInfo()) {
+                                RoomPrice price = dormitoryService.findRoomPrice(dormtiroyItem.getRoomInfo().getId(),
+                                        dormtiroyItem.getContractType().getId());
                                 model.addAttribute("price", price);
                             }
                         }
                     }
-                } else {
-                    // TODO: pickup
                 }
+            } else {
+                // TODO: PICK UP
             }
             model.addAttribute("order", order);
         } else {
@@ -327,13 +445,14 @@ public class OrderController {
             LineItem item = null;
             if (OrderType.DORMITORY == order.getOrderType()) {
                 item = new DormitoryLineItem();
+                order.setCurrency("GBP");
             } else {
                 item = new PickupLineItem();
+                order.setCurrency("CNY");
             }
             order.getLineItems().add(item);
-            // TODO: currency
-            order.setCurrency("");
             order.setAmount(new BigDecimal("0"));
+
         }
         ServletUtils.setOrder2Session(pRequest, order);
     }
@@ -349,7 +468,6 @@ public class OrderController {
 
     private void maintainsOrder(HttpServletRequest pRequest) {
         OrderBean order = ServletUtils.getOrderFromSession(pRequest);
-        // maintains orderType
         OrderType orderType = order.getOrderType();
         // maintains order line item
         maintainsOrderLineItem(pRequest, order, orderType);
@@ -404,13 +522,22 @@ public class OrderController {
 
     private OrderType maintainsOrderType(HttpServletRequest pRequest, OrderBean order) {
 
-        String orderTypeStr = pRequest.getParameter(Constants.PARMA_ORDER_TYPE);
-        if (StringUtils.isBlank(orderTypeStr)) {
-            orderTypeStr = OrderType.TYPE_DORMITORY;
+        OrderType orderType = OrderType.DORMITORY;
+        if (!isDormitoryOrder(pRequest)) {
+            orderType = OrderType.PICKUP;
         }
-        OrderType orderType = OrderType.getType(orderTypeStr);
         order.setOrderType(orderType);
         return orderType;
+    }
+
+
+
+    private boolean isDormitoryOrder(HttpServletRequest pRequest) {
+        String orderTypeStr = pRequest.getParameter(Constants.PARMA_ORDER_TYPE);
+        if (OrderType.PICKUP.toString().equalsIgnoreCase(orderTypeStr)) {
+            return false;
+        }
+        return true;
     }
 
 
@@ -427,6 +554,7 @@ public class OrderController {
             throw new RuntimeException("no line item on order.");
         }
         LineItem item = items.get(0);
+        item.setOrderId(order.getId());
         // collection item information
         if (orderType == OrderType.DORMITORY) {
             // (room_info, contract, dormitory).
@@ -460,10 +588,12 @@ public class OrderController {
             dormitoryItem.setAmount(new BigDecimal(price.getSalePrice()));
             dormitoryItem.setListPrice(new BigDecimal(price.getListPrice()));
             dormitoryItem.setCurrency(price.getCurrency());
-            dormitoryItem.setOrderId(order.getId());
         } else {
             PickupLineItem pickupItem = (PickupLineItem) item;
-            // item.set
+            // TODO: change default price
+            pickupItem.setAmount(new BigDecimal("0.00"));
+            pickupItem.setListPrice(new BigDecimal("0.00"));
+            pickupItem.setCurrency("CNY");
         }
     }
 
