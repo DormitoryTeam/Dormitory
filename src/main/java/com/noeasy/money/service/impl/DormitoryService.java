@@ -109,6 +109,32 @@ public class DormitoryService implements IDormitoryService {
 
 
 
+    @Override
+    public DormitoryBean findDormitoryById(final Integer pDormitoryId) {
+        DormitorySearchBean searchBean = new DormitorySearchBean();
+        searchBean.setId(pDormitoryId);
+        return dormitoryRepository.queryDormitory(searchBean);
+    }
+
+
+
+    @Override
+    public RoomInfoBean findRoomInfoById(final Integer pRoomInfoId) {
+        return dormitoryRepository.findRoomInfoById(pRoomInfoId);
+    }
+
+
+
+    @Override
+    public RoomPrice findRoomPrice(final Integer pRoomInfoId, final Integer pContractId) {
+        RoomPriceSearchBean searchBean = new RoomPriceSearchBean();
+        searchBean.setContractId(pContractId);
+        searchBean.setRoomInfoId(pRoomInfoId);
+        return dormitoryRepository.findRoomPrice(searchBean);
+    }
+
+
+
     /**
      * @see com.noeasy.money.service.IDormitoryService#queryContractTypes()
      */
@@ -176,21 +202,21 @@ public class DormitoryService implements IDormitoryService {
 
 
     /**
-     * @see com.noeasy.money.service.IDormitoryService#queryRoomTypes()
-     */
-    @Override
-    public List<Map<String, Object>> queryRoomTypes() {
-        return dormitoryRepository.queryRoomTypes();
-    }
-
-
-
-    /**
      * @see com.noeasy.money.service.IDormitoryService#queryEquipment()
      */
     @Override
     public List<String> queryEquipment() {
         return dormitoryRepository.queryEquipment();
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.IDormitoryService#queryRoomTypes()
+     */
+    @Override
+    public List<Map<String, Object>> queryRoomTypes() {
+        return dormitoryRepository.queryRoomTypes();
     }
 
 
@@ -214,6 +240,7 @@ public class DormitoryService implements IDormitoryService {
             final String pComment, final String pAlias) {
         DormitoryRateBean rate = new DormitoryRateBean(pDormitoryId, pUserId, pPoint, pComment, pAlias);
         rate.setId(pId);
+        rate.setStatus("1");
         return dormitoryRepository.rateDormitory(rate);
     }
 
@@ -245,32 +272,6 @@ public class DormitoryService implements IDormitoryService {
             }
         }
         return false;
-    }
-
-
-
-    @Override
-    public DormitoryBean findDormitoryById(Integer pDormitoryId) {
-        DormitorySearchBean searchBean = new DormitorySearchBean();
-        searchBean.setId(pDormitoryId);
-        return dormitoryRepository.queryDormitory(searchBean);
-    }
-
-
-
-    @Override
-    public RoomInfoBean findRoomInfoById(Integer pRoomInfoId) {
-        return dormitoryRepository.findRoomInfoById(pRoomInfoId);
-    }
-
-
-
-    @Override
-    public RoomPrice findRoomPrice(Integer pRoomInfoId, Integer pContractId) {
-        RoomPriceSearchBean searchBean = new RoomPriceSearchBean();
-        searchBean.setContractId(pContractId);
-        searchBean.setRoomInfoId(pRoomInfoId);
-        return dormitoryRepository.findRoomPrice(searchBean);
     }
 
 }

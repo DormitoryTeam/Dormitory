@@ -100,6 +100,7 @@
 						</td>
 					</c:forEach>
 				</tr>
+				<%--
 				<tr>
 					<td>Floors</td>
 					<c:forEach var="room" items="${dormitory['rooms']}">
@@ -116,6 +117,7 @@
 						</td>
 					</c:forEach>
 				</tr>
+				--%>
 				<tr>
 					<td>Can Arrange Orientation</td>
 					<c:forEach var="room" items="${dormitory['rooms']}">
@@ -172,7 +174,9 @@
 	<hr />
 	<ol>
 		<c:forEach var="rate" items="${rates}">
-			<li>${rate}</li>
+			<c:if test="${rate['status'] > 0}">
+				<li>${rate}</li>
+			</c:if>
 		</c:forEach>
 	</ol>
 	<form action="/dormitory/dormitory/rate.html" method="POST">
@@ -182,13 +186,11 @@
 			<tbody>
 				<tr>
 					<td>Alias:</td>
-					<td colspan="2"><input type="text" name="alias" value="${curRate.alias}" /></td>
+					<td colspan="2"><input type="text" name="alias" value="${empty curRate['alias'] ? userName : curRate['alias']}" /></td>
 				</tr>
 				<tr>
 					<td>Comment:</td>
-					<td colspan="2"><textarea rows="5" cols="40" name="comment">
-						${curRate.comment}
-					</textarea></td>
+					<td colspan="2"><textarea rows="5" cols="40" name="comment">${curRate['comment']}</textarea></td>
 				</tr>
 				<tr>
 					<td>Rate:</td>

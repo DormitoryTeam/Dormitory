@@ -28,6 +28,8 @@
  */
 package com.noeasy.money.model;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * <class description>
  * 
@@ -48,6 +50,8 @@ public class DormitoryRateBean extends BaseBean {
     private String mComment;
 
     private String mAlias;
+
+    private String mStatus;
 
 
 
@@ -82,6 +86,9 @@ public class DormitoryRateBean extends BaseBean {
      * @return the comment
      */
     public String getComment() {
+        if (StringUtils.isNoneBlank(mComment)) {
+            mComment = mComment.trim();
+        }
         return mComment;
     }
 
@@ -114,7 +121,14 @@ public class DormitoryRateBean extends BaseBean {
 
 
 
-    //
+    /**
+     * @return the status
+     */
+    public String getStatus() {
+        return mStatus;
+    }
+
+
 
     /**
      * @return the userId
@@ -124,6 +138,8 @@ public class DormitoryRateBean extends BaseBean {
     }
 
 
+
+    //
 
     /**
      * @param pAlias
@@ -141,6 +157,9 @@ public class DormitoryRateBean extends BaseBean {
      */
     public void setComment(final String pComment) {
         mComment = pComment;
+        if (StringUtils.isNoneBlank(mComment)) {
+            mComment = mComment.trim();
+        }
     }
 
 
@@ -171,6 +190,16 @@ public class DormitoryRateBean extends BaseBean {
      */
     public void setPoint(final int pPoint) {
         mPoint = pPoint;
+    }
+
+
+
+    /**
+     * @param pStatus
+     *            the status to set
+     */
+    public void setStatus(final String pStatus) {
+        mStatus = pStatus;
     }
 
 

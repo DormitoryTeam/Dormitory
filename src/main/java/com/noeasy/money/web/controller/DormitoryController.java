@@ -15,6 +15,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.noeasy.money.constant.Constants;
+import com.noeasy.money.constant.SessionConstants;
 import com.noeasy.money.enumeration.DormitoryStatus;
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitoryRateBean;
@@ -54,10 +55,14 @@ public class DormitoryController {
 
     @RequestMapping("/rate" + Constants.URL_SUFFIX)
     public String rate(final HttpServletRequest request, final HttpServletResponse response, final Model model,
-            final Integer id, final Integer dormitoryId, final String alias, final String comment, final Integer point) {
+            final int id, final Integer dormitoryId, final String alias, final String comment, final Integer point) {
         if (dormitoryId > 0 && StringUtils.isNoneBlank(comment)) {
-            // TODO change to user id from session
-            dormitoryService.rateDormitory(id, dormitoryId, 1, point, comment, alias);
+            Object userIdObj = request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+            int userId = 0;
+            if (userIdObj != null) {
+                userId = NumberUtils.toInt(String.valueOf(userIdObj));
+            }
+            dormitoryService.rateDormitory(id, dormitoryId, userId, point, comment, alias);
         }
         return "redirect:/dormitory/dormitory-detail.html?id=" + dormitoryId;
     }
@@ -77,14 +82,25 @@ public class DormitoryController {
             if (dormitory.getId() > 0) {
                 int dormitoryId = dormitory.getId();
 
-                // TODO change to user id from session
-                List<Map<String, String>> browsingHistory = dormitoryService
-                        .queryDormitoryBrowseHistory(1, dormitoryId);
-                dormitoryService.saveDormitoryBrowseHistory(1, dormitory.getId());
+                Object userIdObj = request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+                int userId = 0;
+                if (userIdObj != null) {
+                    userId = NumberUtils.toInt(String.valueOf(userIdObj));
+                }
+                Object userNameObj = request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_LOGIN);
+                String userName = "Guest";
+                if (userNameObj != null) {
+                    userName = String.valueOf(userNameObj);
+                }
 
+                List<Map<String, String>> browsingHistory = dormitoryService.queryDormitoryBrowseHistory(userId,
+                        dormitoryId);
+                dormitoryService.saveDormitoryBrowseHistory(userId, dormitory.getId());
+
+                model.addAttribute("curRate", new DormitoryRateBean());
                 List<DormitoryRateBean> rates = dormitoryService.queryDormitoryRates(dormitoryId);
                 for (DormitoryRateBean rate : rates) {
-                    if (rate.getId() == 1) {
+                    if (rate.getUserId() == userId) {
                         model.addAttribute("curRate", rate);
                         break;
                     }
@@ -93,6 +109,8 @@ public class DormitoryController {
                 model.addAttribute("dormitory", dormitory);
                 model.addAttribute("history", browsingHistory);
                 model.addAttribute("rates", rates);
+                model.addAttribute("userId", userId);
+                model.addAttribute("userName", userName);
             }
         }
         return "dormitory/dormitory-detail";

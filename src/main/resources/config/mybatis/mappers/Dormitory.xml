@@ -536,13 +536,14 @@
 	<!-- Rating & Comment#################################################################### -->
 
 	<insert id="rate" keyProperty="id" useGeneratedKeys='true' parameterType="com.noeasy.money.model.DormitoryRateBean">
-		insert into dormitory_rating (dormitory_id, user_id, alias, score, comment, update_time) values (
+		insert into dormitory_rating (dormitory_id, user_id, alias, score, comment, update_time, status) values (
 			#{dormitoryId,javaType=int,jdbcType=INTEGER},
 			#{userId,javaType=int,jdbcType=INTEGER},
 			#{alias,javaType=string,jdbcType=VARCHAR},
 			#{point,javaType=int,jdbcType=INTEGER},
 			#{comment,javaType=string,jdbcType=VARCHAR},
-			#{updateTime,javaType=java.sql.Timestamp,jdbcType=TIMESTAMP}
+			#{updateTime,javaType=java.sql.Timestamp,jdbcType=TIMESTAMP},
+			#{status}
 		)
 	</insert>
 
@@ -550,14 +551,15 @@
 		update dormitory_rating set
 			score = #{point},
 			comment = #{comment},
-			alias = #{alias}
+			alias = #{alias},
+			status = #{status}
 		where id = #{id}
 	</update>
 
 	<select id="selectRates" parameterType="int" resultMap="dormitoryRate">
-		select id dr_id, dormitory_id dr_dormitoryId, user_id dr_userId, alias dr_alias, score dr_point, comment dr_comment, create_time dr_createTime
+		select id dr_id, dormitory_id dr_dormitoryId, user_id dr_userId, alias dr_alias, score dr_point, comment dr_comment, create_time dr_createTime, status dr_status
 		from dormitory_rating
-		where status = 1 and dormitory_id = #{dormitoryId}
+		where dormitory_id = #{dormitoryId}
 	</select>
 
 	<!-- Calculate Distance ################################################################ -->
@@ -767,6 +769,7 @@
 		<result property="comment" column="dr_comment" />
 		<result property="alias" column="dr_alias" />
 		<result property="createTime" column="dr_createTime" />
+		<result property="status" column="dr_status" />
 	</resultMap>
 
 </mapper>
