@@ -135,10 +135,19 @@
 						<td><input type="text" name="rooms[${i['index']}].checkinDateString" value="${curRoom['checkinDateString']}" /></td>
 						<td><input type="text" name="rooms[${i['index']}].houseArea" value="${curRoom['houseArea']}" /></td>
 						<td><input type="text" name="rooms[${i['index']}].bedType" value="${curRoom['bedType']}" /></td>
-						<td><input type="text" name="rooms[${i['index']}].ensuitBathroom" value="${curRoom['ensuitBathroom']}" /></td>
+						<td><select name="rooms[${i['index']}].ensuitBathroom">
+							<option value="false" ${!curRoom['ensuitBathroom'] ? 'selected' : ''}>No</option>
+							<option value="true"  ${ curRoom['ensuitBathroom'] ? 'selected' : ''}>Yes</option>
+						</select></td>
 						<td><input type="text" name="rooms[${i['index']}].kitchenPeople" value="${curRoom['kitchenPeople']}" /></td>
-						<td><input type="text" name="rooms[${i['index']}].orientationArrange" value="${curRoom['orientationArrange']}" /></td>
-						<td><input type="text" name="rooms[${i['index']}].roomLanguageArrange" value="${curRoom['roomLanguageArrange']}" /></td>
+						<td><select name="rooms[${i['index']}].orientationArrange">
+							<option value="false" ${!curRoom['orientationArrange'] ? 'selected' : ''}>No</option>
+							<option value="true"  ${ curRoom['orientationArrange'] ? 'selected' : ''}>Yes</option>
+						</select></td>
+						<td><select name="rooms[${i['index']}].roomLanguageArrange">
+							<option value="false" ${!curRoom['roomLanguageArrange'] ? 'selected' : ''}>No</option>
+							<option value="true"  ${ curRoom['roomLanguageArrange'] ? 'selected' : ''}>Yes</option>
+						</select></td>
 						<td><input type="text" name="rooms[${i['index']}].bathroomEquipment" value="${curRoom['bathroomEquipment']}" /></td>
 						<td><input type="text" name="rooms[${i['index']}].kitchenEquipment" value="${curRoom['kitchenEquipment']}" /></td>
 					</tr>

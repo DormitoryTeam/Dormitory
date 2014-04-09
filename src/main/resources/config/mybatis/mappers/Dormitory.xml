@@ -739,11 +739,11 @@
 		<result property="floors" column="ri_floors" />
 		<result property="bedType" column="ri_bedType" />
 		<result property="houseArea" column="ri_houseArea" />
-		<result property="ensuitBathroo" column="ri_ensuitBathroo" />
+		<result property="ensuitBathroom" column="ri_ensuitBathroom" />
 		<result property="kitchenPeople" column="ri_kitchenPeople" />
 		<result property="floorArrange" column="ri_floorArrange" />
 		<result property="orientationArrange" column="ri_orientationArrange" />
-		<result property="rooLanguageArrange" column="ri_rooLanguageArrange" />
+		<result property="roomLanguageArrange" column="ri_roomLanguageArrange" />
 		<result property="kitchenEquipment" column="ri_kitchenEquipment" />
 		<result property="bathroomEquipment" column="ri_bathroomEquipment" />
 		<result property="status" column="ri_status" />
