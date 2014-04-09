@@ -195,7 +195,7 @@
 				<tr>
 					<td>Rate:</td>
 					<td><div id="rate" data-score="${curRate['point']}"></div></td>
-					<td><input type="submit" value="submit" /></td>
+					<td><input type="submit" ${empty sessionScope['USER_ID'] ? 'disabled value="cannot submit before login"' : 'value="submit"'} /></td>
 				</tr>
 			</tbody>
 		</table>
