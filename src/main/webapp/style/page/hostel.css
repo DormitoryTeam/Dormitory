@@ -1,0 +1,1341 @@
+ul li{
+	list-style: none;
+}
+
+#wrapper > main > .container > .row > .contentBox{
+	width: 690px;
+}
+
+#wrapper > main > .container > .row > .contentBox.country-list-box{
+	width: 810px;
+	margin: 100px auto;
+}
+
+.tip{
+	width: 190px;
+	position: relative;
+	margin-top: 180px;
+}
+
+.tip .tip-arraw{
+	background: url(../common/tip-arraw.jpg) no-repeat;
+	width: 13px;
+	height: 18px;
+	position: absolute;
+	left: -12px;
+	top: 35px;
+}
+
+.tip ul li{
+	border: 1px solid #c3c3c3;
+	border-top: none;
+	border-bottom: none;
+	padding: 10px 20px;
+	font-size: 12px;
+}
+
+.tip ul li a{
+	color: #5a5a5a;
+	font-size: 12px;
+}
+
+.tip ul li.tip-header{
+	background: url(../common/tip-header.jpg) no-repeat;
+	height: 4px;
+	border: none;
+	padding: 0;
+}
+
+.tip ul li.tip-bottom{
+	background: url(../common/tip-bottom.jpg) no-repeat;
+	height: 8px;
+	border: none;
+	padding: 0;
+}
+
+.country-list{
+	width: 810px;
+}
+
+.country-list .country-title{
+	background: url(../common/country-title.jpg) no-repeat;
+	width: 250px;
+	height: 50px;
+	text-align: center;
+	font-size: 24px;
+	line-height: 50px;
+	color: #fff;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+.country-list .country-title p{
+	width: 190px;
+	float: left;
+	padding-left: 20px;
+}
+
+.country-list .country-title span{
+	float: right;
+	width: 40px;
+	font-size: 14px;
+	text-align: left;
+	padding-top: 5px;
+}
+
+.country-list > li > .close-line{
+	height: 10px;
+	border-left: 1px solid #ff8a00;
+	margin-left: 38px;
+}
+
+.country-list > li.close > ul.city-list{
+	display: none;
+}
+
+.country-list > li.close > .close-line{
+	display: block;
+}
+
+.country-list > li.open > ul.city-list{
+	display: block;
+	overflow: hidden;
+}
+
+.country-list > li.open > .close-line,
+.country-list > li.close.last > .close-line{
+	display: none;
+}
+
+.country-list > li > ul.city-list{
+	border-left: 1px solid #ff8a00;
+	margin-left: 38px;
+	width: 100%;
+	padding: 50px 0 90px; 
+}
+
+.country-list > li > ul.city-list li{
+	float: left;
+	padding: 15px 20px;
+	width: 150px;
+}
+
+.country-list > li > ul.city-list li a{
+	font-size: 18px;
+	color: #5a5a5a;
+	text-align: center;
+}
+
+.country-list > li > ul.city-list li a span{
+	font-size: 12px;
+	display: block;
+}
+
+.sidebar > *{
+	margin-top: 30px
+}
+
+.sidebar .map{
+	background: url(../common/map-bottom.jpg) no-repeat bottom;
+	width: 290px;
+	height: 365px;
+}
+
+.sidebar .map img{
+	width: 290px;
+	height: 360px;
+}
+
+
+.searchBox{
+	margin-top: 30px;
+}
+
+.searchBox fieldset{
+	text-align: right;
+	position: relative;
+}
+
+.searchBox fieldset input{
+	width: 290px;
+	height: 35px;
+}
+
+.searchBox fieldset .btn-search{
+	background: url(../common/btn-search.jpg) no-repeat;
+	width: 14px;
+	height: 12px;
+	position: absolute;
+	border: 0;
+	top: 12px;
+	right: 20px;
+}
+
+.bread-crumb{
+
+}
+
+.bread-crumb li{
+	float: left;
+	font-size: 18px;
+	color: #dfdfdf;
+}
+
+.bread-crumb li a{
+	color: #ae0000;
+	font-size: 18px;
+}
+
+.bread-crumb li span{
+	margin-right: 20px;
+}
+
+.bread-crumb li + li{
+	margin-left: 20px;
+}
+
+
+.filter{}
+
+.filter dl,
+.filter dl > *{
+	float: left;
+}
+
+.filter dl dd{
+	padding-top: 1px;
+}
+
+.filter dl dd label{
+	color: #000;
+	padding: 0 35px 0 6px;
+}
+
+.filter .select-el {
+	position: relative;
+	display: inline-block;
+	z-index: 100;
+	height: 25px;
+	width: 130px;
+}
+
+.filter .sim-select {
+	background: transparent;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 25px;
+	width: 130px;
+}
+
+.filter .sim-head {
+	height: 25px;
+}
+
+
+.filter .sim-select .current {
+	color: #595454;
+	font-size: 13px;
+	padding: 0 15px;
+	cursor: default;
+	height: 25px;
+	display: block;
+	line-height: 25px;
+	word-break: keep-all;
+	white-space: nowrap;
+	overflow: hidden;
+	color: #000;
+	background: url(../common/filert-select-input.png) no-repeat;
+}
+
+.filter .sim-arrow {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	width: 6px;
+	height: 5px;
+	cursor: pointer;
+	background: url(../common/filert-select-arrow.png) no-repeat;
+}
+
+.hostel-list-page{
+
+}
+
+.hostel-list-page li{
+	overflow: hidden;
+}
+
+.hostel-list-page li + li{
+	border-top: 1px dashed #5a5a5a;
+	margin-top: 20px;
+	padding-top: 20px;
+}
+
+.hostel-list-page li .hostel-img{
+	width: 200px;
+	height: 210px;
+}
+
+.hostel-list-page li .hostel-img img{
+	width: 300px;
+	height: 180px;
+}
+
+.hostel-list-page li .hostel-img .hostel-server{
+	margin-top: 10px;
+}
+
+.hostel-list-page li .hostel-img .hostel-server a{
+	background: url(../common/icon-server.png) no-repeat;
+	width: 15px;
+	height: 15px;
+	display: inline-block;
+}
+
+.hostel-list-page li .hostel-img .hostel-server a + a{
+	margin-left: 10px;
+}
+
+.hostel-list-page li .hostel-img .hostel-server a.video{
+	background-position: 0 0;
+}
+.hostel-list-page li .hostel-img .hostel-server a.plane{
+	background-position: -27px 0;
+}
+.hostel-list-page li .hostel-img .hostel-server a.sale{
+	background-position: -53px 0;
+}
+.hostel-list-page li .hostel-img .hostel-server a.sunlight{
+	background-position: -77px 0;
+}
+
+.hostel-list-page li .hostel-info{
+	margin-left: 220px;
+	position: relative;
+	font-size: 12px;
+}
+
+.hostel-list-page li .hostel-info .price{
+	position: absolute;
+	right: 0;
+}
+
+.hostel-list-page li .hostel-info .price span{
+	font-size: 24px;
+	color: #ff5400;
+	padding: 0 10px;
+}
+
+.hostel-list-page li .hostel-info .price span em{
+	font-size: 12px;
+	font-style: normal;
+}
+
+.hostel-info .title{
+	color: #0c892a;
+	font-size: 18px;
+}
+
+.hostel-info .title span{
+	font-size: 12px;
+	color: #5a5a5a;
+}
+
+.hostel-info .title span em{
+	font-style: normal;
+	color: #0c892a;
+}
+
+.hostel-info .address{
+	color: #0c892a;
+	margin-bottom: 20px;
+}
+
+.hostel-info > p{
+	margin: 5px 0;
+}
+
+.hostel-info table{
+	width: 100%;
+	border-spacing: 0;
+	margin-top: 20px;
+}
+
+.hostel-info table thead{
+	background: #eadfd1;
+	padding: 5px;
+	font-size: 14px;
+}
+
+.hostel-info table thead th{
+	font-weight: 400;
+	padding: 5px 10px;
+	text-align: center;
+}
+
+.hostel-info table tbody td{
+	padding: 0 10px;
+	text-align: center;
+}
+
+.hostel-info table tbody td a{
+	color: #ae0000;
+	font-size: 12px;
+}
+
+a.btn-style,
+.hostel-info a.more,
+.quick form .btn-quick,
+button.btn-style{
+    background: url(../common/btn.png) no-repeat;
+    width: 115px;
+    height: 30px;
+    color: #fff;
+    font-size: 14px;
+    border: 0;
+    display: block;
+    line-height: 30px;
+    text-align: center;
+    margin-top: 15px;
+    float: right;
+}
+
+.quick{
+	background: #e8e8e8;
+	border-top: 2px solid #d80000;
+}
+
+.quick .title{
+	padding: 15px;
+	font-size: 18px;
+	border-bottom: 1px solid #c3c3c3;
+}
+
+.quick form{
+	padding: 15px 0;
+	margin: 0 25px;
+}
+
+.quick form fieldset{
+	padding-bottom: 25px;
+	border-bottom: dashed 1px #a6a6a6;
+}
+
+.quick form fieldset dl{
+	width: 100%;
+	clear: both;
+	padding: 5px 0;
+}
+
+.quick form fieldset dl > *{
+	float: left;
+}
+
+.quick form fieldset dl > dt{
+	margin-left: 15px;
+}
+
+.quick .select-el {
+	position: relative;
+	display: inline-block;
+	z-index: 100;
+	height: 30px;
+	width: 180px;
+}
+
+.quick .sim-select {
+	background: transparent;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 30px;
+	width: 180px;
+}
+
+.quick .sim-head {
+	height: 30px;
+}
+
+
+.quick .sim-select .current {
+	color: #595454;
+	font-size: 13px;
+	padding: 0 15px;
+	cursor: default;
+	height: 30px;
+	display: block;
+	line-height: 30px;
+	word-break: keep-all;
+	white-space: nowrap;
+	overflow: hidden;
+	color: #000;
+	background: url(../common/quick-select-input.png) no-repeat;
+}
+
+.quick .sim-arrow {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	width: 6px;
+	height: 12px;
+	cursor: pointer;
+	background: url(../common/quick-select-arrow.png) no-repeat;
+}
+
+.quick form p{
+	background: #fff;
+	color: #0c892a;
+	border: 1px solid #c3c3c3;
+	line-height: 50px;
+	height: 50px;
+	width: 250px;
+	text-align: center;
+	margin-top: 25px;
+}
+
+.quick form .btn-quick{
+	float: none;
+	font-size: 18px;
+	text-align: center;
+	margin: 20px auto 0;
+}
+
+.comment{
+	border: 1px solid #c3c3c3;
+}
+
+.comment form{
+	background: #f1f1f1;
+}
+
+.comment .title{
+	font-size: 18px;
+	line-height: 35px;
+	height: 35px;
+	padding-left: 10px;
+}
+
+.comment form fieldset{
+	padding: 10px;
+	border-top: 1px solid #dfdfdf;
+}
+
+.comment form .btn-comment{
+	font-size: 18px;
+	background: transparent;
+	border: none;
+	float: right;
+}
+
+.comment form fieldset dl{
+	overflow: hidden;
+	margin-top: 15px;
+}
+
+.comment form fieldset dl > *{
+	float: left;
+}
+
+.comment form fieldset dl > dt{
+	margin-left: 15px;
+	width: 600px;
+}
+
+.comment form input{
+	width: 130px;
+	height: 32px;
+	border: 1px solid #c3c3c3;
+	padding-left: 5px;
+}
+
+.comment form textarea{
+	width: 600px;
+	height: 80px;
+	border: 1px solid #c3c3c3;
+}
+
+.comment form + .title{
+	margin-top: 30px;
+}
+
+.comment .comment-list{
+	padding: 25px 35px;
+}
+
+.comment .comment-list li{
+
+}
+
+.comment .comment-list li + li{
+	margin-top: 20px;
+}
+
+.comment .comment-list li p a{
+	color: #ae0000;
+}
+
+.comment .comment-list li .comment-content{
+	padding: 20px 0 30px 25px;
+	font-size: 12px;
+	border-bottom: dashed 1px #dadada; 
+}
+
+.house-detail-info{
+	margin-top: 30px;
+}
+
+.house-detail-info .house-text-info{
+	width: 500px;
+}
+
+.house-detail-info  .house-text-info .title,
+.house-detail-info .house-text-info .address{
+	color: #0c892a;
+	font-size: 30px;
+	font-weight: 700;
+}
+
+.house-detail-info .house-text-info .address{
+	font-size: 18px;
+	font-weight: normal;
+}
+
+.house-detail-info .house-text-info p{
+	font-size: 18px;
+	margin-top: 25px;
+}
+
+.house-detail-info .house-text-info p + p{
+	margin-top: 5px;
+}
+
+.house-detail-info .house-score{
+	background: #fc8800;
+	width: 120px;
+	padding: 5px 0;
+	color: #fff;
+	text-align: center;
+}
+
+.house-detail-info .house-score .starBox{
+	margin: 0 auto;
+}
+
+.house-detail-info .house-tabs{
+	border: none 0;
+	padding: 0;
+	margin-top: 25px;
+}
+
+.house-detail-info .house-tabs .ui-tabs-nav{
+	border: 1px solid #e60012;
+	padding: 0;
+	background: #fff;
+}
+
+.house-detail-info .house-tabs .ui-tabs-nav li{
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: #fff;
+	overflow: hidden;
+	height: 50px;
+	line-height: 35px;
+}
+
+.house-detail-info .house-tabs .ui-tabs-nav li a{
+	color: #e60012;
+	font-size: 18px;
+}
+
+.house-detail-info .house-tabs .ui-tabs-nav li.min a{
+	width: 47px;
+	font-size: 14px;
+	line-height: 19px;
+	word-break: break-all;
+	word-wrap: break-word;
+	white-space: normal;
+}
+
+.house-detail-info .house-tabs .ui-tabs-nav li.min.little a{
+	font-size: 12px;
+	width: 46px;
+}
+
+.house-detail-info .house-tabs .ui-tabs-nav li.ui-tabs-active{
+	background: #e60012;
+	margin: 0;
+	border-bottom-right-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+
+.house-detail-info .house-tabs .ui-tabs-nav li.ui-tabs-active a{
+	color: #fff;
+}
+
+.house-detail-info .house-tabs.ui-tabs .ui-tabs-panel{
+	border: 1px solid #c3c3c3;
+	border-radius: 10px;
+	margin: 20px 0 25px 0;
+	overflow: hidden;
+}
+
+.house-detail-info .house-tabs.ui-tabs .ui-tabs-panel.compare-no{
+	padding: 0;
+}
+
+.house-detail-info .compare-title{
+	float: left;
+}
+
+.house-detail-info .compare-title li,
+.house-detail-info .scroll-content-item li{
+	width: 139px;
+	border-right: 1px solid #c3c3c3;
+	text-align: center;
+	padding: 25px 0;
+	overflow: hidden;
+}
+
+.house-detail-info .scroll-content-item li{
+	border-right: 0;
+}
+
+.house-detail-info .scroll-content-item + .scroll-content-item{
+	border-left: 1px solid #c3c3c3;
+}
+
+.house-detail-info .compare-title li.title-hight,
+.house-detail-info .scroll-content-item li.title-hight{
+	height: 110px;
+}
+
+.house-detail-info .compare-title li.title-hight.last,
+.house-detail-info .scroll-content-item li.title-hight.last{
+	height: 30px;
+}
+
+.house-detail-info .compare-title li + li{
+	border-top: 1px solid #c3c3c3;
+}
+
+.house-detail-info .scroll-pane { 
+	overflow: auto; 
+	width: 548px; 
+	float: left; 
+}
+
+.house-detail-info .scroll-content { 
+	width: 2000px; 
+	float: left; 
+}
+
+.house-detail-info .scroll-content-item { 
+	width: 139px; 
+	float: left; 
+	text-align: center; 
+}
+
+.house-detail-info .scroll-content-item.itme-header{
+	height: 105px;
+	overflow: hidden;
+	width: 139px;
+}
+
+.house-detail-info .scroll-content-item li{
+	overflow: hidden;
+}
+
+.house-detail-info .scroll-content-item li + li{
+	border-top: 1px solid #c3c3c3;
+}
+
+.house-detail-info .scroll-content-item li h3{
+	font-size: 14px;
+	font-weight: normal;
+	margin-bottom: 15px;
+}
+
+.house-detail-info .scroll-content-item li p{
+	font-size: 12px;
+}
+
+.house-detail-info .scroll-content-item li p span{
+	color: #e60012;
+}
+
+.house-detail-info .scroll-bar-wrap { 
+	clear: left; 
+	border-top: 1px solid #c3c3c3;
+	height: 44px; 
+	padding-top: 10px;
+	border-bottom: 1px solid #c3c3c3;
+}
+
+.house-detail-info .scroll-bar-wrap .ui-slider { 
+	background: none;
+	border:0; 
+	margin: 10px auto 0;  
+}
+
+.house-detail-info .scroll-bar-wrap .srcoll-bar-bg{
+	background: #c3c3c3;
+	height: 3px; 
+	margin-top: -10px;
+}
+
+.house-detail-info .scroll-bar-wrap .ui-handle-helper-parent { 
+	position: relative; 
+	width: 100%; 
+	height: 3px; 
+	margin: 0 auto; 
+	background: none;
+}
+
+.house-detail-info .scroll-bar-wrap .ui-slider-handle { 
+	background: #515567;
+	height: 15px;
+	border: 0;
+	border-radius: 0;
+}
+.house-detail-info .scroll-bar-wrap .ui-slider-handle .ui-icon {}
+
+.item-body a.btn-style{
+	margin: 0 auto;
+	float: none;
+}
+
+.img-larger-content{
+	width: 650px;
+	height: 435px;
+	overflow: hidden;
+	text-align: center;
+}
+
+.img-larger-content img{
+	width: 650px;
+}
+
+.scrollable {
+    position: relative;
+    overflow: hidden;
+    width: 615px;
+    height: 120px;
+    border: none;
+    background: none;
+    float: left;
+    margin-left: 17px;
+}
+
+.scrollable .items {
+    width: 20000em;
+    position: absolute;
+    clear: both;
+}
+
+.items div {
+    float: left;
+    width: 680px;
+}
+
+.scrollable img {
+    float: left;
+    margin: 2px;
+    background-color: #fff;
+    padding: 2px;
+    width: 115px;
+    height: 77px;
+}
+
+.scroll-small{
+	margin: 10px auto 0; 
+	width: 650px; 
+	height: 80px;
+	position: relative;
+}
+
+.scrollable .active {
+    position:relative;
+    cursor:default;
+}
+
+a.browse {
+    display: block;
+    width: 32px;
+    height: 37px;
+    float: left;
+    margin: 25px 10px;
+    cursor: pointer;
+    font-size: 1px;
+    position: absolute;
+    z-index: 5;
+}
+
+a.right { 
+	background: url(../common/icon-next.png) no-repeat;
+	margin-right: 0px;
+	right: 0;
+}
+
+a.left { 
+	margin-left: 0px; 
+	background: url(../common/icon-prev.png) no-repeat;
+}
+
+a.disabled {
+
+}
+
+.reservation-content{
+	width: 890px;
+	height: 737px;
+	margin-top: 80px;
+	background: url(../common/reservation-bg.png) no-repeat;
+	padding: 35px 55px;
+}
+
+.reservation-content .reservation-info{
+	border: 1px solid #b47300;
+	overflow: hidden;
+}
+
+.reservation-content .reservation-info span{
+	padding: 10px 20px;
+	color: #fff;
+	background: #b47300;
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.reservation-content .reservation-info span,
+.reservation-content .reservation-info fieldset,
+.reservation-content .reservation-info fieldset dl,
+.reservation-content .reservation-info fieldset dl > *{
+	float: left;
+}
+
+.reservation-content .reservation-info fieldset dl{
+	margin: 10px 15px 10px 0;
+	padding-left: 10px;
+}
+
+.reservation-content .reservation-info fieldset dl + dl{
+	border-left: 1px solid #838383;
+}
+
+.reservation-content .reservation-info fieldset dl dd{
+	text-decoration: underline;
+	padding-left: 10px;
+}
+
+.about-info.news li.item{
+	border: none;
+}
+
+.hot-news-list{
+	background: #eadfd1;
+}
+
+.hot-news-list .title{
+	background: #b47200 url(../common/icon-list-title.jpg) no-repeat;
+	padding-left: 42px;
+	font-size: 18px;
+	line-height: 34px;
+	color: #fff;
+}
+
+.hot-news-list .news-list{
+	padding: 15px 20px 30px;
+}
+
+.hot-news-list .news-list li{
+	list-style: disc;
+	list-style-position: inside;
+	padding: 5px 15px;
+}
+
+.hot-news-list .news-list li + li{
+	border-top: 1px solid #b47200;
+	margin-top: 5px;
+
+}
+
+.hot-news-list .news-list li.last{
+	border-bottom: 1px solid #b47200;
+	padding-bottom: 10px;
+}
+
+.hot-news-list .news-list li:hover{
+	border-radius: 5px;
+	background: #b47200;
+}
+
+.hot-news-list .news-list li:hover a{
+	color: #fff;
+}
+
+#wrapper > main > .container > .row > .contentBox.news-info{
+	border-radius: 10px;
+	border: 1px solid #b47200;
+	padding: 35px;
+	width: 620px;
+	margin-top: 30px;
+}
+
+.news-info h1{
+	font-size: 24px;
+	color: #ae0000;
+	font-weight: normal;
+	text-align: center;
+}
+
+.news-info > p{
+	font-size: 12px;
+	text-align: center;
+	margin-top: 10px;
+}
+
+.news-info .news-details{
+	margin-top: 25px;
+}
+
+.news-info .news-details .news-header{
+	text-align: center;
+}
+
+.news-info .news-details .news-header img{
+	width: 500px;
+}
+
+.news-info .news-details .news-header a.btn-style{
+	float: none;
+	margin: 25px auto;
+	font-size: 18px;
+}
+
+.news-content-text > p{ 
+	text-indent: 1.5em; 
+	line-height: 25px;
+} 
+
+.reservation-personal{
+	position: relative;
+}
+
+.reservation-personal form > a.addOne{
+	background: url(../common/add.png) no-repeat;
+	width: 75px;
+	height: 74px;
+	display: block;
+	position: absolute;
+	top: 310px;
+	left: 60px;
+}
+
+.reservation-personal form > .btnBox{
+	position: absolute;
+	bottom: 20px;
+	width: 60px;
+	left: 60px;
+
+}
+
+.reservation-personal form > .btnBox > input{
+	width: 60px;
+	height: 60px;
+	background: #ff8a00;
+	border: none;
+	font-size: 18px;
+	line-height: 60px;
+	color: #fff;
+}
+
+.reservation-personal form > .btnBox > input.save{
+	background: #2cb111;
+	margin-bottom: 20px;
+}
+
+.ui-tabs-vertical { 
+	width: 100%;
+	padding: 0;
+	border: 0;
+	margin-top: 20px; 
+}
+
+.ui-tabs-vertical .ui-tabs-nav { 
+	padding: 0; 
+	float: left; 
+	width: 200px;
+	border-radius: 0;
+	border: 0;
+	background: transparent; 
+}
+
+.ui-tabs-vertical .ui-tabs-nav li { 
+	clear: left; 
+	width: 199px; 
+	border-bottom-width: 1px !important; 
+	margin: 0;
+	text-align: center; 
+	border: 1px solid #d1d1d1;
+	border-right-width: 0 !important; 
+	background: transparent;
+}
+
+.ui-tabs-vertical .ui-tabs-nav li a.ui-tabs-anchor{ 
+	display: block; 
+	width: 100%;
+	padding: 10px 0;
+	text-align: center;
+	font-size: 24px;
+}
+
+.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { 
+	padding-bottom: 0;
+	padding-right: .1em; 
+	border-right-width: 1px; 
+	border-right-width: 1px; 
+	margin-bottom: 0;
+}
+
+.ui-tabs-vertical .ui-tabs-panel { 
+	float: right; 
+	width: 626px;
+	padding: 30px;
+	border: dashed 2px #aaaaaa;
+	border-radius: 0 10px 10px 0;
+	min-height: 615px;
+}
+
+.reservation-personal .ui-tabs-panel input{
+	width: 120px;
+	height: 30px;
+	border: 1px solid #c3c3c3;
+	padding-left: 10px;
+}
+
+.reservation-personal .ui-tabs-panel input.min{
+	width: 60px;
+}
+
+.reservation-personal .ui-tabs-panel input.long{
+	width: 250px;
+}
+
+.reservation-personal .ui-tabs-panel input.larger{
+	width: 400px;
+}
+
+.reservation-personal .select-el,
+.reservation-personal .sim-select,
+.reservation-personal .sim-head{
+	height: 30px;
+	width: 80px;
+}
+
+.reservation-personal .sim-select .current{
+	background: #fff;
+	border-radius: 10px;
+	width: 50px;
+	height: 28px;
+	border: 1px solid #c3c3c3;
+	line-height: 30px;
+	color: #5a5a5a;
+}
+
+.reservation-personal .sim-arrow{
+	top: 10px;
+}
+
+.reservation-personal dl{
+	display: block;
+	width: 100%;
+}
+
+.reservation-personal dl + dl{
+	margin-top: 20px;
+}
+
+.reservation-personal dl:before,
+.reservation-personal dl:after {
+	content: " ";
+	display: table;
+}
+
+.reservation-personal dl:after {
+	clear: both;
+}
+
+.reservation-personal dl > *{
+	float: left;
+	line-height: 30px;
+}
+
+.reservation-personal dl dt{
+	font-size: 18px;
+	width: 90px;
+	text-align: right;
+}
+
+.reservation-personal dl dd,
+.reservation-personal dl dd + dt{
+	margin-left: 10px;
+}
+
+.reservation-personal dl dd + dt{
+	width: 30px;
+}
+
+.reservation-personal dl dd + dt.long{
+	width: 80px;
+}
+
+.reservation-personal dl dd + dt.min{
+	width: 45px;
+}
+
+.reservation-personal dl dd .btn-style{
+	margin-left: 200px;
+}
+
+.reservation-personal dl dd + dd{
+	width: 100%;
+}
+
+.reservation-personal dl dd > *{
+	vertical-align: middle;
+}
+
+.reservation-personal dl dd label + label.fradio{
+	margin-left: 10px;
+}
+
+.reservation-personal dl dd label.fradio + label{
+	margin-left: 5px;
+}
+
+.airport{
+	margin-top: 100px;
+}
+
+.airport .nav-box{
+	float: left;
+	width: 250px;
+}
+
+.airport .nav-box .reservation-nav li{
+	background: #ff8a00;
+	height: 60px;
+	line-height: 60px;
+	padding-left: 120px;
+}
+
+.airport .nav-box .reservation-nav li a{
+	color: #fff;
+	font-size: 24px;
+}
+
+.airport .nav-box .reservation-nav li + li {
+	margin-top: 5px;
+}
+
+.airport .nav-box .reservation-nav li.icon-plane{
+	background: #ff8a00 url(../common/icon-air.jpg) no-repeat;
+}
+
+.airport .nav-box .reservation-nav li.icon-old{
+	background: #ff8a00 url(../common/icon-old.jpg) no-repeat;
+}
+
+.airport .nav-box .reservation-nav li.icon-air-compare{
+	background: #ff8a00 url(../common/icon-air-compare.jpg) no-repeat;
+}
+
+.airport .nav-box .air-tip{
+	padding: 80px 20px;
+}
+
+.airport .nav-box .air-tip .title{
+	font-size: 24px;
+	margin-bottom: 15px;
+}
+
+.airport .nav-box .air-tip .tip-content{
+	line-height: 19px;
+}
+
+.airport .reservation-personal{
+	width: 748px;
+	float: left;
+	min-height: 800px;
+}
+
+.air-tab-personal {
+	padding: 0;
+	border: 1px solid #ff8a00;
+	border-radius: 0;
+}
+
+.ui-widget-content{
+	color: #5a5a5a;
+}
+
+.air-tab-personal .tip-text{
+	float: right;
+	font-size: 12px;
+	margin-top: 20px;
+	margin-right: 20px;
+	color: #5a5a5a;
+}
+
+.air-tab-personal form{
+	margin: 25px 30px;
+}
+
+.air-tab-personal .ui-tabs-nav{
+	background: transparent;
+	border: none;
+}
+
+.air-tab-personal .ui-tabs-panel{
+	border: dashed 1px #aaaaaa;
+}
+
+.air-tab-personal .ui-tabs-nav{
+	padding: 0;
+}
+
+.air-tab-personal .ui-tabs-nav li{
+	border-bottom: 1px solid #aaaaaa;
+	margin-bottom: -1px;
+	margin-right: 0;
+	padding: 0 20px 1px;
+	background: transparent;
+}
+
+.air-tab-personal .ui-tabs-nav li + li{
+	border-left: 0;
+}
+
+.air-tab-personal .ui-tabs-nav li a{
+	font-size: 14px;
+	width: 30px;
+	white-space: normal;
+}
+
+.air-tab-personal form a.addOne{
+	width: 50px;
+	height: 43px;
+	background: url(../common/air-add.jpg) no-repeat;
+	top: 30px;
+	left: 450px;
+}
+
+.air-tab-personal form > .btnBox{
+	top: 100px;
+	left: 630px;
+}

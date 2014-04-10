@@ -1,0 +1,45 @@
+#wrapper{
+}
+
+#wrapper > header{
+}
+
+.pro-items > li{
+	list-style-type: none;
+	float: left;
+}
+
+.pro-items > li img{
+	max-width: 100%;
+}
+
+.pro-items .pro-title{
+	text-align: center;
+	margin-top: 10px;
+	
+}
+.pro-items .pro-title a{
+	line-height: 23px;
+	display: inline-block;
+	color: #3D3C3A;
+}
+
+.pro-items .pro-title a:hover{
+	color: #36BAE2;
+}
+
+#wrapper > main > .container {
+	background: #ffffff;
+	min-height: 320px;
+	padding-bottom: 40px;
+	width: 1000px;
+}
+
+#wrapper > main > .container > .row > .contentBox {
+    width: 700px;
+    overflow: hidden;
+}
+
+#wrapper > main > .container > .row > .sidebar{
+	width: 290px;
+}

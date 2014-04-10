@@ -1,0 +1,339 @@
+.sliderShow {
+    background: #fff;
+    width: 100%;
+    height: 350px;
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto
+}
+
+.sliderList {
+    vertical-align: baseline;
+    overflow: hidden;
+    position: absolute
+}
+
+.sliderList .sliderItem {
+    float: left;
+    display: inline-block;
+    position: relative
+}
+
+.sliderItem>img {
+    width: 100%
+}
+
+.sliderItem>.text {
+    position: absolute;
+    top: 15%;
+    right: 0;
+    z-index: 200;
+    font-size: 24px;
+    line-height: 28px;
+    text-align: left;
+    font-weight: 700;
+    opacity: 0;
+    transition: all .3s ease-out;
+    -webkit-transition: all .3s ease-out;
+    -moz-transition: all .3s ease-out;
+    -ms-transition: all .3s ease-out
+}
+
+.sliderItem>.text>span {
+    font-weight: 900;
+    font-size: 42px;
+    line-height: 50px;
+    margin-bottom: 20px;
+    display: block
+}
+
+.sliderItem>.text.active {
+    right: 5%;
+    opacity: 1
+}
+
+.sliderItem>.text>.styleBtn {
+    z-index: 200;
+    background: #000;
+    opacity: 0;
+    transition: all .3s ease-out;
+    -webkit-transition: all .3s ease-out;
+    -moz-transition: all .3s ease-out;
+    -ms-transition: all .3s ease-out;
+    display: inline-block;
+    margin-top: 20px
+}
+
+.sliderItem>.text>.styleBtn:hover {
+    background: #fc0;
+    color: #000
+}
+
+.sliderItem>.text>.styleBtn.active {
+    opacity: 1
+}
+
+.sliderPager {
+    position: absolute;
+    bottom: 20px;
+    right: 25px;
+}
+
+.sliderPager>a {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    text-align: center;
+    color: #fff;
+    background: url(../common/slider-page.png) no-repeat;
+}
+
+.sliderPager>a+a {
+    margin-left: 10px
+}
+
+.sliderPager a.active {
+    color: #000;
+}
+
+.sliderPager>a:hover {
+    background-position: 0 -22px
+}
+
+.sidebar > .serviceBox{
+    background: #eadfd1;
+}
+
+.sidebar > .serviceBox > .itembar{
+    color: #ae0000;
+    border-left: 1px solid #ae0000;
+    padding: 0 5px;
+    width: 65px;
+    float: right;
+    height: 260px;
+}
+
+.sidebar > .serviceBox > .itembar > ul > li{
+    padding: 20px 0;
+    text-align: center;
+    list-style: none;
+}
+
+.sidebar > .serviceBox > .itembar > ul > li + li{
+    border-top: 1px dashed #ae0000;
+}
+
+.sidebar > .serviceBox > .selectContent{
+    height: 260px;
+}
+
+.sidebar > .serviceBox > .selectContent > form{
+    padding: 30px 15px;
+}
+
+.sidebar > .serviceBox > .selectContent .btn-search{
+    background: url(../common/btn.png) no-repeat;
+    width: 115px;
+    height: 30px;
+    color: #fff;
+    font-size: 18px;
+    border: 0;
+}
+
+.sidebar > .serviceBox > .selectContent dl + dl{
+    margin-top: 10px;
+}
+
+.sidebar > .serviceBox > .selectContent dl.btnBox{
+    margin-top: 120px;
+}
+
+.sidebar > .serviceBox > .selectContent dl.btnBox dd{
+    text-align: center;
+}
+
+.sidebar > .serviceBox > .selectContent dl dt{
+    float: left;
+    color: #ae0000;
+    padding-right: 15px;
+}
+
+.sidebar > .login-plan,
+.sidebar > .userInfo{
+    padding-top: 25px;
+    padding-left: 20px;
+}
+
+.sidebar > .login-plan >ul>li,
+.sidebar > .userInfo > ul >li,
+.sidebar > .userInfo ul li > ul.user-links li{
+    float: left;
+    list-style: none;
+}
+
+.sidebar > .login-plan >ul>li a{
+    width: 110px;
+    height: 50px;
+    display: block;
+}
+
+.sidebar > .login-plan >ul>li + li{
+    margin-left: 30px;
+}
+
+.sidebar > .login-plan .reg-btn{
+    background: url(../common/nologin-reg-btn.png) no-repeat center;
+}
+
+.sidebar > .login-plan .login-btn{
+    background: url(../common/nologin-login-btn.png) no-repeat center;
+}
+
+.sidebar > .userInfo .user-header{
+    width: 60px;
+    height: 60px;
+}
+
+.sidebar > .userInfo .header-img-opacity{
+    background: url(../common/login-img-opacity.png) no-repeat center;
+}
+
+.sidebar > .userInfo >ul>li + li{
+    border-left: 1px solid #dfdfdf;
+    margin-left: 25px;
+    padding-left: 20px;
+    margin-top: 5px;
+}
+
+.sidebar > .userInfo ul li > ul.user-links{
+    margin-top: 10px;
+}
+
+.sidebar > .userInfo a{
+    color: #32b16c;
+}
+
+.sidebar > .userInfo ul li > ul.user-links li + li{
+    border-left: 1px solid #32b16c;
+    padding-left: 15px;
+    margin-left: 15px;
+}
+
+.sidebar > .news-box{
+    background: url(../common/news-background.jpg) no-repeat;
+    width: 290px;
+    height: 300px;
+}
+
+.sidebar > .news-box ul{
+    padding: 30px 0;
+}
+
+.sidebar > .news-box a{
+    color: #5a5a5a;
+}
+
+.sidebar > .news-box a.more{
+    display: block;
+    text-align: right;
+    padding-right: 20px;
+}
+
+.sidebar > .news-box ul li{
+    padding: 5px 0;
+    margin-left: 40px;
+    overflow: hidden;
+    list-style: inside;
+    width: 230px;
+    height: 20px;
+}
+
+.row.hot-city{
+    border: 1px solid #b47200;
+}
+
+.row .title{
+    height: 35px;
+}
+
+.row .title a.more{
+    color: #5a5a5a;
+    margin-left: 15px;
+    vertical-align: bottom;
+}
+
+.row .title span{
+    display: inline-block;
+    background:#b47200 url(../common/icon-list-title.jpg) no-repeat;
+    padding:0 10px 0 41px;
+    height: 34px;
+    line-height: 34px;
+    font-size: 18px;
+    color: #fff;
+}
+
+.hot-city .city-list{
+    padding: 20px;
+    overflow: hidden;
+}
+
+.hot-city .city-list li{
+    background: url(../common/icon-city-backgrond.jpg) no-repeat;
+    width: 56px;
+    height: 76px;
+    text-align: center;
+    float: left;
+    list-style: none;
+    margin: 10px 20px;
+    display: table;
+    padding: 0 10px;
+}
+
+.hot-city .city-list li a{
+    color: #fff;
+    display: table-cell;
+    vertical-align: middle;
+    width: 60px;
+    word-wrap:break-word;
+}
+
+.hot-city .city-list li.active{
+    background: url(../common/icon-city-active.jpg) no-repeat;
+}
+
+.hot-city .city-list li.active a{
+    color: #ae0000;
+}
+
+.news-list li{
+    margin: 10px 0;
+    list-style: none;
+    overflow: hidden;
+}
+
+.news-list .news-itme .news-img{
+    background: url(../common/news-img-background.jpg) no-repeat;
+    width: 350px;
+    height: 238px;
+}
+
+.news-list .news-itme .news-img img{
+    width: 330px;
+    height: 212px;
+    margin: 10px;
+}
+
+.news-list .news-itme .news-info{
+    color: #5a5a5a;
+    margin-left: 370px;
+}
+
+.news-list .news-itme .news-info h2 a{
+    font-size: 18px;
+    color: #5a5a5a;
+}
+
+.news-list .news-itme .news-info p{
+    font-size: 12px;
+    margin-top: 10px;
+}
