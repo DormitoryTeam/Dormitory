@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="<%=ctx%>/style/all.min.css" />
 <link rel="stylesheet" href="<%=ctx%>/style/page/<%=request.getParameter("template")%>.css">
 <script>
-	var baseUrl = "";
+	var baseUrl = "<%=ctx%>";
 </script>
 <script src="<%=ctx%>/js/vendor/modernizr.custom.33292.js"></script>
 <script src="<%=ctx%>/js/vendor/require.js" data-main="<%=ctx%>/js/pages/<%=request.getParameter("template")%>"></script>
