@@ -2,11 +2,18 @@
 <body>
 <h1>Edit User</h1>
 ${message}<br>
-
+<c:choose>
+<c:when test="${'pickup' eq orderType}">
+Order for Pickup
+</c:when>
+<c:otherwise>
 ${dormitory.name}, ${price.contract}, ${price.salePrice}, ${price.salePrice},  <fmt:formatDate value='${roomInfo.checkinDate}' pattern='yyyy-MM-dd'/>
+</c:otherwise>
+</c:choose>
 <hr>
 <form action="<c:url value="/order/dormitory-place-order.html"/>" method="POST" id="loginForm" name="loginForm">
 <input type="hidden" name="pageStep" value="0" />
+<input type="hidden" name="orderType" value="${orderType}"/>
 <input type="hidden" name="dormitoryId" value="${dormitory.id}" />
 <input type="hidden" name="contractId" value="${price.contractId}" /> 
 <input type="hidden" name="roomInfoId" value="${roomInfo.id}" />

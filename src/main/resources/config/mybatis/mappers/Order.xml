@@ -286,9 +286,6 @@
 	
 	<update id="updatePickupLineItem" parameterType="com.noeasy.money.model.PickupLineItem">
 		UPDATE line_item_pickup SET
-		<if test="listPrice != null">
-			listPrice = #{listPrice},
-		</if>
 		<if test="amount != null">
 			amount = #{amount},
 		</if>

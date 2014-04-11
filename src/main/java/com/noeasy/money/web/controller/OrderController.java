@@ -68,8 +68,6 @@ import com.noeasy.money.model.UserBean;
 import com.noeasy.money.model.UserInfoBean;
 import com.noeasy.money.model.UserPreferBean;
 import com.noeasy.money.model.UserSearchBean;
-import com.noeasy.money.repository.impl.OrderRepository;
-import com.noeasy.money.repository.impl.UserRepository;
 import com.noeasy.money.service.IDormitoryService;
 import com.noeasy.money.service.INavigationService;
 import com.noeasy.money.service.IOrderService;
@@ -127,17 +125,21 @@ public class OrderController {
                 if (isExpired(request)) {
                     // TODO: message
                     return forwrdURLs[0];
-                } else {
-                    OrderBean order = ServletUtils.getOrderFromSession(request);
-                    model.addAttribute("order", order);
-                }
+                } 
                 break;
             }
-
+            OrderBean order = ServletUtils.getOrderFromSession(request);
+            model.addAttribute("order", order);
+            if (OrderType.PICKUP == order.getOrderType()) {
+                model.addAttribute("item", getPickupItemFromSesssion(request));
+            }
             return forwrdURLs[step];
         } else {
             OrderBean order = ServletUtils.getOrderFromSession(request);
             model.addAttribute("order", order);
+            if (OrderType.PICKUP == order.getOrderType()) {
+                model.addAttribute("item", getPickupItemFromSesssion(request));
+            }
             String command = request.getParameter(Constants.PARAM_COMMAND);
             if (Constants.PARAM_VALUE_COMMAND_SAVE.equalsIgnoreCase(command)) {
                 if (null == order) {
@@ -261,6 +263,17 @@ public class OrderController {
 
     private void maintainDestinationInfo(HttpServletRequest pRequest) {
         PickupLineItem item = getPickupItemFromSesssion(pRequest);
+        item.setPickup2City(pRequest.getParameter("pickup2City"));
+        item.setPickup2Address(pRequest.getParameter("pickup2Address"));
+        item.setPickup2Dormitory(pRequest.getParameter("pickup2Dormitory"));
+        item.setPickup2Postalcode(pRequest.getParameter("pickup2Postalcode"));
+        orderService.updateLineItem(ServletUtils.getOrderFromSession(pRequest));
+    }
+
+
+
+    private void maintainFlightInfo(HttpServletRequest pRequest) {
+        PickupLineItem item = getPickupItemFromSesssion(pRequest);
         String takeOffDateStr = pRequest.getParameter("takeOffDate");
         if (StringUtils.isNotBlank(takeOffDateStr)) {
             item.setTakeOffDate(DateUtils.stringToDate(takeOffDateStr));
@@ -276,17 +289,7 @@ public class OrderController {
         item.setFlightCompany(pRequest.getParameter("flightCompany"));
         item.setFlightNum(pRequest.getParameter("flightNumber"));
         orderService.updateLineItem(ServletUtils.getOrderFromSession(pRequest));
-    }
-
-
-
-    private void maintainFlightInfo(HttpServletRequest pRequest) {
-        PickupLineItem item = getPickupItemFromSesssion(pRequest);
-        item.setPickup2City(pRequest.getParameter("pickup2City"));
-        item.setPickup2Address(pRequest.getParameter("pickup2Address"));
-        item.setPickup2Dormitory(pRequest.getParameter("pickup2Dormitory"));
-        item.setPickup2Postalcode(pRequest.getParameter("pickup2Postalcode"));
-        orderService.updateLineItem(ServletUtils.getOrderFromSession(pRequest));
+        
     }
 
 
@@ -414,6 +417,7 @@ public class OrderController {
         if (StringUtils.isNotBlank(orderId)) {
             if (isDormitoryOrder(pRequest)) {
                 // FIXME: Check placer and belongs to
+                // FIXME: check order status
                 order = orderService.findOrderById(Integer.valueOf(orderId));
                 if (null != order) {
                     // FIXME check this line is need nor not.
@@ -433,7 +437,7 @@ public class OrderController {
                     }
                 }
             } else {
-                // TODO: PICK UP
+                // TODO: find PICK UP order
             }
             model.addAttribute("order", order);
         } else {
