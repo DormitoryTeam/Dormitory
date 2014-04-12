@@ -1,5 +1,5 @@
 ﻿<div class="row info-banner">
-	<img src="../data/hostel/images/banner/banner.jpg" alt/>
+	<img src="/dormitory/img/banner/banner.jpg" alt/>
 </div>
 <div class="row">
 	<div class="sidebar pull-left">
@@ -17,7 +17,7 @@
 		</div>
 	</div>
 	<div class="contentBox pull-left ml-10">
-		<img src="../data/hostel/images/video/index.jpg" alt/>
+		<img src="/dormitory/img/video/index.jpg" alt/>
 	</div>
 </div>
 <div class="row hot-city">

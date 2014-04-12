@@ -141,7 +141,7 @@ public class NavigationController {
             model.addAttribute("colleges", colleges);
             model.addAttribute("slides", slides);
         }
-        return "home";
+        return "homepage";
     }
 
 

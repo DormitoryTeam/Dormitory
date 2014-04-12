@@ -1,9 +1,4 @@
-﻿<% String isLogin = request.getParameter("login"); %>
-<%
-	if ("1".equals(isLogin)){
-	}
-%>
-<div class="row">
+﻿<div class="row">
 	<div class="sidebar ml-10 pull-right">
 		<div class="serviceBox">
 			<div class="itembar">
@@ -49,14 +44,12 @@
 				</form>
 			</div>
 		</div>
-		<%
-		if ("1".equals(isLogin)){
-		%>
+		<c:if test="${sessionScope.USER_ID > 0}">
 			<div class="userInfo">
 				<ul>
 					<li class="user-header">
 						<div class="header-img-opacity">
-							<img src="../data/hostel/images/login/header.jpg" alt="" />
+							<img src="/dormitory/img/login/header.jpg" alt="" />
 						</div>
 					</li>
 					<li>
@@ -74,7 +67,8 @@
 					</li>
 				</ul>
 			</div>
-		<%}else{%>
+		</c:if>
+		<c:if test="${empty sessionScope.USER_ID}">
 			<div class="login-plan">
 				<ul>
 					<li>
@@ -85,20 +79,20 @@
 					</li>
 				</ul>
 			</div>
-		<%}%>
+		</c:if>
 	</div>
 	<div class="contentBox">
 		<div class="sliderShow">
 			<div class="sliderList">
 				<div class="sliderItem">
 						<a href="#">
-							<img src="../data/hostel/images/slider/slider-img.jpg" alt=""/>
+							<img src="/dormitory/img/slider/slider-img.jpg" alt=""/>
 						</a> 
 					<p class="text"></p>
 				</div> 
 				<div class="sliderItem">
 						<a href="#">
-							<img src="../data/hostel/images/slider/slider-img.jpg" alt=""/>
+							<img src="/dormitory/img/slider/slider-img.jpg" alt=""/>
 						</a> 
 					<p class="text"></p>
 				</div> 
