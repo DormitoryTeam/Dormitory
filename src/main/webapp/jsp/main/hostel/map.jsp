@@ -1,3 +1,3 @@
 <div class="map">
-	<img src="../data/hostel/images/map/map.jpg" alt />
+	<img src="/dormitory/img/map/map.jpg" alt />
 </div>

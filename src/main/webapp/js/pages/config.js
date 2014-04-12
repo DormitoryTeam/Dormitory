@@ -18,7 +18,7 @@ require.config({
 		jqzoom: baseUrl + '/js/lib/jquery.jqzoom-core',
 		popover: baseUrl + '/js/lib/jquery.popover',
 		utils: baseUrl + '/js/lib/utils',
-		raty: baseUrl + '/js/lib/jquery.raty.min',
+		raty: baseUrl + '/js/jquery-raty/jquery.raty.min',
 		jQueryUI: baseUrl + '/js/lib/jquery-ui',
 		jqueryTools: baseUrl + '/js/lib/jquery.tools.min',
 

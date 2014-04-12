@@ -69,7 +69,7 @@
 	<li class="item">
 		<h2 class="webchat">在微信上关注我们</h2>
 		<p>
-			<img src="../data/hostel/images/banner/webchat.jpg" alt />
+			<img src="/dormitory/img/banner/webchat.jpg" alt />
 		</p>
 	</li>
 	<li class="bottom">&nbsp;</li>

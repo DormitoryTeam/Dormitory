@@ -164,7 +164,7 @@ public class DormitoryController {
             model.addAttribute("dormitories", dormitories);
             model.addAttribute("page", page);
         }
-        return "dormitory/dormitory-list";
+        return "dormitory/dormitorylist";
     }
 
 }
