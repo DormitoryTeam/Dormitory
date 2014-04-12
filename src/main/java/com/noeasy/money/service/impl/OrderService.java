@@ -221,4 +221,11 @@ public class OrderService implements IOrderService {
         
     }
 
+
+
+    @Override
+    public OrderBean findPickupOrderById(Integer pId) {
+        return orderRepository.findPickupOrderById(pId);
+    }
+
 }

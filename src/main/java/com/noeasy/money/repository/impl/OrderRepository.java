@@ -233,4 +233,12 @@ public class OrderRepository extends BaseRepository implements IOrderRepository 
         
     }
 
+
+
+    @Override
+    public OrderBean findPickupOrderById(Integer pId) {
+        
+        return getSqlSession().selectOne("com.noeasy.money.model.Order.findPickupOrderById", pId);
+    }
+
 }

@@ -85,4 +85,8 @@ public interface IOrderService {
 
 
     void updateLineItem(OrderBean pOrder);
+
+
+
+    OrderBean findPickupOrderById(Integer pId);
 }

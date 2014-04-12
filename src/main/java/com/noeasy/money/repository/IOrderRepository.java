@@ -122,4 +122,8 @@ public interface IOrderRepository {
 
     void updatePickupLineItem(PickupLineItem pPickupItem);
 
+
+
+    OrderBean findPickupOrderById(Integer pId);
+
 }

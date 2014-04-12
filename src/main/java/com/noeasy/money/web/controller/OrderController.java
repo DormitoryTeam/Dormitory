@@ -246,6 +246,12 @@ public class OrderController {
 
     private PickupLineItem getPickupItemFromSesssion(HttpServletRequest pRequest) {
         OrderBean order = ServletUtils.getOrderFromSession(pRequest);
+        return getPickupItemFromOrder(order);
+    }
+
+
+
+    private PickupLineItem getPickupItemFromOrder(OrderBean order) {
         if (null == order) {
             throw new RuntimeException("no order in session");
         }
@@ -415,10 +421,11 @@ public class OrderController {
         String orderId = pRequest.getParameter(Constants.PARAM_ORDER_ID);
         OrderBean order = null;
         if (StringUtils.isNotBlank(orderId)) {
+            Integer id = Integer.valueOf(orderId);
             if (isDormitoryOrder(pRequest)) {
                 // FIXME: Check placer and belongs to
                 // FIXME: check order status
-                order = orderService.findOrderById(Integer.valueOf(orderId));
+                order = orderService.findOrderById(id);
                 if (null != order) {
                     // FIXME check this line is need nor not.
                     model.addAttribute("user", order.getUser());
@@ -437,7 +444,9 @@ public class OrderController {
                     }
                 }
             } else {
-                // TODO: find PICK UP order
+                order = orderService.findPickupOrderById(id);
+                PickupLineItem item = getPickupItemFromOrder(order);
+                model.addAttribute("item", item);
             }
             model.addAttribute("order", order);
         } else {
