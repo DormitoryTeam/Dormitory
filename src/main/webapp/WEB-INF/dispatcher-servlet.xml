@@ -52,4 +52,5 @@
 	<mvc:resources mapping="/style/**" location="/style/" />
 	<mvc:resources mapping="/img/**" location="/img/" />
 	<mvc:resources mapping="/bootstrap/**" location="/bootstrap/" />
+	<mvc:resources mapping="/upload/**" location="/upload/" />
 </beans>

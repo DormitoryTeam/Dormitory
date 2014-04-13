@@ -80,7 +80,7 @@ function removeFileFromSubmitForm() {
 
 function appendLastestImagePreview(data) {
     $.each(data.result, function(i, e) {
-        var imageURL = "/dormitory/admin/dormitory/dormitory-image-preview.html?dormitoryId=" + $("#hidDormitoryId").val() + "&fileName=" + e.name;
+        var imageURL = "/dormitory/upload/images/dormitory/" + $("#hidDormitoryId").val() + "/" + e.name;
         var row = $('<tr>');
         row.append($('<td>').html("<input type=\"text\" name=\"imageNames\" class=\"fileNames\" value=\"" + e.name + "\" />"));
         row.append($('<td>').html("<a href='" + imageURL + "'><img src='" + imageURL + "' /></a>"));
