@@ -9,7 +9,7 @@ $(function() {
 		path : '../style/img'
 	});
 
-	$('#dormitoryRate').raty({
+	$('.starBox').raty({
 		score : function() {
 			return $(this).attr('data-score');
 		},

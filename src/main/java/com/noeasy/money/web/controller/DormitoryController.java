@@ -113,7 +113,7 @@ public class DormitoryController {
                 model.addAttribute("userName", userName);
             }
         }
-        return "dormitory/dormitory-detail";
+        return "dormitory/dormitorydetail";
     }
 
 
@@ -164,7 +164,7 @@ public class DormitoryController {
             model.addAttribute("dormitories", dormitories);
             model.addAttribute("page", page);
         }
-        return "dormitory/dormitory-list";
+        return "dormitory/dormitorylist";
     }
 
 }

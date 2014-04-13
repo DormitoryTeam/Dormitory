@@ -1,23 +1,13 @@
-﻿<ul class="hostel-list-info">
+<ul class="hostel-list-info">
 	<li class="top">&nbsp;</li>
 	<li class="item">
 		<h2 class="favorites">我浏览过的宿舍</h2>
 		<ul class="favorites-hostel-list">
-			<li>
-				<a href="#">伦敦-伦敦大学-宿舍A</a>
-			</li>
-			<li>
-				<a href="#">伦敦-伦敦大学-宿舍B</a>
-			</li>
-			<li>
-				<a href="#">伦敦-伦敦大学-宿舍C</a>
-			</li>
-			<li>
-				<a href="#">伦敦-伦敦大学-宿舍D</a>
-			</li>
-			<li>
-				<a href="#">伦敦-伦敦大学-宿舍E</a>
-			</li>
+			<c:forEach var="dormitory" items="${history}">
+				<li>
+					<a href="/dormitory/dormitory/dormitory-detail.html?id=${dormitory['dormitoryId']}&template=hostel">${dormitory['name']}</a>
+				</li>
+			</c:forEach>
 		</ul>
 	</li>
 	<li class="item">
