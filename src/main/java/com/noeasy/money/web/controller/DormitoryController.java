@@ -113,7 +113,7 @@ public class DormitoryController {
                 model.addAttribute("userName", userName);
             }
         }
-        return "dormitory/dormitory-detail";
+        return "dormitory/dormitorydetail";
     }
 
 

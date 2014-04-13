@@ -23,7 +23,7 @@
 				<p>设施：
 					<c:forEach var="binaryEquipment" items="${dormitory['binaryEquipmentArray']}" varStatus="i">
 						<c:if test="${binaryEquipment eq '1'.charAt(0)}">
-							<c:if test="${hasOneEquipment eq 1}">, </c:if>
+							<c:if test="${hasOneEquipment eq 1}">、 </c:if>
 							<c:set var="hasOneEquipment" value="1" />
 							${equipments[i['index']]}
 						</c:if>
