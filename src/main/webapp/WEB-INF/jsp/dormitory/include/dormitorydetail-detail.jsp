@@ -39,11 +39,13 @@
 		<div id="tabs-video">
 			<jsp:include page="dormitorydetail-slide.jsp" />
 		</div>
-		<div id="tabs-info">基本介绍</div>
+		<div id="tabs-info">${dormitory['description']}</div>
 		<div id="tabs-compaer" class="compare-no">
 			<jsp:include page="dormitorydetail-comparison.jsp" />
 		</div>
-		<div id="tabs-map">地图</div>
+		<div id="tabs-map">
+			<div id="map_canvas" style="width:500px; height:500px"></div>
+		</div>
 		<div id="tabs-air">接机</div>
 		<div id="tabs-pay">付款取消政策</div>
 		<div id="tabs-qa">常见问题</div>

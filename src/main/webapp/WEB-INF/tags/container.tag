@@ -13,6 +13,7 @@
 </script>
 <script src="<%=ctx%>/js/vendor/modernizr.custom.33292.js"></script>
 <script src="<%=ctx%>/js/vendor/require.js" data-main="<%=ctx%>/js/pages/<%=request.getParameter("template")%>"></script>
+<script src="<%=ctx%>/js/vendor/jquery-1.10.2.min.js" data-main="<%=ctx%>/js/pages/<%=request.getParameter("template")%>"></script>
 <!--[if lt IE 9]>
 	<link rel="stylesheet" href="<%=ctx%>/css/hostel/ie.css">
 <![endif]-->

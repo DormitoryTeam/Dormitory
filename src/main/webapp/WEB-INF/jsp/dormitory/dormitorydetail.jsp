@@ -2,6 +2,10 @@
 <%@ taglib prefix="hostel" tagdir="/WEB-INF/tags"%>
 <hostel:container>
 	<%-- top section --%>
+	<script type="text/javascript" src="/dormitory/js/jquery-raty/jquery.raty.min.js"></script>
+	<script type="text/javascript" src="/dormitory/js/dormitory/dormitory-detail.js"></script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDseYSlaYVhokgVdQuPH9Y35gACzO2n3BM&sensor=false"></script>
+	
 	<header>
 		<jsp:include page="/jsp/header/header.jsp" />
 	</header>
@@ -12,7 +16,7 @@
 		<div class="row">
 			<div class="sidebar pull-right">
 				<jsp:include page="/jsp/main/hostel/quick.jsp" />
-				<jsp:include page="/jsp/main/hostel/rightinfobar.jsp" />
+				<jsp:include page="include/dormitorydetail-rightbar.jsp" />
 			</div>
 			<div class="contentBox">
 				<jsp:include page="include/dormitorydetail-detail.jsp" />

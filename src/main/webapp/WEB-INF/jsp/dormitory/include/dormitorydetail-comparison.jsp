@@ -49,9 +49,30 @@
 					${room['bathroomEquipment']}
 				</li>
 				<li class="title-hight last">
-					<input class="btn-style" type="submit" class="btnBookDormitory" roomId="${room['id']}" value="立即预定" />
+					<input class="btn-style btnBookDormitory" type="submit" class="btnBookDormitory" roomId="${room['id']}" value="立即预定" />
 				</li>
 			</ul>
 		</c:forEach>
 	</div>
 </div>
+
+
+<form id="placeOrderForm" action="<c:url value="/order/dormitory-place-order.html"/>" method="GET">
+	<input type="hidden" name="dormitoryId" value="${dormitory['id']}" />
+	<input type="hidden" id="contractId" name="contractId" /> 
+	<input type="hidden" id="roomInfoId" name="roomInfoId" />
+</form>
+<div id="chooseContract">
+
+</div>
+<script>
+var room_contracts = {};
+<c:forEach var="room" items="${dormitory['rooms']}">
+	var contracts = [];
+	<c:forEach var="contractPrice" items="${room['contractPrice']}">
+		var contract = {"id": ${contractPrice['contractId']}, "name": "${contractPrice['contract']}", "salePrice": ${contractPrice['salePrice']}, "currency": "${contractPrice['currency']}"};
+		contracts.push(contract);
+	</c:forEach>
+	room_contracts["${room['id']}"] = contracts;
+</c:forEach>
+</script>
