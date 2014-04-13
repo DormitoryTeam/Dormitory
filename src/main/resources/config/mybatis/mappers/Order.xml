@@ -13,9 +13,9 @@
 		placer.id as placer_id, placer.login as placer_login, placer.email as placer_email, placer.alias as placer_alias,
 		belong_to.id as bt_id, belong_to.login as bt_login, belong_to.email as bt_email, belong_to.alias as bt_alias,
 		order_contact.id as contact_id, order_contact.order_id as contact_order_id,
-		user_info.id as bti_id, user_info.name as bti_name, user_info.nationality as bti_nationality, user_info.gender as bti_gender, user_info.birthday as bti_birthday, user_info.email as bti_email, user_info.qq as bti_qq, user_info.wechat as bti_wechat, user_info.phone as bti_phone, user_info.country as bti_country, user_info.province as bti_province, user_info.city as bti_city, user_info.address as bti_address,
-		guarantee_info.id as gi_id, guarantee_info.name as gi_name, guarantee_info.nationality as gi_nationality, guarantee_info.gender as gi_gender, guarantee_info.birthday as gi_birthday, guarantee_info.email as gi_email, guarantee_info.qq as gi_qq, guarantee_info.wechat as gi_wechat, guarantee_info.phone as gi_phone, guarantee_info.country as gi_country, guarantee_info.province as gi_province, guarantee_info.city as gi_city, guarantee_info.address as gi_address,
-		contact_info.id as ci_id, contact_info.name as ci_name, contact_info.nationality as ci_nationality, contact_info.gender as ci_gender, contact_info.birthday as ci_birthday, contact_info.email as ci_email, contact_info.qq as ci_qq, contact_info.wechat as ci_wechat, contact_info.phone as ci_phone, contact_info.country as ci_country, contact_info.province as ci_province, contact_info.city as ci_city, contact_info.address as ci_address,
+		user_info.id as bti_id, user_info.name as bti_name, user_info.last_name as bti.last_name, user_info.nationality as bti_nationality, user_info.gender as bti_gender, user_info.birthday as bti_birthday, user_info.email as bti_email, user_info.qq as bti_qq, user_info.wechat as bti_wechat, user_info.phone as bti_phone, user_info.country as bti_country, user_info.province as bti_province, user_info.city as bti_city, user_info.county as bti_county, user_info.address as bti_address, user_info.postalcode as bti.postalcode, user_info.relationship as bti_relationship,
+		guarantee_info.id as gi_id, guarantee_info.name as gi_name, guarantee_info.last_name ase gi_last_name, guarantee_info.nationality as gi_nationality, guarantee_info.gender as gi_gender, guarantee_info.birthday as gi_birthday, guarantee_info.email as gi_email, guarantee_info.qq as gi_qq, guarantee_info.wechat as gi_wechat, guarantee_info.phone as gi_phone, guarantee_info.country as gi_country, guarantee_info.province as gi_province, guarantee_info.city as gi_city, guarantee_info.county as gi_county,  guarantee_info.address as gi_address, guarantee_info.postalcode as gi_postalcode, guarantee_info.relationship as gi_relationship,
+		contact_info.id as ci_id, contact_info.name as ci_name, contact_info.last_name as ci_last_name, contact_info.nationality as ci_nationality, contact_info.gender as ci_gender, contact_info.birthday as ci_birthday, contact_info.email as ci_email, contact_info.qq as ci_qq, contact_info.wechat as ci_wechat, contact_info.phone as ci_phone, contact_info.country as ci_country, contact_info.province as ci_province, contact_info.city as ci_city, contact_info.county as ci_county, contact_info.address as ci_address, contact_info.postalcode as ci_postalcode, contact_info.relationship as ci_relationship,
 		item.id as lid, item.amount as li_amount, item.currency as li_currency,
 		dormitory.id as dormitory_id, dormitory.city_id as dormitory_city_id, dormitory.name as dormitory_name, dormitory.address as dormitory_address, dormitory.postcode as dormitory_postcode, dormitory.listPrice as dormitory_listPrice, dormitory.salePrice as dormitory_salePrice, dormitory.currency as dormitory_currency, dormitory.equipment as dormitory_equipment, dormitory.service as dormitory_service, dormitory.description as dormitory_description, dormitory.status as dormitory_status,
 		room_info.id as ri_id, room_info.dormitory_id as ri_dormitory_id, room_info.room_type_id as ri_room_type_id, room_info.description as ri_description, room_info.checkin_date as ri_checkin_date, room_info.orientations as ri_orientations, room_info.floors as ri_floors, room_info.bed_type as ri_bed_type, room_info.house_area as ri_house_area, room_info.ensuite_bathroom as ri_ensuite_bathroom, room_info.kitchen_people_number as ri_kitchen_people_number, room_info.floor_arrangement as ri_floor_arrangement, room_info.orientation_arrangement as ri_orientation_arrangement, room_info.room_language_arrangement as ri_language_arrangement, room_info.kitchen_equipment as ri_kitchen_equipment, room_info.bathroom_equipment as ri_bathroom_equipment, room_info.status as ri_status,
@@ -44,7 +44,7 @@
 		placer.id as placer_id, placer.login as placer_login, placer.email as placer_email, placer.alias as placer_alias,
 		belong_to.id as bt_id, belong_to.login as bt_login, belong_to.email as bt_email, belong_to.alias as bt_alias,
 		order_contact.id as contact_id, order_contact.order_id as contact_order_id,
-		user_info.id as bti_id, user_info.name as bti_name, user_info.nationality as bti_nationality, user_info.gender as bti_gender, user_info.birthday as bti_birthday, user_info.email as bti_email, user_info.qq as bti_qq, user_info.wechat as bti_wechat, user_info.phone as bti_phone, user_info.country as bti_country, user_info.province as bti_province, user_info.city as bti_city, user_info.address as bti_address,
+		user_info.id as bti_id, user_info.name as bti_name, user_info.last_name as bti.last_name, user_info.nationality as bti_nationality, user_info.gender as bti_gender, user_info.birthday as bti_birthday, user_info.email as bti_email, user_info.qq as bti_qq, user_info.wechat as bti_wechat, user_info.phone as bti_phone, user_info.country as bti_country, user_info.province as bti_province, user_info.city as bti_city, user_info.county as bti_county, user_info.address as bti_address, user_info.postalcode as bti.postalcode, user_info.relationship as bti_relationship,
 		item.id as lid, item.amount as li_amount, item.currency as li_currency, item.city_id as li_city_id, item.pickup_date as li_pickup_date, item.pickup_type as li_pickup_type, item.luggage_amount as li_luggage_amount, item.luggage_size as li_luggage_size, item.takeoff_date as li_takeoff_date, item.takeoff_city as li_takeoff_city, item.arrival_city as li_arrival_city, item.arrival_country as li_arrival_country, item.arrival_airport as li_arrival_airport, item.flight_company as li_flight_company, item.flight_number as li_flight_number, item.pickup_to_city as li_pickup_to_city, item.pickup_to_address as li_pickup_to_address, item.pickup_to_dormitory as li_pickup_to_dormitory, item.pickup_to_postalcode as li_pickup_to_postalcode
 	</sql>
 
@@ -81,7 +81,7 @@
 			</if>
 		</if>
 		<if test="orderType != null">
-			and t1.type = #{orderType}
+			and o.type = #{orderType}
 		</if>
 	</sql>
 
@@ -308,6 +308,7 @@
 	<resultMap id="belongToInfo" type="com.noeasy.money.model.UserInfoBean">
 		<id property="id" column="bti_id" />
 		<result property="name" column="bti_name" />
+		<result property="lastName" column="bti_last_name" />
 		<result property="nationality" column="bti_nationality" />
 		<result property="gender" column="bti_gender" />
 		<result property="birthday" column="bti_birthday" />
@@ -318,12 +319,16 @@
 		<result property="country" column="bti_country" />
 		<result property="province" column="bti_province" />
 		<result property="city" column="bti_city" />
+		<result property="county" column="bti_county" />
 		<result property="address" column="bti_address" />
+		<result property="postalcode" column="bti_postalcode" />
+		<result property="relationship" column="bti_relationship" />
 	</resultMap>
 
 	<resultMap id="contactInfo" type="com.noeasy.money.model.UserInfoBean">
 		<id property="id" column="ci_id" />
 		<result property="name" column="ci_name" />
+		<result property="lastName" column="ci_last_name" />
 		<result property="nationality" column="ci_nationality" />
 		<result property="gender" column="ci_gender" />
 		<result property="birthday" column="ci_birthday" />
@@ -334,12 +339,16 @@
 		<result property="country" column="ci_country" />
 		<result property="province" column="ci_province" />
 		<result property="city" column="ci_city" />
+		<result property="county" column="ci_county" />
 		<result property="address" column="ci_address" />
+		<result property="postalcode" column="ci_postalcode" />
+		<result property="relationship" column="ci_relationship" />
 	</resultMap>
 
 	<resultMap id="guaranteeInfo" type="com.noeasy.money.model.UserInfoBean">
 		<id property="id" column="gi_id" />
 		<result property="name" column="gi_name" />
+		<result property="lastName" column="gi_last_name" />
 		<result property="nationality" column="gi_nationality" />
 		<result property="gender" column="gi_gender" />
 		<result property="birthday" column="gi_birthday" />
@@ -350,7 +359,10 @@
 		<result property="country" column="gi_country" />
 		<result property="province" column="gi_province" />
 		<result property="city" column="gi_city" />
+		<result property="county" column="gi_county" />
 		<result property="address" column="gi_address" />
+		<result property="postalcode" column="gi_postalcode" />
+		<result property="relationship" column="gi_relationship" />
 	</resultMap>
 	
 	<resultMap id="userPrefer" type="com.noeasy.money.model.UserPreferBean">

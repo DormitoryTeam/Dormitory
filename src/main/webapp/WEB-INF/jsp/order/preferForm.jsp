@@ -1,3 +1,26 @@
+<hostel:container>
+    <%-- top section --%>
+    <header>
+    </header>
+    
+    <%-- main section --%>
+	<main>
+		
+		<%-- content --%>
+		<div class="container">
+            <div class="row">
+                <jsp:include page="/jsp/main/hostel/order/preferForm.jsp"/>
+            </div>
+		</div>
+	</main>
+	
+    <%-- bottom section --%>
+    <footer>
+    </footer>  
+    <script type="text/javascript" src="<c:url value='/js/order/dormitory-order-place.js'/>"></script>
+</hostel:container>
+<%-- 
+
 <html>
 <body>
 <h1>Edit User Prefer</h1>
@@ -79,3 +102,4 @@ graduateSchool: <input name="graduateSchool" type="text" value="${graduateSchool
 </form>
 </body>
 </html>
+--%>

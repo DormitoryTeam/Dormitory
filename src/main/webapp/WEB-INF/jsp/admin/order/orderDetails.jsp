@@ -4,9 +4,9 @@ Order&nbsp;&nbsp;number:&nbsp;&nbsp;${order.id}<br>
 Order&nbsp;&nbsp;amount:&nbsp;&nbsp;${order.amount}<br>
 Order&nbsp;&nbsp;status:&nbsp;&nbsp;${order.orderStatus}<br>
 Proposer:&nbsp;&nbsp;${order.belongsTo.login}<br>
-Phone:&nbsp;&nbsp;${order.orderContact.phone}<br>
-QQ:&nbsp;&nbsp;${order.orderContact.QQ}<br>
-Address:&nbsp;&nbsp;${order.orderContact.address}<br>
+Phone:&nbsp;&nbsp;${order.orderContact.belongsToInfo.phone}<br>
+QQ:&nbsp;&nbsp;${order.orderContact.belongsToInfo.qq}<br>
+Address:&nbsp;&nbsp;${order.orderContact.belongsToInfo.address}<br>
 <hr>
 <c:choose>
 <c:when test='${"D" eq type}'>
@@ -24,11 +24,12 @@ Luggage&nbsp;&nbsp;Amount:${order.lineItems[0].luggageAmount}<br>
 </c:otherwise>
 </c:choose>
 <c:choose>
-<c:when test="${0 eq order.orderStatus.value}"><c:set value="Reviewed" var="buttonValue"/> <c:set value="1" var="showForm"/></c:when>
-<c:when test="${1 eq order.orderStatus.value}"><c:set value="0" var="showForm"/></c:when>
-<c:when test="${2 eq order.orderStatus.value}"><c:set value="0" var="showForm"/></c:when>
-<c:when test="${3 eq order.orderStatus.value}"><c:set value="ComfirmPayment" var="buttonValue"/> <c:set value="1" var="showForm"/></c:when>
-<c:when test="${4 eq order.orderStatus.value}"><c:set value="Send Contract" var="buttonValue"/> <c:set value="1" var="showForm"/></a></c:when>
+<c:when test="${0 eq order.orderStatus.value}"><c:set value="Waiting for user place order." var="buttonValue"/> <c:set value="0" var="showForm"/></c:when>
+<c:when test="${1 eq order.orderStatus.value}"><c:set value="Reviewed" var="buttonValue"/> <c:set value="1" var="showForm"/></c:when>
+<c:when test="${2 eq order.orderStatus.value}"><c:set value="Waiting for user payment." var="buttonValue"/><c:set value="0" var="showForm"/></c:when>
+<c:when test="${3 eq order.orderStatus.value}"><c:set value="Waiting for user payment." var="buttonValue"/><c:set value="0" var="showForm"/></c:when>
+<c:when test="${4 eq order.orderStatus.value}"><c:set value="ComfirmPayment" var="buttonValue"/> <c:set value="1" var="showForm"/></c:when>
+<c:when test="${5 eq order.orderStatus.value}"><c:set value="Send Contract" var="buttonValue"/> <c:set value="1" var="showForm"/></a></c:when>
 <c:otherwise><c:set value="0" var="showForm"/></c:otherwise>
 </c:choose>
 
@@ -42,6 +43,11 @@ Luggage&nbsp;&nbsp;Amount:${order.lineItems[0].luggageAmount}<br>
 	<input type="submit" value="${buttonValue}"/>
 </form>
 </c:if>
+<c:if test="${'0' eq showForm }">
+<hr>
+${buttonValue}
+</c:if>
+
 <c:if test="${order.orderStatus.value lt 2}">
 <hr>
 <form action="<c:url value='/admin/order/updateOrderPrice.html'/>" method="POST">

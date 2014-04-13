@@ -63,6 +63,7 @@ public class ServletUtils {
     public static UserInfoBean getUserInfoFromRequest(HttpServletRequest pRequest) {
         UserInfoBean userInfo = new UserInfoBean();
         userInfo.setName(pRequest.getParameter("name"));
+        userInfo.setLastName(pRequest.getParameter("lastName"));
         userInfo.setNationality(pRequest.getParameter("nationality"));
         userInfo.setEmail(pRequest.getParameter("email"));
         userInfo.setQq(pRequest.getParameter("qq"));
@@ -84,6 +85,9 @@ public class ServletUtils {
         if (StringUtils.isNotBlank(idStr)) {
             userInfo.setId(Integer.valueOf(idStr));
         }
+        userInfo.setCounty(pRequest.getParameter("county"));
+        userInfo.setPostalcode(pRequest.getParameter("postalcode"));
+        userInfo.setRelationship(pRequest.getParameter("relationship"));
         return userInfo;
     }
 

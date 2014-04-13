@@ -1,3 +1,25 @@
+<hostel:container>
+    <%-- top section --%>
+    <header>
+    </header>
+    
+    <%-- main section --%>
+	<main>
+		
+		<%-- content --%>
+		<div class="container">
+            <div class="row">
+                <jsp:include page="/jsp/main/hostel/order/guaranteeForm.jsp"/>
+            </div>
+		</div>
+	</main>
+	
+    <%-- bottom section --%>
+    <footer>
+    </footer>
+    <script type="text/javascript" src="<c:url value='/js/order/dormitory-order-place.js'/>"></script>
+</hostel:container>
+<%-- 
 <html>
 <body>
 <h1>Edit Guarantee</h1>
@@ -86,3 +108,4 @@ address: country <input name="country" type="text" value="${country}" /> | provi
 </form>
 </body>
 </html>
+--%>
