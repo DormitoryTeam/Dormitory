@@ -1,3 +1,25 @@
+<hostel:container>
+    <%-- top section --%>
+    <header>
+    </header>
+    
+    <%-- main section --%>
+	<main>
+		
+		<%-- content --%>
+		<div class="container">
+            <div class="row">
+                <jsp:include page="/jsp/main/hostel/order/notesForm.jsp"/>
+            </div>
+		</div>
+	</main>
+	
+    <%-- bottom section --%>
+    <footer>
+    </footer>
+    <script type="text/javascript" src="<c:url value='/js/order/dormitory-order-place.js'/>"></script>
+</hostel:container>
+<%--
 <html>
 <body>
 <h1>Edit Others</h1>
@@ -26,3 +48,4 @@ readClause: <input name="readClause" type="radio" value="Y" <c:if test="${readCl
 </form>
 </body>
 </html>
+--%>

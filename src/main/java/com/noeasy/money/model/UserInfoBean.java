@@ -6,6 +6,7 @@ import java.util.Date;
 public class UserInfoBean extends BaseBean {
     private Integer id;
     private String  name;
+    private String  lastName;
     private String  nationality;
     private int     gender;
     private Date    birthday;
@@ -16,7 +17,10 @@ public class UserInfoBean extends BaseBean {
     private String  country;
     private String  province;
     private String  city;
+    private String  county;
     private String  address;
+    private String  postalcode;
+    private String  relationship;
 
 
 
@@ -172,6 +176,54 @@ public class UserInfoBean extends BaseBean {
 
     public void setAddress(String pAddress) {
         address = pAddress;
+    }
+
+
+
+    public String getLastName() {
+        return lastName;
+    }
+
+
+
+    public void setLastName(String pLastName) {
+        lastName = pLastName;
+    }
+
+
+
+    public String getCounty() {
+        return county;
+    }
+
+
+
+    public void setCounty(String pCounty) {
+        county = pCounty;
+    }
+
+
+
+    public String getPostalcode() {
+        return postalcode;
+    }
+
+
+
+    public void setPostalcode(String pPostalcode) {
+        postalcode = pPostalcode;
+    }
+
+
+
+    public String getRelationship() {
+        return relationship;
+    }
+
+
+
+    public void setRelationship(String pRelationship) {
+        relationship = pRelationship;
     }
 
 
