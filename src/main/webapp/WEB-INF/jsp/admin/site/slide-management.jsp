@@ -31,7 +31,7 @@
 						<c:forEach var="slide" items="${slides}" varStatus="index">
 							<tr class="fileRow">
 								<td>${slide}<input type="text" readonly="readonly" name="imageNames" class="fileNames" value="${slide['path']}" /> <input type="hidden" name="imageIndexes" class="fileIndex" value="${slide['index']}" /></td>
-								<td><a href="/dormitory/admin/slide-image-preview.html?fileName=${slide['path']}"> <img src="/dormitory/admin/slide-image-preview.html?fileName=${slide['path']}" /></a></td>
+								<td><a href="/dormitory/upload/images/slide/${slide['path']}"> <img src="/dormitory/upload/images/slide/${slide['path']}" /></a></td>
 								<td><input type="button" value="Up ↑" class="btnUp" /></td>
 								<td><input type="button" value="Down ↓" class="btnDown" /></td>
 								<td><input type="button" value="Remove" class="btnRemove" /></td>

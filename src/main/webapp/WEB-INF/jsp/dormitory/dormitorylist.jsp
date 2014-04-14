@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="hostel" tagdir="/WEB-INF/tags"%>
-<hostel:container>
+<hostel:container template="hostel">
 	<%-- top section --%>
 	<header>
 		<jsp:include page="/jsp/header/header.jsp" />
