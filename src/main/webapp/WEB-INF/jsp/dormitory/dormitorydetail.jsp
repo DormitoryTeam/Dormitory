@@ -1,6 +1,6 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="hostel" tagdir="/WEB-INF/tags"%>
-<hostel:container>
+<hostel:container template="hostel">
 	<%-- top section --%>
 	<script type="text/javascript" src="/dormitory/js/jquery-raty/jquery.raty.min.js"></script>
 	<script type="text/javascript" src="/dormitory/js/dormitory/dormitory-detail.js"></script>
