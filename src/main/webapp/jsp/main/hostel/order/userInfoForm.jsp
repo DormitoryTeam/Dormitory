@@ -27,15 +27,16 @@
 	<div class="reservation-personal reservation-tab">
 		<form action="<c:url value="/order/dormitory-place-order.html"/>" method="POST" id="placeOrderForm">
 		<input type="hidden" name="pageStep" value="0" />
+			<input type="hidden" name="command" id="command"/>
 			<input type="hidden" name="orderType" value="${orderType}"/>
 			<input type="hidden" name="dormitoryId" value="${dormitory.id}" />
 			<input type="hidden" name="contractId" value="${price.contractId}" /> 
 			<input type="hidden" name="roomInfoId" value="${roomInfo.id}" />
 			<input name="infoId" type="hidden" value="${order.orderContact.belongsToInfo.id}"/>
-			<a href="#" class="addOne">&nbsp;</a>
+			<a href="<c:url value="/order/dormitory-place-order.html?dormitoryId=${dormitory.id}&contractId=${price.contractId}&roomInfoId=${roomInfo.id}"/>" class="addOne">&nbsp;</a>
 			<div class="btnBox">
-				<input class="save" type="button" value="保存" />
-				<input type="submit" value="提交" />
+				<input class="save btn-place-order-save" type="button" value="保存" />
+				<input type="submit" style="background-color: #808080;" value="提交" />
 			</div>
 			<ul>
 				<li style="background-color: antiquewhite;"><a href="#tabs-personal">个人信息</a></li>

@@ -1,4 +1,4 @@
-<hostel:container>
+<hostel:container template="hostel">
     <%-- top section --%>
     <header>
     </header>

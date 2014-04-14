@@ -26,15 +26,16 @@
 	</div>
 	<div class="reservation-personal reservation-tab">
 		<form action="<c:url value="/order/dormitory-place-order.html"/>" method="POST" id="placeOrderForm">
+			<input type="hidden" name="command" id="command"/>
 			<input name="pageStep" type="hidden" value="3"/>
 			<input type="hidden" name="dormitoryId" value="${dormitory.id}" />
 			<input type="hidden" name="contractId" value="${price.contractId}" /> 
 			<input type="hidden" name="roomInfoId" value="${roomInfo.id}" />
 			<input name="infoId" type="hidden" value="${order.orderContact.contactPersonInfo.id}"/>
-			<a href="#" class="addOne">&nbsp;</a>
+			<a href="<c:url value="/order/dormitory-place-order.html?dormitoryId=${dormitory.id}&contractId=${price.contractId}&roomInfoId=${roomInfo.id}"/>" class="addOne">&nbsp;</a>
 			<div class="btnBox">
-				<input class="save" type="button" value="保存" />
-				<input type="submit" value="提交" />
+				<input class="save btn-place-order-save" type="button" value="保存" />
+				<input type="submit" style="background-color: #808080;" value="提交" />
 			</div>
 			<ul>
 				<li><a href="#tabs-emergency">个人信息</a></li>
@@ -47,7 +48,7 @@
 				<fieldset>
 					<dl>
 						<dd>
-							<input type="checkbox" /><label>同担保人信息</label>
+							<input id="sameas" type="checkbox"/><label>同担保人信息</label>
 						</dd>
 					</dl>
 					<dl>
@@ -57,7 +58,7 @@
 							<c:if test="${null == gender}">
 							<c:set var="gender" value="${user.contactPersonInfo.gender}" />
 							</c:if>
-							<select name="gender">
+							<select name="gender" id="gender">
 							<option value="0" <c:if test="gender eq 0">selected</c:if>>Mr.</option>
 							<option value="1" <c:if test="gender eq 1">selected</c:if>>Mrs.</option>
 							<option value="2" <c:if test="gender eq 2">selected</c:if>>Miss</option>
@@ -71,7 +72,7 @@
 							<c:if test="${null == relationship}">
 							<c:set var="relationship" value="${user.contactPersonInfo.relationship}" />
 							</c:if>
-							<input type="text" name="relationship" value="${relationship}" /> 
+							<input type="text" name="relationship" value="${relationship}" id="relationship" /> 
 						</dd>
 					</dl>
 					<dl>
@@ -81,7 +82,7 @@
 							<c:if test="${null == lastName}">
 							<c:set var="lastName" value="${user.contactPersonInfo.lastName}" />
 							</c:if>
-							<input type="text" name="lastName" value="${lastName}" class="min" />  
+							<input type="text" name="lastName" value="${lastName}" class="min" id="lastName" />  
 						</dd>
 						<dt>名</dt>
 						<dd>
@@ -89,7 +90,7 @@
 							<c:if test="${null == name}">
 							<c:set var="name" value="${user.contactPersonInfo.name}" />
 							</c:if>
-							<input type="text" name="name" value="${name}" class="min" /> 
+							<input type="text" name="name" value="${name}" class="min" id="name" /> 
 						</dd>
 					</dl>
 					<dl>
@@ -99,7 +100,7 @@
 							<c:if test="${null == nationality}">
 							<c:set var="nationality" value="${user.contactPersonInfo.nationality}" />
 							</c:if>
-							<input name="nationality" type="text" value="${nationality}" />
+							<input name="nationality" type="text" value="${nationality}" id="nationality" />
 						</dd>
 					</dl>
 					<dl>
@@ -109,7 +110,7 @@
 							<c:if test="${null == birthday}">
 							<c:set var="birthday" value="${user.contactPersonInfo.birthday}" />
 							</c:if>
-							<input name="birthday" type="text" value="<fmt:formatDate value='${birthday}' pattern='yyyy-MM-dd'/>" />
+							<input name="birthday" type="text" value="<fmt:formatDate value='${birthday}' pattern='yyyy-MM-dd'/>" id="birthday" />
 						</dd>
 					</dl>
 					<dl>
@@ -119,7 +120,7 @@
 							<c:if test="${null == email}">
 							<c:set var="email" value="${user.contactPersonInfo.email}" />
 							</c:if>
-							<input name="email" value="${email}" type="text" class="long" />
+							<input name="email" value="${email}" type="text" class="long" id="email" />
 						</dd>
 					</dl>
 					<dl>
@@ -129,7 +130,7 @@
 							<c:if test="${null == phone}">
 							<c:set var="phone" value="${user.contactPersonInfo.phone}" />
 							</c:if>
-							<input name="phone" type="text" value="${phone}" /> 
+							<input name="phone" type="text" value="${phone}" id="phone" /> 
 						</dd>
 					</dl>
 					<dl>
@@ -155,13 +156,13 @@
 							<c:if test="${null == address}">
 							<c:set var="address" value="${user.contactPersonInfo.address}" />
 							</c:if>
-							<input name="country" type="text" value="${country}" class="min" /> (国家)<input name="province" type="text" value="${province}" class="min" /> (省)<input name="city" type="text" value="${city}" class="min" /> (市)<input type="text" name="county" value="${county}" class="min" /> (区县)
+							<input name="country" type="text" value="${country}" class="min" id="country" /> (国家)<input name="province" type="text" value="${province}" class="min" id="province" /> (省)<input name="city" type="text" value="${city}" class="min" id="city" /> (市)<input type="text" name="county" value="${county}" class="min" id="county" /> (区县)
 						</dd>
 					</dl>
 					<dl>
 						<dt>&nbsp;</dt>
 						<dd>
-							<input name="address" type="text" value="${address}" class="larger"/> (街道地址)
+							<input name="address" type="text" value="${address}" class="larger" id="address" /> (街道地址)
 						</dd>
 					</dl>
 					<dl>
@@ -171,7 +172,7 @@
 							<c:if test="${null == postalcode}">
 							<c:set var="postalcode" value="${user.contactPersonInfo.postalcode}" />
 							</c:if>
-							<input type="text" name="postalcode" value="${postalcode}" /> (邮编)
+							<input type="text" name="postalcode" value="${postalcode}" id="postalcode" /> (邮编)
 						</dd>
 					</dl>
 					<dl>
@@ -185,3 +186,20 @@
 		</form>
 	</div>
 </div>
+<script>
+var guarantee = {gender:"${order.orderContact.guaranteeInfo.gender}", 
+				 relationship: "${order.orderContact.guaranteeInfo.relationship}", 
+				 name: "${order.orderContact.guaranteeInfo.name}", 
+				 lastName: "${order.orderContact.guaranteeInfo.lastName}", 
+				 nationality: "${order.orderContact.guaranteeInfo.nationality}",
+				 birthday:"<fmt:formatDate value='${order.orderContact.guaranteeInfo.birthday}' pattern='yyyy-MM-dd'/>", 
+				 email: "${order.orderContact.guaranteeInfo.email}",
+				 phone: "${order.orderContact.guaranteeInfo.phone}",
+				 country: "${order.orderContact.guaranteeInfo.country}",
+				 province: "${order.orderContact.guaranteeInfo.province}",
+				 city: "${order.orderContact.guaranteeInfo.city}",
+				 county: "${order.orderContact.guaranteeInfo.county}",
+				 address: "${order.orderContact.guaranteeInfo.address}",
+				 postalcode: "${order.orderContact.guaranteeInfo.postalcode}"
+				 }
+</script>
