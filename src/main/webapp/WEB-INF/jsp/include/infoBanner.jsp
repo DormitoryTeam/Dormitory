@@ -1,23 +1,19 @@
 ﻿<div class="row info-banner">
-	<img src="../data/hostel/images/banner/banner.jpg" alt/>
+	<img src="/dormitory/img/banner/banner.jpg" alt/>
 </div>
 <div class="row">
 	<div class="sidebar pull-left">
 		<div class="news-box">
 			<ul>
-				<li><a href="#">预订宿舍免费接机</a></li>
-				<li><a href="#">国内免费寄送新生大礼包</a></li>
-				<li><a href="#">学生宿舍预订特价</a></li>
-				<li><a href="#">预订宿舍免费接机</a></li>
-				<li><a href="#">国内免费寄送新生大礼包</a></li>
-				<li><a href="#">学生宿舍预订特价</a></li>
-				<li><a href="#">预订宿舍免费接机</a></li>
+				<c:forEach var="article" items="${news}">
+					<li><a href="#">${article['title']}</a></li>
+				</c:forEach>
 			</ul>
 			<a href="#" class="more">> 更多</a>
 		</div>
 	</div>
 	<div class="contentBox pull-left ml-10">
-		<img src="../data/hostel/images/video/index.jpg" alt/>
+		<img src="/dormitory/img/video/index.jpg" alt/>
 	</div>
 </div>
 <div class="row hot-city">

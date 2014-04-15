@@ -11,6 +11,10 @@ public class RichTextBean extends BaseBean {
 
     public static final String SPLIT_SYMBOL = ",";
 
+    public static final String NEWS         = "1";
+
+    public static final String GO_TRAVEL    = "1";
+
     private int                mId;
 
     private int                mUserId;

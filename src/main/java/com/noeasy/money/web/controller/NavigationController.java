@@ -47,6 +47,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.noeasy.money.constant.Constants;
+import com.noeasy.money.model.RichTextBean;
 import com.noeasy.money.service.INavigationService;
 import com.noeasy.money.service.ISiteService;
 
@@ -136,10 +137,15 @@ public class NavigationController {
 
             List<Map<String, Object>> slides = siteService.querySlides();
 
+            List<Map<String, Object>> news = siteService.queryArticleTitle(RichTextBean.NEWS, "1");
+            List<Map<String, Object>> goTravles = siteService.queryArticleTitle(RichTextBean.GO_TRAVEL, "1");
+
             model.addAttribute("countries", countries);
             model.addAttribute("cities", cities);
             model.addAttribute("colleges", colleges);
             model.addAttribute("slides", slides);
+            model.addAttribute("news", news);
+            model.addAttribute("goTravles", goTravles);
         }
         return "homepage";
     }

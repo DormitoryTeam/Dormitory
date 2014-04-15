@@ -18,7 +18,7 @@
 			<li class="item">
 				<h2 class="webchat">在微信上关注我们</h2>
 				<p>
-					<img src="../data/hostel/images/banner/webchat.jpg" alt />
+					<img src="/dormitory/img/banner/webchat.jpg" alt />
 				</p>
 			</li>
 			<li class="bottom">&nbsp;</li>
@@ -31,7 +31,7 @@
 		<ul class="news-list">
 			<li class="news-itme">
 				<div class="news-img pull-left">
-					<img src="../data/hostel/images/news/news-img.jpg" alt/>
+					<img src="/dormitory/img/news/news-img.jpg" alt/>
 				</div>
 				<div class="news-info">
 					<h2><a href="#">伦敦大本钟一日游</a></h2>
@@ -40,7 +40,7 @@
 			</li>
 			<li class="news-itme">
 				<div class="news-img pull-left">
-					<img src="../data/hostel/images/news/news-img2.jpg" alt/>
+					<img src="/dormitory/img/news/news-img2.jpg" alt/>
 				</div>
 				<div class="news-info">
 					<h2><a href="#">伦敦大本钟一日游</a></h2>
@@ -49,7 +49,7 @@
 			</li>
 			<li class="news-itme">
 				<div class="news-img pull-left">
-					<img src="../data/hostel/images/news/news-img3.jpg" alt/>
+					<img src="/dormitory/img/news/news-img3.jpg" alt/>
 				</div>
 				<div class="news-info">
 					<h2><a href="#">伦敦大本钟一日游</a></h2>

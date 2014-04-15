@@ -43,26 +43,40 @@
 	<delete id="deleteSlide">
 		delete from slide
 	</delete>
-	
+
 	<select id="selectArticlePage" resultType="com.noeasy.money.model.RichTextBean">
 		select id, user_id userId, title, text textBody, create_time createTime, status
 		from article
 	</select>
-	
+
 	<select id="selectArticle" resultType="com.noeasy.money.model.RichTextBean" parameterType="int">
-		select id, user_id userId, title, text textBody, create_time createTime, status
+		select id, user_id userId, title, text textBody,
+		create_time createTime, status
 		from article
 		where id = #{id}
 	</select>
-	
+
 	<insert id="saveArticle" useGeneratedKeys="true" keyProperty="id" parameterType="com.noeasy.money.model.RichTextBean">
-		insert into article (user_id, title, text, status) values (
-			#{userId}, #{title}, #{textBody}, #{status}
+		insert into article (user_id, title, text, status, type)
+		values (
+		#{userId}, #{title}, #{textBody}, #{status}, #{type}
 		)
 	</insert>
-	
+
 	<update id="updateArticle" parameterType="com.noeasy.money.model.RichTextBean">
-		update article set user_id = #{userId}, title = #{title}, text = #{textBody}, status = #{status}
+		update article set user_id = #{userId}, title = #{title}, text = #{textBody}, status = #{status},
+		type = #{type}
 		where id = #{id}
 	</update>
+
+	<select id="selectArticleTitle" resultType="hashmap">
+		select id, title from article
+		where 1=1
+		<if test="type != null">
+			and type = #{type}
+		</if>
+		<if test="status != null">
+			and status = #{status}
+		</if>
+	</select>
 </mapper>

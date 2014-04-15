@@ -94,6 +94,17 @@ public class SiteService implements ISiteService {
 
 
     /**
+     * @see com.noeasy.money.service.ISiteService#queryArticleTitle(java.lang.String,
+     *      java.lang.String)
+     */
+    @Override
+    public List<Map<String, Object>> queryArticleTitle(final String pType, final String pStatus) {
+        return siteRepository.queryArticleTitle(pType, pStatus);
+    }
+
+
+
+    /**
      * @see com.noeasy.money.service.ISiteService#querySlides()
      */
     @Override
@@ -123,7 +134,7 @@ public class SiteService implements ISiteService {
      */
     @Override
     public boolean saveSlide(final String pDescription, final String pPath, final Integer pIndex, final Integer pStatus) {
-        return siteRepository.saveSlide(pDescription, pPath, pIndex, pStatus);
+        return siteRepository.saveSlide(pDescription, pPath, pIndex, pStatus, null);
     }
 
 }

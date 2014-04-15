@@ -50,15 +50,19 @@ public interface ISiteService {
 
 
 
-    List<Map<String, Object>> querySlides();
-
-
-
     RichTextBean queryArticle(int pId);
 
 
 
     List<RichTextBean> queryArticlePage();
+
+
+
+    List<Map<String, Object>> queryArticleTitle(String pType, String pStatus);
+
+
+
+    List<Map<String, Object>> querySlides();
 
 
 

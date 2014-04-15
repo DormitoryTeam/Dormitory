@@ -58,6 +58,10 @@ public interface ISiteRepository {
 
 
 
+    List<Map<String, Object>> queryArticleTitle(String pType, String pStatus);
+
+
+
     List<Map<String, Object>> querySlides();
 
 
@@ -66,7 +70,7 @@ public interface ISiteRepository {
 
 
 
-    boolean saveSlide(String pDescription, String pPath, Integer pIndex, Integer pStatus);
+    boolean saveSlide(String pDescription, String pPath, Integer pIndex, Integer pStatus, String pType);
 
 
 
@@ -74,5 +78,5 @@ public interface ISiteRepository {
 
 
 
-    boolean updateSlide(Integer pId, String pDescription, Integer pIndex, String pStatus);
+    boolean updateSlide(Integer pId, String pDescription, Integer pIndex, String pStatus, String pType);
 }

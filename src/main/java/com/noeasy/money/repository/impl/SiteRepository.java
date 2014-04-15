@@ -87,6 +87,20 @@ public class SiteRepository extends BaseRepository implements ISiteRepository {
 
 
     /**
+     * @see com.noeasy.money.repository.ISiteRepository#queryArticleTitle(java.lang.String,
+     *      java.lang.String)
+     */
+    @Override
+    public List<Map<String, Object>> queryArticleTitle(final String pType, final String pStatus) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("status", pStatus);
+        params.put("type", pType);
+        return getSqlSession().selectList("com.noeasy.money.model.Site.selectArticleTitle");
+    }
+
+
+
+    /**
      * @see com.noeasy.money.repository.ISiteRepository#querySlides()
      */
     @Override
@@ -108,15 +122,17 @@ public class SiteRepository extends BaseRepository implements ISiteRepository {
 
     /**
      * @see com.noeasy.money.repository.ISiteRepository#saveSlide(java.lang.String,
-     *      java.lang.String, java.lang.String, java.lang.String)
+     *      java.lang.String, java.lang.String, java.lang.String, String)
      */
     @Override
-    public boolean saveSlide(final String pDescription, final String pPath, final Integer pIndex, final Integer pStatus) {
+    public boolean saveSlide(final String pDescription, final String pPath, final Integer pIndex,
+            final Integer pStatus, final String pType) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("desc", pDescription);
         params.put("path", pPath);
         params.put("index", pIndex);
         params.put("status", pStatus);
+        params.put("type", pType);
         return getSqlSession().insert("com.noeasy.money.model.Site.insertSlide", params) > 0;
     }
 
@@ -134,15 +150,17 @@ public class SiteRepository extends BaseRepository implements ISiteRepository {
 
     /**
      * @see com.noeasy.money.repository.ISiteRepository#updateSlide(java.lang.Integer,
-     *      java.lang.String, java.lang.String, java.lang.String)
+     *      java.lang.String, java.lang.String, java.lang.String, String)
      */
     @Override
-    public boolean updateSlide(final Integer pId, final String pDescription, final Integer pIndex, final String pStatus) {
+    public boolean updateSlide(final Integer pId, final String pDescription, final Integer pIndex,
+            final String pStatus, final String pType) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("desc", pDescription);
         params.put("index", pIndex);
         params.put("status", pStatus);
         params.put("id", pId);
+        params.put("type", pType);
         return getSqlSession().update("com.noeasy.money.model.Site.updateSlide", params) > 0;
     }
 
