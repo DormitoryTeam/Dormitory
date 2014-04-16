@@ -2,6 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="hostel" tagdir="/WEB-INF/tags" %>
 <hostel:container template="homepage">
+
+	<script type="text/javascript" src="<c:url value='/js/home.js'/>"></script>
+	
     <%-- top section --%>
     <header>
     	<jsp:include page="/jsp/header/header.jsp"/>  

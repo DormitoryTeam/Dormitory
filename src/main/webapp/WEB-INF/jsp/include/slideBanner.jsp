@@ -8,21 +8,56 @@
 				</ul>
 			</div>
 			<div class="selectContent">
-				<form name="" action="#">
+				<form action="/dormitory/dormitory/dormitory-list.html" method="GET">
 					<fieldset>
 						<dl>
 							<dt>国家</dt>
 							<dd>
-								<select>
-									<option value="英国">英国</option>
+								<select id="sltCountry" name="countryId">
+									<c:choose>
+										<c:when test="${not empty countries}">
+											<c:forEach items="${countries}" var="country">
+												<option value="${country['id']}">${country['name']}</option>
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<option value="0">no valid result</option>
+										</c:otherwise>
+									</c:choose>
 								</select>
 							</dd>
 						</dl>
 						<dl>
 							<dt>城市</dt>
 							<dd>
-								<select>
-									<option value="伦敦">伦敦</option>
+								<select id="sltCity" name="cityId">
+									<c:choose>
+										<c:when test="${not empty cities}">
+											<c:forEach items="${cities}" var="city">
+												<option value="${city['id']}">${city['name']}</option>
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<option value="0">no valid result</option>
+										</c:otherwise>
+									</c:choose>
+								</select>
+							</dd>
+						</dl>
+						<dl>
+							<dt>高校</dt>
+							<dd>
+								<select id="sltCollege" name="collegeId">
+									<c:choose>
+										<c:when test="${not empty colleges}">
+											<c:forEach items="${colleges}" var="college">
+												<option value="${college['id']}">${college['name']}</option>
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<option value="0">no valid result</option>
+										</c:otherwise>
+									</c:choose>
 								</select>
 							</dd>
 						</dl>
@@ -71,8 +106,7 @@
 				<c:if test="${not empty slides}">
 					<c:forEach var="img" items="${slides}">
 						<div class="sliderItem">
-							<a href="/dormitory/upload/images/slide/${img['path']}">
-								<img src="/dormitory/upload/images/slide/${img['path']}" alt="${empty img['desc'] ? img['path'] : img['desc']}" />
+							<a href="/dormitory/upload/images/slide/${img['path']}"> <img src="/dormitory/upload/images/slide/${img['path']}" alt="${empty img['desc'] ? img['path'] : img['desc']}" />
 							</a>
 							<p class="text"></p>
 						</div>
@@ -80,11 +114,10 @@
 				</c:if>
 				<c:if test="${empty slides}">
 					<div class="sliderItem">
-						<a href="#">
-							<img src="/dormitory/img/slider/slider-img.jpg" alt=""/>
-						</a> 
+						<a href="#"> <img src="/dormitory/img/slider/slider-img.jpg" alt="" />
+						</a>
 						<p class="text"></p>
-					</div> 
+					</div>
 				</c:if>
 			</div>
 			<div class="sliderPager"></div>

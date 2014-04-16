@@ -1,5 +1,4 @@
 $(function() {
-    initSlides();
     $("#sltCountry").bind("change", loadCitiesByCountry);
     $("#sltCity").bind("change", loadCollegesByCity);
 });
@@ -44,15 +43,3 @@ function renderOption(selectId, data) {
     }
 }
 
-function initSlides() {
-    $('#slides').slidesjs({
-        width : 450,
-        height : 450,
-        play : {
-            active : true,
-            auto : true,
-            interval : 4000,
-            swap : true
-        }
-    });
-}
