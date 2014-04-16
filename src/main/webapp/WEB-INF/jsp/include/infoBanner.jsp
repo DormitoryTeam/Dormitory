@@ -6,7 +6,7 @@
 		<div class="news-box">
 			<ul>
 				<c:forEach var="article" items="${news}">
-					<li><a href="#">${article['title']}</a></li>
+					<li><a href="/dormitory/admin/site/article-detail.html?id=${article['id']}">${article['title']}</a></li>
 				</c:forEach>
 			</ul>
 			<a href="#" class="more">> 更多</a>

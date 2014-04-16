@@ -48,6 +48,7 @@ public class FileUtils {
     public static final String  CONFIG_VIDEO_FOLDER       = "videoFolder";
     public static final String  CONFIG_DORMITORY          = "dormitoryFolder";
     public static final String  CONFIG_SLIDE              = "slideFolder";
+    public static final String  CONFIG_ARTICLE_COVER      = "articleCoverFolder";
 
     private static final String CONFIG_PATH               = "/config/upload/upload.properties";
     private static final String PARENT_PATH               = "../";
@@ -69,6 +70,12 @@ public class FileUtils {
 
     private FileUtils() {
 
+    }
+
+
+
+    public String createArticleCoverFolder(final Integer pArticleId) {
+        return createFolder(getUploadArticleCoverPaht(), pArticleId.toString());
     }
 
 
@@ -141,6 +148,12 @@ public class FileUtils {
 
     public String getProjectBasePath() {
         return Thread.currentThread().getContextClassLoader().getResource(PARENT_PATH + PARENT_PATH).getPath();
+    }
+
+
+
+    public String getUploadArticleCoverPaht() {
+        return getUploadImagePath() + SLASH + getConfigurableProperty(CONFIG_ARTICLE_COVER);
     }
 
 

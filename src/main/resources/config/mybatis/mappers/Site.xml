@@ -45,27 +45,25 @@
 	</delete>
 
 	<select id="selectArticlePage" resultType="com.noeasy.money.model.RichTextBean">
-		select id, user_id userId, title, text textBody, create_time createTime, status
+		select id, user_id userId, title, text textBody, create_time createTime, `type` type, cover_path coverPath, status
 		from article
 	</select>
 
 	<select id="selectArticle" resultType="com.noeasy.money.model.RichTextBean" parameterType="int">
-		select id, user_id userId, title, text textBody,
-		create_time createTime, status
+		select id, user_id userId, title, text textBody, create_time createTime, `type` type, cover_path coverPath, status
 		from article
 		where id = #{id}
 	</select>
 
 	<insert id="saveArticle" useGeneratedKeys="true" keyProperty="id" parameterType="com.noeasy.money.model.RichTextBean">
-		insert into article (user_id, title, text, status, type)
+		insert into article (user_id, title, text, status, type, cover_path)
 		values (
-		#{userId}, #{title}, #{textBody}, #{status}, #{type}
+		#{userId}, #{title}, #{textBody}, #{status}, #{type}, #{coverPath}
 		)
 	</insert>
 
 	<update id="updateArticle" parameterType="com.noeasy.money.model.RichTextBean">
-		update article set user_id = #{userId}, title = #{title}, text = #{textBody}, status = #{status},
-		type = #{type}
+		update article set user_id = #{userId}, title = #{title}, text = #{textBody}, status = #{status}, type = #{type}, cover_path = #{coverPath}
 		where id = #{id}
 	</update>
 

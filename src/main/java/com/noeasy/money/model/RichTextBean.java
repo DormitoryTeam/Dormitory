@@ -9,23 +9,38 @@ package com.noeasy.money.model;
 
 public class RichTextBean extends BaseBean {
 
-    public static final String SPLIT_SYMBOL = ",";
+    public static final String   SPLIT_SYMBOL     = ",";
 
-    public static final String NEWS         = "1";
+    public static final String   NEWS             = "1";
 
-    public static final String GO_TRAVEL    = "1";
+    public static final String   GO_TRAVEL        = "2";
 
-    private int                mId;
+    public static final String[] TYPE_ARRAY       = { "NEWS", "GO_TRAVEL" };
 
-    private int                mUserId;
+    public static final int[]    TYPE_VALUE_ARRAY = { 1, 2 };
 
-    private String             mTitle;
+    private int                  mId;
 
-    private String             mTextBody;
+    private int                  mUserId;
 
-    private String             mStatus;
+    private String               mTitle;
 
-    private String             mType;
+    private String               mTextBody;
+
+    private String               mCoverPath;
+
+    private String               mStatus;
+
+    private String               mType;
+
+
+
+    /**
+     * @return the coverPath
+     */
+    public String getCoverPath() {
+        return mCoverPath;
+    }
 
 
 
@@ -79,6 +94,16 @@ public class RichTextBean extends BaseBean {
      */
     public int getUserId() {
         return mUserId;
+    }
+
+
+
+    /**
+     * @param pCoverPath
+     *            the coverPath to set
+     */
+    public void setCoverPath(final String pCoverPath) {
+        mCoverPath = pCoverPath;
     }
 
 

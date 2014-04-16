@@ -20,14 +20,19 @@
 </head>
 <body>
 	<br />
-	<form id="form" action="/dormitory/admin/site/article-save.html" method="POST">
+	<form id="form" action="/dormitory/admin/site/article-save.html" method="POST" enctype="multipart/form-data">
 		<input type="hidden" name="id" value="${article['id']}" />
 		<input type="hidden" name="userId" value="${article['userId']}" />
 		<input id="iptTextBody" type="hidden" name="textBody" value="" />
 		
 		<div class="container">
 			<div class="hero-unit">
-				Title:<input type="text" name="title" value="${article['title']}" />
+				TITLE:<input type="text" name="title" value="${article['title']}" />&nbsp;
+				<select name="type">
+					<c:forEach var="articleType" items="${articleTypes}" varStatus="i">
+						<option value="${articleTypeValues[i.index]}">${articleType}</option>
+					</c:forEach>
+				</select>
 				<hr />
 				<div id="alerts"></div>
 				<div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
@@ -80,6 +85,17 @@
 				</div>
 		
 				<div id="editor">${article['textBody']}</div>
+				
+				<c:if test="${not empty article['coverPath']}">
+					<img style="height:160px;" src="/dormitory/upload/images/articleCover/${article['id']}/${article['coverPath']}" />
+				</c:if>
+				<input type="file" name="cover" />
+				<select name="status">
+					<option value="0" ${0 eq article['status'] ? 'selected' : ''}>Show</option>
+					<option value="1" ${1 eq article['status'] ? 'selected' : ''}>Hide</option>
+				</select> 
+				<br />
+				
 				<input id="btnSubmit" type="button" value="submit" />
 			</div>
 		</div>

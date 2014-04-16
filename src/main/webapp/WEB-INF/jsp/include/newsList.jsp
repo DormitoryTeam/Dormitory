@@ -29,33 +29,17 @@
 			<span>一起去旅行</span>
 		</div>
 		<ul class="news-list">
-			<li class="news-itme">
-				<div class="news-img pull-left">
-					<img src="/dormitory/img/news/news-img.jpg" alt/>
-				</div>
-				<div class="news-info">
-					<h2><a href="#">伦敦大本钟一日游</a></h2>
-					<p>2014年3月10日起，阿联酋航空将每天飞往在美国的第8个目的地 ─ 波士顿。</p>
-				</div>
-			</li>
-			<li class="news-itme">
-				<div class="news-img pull-left">
-					<img src="/dormitory/img/news/news-img2.jpg" alt/>
-				</div>
-				<div class="news-info">
-					<h2><a href="#">伦敦大本钟一日游</a></h2>
-					<p>2014年3月10日起，阿联酋航空将每天飞往在美国的第8个目的地 ─ 波士顿。</p>
-				</div>
-			</li>
-			<li class="news-itme">
-				<div class="news-img pull-left">
-					<img src="/dormitory/img/news/news-img3.jpg" alt/>
-				</div>
-				<div class="news-info">
-					<h2><a href="#">伦敦大本钟一日游</a></h2>
-					<p>2014年3月10日起，阿联酋航空将每天飞往在美国的第8个目的地 ─ 波士顿。</p>
-				</div>
-			</li>
+			<c:forEach var="article" items="${goTravles}">
+				<li class="news-itme">
+					<div class="news-img pull-left">
+						<img src="/dormitory/upload/images/articleCover/${article['id']}/${article['coverPath']}" />
+					</div>
+					<div class="news-info">
+						<h2><a href="/dormitory/admin/site/article-detail.html?id=${article['id']}">${article['title']}</a></h2>
+						<p>${article['textBody']}</p>
+					</div>
+				</li>
+			</c:forEach>
 		</ul>
 	</div>
 </div>
