@@ -218,6 +218,9 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
             dormitoryIds.add(dormitory.getId());
         }
 
+        if (dormitoryIds.isEmpty()) {
+            return dormitories;
+        }
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("dormitoryIds", dormitoryIds);
         parameters.put("status", 1);
