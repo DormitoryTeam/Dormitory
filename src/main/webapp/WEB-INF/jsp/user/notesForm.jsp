@@ -1,3 +1,32 @@
+<hostel:container template="myaccount">
+    <%-- top section --%>
+    <header>
+        <jsp:include page="/jsp/header/header.jsp"/>  
+    </header>
+    
+    <%-- main section --%>
+	<main>
+		
+		<%-- content --%>
+		<div class="container">
+            <c:choose>
+			<c:when test="${'edit' eq command}">
+            <jsp:include page="/jsp/main/myaccount/user/notesForm.jsp"/>
+            </c:when>
+            <c:otherwise>
+            <jsp:include page="/jsp/main/myaccount/user/display/notesForm.jsp"/>
+            </c:otherwise>
+            </c:choose>
+		</div>
+	</main>
+	
+    <%-- bottom section --%>
+    <footer>
+        <jsp:include page="/jsp/footer/footer.jsp"/>
+    </footer>
+    <script type="text/javascript" src="<c:url value='/js/user/userinfo.js'/>"></script>
+</hostel:container>
+<%--
 <html>
 <body>
 <h1>Edit Others</h1>
@@ -11,3 +40,4 @@ readClause: <input name="readClause" type="radio" value="Y" <c:if test="${user.p
 </form>
 </body>
 </html>
+--%>

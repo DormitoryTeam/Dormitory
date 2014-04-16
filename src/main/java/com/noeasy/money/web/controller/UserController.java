@@ -88,6 +88,8 @@ public class UserController {
         if (!ServletUtils.isLogin(request)) {
             return "redirect:/user/login.html";
         }
+        String command = request.getParameter("command");
+        model.put("command", command);
         Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
         String[] forwrdURLs = new String[] { "user/userInfoForm", "user/preferForm", "user/guaranteeForm",
                 "user/contactPersonForm", "user/notesForm" };
@@ -131,7 +133,10 @@ public class UserController {
             maintainsUserInfo(request, response);
             break;
         }
-        Integer nextStep = step + 1;
+//        Integer nextStep = step + 1;
+        user = userService.findUserById(userId);
+        model.addAttribute("user", user);
+        Integer nextStep = step;
         if (nextStep > 4) {
             return "user/editUserSuccess";
         } else {

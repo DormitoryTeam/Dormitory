@@ -13,7 +13,7 @@ Address:&nbsp;&nbsp;${order.orderContact.belongsToInfo.address}<br>
 Dormitory&nbsp;&nbsp;name:&nbsp;&nbsp;${order.lineItems[0].dormitory.name}<br>
 Dormitory&nbsp;&nbsp;address:&nbsp;&nbsp;${order.lineItems[0].dormitory.address}<br>
 Dormitory&nbsp;&nbsp;price:&nbsp;&nbsp;${order.amount}<br>
-Contact&nbsp;&nbsp;type:&nbsp;&nbsp;${order.lineItems[0].dormitory.contract}<br>
+Contact&nbsp;&nbsp;type:&nbsp;&nbsp;${order.lineItems[0].contractType.name}<br>
 </c:when>
 <c:otherwise>
 Flight&nbsp;&nbsp;Number:${order.lineItems[0].flightNum}<br>

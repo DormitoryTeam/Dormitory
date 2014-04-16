@@ -1,6 +1,6 @@
 ﻿<ul class="info-header">
 	<li class="header-img">
-		<img src="../data/hostel/images/login/header.jpg" alt="" />
+		<img src="/img/login/header.jpg" alt="" />
 	</li>
 	<li>
 		袋鼠在欧洲

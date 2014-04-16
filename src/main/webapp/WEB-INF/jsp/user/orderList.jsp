@@ -1,3 +1,26 @@
+<hostel:container template="myaccount">
+    <%-- top section --%>
+    <header>
+        <jsp:include page="/jsp/header/header.jsp"/>  
+    </header>
+    
+    <%-- main section --%>
+	<main>
+		
+		<%-- content --%>
+		<div class="container">
+            <jsp:include page="/jsp/main/myaccount/order/orderList.jsp"/>
+		</div>
+	</main>
+	
+    <%-- bottom section --%>
+    <footer>
+        <jsp:include page="/jsp/footer/footer.jsp"/>
+    </footer>
+    <script type="text/javascript" src="<c:url value='/js/user/userinfo.js'/>"></script>
+</hostel:container>
+
+<%--
 <table>
 <c:choose>
 <c:when test='${"D" eq type}'>
@@ -49,3 +72,4 @@
 
 </table>
 <jsp:include page="/jsp/utils/pagination.jsp" flush="true"/>
+--%>
