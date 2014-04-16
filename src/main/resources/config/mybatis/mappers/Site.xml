@@ -67,8 +67,8 @@
 		where id = #{id}
 	</update>
 
-	<select id="selectArticleTitle" resultType="hashmap">
-		select id, title from article
+	<select id="selectArticleTitle" resultType="hashmap" parameterType="java.util.Map">
+		select id, title, cover_path coverPath from article
 		where 1=1
 		<if test="type != null">
 			and type = #{type}

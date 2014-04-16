@@ -46,7 +46,7 @@
 					</li>
 					<li>
 						<div class="user-name">
-							<a href="#">袋鼠在欧洲</a>
+							<a href="#">${user['login']}</a>
 						</div>
 						<ul class="user-links">
 							<li><a href="#">我的订单</a></li>

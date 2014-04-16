@@ -95,7 +95,7 @@ public class SiteRepository extends BaseRepository implements ISiteRepository {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("status", pStatus);
         params.put("type", pType);
-        return getSqlSession().selectList("com.noeasy.money.model.Site.selectArticleTitle");
+        return getSqlSession().selectList("com.noeasy.money.model.Site.selectArticleTitle", params);
     }
 
 

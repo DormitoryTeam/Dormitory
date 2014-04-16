@@ -45,22 +45,28 @@ public class AdminSiteController {
         MultipartFile multipartFile = null;
 
         Iterator<String> itr = request.getFileNames();
-        while (itr.hasNext()) {
-            multipartFile = request.getFile(itr.next());
-            article.setCoverPath(multipartFile.getOriginalFilename());
-            boolean result = siteService.saveOrUpdateArticle(article);
-            if (result) {
-                String curCoverUploadFolderPath = fileUtils.createArticleCoverFolder(article.getId());
-                try {
-                    FileCopyUtils.copy(multipartFile.getBytes(), new FileOutputStream(curCoverUploadFolderPath
-                            + FileUtils.SLASH + multipartFile.getOriginalFilename()));
-                    System.out.println(">>>" + multipartFile.getOriginalFilename() + ">>>");
-                } catch (IOException e) {
-                    e.printStackTrace();
+        if (itr.hasNext()) {
+            while (itr.hasNext()) {
+                multipartFile = request.getFile(itr.next());
+                String coverFileName = multipartFile.getOriginalFilename();
+                article.setCoverPath(coverFileName);
+                boolean result = siteService.saveOrUpdateArticle(article);
+                if (result) {
+                    String curCoverUploadFolderPath = fileUtils.createArticleCoverFolder(article.getId());
+                    try {
+                        FileCopyUtils.copy(multipartFile.getBytes(), new FileOutputStream(curCoverUploadFolderPath
+                                + FileUtils.SLASH + multipartFile.getOriginalFilename()));
+                        System.out.println(">>>" + multipartFile.getOriginalFilename() + ">>>");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
+                model.addAttribute("result", result);
+                break;
             }
+        } else {
+            boolean result = siteService.saveOrUpdateArticle(article);
             model.addAttribute("result", result);
-            break;
         }
         model.addAttribute("article", article);
         return "admin/site/article-save-result";

@@ -47,9 +47,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.noeasy.money.constant.Constants;
+import com.noeasy.money.constant.SessionConstants;
 import com.noeasy.money.model.RichTextBean;
+import com.noeasy.money.model.UserBean;
 import com.noeasy.money.service.INavigationService;
 import com.noeasy.money.service.ISiteService;
+import com.noeasy.money.service.IUserService;
 
 /**
  * <class description>
@@ -66,6 +69,9 @@ public class NavigationController {
 
     @Resource(name = "siteService")
     ISiteService       siteService;
+
+    @Resource(name = "userService")
+    IUserService       userService;
 
 
 
@@ -128,6 +134,16 @@ public class NavigationController {
 
     @RequestMapping("/home" + Constants.URL_SUFFIX)
     public String toHome(final HttpServletRequest request, final HttpServletResponse response, final Model model) {
+        Object userIdObj = request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+        int userId = 0;
+        if (userIdObj != null) {
+            userId = NumberUtils.toInt(String.valueOf(userIdObj));
+        }
+        if (userId > 0) {
+            UserBean user = userService.findUserById(userId);
+            model.addAttribute("user", user);
+        }
+
         List<Map<String, Object>> countries = navigationService.queryCountries();
         if (CollectionUtils.isNotEmpty(countries)) {
             Integer firstCountryId = (Integer) countries.get(0).get("id");
@@ -147,6 +163,7 @@ public class NavigationController {
             model.addAttribute("news", news);
             model.addAttribute("goTravles", goTravles);
         }
+
         return "homepage";
     }
 
