@@ -181,29 +181,30 @@
 				</c:forEach>
 			</tbody>
 		</table>
-
-		<hr />
-		<div style="width: 500px; padding: 20px;">
-			<input id="fileupload" type="file" name="files[]" data-url="/dormitory/admin/dormitory/dormitory-image-upload.html?dormitoryId=${dormitory['id']}" multiple="multiple">
-			<div id="dropzone" class="fade well">Drop files here</div>
-			<div id="progress" class="progress">
-				<div class="bar" style="width: 0%;"></div>
+		<c:if test="${not empty dormitory['id']}">
+			<hr />
+			<div style="width: 500px; padding: 20px;">
+				<input id="fileupload" type="file" name="files[]" data-url="/dormitory/admin/dormitory/dormitory-image-upload.html?dormitoryId=${dormitory['id']}" multiple="multiple">
+				<div id="dropzone" class="fade well">Drop files here</div>
+				<div id="progress" class="progress">
+					<div class="bar" style="width: 0%;"></div>
+				</div>
 			</div>
-		</div>
-		<table id="uploaded-files" class="table table-hover table-bordered" style="width: 500px; padding: 20px;">
-			<tr>
-				<th>File Name</th>
-				<th>Preview</th>
-				<th>Action</th>
-			</tr>
-			<c:forEach var="path" items="${dormitory['picPath']}" varStatus="index">
+			<table id="uploaded-files" class="table table-hover table-bordered" style="width: 500px; padding: 20px;">
 				<tr>
-					<td><input type="text" name="imageNames" class="fileNames" value="${path}" /></td>
-					<td><a href="/dormitory/upload/images/dormitory/${dormitory['id']}/${path}"> <img src="/dormitory/upload/images/dormitory/${dormitory['id']}/${path}" /></a></td>
-					<td><input type="button" value="Remove" class="btnRemove" fileName="${path}" /></td>
+					<th>File Name</th>
+					<th>Preview</th>
+					<th>Action</th>
 				</tr>
-			</c:forEach>
-		</table>
+				<c:forEach var="path" items="${dormitory['picPath']}" varStatus="index">
+					<tr>
+						<td><input type="text" name="imageNames" class="fileNames" value="${path}" /></td>
+						<td><a href="/dormitory/upload/images/dormitory/${dormitory['id']}/${path}"> <img src="/dormitory/upload/images/dormitory/${dormitory['id']}/${path}" /></a></td>
+						<td><input type="button" value="Remove" class="btnRemove" fileName="${path}" /></td>
+					</tr>
+				</c:forEach>
+			</table>
+		</c:if>
 
 		<hr />
 		<input type="submit" value="Update" /> <a href="${backURL}">Back to list</a>

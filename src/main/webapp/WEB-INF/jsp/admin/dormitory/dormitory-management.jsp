@@ -10,14 +10,14 @@
 <title></title>
 </head>
 <body>
-	<form action="/dormitory/dormitory/dormitory-list.html?collegeId=${college['id']}&cityId=${city['id']}" method="POST">
+	<form action="/dormitory/admin/dormitory/dormitory-management.html?collegeId=${college['id']}&cityId=${city['id']}" method="POST">
 		<input type="radio" name="sortField" value="distance" <c:if test="${sortField eq 'distance' or empty sortField}">checked</c:if> /> Sort By Distance
 		<input type="radio" name="sortField" value="salePrice" <c:if test="${sortField eq 'salePrice'}">checked</c:if> /> Sort By Price
 		<input type="radio" name="sortField" value="rating" <c:if test="${sortField eq 'rating'}">checked</c:if> /> Sort By Rate
 		<input type="radio" name="sortField" value="sales" <c:if test="${sortField eq 'sales'}">checked</c:if> /> Sort By Sales
 		<input type="text" name="keyword" value="${keyword}"/>
 		<input type="submit" value="search" />
-				<input type="button" id="btnAdd" value="Create Dormitory">
+		<input type="button" id="btnAdd" value="Create Dormitory">
 	</form>
 	<hr />
 
