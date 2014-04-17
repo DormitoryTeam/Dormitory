@@ -29,10 +29,13 @@
 			<div class="hero-unit">
 				Title:<input type="text" name="title" value="${article['title']}" />&nbsp;
 				<select name="type">
-					<c:forEach var="articleType" items="${articleTypes}" varStatus="i">
-						<option value="${articleTypeValues[i.index]}" ${article['type'] eq articleTypeValues[i.index] ? 'selected' : ''}>${articleType}</option>
-					</c:forEach>
+					<option value="1" ${article['type'] eq 1 ? 'selected' : ''}>News</option>
+					<option value="2" ${article['type'] eq 2 ? 'selected' : ''}>Go Travel</option>
 				</select>
+				<select name="status">
+					<option value="0" ${0 eq article['status'] ? 'selected' : ''}>Hide</option>
+					<option value="1" ${1 eq article['status'] ? 'selected' : ''}>Show</option>
+				</select> 
 				<hr />
 				<div id="alerts"></div>
 				<div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
@@ -86,16 +89,15 @@
 		
 				<div id="editor">${article['textBody']}</div>
 				
-				<c:if test="${not empty article['coverPath']}">
-					<img style="height:160px;" src="/dormitory/upload/images/articleCover/${article['id']}/${article['coverPath']}" />
-				</c:if>
-				
 				<input type="hidden" name="coverPath" value="${article['coverPath']}" />
 				<input type="file" name="cover" />
-				<select name="status">
-					<option value="0" ${0 eq article['status'] ? 'selected' : ''}>Hide</option>
-					<option value="1" ${1 eq article['status'] ? 'selected' : ''}>Show</option>
-				</select> 
+				<c:if test="${not empty article['coverPath']}">
+					<img style="height:160px;" src="/dormitory/upload/images/articleCover/${article['id']}/${article['coverPath']}" />
+					<input id="ckbRemoveCover" type="checkbox" value="Remove Cover" />
+					Remove cover:
+					<input id="hidRemoveCover" type="hidden" name="removeCover" value="false" />
+				</c:if>
+
 				<br />
 				
 				<input id="btnSubmit" type="button" value="submit" />

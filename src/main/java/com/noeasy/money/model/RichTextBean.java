@@ -9,29 +9,29 @@ package com.noeasy.money.model;
 
 public class RichTextBean extends BaseBean {
 
-    public static final String   SPLIT_SYMBOL     = ",";
+    public static final String SPLIT_SYMBOL   = ",";
 
-    public static final String   NEWS             = "1";
+    public static final String NEWS           = "1";
 
-    public static final String   GO_TRAVEL        = "2";
+    public static final String GO_TRAVEL      = "2";
 
-    public static final String[] TYPE_ARRAY       = { "NEWS", "GO_TRAVEL" };
+    public static final String NEWS_NAME      = "News";
 
-    public static final int[]    TYPE_VALUE_ARRAY = { 1, 2 };
+    public static final String GO_TRAVEL_NAME = "Go Travle";
 
-    private int                  mId;
+    private int                mId;
 
-    private int                  mUserId;
+    private int                mUserId;
 
-    private String               mTitle;
+    private String             mTitle;
 
-    private String               mTextBody;
+    private String             mTextBody;
 
-    private String               mCoverPath;
+    private String             mCoverPath;
 
-    private String               mStatus;
+    private String             mStatus;
 
-    private String               mType;
+    private String             mType;
 
 
 

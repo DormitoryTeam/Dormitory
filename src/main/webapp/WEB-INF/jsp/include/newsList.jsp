@@ -29,7 +29,7 @@
 			<span>一起去旅行</span>
 		</div>
 		<ul class="news-list">
-			<c:forEach var="article" items="${goTravles}">
+			<c:forEach var="article" items="${goTravles}" end="2">
 				<li class="news-itme">
 					<div class="news-img pull-left">
 						<img src="/dormitory/upload/images/articleCover/${article['id']}/${article['coverPath']}" />

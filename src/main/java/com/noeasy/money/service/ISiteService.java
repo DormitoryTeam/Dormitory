@@ -46,6 +46,10 @@ public interface ISiteService {
 
 
 
+    List<Map<String, Object>> queryActiveArticleTitles(String pType);
+
+
+
     List<Map<String, Object>> queryAllSlides();
 
 
@@ -58,7 +62,7 @@ public interface ISiteService {
 
 
 
-    List<Map<String, Object>> queryArticleTitle(String pType, String pStatus);
+    List<Map<String, Object>> queryArticleTitles(String pType);
 
 
 

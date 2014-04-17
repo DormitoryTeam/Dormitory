@@ -5,7 +5,7 @@
 	<div class="sidebar pull-left">
 		<div class="news-box">
 			<ul>
-				<c:forEach var="article" items="${news}">
+				<c:forEach var="article" items="${news}" end="6">
 					<li><a href="/dormitory/admin/site/article-detail.html?id=${article['id']}">${article['title']}</a></li>
 				</c:forEach>
 			</ul>

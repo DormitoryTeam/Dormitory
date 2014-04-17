@@ -153,8 +153,8 @@ public class NavigationController {
 
             List<Map<String, Object>> slides = siteService.querySlides();
 
-            List<Map<String, Object>> news = siteService.queryArticleTitle(RichTextBean.NEWS, "1");
-            List<Map<String, Object>> goTravles = siteService.queryArticleTitle(RichTextBean.GO_TRAVEL, "1");
+            List<Map<String, Object>> news = siteService.queryArticleTitles(RichTextBean.NEWS);
+            List<Map<String, Object>> goTravles = siteService.queryArticleTitles(RichTextBean.GO_TRAVEL);
 
             model.addAttribute("countries", countries);
             model.addAttribute("cities", cities);

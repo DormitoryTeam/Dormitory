@@ -42,4 +42,8 @@ $(function() {
         $("#iptTextBody").val($("#editor").html());
         $("#form").submit();
     });
+    
+    $("#ckbRemoveCover").bind('click', function() {
+    	$("#hidRemoveCover").val($(this).prop("checked"))
+    });
 });
