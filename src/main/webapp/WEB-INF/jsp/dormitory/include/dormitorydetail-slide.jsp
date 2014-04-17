@@ -24,6 +24,9 @@
 				</c:if>
 				<c:set var="count" value="${count + 1}" />
 				</c:forEach>
+				<c:if test="${count > 1}">
+				</div>
+				</c:if>
 			</c:if>
 			<c:if test="${empty dormitory['picPath']}">
 				<div>
