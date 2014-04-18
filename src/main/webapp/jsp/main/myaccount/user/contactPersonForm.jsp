@@ -30,7 +30,7 @@
 						<dl>
 							<dd>称呼：</dd>
 							<dt>
-							<select name="gender">
+							<select name="gender" id="gender" class="same-as" >
 							<option value="0" <c:if test="${user.contactPersonInfo.gender eq 0}">selected</c:if>>Mr.</option>
 							<option value="1" <c:if test="${user.contactPersonInfo.gender eq 1}">selected</c:if>>Mrs.</option>
 							<option value="2" <c:if test="${user.contactPersonInfo.gender eq 2}">selected</c:if>>Miss</option>
@@ -39,47 +39,47 @@
 						</dl>
 						<dl>
 							<dd>与你的关系</dd>
-							<dt><input type="text" name="relationship" value="${user.contactPersonInfo.relationship}" /> </dt>
+							<dt><input type="text" name="relationship" id="relationship" value="${user.contactPersonInfo.relationship}" class="same-as" /> </dt>
 						</dl>
 						<dl>
 							<dd>姓：</dd>
-							<dt><input name="lastName" type="text" value="${user.contactPersonInfo.lastName}" /></dt>
+							<dt><input name="lastName" id="lastName" type="text" value="${user.contactPersonInfo.lastName}" class="same-as" /></dt>
 						</dl>
 						<dl>
 							<dd>名：</dd>
-							<dt><input name="name" type="text" value="${user.contactPersonInfo.name}" /></dt>
+							<dt><input name="name" id="name" type="text" value="${user.contactPersonInfo.name}" class="same-as" /></dt>
 						</dl>
 						<dl>
 							<dd>国籍：</dd>
-							<dt><input name="nationality" type="text" value="${user.contactPersonInfo.nationality}" /></dt>
+							<dt><input name="nationality" id="nationality" type="text" value="${user.contactPersonInfo.nationality}" class="same-as" /></dt>
 						</dl>
 						<dl>
 							<dd>出生日期：</dd>
-							<dt><input name="birthday" type="text" value="<fmt:formatDate value='${user.contactPersonInfo.birthday}' pattern='yyyy-MM-dd'/>" /></dt>
+							<dt><input name="birthday" id="birthday" type="text" value="<fmt:formatDate value='${user.contactPersonInfo.birthday}' pattern='yyyy-MM-dd'/>" class="same-as" /></dt>
 						</dl>
 						<dl>
 							<dd>电子邮箱：</dd>
-							<dt><input name="email" value="${user.contactPersonInfo.email}"/></dt>
+							<dt><input name="email" id="email" value="${user.contactPersonInfo.email}" class="same-as" /></dt>
 						</dl>
 						<dl>
 							<dd>手机号：</dd>
-							<dt><input name="phone" type="text" value="${user.contactPersonInfo.phone}" /></dt>
+							<dt><input name="phone" id="phone" type="text" value="${user.contactPersonInfo.phone}" class="same-as" /></dt>
 						</dl>
 						<dl>
 							<dd>家庭住址：</dd>
-							<dt><input name="country" type="text" value="${user.contactPersonInfo.country}" class="min" /> (国家)<input name="province" type="text" value="${user.contactPersonInfo.province}" class="min" /> (省)<input name="city" type="text" value="${user.contactPersonInfo.city}" class="min" /> (市)<input name="county" type="text" value="${user.contactPersonInfo.county}" class="min" /> (区县)</dt>
+							<dt><input name="country" id="country" type="text" value="${user.contactPersonInfo.country}" class="min same-as" /> (国家)<input name="province" id="province" type="text" value="${user.contactPersonInfo.province}" class="min same-as" /> (省)<input name="city" id="city" type="text" value="${user.contactPersonInfo.city}" class="min same-as" /> (市)<input name="county" id="county" type="text" value="${user.contactPersonInfo.county}" class="min same-as" /> (区县)</dt>
 						</dl>
 						<dl>
-							<dt>&nbsp;</dt>
-							<dd>
-								<input name="address" type="text" value="${user.contactPersonInfo.address}" class="larger"/> (街道地址)
-							</dd>
+							<dd>&nbsp;</dd>
+							<dt>
+								<input name="address" id="address" type="text" value="${user.contactPersonInfo.address}" class="larger same-as"/> (街道地址)
+							</dt>
 						</dl>
 						<dl>
-							<dt>&nbsp;</dt>
-							<dd>
-								<input name="postalcode" type="text" value="${user.contactPersonInfo.postalcode}" class="larger"/> (邮编)
-							</dd>
+							<dd>&nbsp;</dd>
+							<dt>
+								<input name="postalcode" id="postalcode" type="text" value="${user.contactPersonInfo.postalcode}" class="larger same-as"/> (邮编)
+							</dt>
 						</dl>
 					</fieldset>
 					<a href="#" class="modify btn-user-info-save">完成</a>
@@ -89,6 +89,20 @@
 		</div>
 	</div>
 </div>
+<input id="gender_val" type="hidden" value="${user.guaranteeInfo.gender}"/>
+<input id="relationship_val" type="hidden" value="${user.guaranteeInfo.relationship}"/>
+<input id="name_val" type="hidden" value="${user.guaranteeInfo.name}"/>
+<input id="lastName_val" type="hidden" value="${user.guaranteeInfo.lastName}"/>
+<input id="nationality_val" type="hidden" value="${user.guaranteeInfo.nationality}"/>
+<input id="birthday_val" type="hidden" value="<fmt:formatDate value='${user.guaranteeInfo.birthday}' pattern='yyyy-MM-dd'/>"/>
+<input id="email_val" type="hidden" value="${user.guaranteeInfo.email}"/>
+<input id="phone_val" type="hidden" value="${user.guaranteeInfo.phone}"/>
+<input id="country_val" type="hidden" value="${user.guaranteeInfo.country}"/>
+<input id="province_val" type="hidden" value="${user.guaranteeInfo.province}"/>
+<input id="city_val" type="hidden" value="${user.guaranteeInfo.city}"/>
+<input id="county_val" type="hidden" value="${user.guaranteeInfo.county}"/>
+<input id="address_val" type="hidden" value="${user.guaranteeInfo.address}"/>
+<input id="postalcode_val" type="hidden" value="${user.guaranteeInfo.postalcode}"/>
 <%--
 
 

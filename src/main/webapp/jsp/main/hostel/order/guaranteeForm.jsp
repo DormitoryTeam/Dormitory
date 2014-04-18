@@ -68,7 +68,7 @@
 							<c:if test="${null == relationship}">
 							<c:set var="relationship" value="${user.guaranteeInfo.relationship}" />
 							</c:if>
-							<input type="text" name="relationship" value=""${relationship} /> 
+							<input type="text" name="relationship" value="${relationship}" /> 
 						</dd>
 					</dl>
 					<dl>
@@ -152,7 +152,7 @@
 						<c:if test="${null == address}">
 						<c:set var="address" value="${user.guaranteeInfo.address}" />
 						</c:if>
-							<input name="country" type="text" value="${country}" class="min" /> (国家)<input name="province" type="text" value="${province}" class="min" /> (省)<input name="city" type="text" value="${city}" class="min" /> (市)<input type="text" name="county" value=""${county} class="min" /> (区县)
+							<input name="country" type="text" value="${country}" class="min" /> (国家)<input name="province" type="text" value="${province}" class="min" /> (省)<input name="city" type="text" value="${city}" class="min" /> (市)<input type="text" name="county" value="${county}" class="min" /> (区县)
 						</dd>
 					</dl>
 					<dl>

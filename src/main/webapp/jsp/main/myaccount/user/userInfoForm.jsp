@@ -70,16 +70,16 @@
 							<dt><input name="country" type="text" value="${user.info.country}" class="min" /> (国家)<input name="province" type="text" value="${user.info.province}" class="min" /> (省)<input name="city" type="text" value="${user.info.city}" class="min" /> (市)<input name="county" type="text" value="${user.info.county}" class="min" /> (区县)</dt>
 						</dl>
 						<dl>
-							<dt>&nbsp;</dt>
-							<dd>
+							<dd>&nbsp;</dd>
+							<dt>
 								<input name="address" type="text" value="${user.info.address}" class="larger"/> (街道地址)
-							</dd>
+							</dt>
 						</dl>
 						<dl>
-							<dt>&nbsp;</dt>
-							<dd>
+							<dd>&nbsp;</dd>
+							<dt>
 								<input name="postalcode" type="text" value="${user.info.postalcode}" class="larger"/> (邮编)
-							</dd>
+							</dt>
 						</dl>
 					</fieldset>
 					<a href="#" class="modify btn-user-info-save">完成</a>

@@ -61,16 +61,16 @@
 							<dt>${user.guaranteeInfo.country}${user.guaranteeInfo.province}${user.guaranteeInfo.city}${user.guaranteeInfo.county}</dt>
 						</dl>
 						<dl>
-							<dt>&nbsp;</dt>
-							<dd>
+							<dd>&nbsp;</dd>
+							<dt>
 								${user.guaranteeInfo.address}
-							</dd>
+							</dt>
 						</dl>
 						<dl>
-							<dt>邮编</dt>
-							<dd>
+							<dd>邮编</dd>
+							<dt>
 								${user.guaranteeInfo.postalcode}
-							</dd>
+							</dt>
 						</dl>
 					</fieldset>
 					<a href="#" class="modify btn-user-info-edit" gotoURL="<c:url value='/user/editUserInfo.html?command=edit&pageStep=2'/>" >修改</a>

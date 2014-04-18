@@ -58,7 +58,7 @@
 							<c:if test="${null == gender}">
 							<c:set var="gender" value="${user.contactPersonInfo.gender}" />
 							</c:if>
-							<select name="gender" id="gender">
+							<select name="gender" id="gender" class="same-as" >
 							<option value="0" <c:if test="gender eq 0">selected</c:if>>Mr.</option>
 							<option value="1" <c:if test="gender eq 1">selected</c:if>>Mrs.</option>
 							<option value="2" <c:if test="gender eq 2">selected</c:if>>Miss</option>
@@ -72,7 +72,7 @@
 							<c:if test="${null == relationship}">
 							<c:set var="relationship" value="${user.contactPersonInfo.relationship}" />
 							</c:if>
-							<input type="text" name="relationship" value="${relationship}" id="relationship" /> 
+							<input type="text" name="relationship" value="${relationship}" id="relationship" class="same-as"/> 
 						</dd>
 					</dl>
 					<dl>
@@ -82,7 +82,7 @@
 							<c:if test="${null == lastName}">
 							<c:set var="lastName" value="${user.contactPersonInfo.lastName}" />
 							</c:if>
-							<input type="text" name="lastName" value="${lastName}" class="min" id="lastName" />  
+							<input type="text" name="lastName" value="${lastName}" class="min" id="lastName" class="same-as"/>  
 						</dd>
 						<dt>名</dt>
 						<dd>
@@ -90,7 +90,7 @@
 							<c:if test="${null == name}">
 							<c:set var="name" value="${user.contactPersonInfo.name}" />
 							</c:if>
-							<input type="text" name="name" value="${name}" class="min" id="name" /> 
+							<input type="text" name="name" value="${name}" class="min" id="name" class="same-as"/> 
 						</dd>
 					</dl>
 					<dl>
@@ -100,7 +100,7 @@
 							<c:if test="${null == nationality}">
 							<c:set var="nationality" value="${user.contactPersonInfo.nationality}" />
 							</c:if>
-							<input name="nationality" type="text" value="${nationality}" id="nationality" />
+							<input name="nationality" type="text" value="${nationality}" id="nationality" class="same-as"/>
 						</dd>
 					</dl>
 					<dl>
@@ -110,7 +110,7 @@
 							<c:if test="${null == birthday}">
 							<c:set var="birthday" value="${user.contactPersonInfo.birthday}" />
 							</c:if>
-							<input name="birthday" type="text" value="<fmt:formatDate value='${birthday}' pattern='yyyy-MM-dd'/>" id="birthday" />
+							<input name="birthday" type="text" value="<fmt:formatDate value='${birthday}' pattern='yyyy-MM-dd'/>" id="birthday" class="same-as"/>
 						</dd>
 					</dl>
 					<dl>
@@ -120,7 +120,7 @@
 							<c:if test="${null == email}">
 							<c:set var="email" value="${user.contactPersonInfo.email}" />
 							</c:if>
-							<input name="email" value="${email}" type="text" class="long" id="email" />
+							<input name="email" value="${email}" type="text" class="long" id="email" class="same-as"/>
 						</dd>
 					</dl>
 					<dl>
@@ -130,7 +130,7 @@
 							<c:if test="${null == phone}">
 							<c:set var="phone" value="${user.contactPersonInfo.phone}" />
 							</c:if>
-							<input name="phone" type="text" value="${phone}" id="phone" /> 
+							<input name="phone" type="text" value="${phone}" id="phone" class="same-as"/> 
 						</dd>
 					</dl>
 					<dl>
@@ -156,13 +156,13 @@
 							<c:if test="${null == address}">
 							<c:set var="address" value="${user.contactPersonInfo.address}" />
 							</c:if>
-							<input name="country" type="text" value="${country}" class="min" id="country" /> (国家)<input name="province" type="text" value="${province}" class="min" id="province" /> (省)<input name="city" type="text" value="${city}" class="min" id="city" /> (市)<input type="text" name="county" value="${county}" class="min" id="county" /> (区县)
+							<input name="country" type="text" value="${country}" class="min same-as" id="country" /> (国家)<input name="province" type="text" value="${province}" class="min same-as" id="province" /> (省)<input name="city" type="text" value="${city}" class="min same-as" id="city" /> (市)<input type="text" name="county" value="${county}" class="min same-as" id="county" /> (区县)
 						</dd>
 					</dl>
 					<dl>
 						<dt>&nbsp;</dt>
 						<dd>
-							<input name="address" type="text" value="${address}" class="larger" id="address" /> (街道地址)
+							<input name="address" type="text" value="${address}" class="larger same-as" id="address"/> (街道地址)
 						</dd>
 					</dl>
 					<dl>
@@ -172,7 +172,7 @@
 							<c:if test="${null == postalcode}">
 							<c:set var="postalcode" value="${user.contactPersonInfo.postalcode}" />
 							</c:if>
-							<input type="text" name="postalcode" value="${postalcode}" id="postalcode" /> (邮编)
+							<input type="text" name="postalcode" value="${postalcode}" id="postalcode" class="same-as"/> (邮编)
 						</dd>
 					</dl>
 					<dl>
@@ -186,20 +186,17 @@
 		</form>
 	</div>
 </div>
-<script>
-var guarantee = {gender:"${order.orderContact.guaranteeInfo.gender}", 
-				 relationship: "${order.orderContact.guaranteeInfo.relationship}", 
-				 name: "${order.orderContact.guaranteeInfo.name}", 
-				 lastName: "${order.orderContact.guaranteeInfo.lastName}", 
-				 nationality: "${order.orderContact.guaranteeInfo.nationality}",
-				 birthday:"<fmt:formatDate value='${order.orderContact.guaranteeInfo.birthday}' pattern='yyyy-MM-dd'/>", 
-				 email: "${order.orderContact.guaranteeInfo.email}",
-				 phone: "${order.orderContact.guaranteeInfo.phone}",
-				 country: "${order.orderContact.guaranteeInfo.country}",
-				 province: "${order.orderContact.guaranteeInfo.province}",
-				 city: "${order.orderContact.guaranteeInfo.city}",
-				 county: "${order.orderContact.guaranteeInfo.county}",
-				 address: "${order.orderContact.guaranteeInfo.address}",
-				 postalcode: "${order.orderContact.guaranteeInfo.postalcode}"
-				 }
-</script>
+<input id="gender_val" type="hidden" value="${order.orderContact.guaranteeInfo.gender}"/>
+<input id="relationship_val" type="hidden" value="${order.orderContact.guaranteeInfo.relationship}"/>
+<input id="name_val" type="hidden" value="${order.orderContact.guaranteeInfo.name}"/>
+<input id="lastName_val" type="hidden" value="${order.orderContact.guaranteeInfo.lastName}"/>
+<input id="nationality_val" type="hidden" value="${order.orderContact.guaranteeInfo.nationality}"/>
+<input id="birthday_val" type="hidden" value="<fmt:formatDate value='${order.orderContact.guaranteeInfo.birthday}' pattern='yyyy-MM-dd'/>"/>
+<input id="email_val" type="hidden" value="${order.orderContact.guaranteeInfo.email}"/>
+<input id="phone_val" type="hidden" value="${order.orderContact.guaranteeInfo.phone}"/>
+<input id="country_val" type="hidden" value="${order.orderContact.guaranteeInfo.country}"/>
+<input id="province_val" type="hidden" value="${order.orderContact.guaranteeInfo.province}"/>
+<input id="city_val" type="hidden" value="${order.orderContact.guaranteeInfo.city}"/>
+<input id="county_val" type="hidden" value="${order.orderContact.guaranteeInfo.county}"/>
+<input id="address_val" type="hidden" value="${order.orderContact.guaranteeInfo.address}"/>
+<input id="postalcode_val" type="hidden" value="${order.orderContact.guaranteeInfo.postalcode}"/>

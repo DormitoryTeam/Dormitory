@@ -5,9 +5,11 @@ $(function() {
 	
 	$("#sameas").click(function() {
 		if(!$(this).parent().hasClass("fchecked")) {
-			for (var key in guarantee) {
-				$("#"+key).val(guarantee[key]);
-			}
+			$(".same-as").each(function(i, e) {
+				var id = $(e).attr("id");
+				var value = $("#" + id + "_val").val();
+				$(e).val(value);
+			});
 			if ('0' == $("#gender").val()) {
 				$("span .current").html("Mr.");
 			}
