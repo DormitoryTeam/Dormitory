@@ -122,7 +122,7 @@ public class DormitoryController {
     public String toDormitoryList(final HttpServletRequest request, final HttpServletResponse response,
             final Model model, final String collegeId, final String cityId, final String keyword,
             final String sortField, final String sortType, final String currentPage, final String pageSize) {
-        if (StringUtils.isNotBlank(collegeId) && StringUtils.isNotBlank(cityId)) {
+        if (StringUtils.isNotBlank(cityId)) {
 
             Map<String, Object> city = navigationService.queryCityById(NumberUtils.toInt(cityId), null);
             Integer countryId = (Integer) city.get("countryId");
@@ -131,7 +131,9 @@ public class DormitoryController {
 
             DormitorySearchBean searchBean = new DormitorySearchBean();
             searchBean.setCityId(NumberUtils.toInt(cityId));
-            searchBean.setCollegeId(NumberUtils.toInt(collegeId));
+            if (StringUtils.isNoneBlank(collegeId)) {
+                searchBean.setCollegeId(NumberUtils.toInt(collegeId));
+            }
             if (StringUtils.isNoneBlank(keyword)) {
                 searchBean.setKeyword(keyword);
             }
@@ -162,6 +164,8 @@ public class DormitoryController {
             model.addAttribute("city", city);
             model.addAttribute("college", college);
             model.addAttribute("dormitories", dormitories);
+            model.addAttribute("collegeId", collegeId);
+            model.addAttribute("cityId", cityId);
             model.addAttribute("page", page);
         }
         return "dormitory/dormitorylist";

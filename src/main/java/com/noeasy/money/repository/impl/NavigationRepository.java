@@ -53,6 +53,16 @@ public class NavigationRepository extends BaseRepository implements INavigationR
 
 
     /**
+     * @see com.noeasy.money.repository.INavigationRepository#queryCities()
+     */
+    @Override
+    public List<Map<String, Object>> queryCities() {
+        return getSqlSession().selectList("com.noeasy.money.model.Navigation.queryCity");
+    }
+
+
+
+    /**
      * @see com.noeasy.money.repository.INavigationRepository#queryCities(java.lang.Integer)
      */
     @Override
@@ -103,6 +113,16 @@ public class NavigationRepository extends BaseRepository implements INavigationR
         params.put(ID, pCollegeId);
         params.put(CITY_ID, pCityId);
         return getSqlSession().selectOne("com.noeasy.money.model.Navigation.queryCollege", params);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.INavigationRepository#queryColleges()
+     */
+    @Override
+    public List<Map<String, Object>> queryColleges() {
+        return getSqlSession().selectList("com.noeasy.money.model.Navigation.queryCollege");
     }
 
 

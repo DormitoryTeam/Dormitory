@@ -19,24 +19,12 @@
 <div class="row hot-city">
 	<div class="title">
 		<span>公寓预定热门城市</span>
-		<a href="#" class="more">> 更多城市</a>
+		<a href="/dormitory/navigation/navigator.html?countryId=${countries[0]['id']}" class="more">> 更多城市</a>
 	</div>
 	<ul class="city-list">
-		<li class="active"><a href="#">英国</a></li>
-		<li><a href="#">伦敦</a></li>
-		<li><a href="#">曼切斯特</a></li>
-		<li><a href="#">布拉德福德</a></li>
-		<li><a href="#">哈德斯菲尔德</a></li>
-		<li><a href="#">利兹</a></li>
-		<li><a href="#">谢菲尔德</a></li>
-		<li><a href="#">伯明翰</a></li>
-		<li><a href="#">英国</a></li>
-		<li><a href="#">伦敦</a></li>
-		<li><a href="#">曼切斯特</a></li>
-		<li><a href="#">布拉德福德</a></li>
-		<li><a href="#">哈德斯菲尔德</a></li>
-		<li><a href="#">利兹</a></li>
-		<li><a href="#">谢菲尔德</a></li>
-		<li><a href="#">伯明翰</a></li>
+		<li class="active"><a href="/dormitory/navigation/navigator.html?countryId=${countries[0]['id']}">${countries[0]['name']}</a></li>
+		<c:forEach var="city" items="${cities}" end="13">
+			<li><a href="/dormitory/dormitory/dormitory-list.html?cityId=${city['id']}">${city['name']}</a></li>
+		</c:forEach>
 	</ul>
 </div>

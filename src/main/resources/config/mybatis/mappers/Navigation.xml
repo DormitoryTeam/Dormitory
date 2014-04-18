@@ -11,6 +11,7 @@
 		<if test="id != null">
 			and id = #{id}
 		</if>
+		order by id;
 	</select>
 
 	<select id="queryCity" resultType="hashmap" parameterType="java.util.Map">
@@ -23,6 +24,7 @@
 		<if test="countryId != null">
 			and country_id = #{countryId}
 		</if>
+		order by country_id
 	</select>
 
 	<select id="queryCollege" resultType="hashmap" parameterType="java.util.Map">
@@ -40,18 +42,21 @@
 	<select id="queryCityInSameCountry" resultType="hashmap" parameterType="java.util.Map">
 		select id, country_id as countryId, name, status
 		from city
-		where status = 1
+		where status =
+		1
 		and country_id = (
 		select country_id from city where id = #{id} and status = 1
 		)
 	</select>
 
 	<select id="queryCountryByCityId" resultType="hashmap" parameterType="int">
-		select country.id, country.name, countrycode as countryCode, country.status
+		select country.id, country.name, countrycode as countryCode,
+		country.status
 		from country
 		left join city on country.id = city.country_id and city.id
 		where
-		country.status = 1 and city.status = 1 and city.id = #{cityId}
+		country.status = 1 and city.status = 1 and city.id =
+		#{cityId}
 	</select>
 
 	<select id="queryFlight" resultType="hashmap" parameterType="java.util.Map">

@@ -199,10 +199,15 @@ public class NavigationController {
 
 
     @RequestMapping("/navigator" + Constants.URL_SUFFIX)
-    public String toNavigation(final HttpServletRequest request, final HttpServletResponse response, final Model model) {
+    public String toNavigation(final HttpServletRequest request, final HttpServletResponse response, final Model model,
+            final String countryId) {
         List<Map<String, Object>> countries = navigationService.queryCountries();
-        model.addAttribute("countries", countries);
-        return "navigation/navigation";
-    }
+        List<Map<String, Object>> cities = navigationService.queryCities();
 
+        model.addAttribute("countries", countries);
+        model.addAttribute("cities", cities);
+        model.addAttribute("countryId", countryId);
+
+        return "navigation/citynavigation";
+    }
 }
