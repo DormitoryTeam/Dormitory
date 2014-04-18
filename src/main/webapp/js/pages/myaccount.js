@@ -5,9 +5,9 @@ $(function() {
 	utils.init();
 
 
-	$( ".myaccount-tab" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
+	//$( ".myaccount-tab" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
 
-    $( ".personal-info-tab" ).tabs();
+  //$( ".personal-info-tab" ).tabs();
 
 });
 });
