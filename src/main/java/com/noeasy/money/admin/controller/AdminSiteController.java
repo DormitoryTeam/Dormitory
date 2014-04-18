@@ -41,7 +41,8 @@ public class AdminSiteController {
 
     @RequestMapping("/article-save" + Constants.URL_SUFFIX)
     public String saveArticle(final MultipartHttpServletRequest request, final HttpServletResponse response,
-            final Model model, final RichTextBean article, final boolean removeCover) {
+            final Model model, final RichTextBean article, final boolean removeCover, final String backURL) {
+        model.addAttribute("backURL", backURL);
         FileUtils fileUtils = FileUtils.getInstance();
         MultipartFile multipartFile = null;
         boolean result = false;
@@ -69,16 +70,17 @@ public class AdminSiteController {
             result = siteService.saveOrUpdateArticle(article);
             model.addAttribute("result", result);
             model.addAttribute("article", article);
-            return "admin/site/article-save-result";
+            return "admin/site/article-detail";
         }
-        return "admin/site/article-save-result";
+        return "admin/site/article-detail";
     }
 
 
 
     @RequestMapping("/article-add-or-update" + Constants.URL_SUFFIX)
     public String toArticleAddOrUpdate(final HttpServletRequest request, final HttpServletResponse response,
-            final Model model, final String backURL, final Integer id) {
+            final Model model, final Integer id, final String backURL) {
+        model.addAttribute("backURL", backURL);
         RichTextBean article = new RichTextBean();
         if (ParamUtils.isValidIdField(id)) {
             article = siteService.queryArticle(id);
@@ -91,7 +93,8 @@ public class AdminSiteController {
 
     @RequestMapping("/article-detail" + Constants.URL_SUFFIX)
     public String toArticleDetail(final HttpServletRequest request, final HttpServletResponse response,
-            final Model model, final int id) {
+            final Model model, final int id, final String backURL) {
+        model.addAttribute("backURL", backURL);
         RichTextBean article = new RichTextBean();
         if (ParamUtils.isValidIdField(id)) {
             article = siteService.queryArticle(id);
@@ -103,7 +106,9 @@ public class AdminSiteController {
 
 
     @RequestMapping("/article-list" + Constants.URL_SUFFIX)
-    public String toArticleList(final HttpServletRequest request, final HttpServletResponse response, final Model model) {
+    public String toArticleList(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final String backURL) {
+        model.addAttribute("backURL", backURL);
         List<Map<String, Object>> articleTitles = siteService.queryArticleTitles(null);
         model.addAttribute("articleTitles", articleTitles);
         return "admin/site/article-list";

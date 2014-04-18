@@ -101,6 +101,9 @@
 				<br />
 				
 				<input id="btnSubmit" type="button" value="submit" />
+				<c:if test="${not empty backURL}">
+					&nbsp;<a href="${backURL}">Back</a>
+				</c:if>
 			</div>
 		</div>
 	</form>

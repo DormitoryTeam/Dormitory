@@ -28,6 +28,7 @@
  */
 package com.noeasy.money.web.controller;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +54,7 @@ import com.noeasy.money.model.UserBean;
 import com.noeasy.money.service.INavigationService;
 import com.noeasy.money.service.ISiteService;
 import com.noeasy.money.service.IUserService;
+import com.noeasy.money.util.ParamUtils;
 
 /**
  * <class description>
@@ -128,6 +130,33 @@ public class NavigationController {
         List<Map<String, Object>> flights = navigationService.queryFlightByConditions(countryId, cityId, null);
         JSONArray countryJson = JSONArray.fromObject(flights);
         return countryJson.toString();
+    }
+
+
+
+    @RequestMapping("/article-detail" + Constants.URL_SUFFIX)
+    public String toArticleDetail(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final int id, final String backURL) {
+        model.addAttribute("backURL", backURL);
+
+        RichTextBean article = new RichTextBean();
+        if (ParamUtils.isValidIdField(id)) {
+            article = siteService.queryArticle(id);
+            model.addAttribute("backURL", MessageFormat.format("{0}?type={1}", backURL, article.getType()));
+        }
+        model.addAttribute("article", article);
+        return "navigation/article-detail";
+    }
+
+
+
+    @RequestMapping("/article-list" + Constants.URL_SUFFIX)
+    public String toArticleList(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final String type, final String backURL) {
+        model.addAttribute("backURL", backURL);
+        List<Map<String, Object>> articleTitles = siteService.queryArticleTitles(type);
+        model.addAttribute("articleTitles", articleTitles);
+        return "navigation/article-list";
     }
 
 
