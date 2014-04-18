@@ -68,7 +68,7 @@
 								<a href="#">我的订单</a>
 							</li>
 							<li>
-								<a href="#">个人中心</a>
+								<a href="<c:url value="/user/editUserInfo.html"/>">个人中心</a>
 							</li>
 						</ul>
 					</li>
