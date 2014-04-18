@@ -35,7 +35,7 @@
 						<img src="/dormitory/upload/images/articleCover/${article['id']}/${article['coverPath']}" />
 					</div>
 					<div class="news-info">
-						<h2><a href="/dormitory/admin/site/article-detail.html?id=${article['id']}">${article['title']}</a></h2>
+						<h2><a href="/dormitory/navigation/article-detail.html?id=${article['id']}&backURL=${pageContext['request']['contextPath']}${requestScope['javax.servlet.forward.servlet_path']}">${article['title']}</a></h2>
 						<p>${article['textBody']}</p>
 					</div>
 				</li>

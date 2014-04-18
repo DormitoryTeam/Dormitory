@@ -40,6 +40,10 @@ import java.util.Map;
 
 public interface INavigationRepository {
 
+    List<Map<String, Object>> queryCities();
+
+
+
     List<Map<String, Object>> queryCities(Integer pCountryId);
 
 
@@ -53,6 +57,10 @@ public interface INavigationRepository {
 
 
     Map<String, Object> queryCollegeById(Integer pCollegeId, Integer pCityId);
+
+
+
+    List<Map<String, Object>> queryColleges();
 
 
 

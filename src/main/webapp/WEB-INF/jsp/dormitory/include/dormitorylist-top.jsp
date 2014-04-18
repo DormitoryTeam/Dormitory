@@ -7,7 +7,9 @@
 	<ul class="row bread-crumb">
 		<li><a hrf="#">${country['name']}</a></li>
 		<li><a hrf="#"><span>&#62;</span>${city['name']}</a></li>
-		<li><span>&#62;</span>${college['name']}</li>
+		<c:if test="${not empty collegeId}">
+			<li><span>&#62;</span>${college['name']}</li>
+		</c:if>
 	</ul>
 	<div class="row filter">
 		<fieldset>
@@ -18,14 +20,16 @@
 					<label for="price">按价格</label>
 				</dd>
 			</dl>
-			<dl>
-				<dt>
-					<input type="radio" name="sortField" value="distance" <c:if test="${sortField eq 'distance' or empty sortField}">checked</c:if> />
-				</dt>
-				<dd>
-					<label for="range">按距离</label>
-				</dd>
-			</dl>
+			<c:if test="${not empty collegeId}">
+				<dl>
+					<dt>
+						<input type="radio" name="sortField" value="distance" <c:if test="${sortField eq 'distance' or empty sortField}">checked</c:if> />
+					</dt>
+					<dd>
+						<label for="range">按距离</label>
+					</dd>
+				</dl>
+			</c:if>
 			<dl>
 				<dt>
 					<input type="radio" name="sortField" value="rating" <c:if test="${sortField eq 'rating'}">checked</c:if> />

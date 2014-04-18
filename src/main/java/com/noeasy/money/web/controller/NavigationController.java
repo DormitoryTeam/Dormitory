@@ -28,6 +28,7 @@
  */
 package com.noeasy.money.web.controller;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +54,7 @@ import com.noeasy.money.model.UserBean;
 import com.noeasy.money.service.INavigationService;
 import com.noeasy.money.service.ISiteService;
 import com.noeasy.money.service.IUserService;
+import com.noeasy.money.util.ParamUtils;
 
 /**
  * <class description>
@@ -132,6 +134,33 @@ public class NavigationController {
 
 
 
+    @RequestMapping("/article-detail" + Constants.URL_SUFFIX)
+    public String toArticleDetail(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final int id, final String backURL) {
+        model.addAttribute("backURL", backURL);
+
+        RichTextBean article = new RichTextBean();
+        if (ParamUtils.isValidIdField(id)) {
+            article = siteService.queryArticle(id);
+            model.addAttribute("backURL", MessageFormat.format("{0}?type={1}", backURL, article.getType()));
+        }
+        model.addAttribute("article", article);
+        return "navigation/article-detail";
+    }
+
+
+
+    @RequestMapping("/article-list" + Constants.URL_SUFFIX)
+    public String toArticleList(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final String type, final String backURL) {
+        model.addAttribute("backURL", backURL);
+        List<Map<String, Object>> articleTitles = siteService.queryArticleTitles(type);
+        model.addAttribute("articleTitles", articleTitles);
+        return "navigation/article-list";
+    }
+
+
+
     @RequestMapping("/home" + Constants.URL_SUFFIX)
     public String toHome(final HttpServletRequest request, final HttpServletResponse response, final Model model) {
         Object userIdObj = request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
@@ -170,10 +199,15 @@ public class NavigationController {
 
 
     @RequestMapping("/navigator" + Constants.URL_SUFFIX)
-    public String toNavigation(final HttpServletRequest request, final HttpServletResponse response, final Model model) {
+    public String toNavigation(final HttpServletRequest request, final HttpServletResponse response, final Model model,
+            final String countryId) {
         List<Map<String, Object>> countries = navigationService.queryCountries();
-        model.addAttribute("countries", countries);
-        return "navigation/navigation";
-    }
+        List<Map<String, Object>> cities = navigationService.queryCities();
 
+        model.addAttribute("countries", countries);
+        model.addAttribute("cities", cities);
+        model.addAttribute("countryId", countryId);
+
+        return "navigation/citynavigation";
+    }
 }

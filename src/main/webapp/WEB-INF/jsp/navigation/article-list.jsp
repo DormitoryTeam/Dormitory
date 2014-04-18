@@ -7,7 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
-	title: ${article['title']}<br/>
-	text:${article['textBody']}
+	<ul>
+		<c:forEach var="article" items="${articleTitles}">
+			<li><a href="/dormitory/navigation/article-detail.html?id=${article['id']}&backURL=${pageContext['request']['contextPath']}${requestScope['javax.servlet.forward.servlet_path']}">${article['title']}</a></li>
+		</c:forEach>
+	</ul>
 </body>
 </html>
