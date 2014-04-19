@@ -45,7 +45,7 @@
 	</sql>
 
 	<sql id="order-by-field">
-		order by dor_${sortField} asc
+		order by `${sortField}` asc
 	</sql>
 
 	<sql id="limit-split-page">
@@ -73,7 +73,7 @@
 		t2.name dor_city,
 		coalesce(avg(t3.score), 0) dor_rating
 		<if test="collegeId != null">
-			,ifnull(t8.distance, 0) as dor_distance
+			,ifnull(t8.distance, 0) as distance
 		</if>
 		from
 		dormitory t1
@@ -164,7 +164,7 @@
 		t6.name ri_roomType,
 		t7.name rp_contract
 		<if test="collegeId != null">
-			,ifnull(t8.distance, 0) as dor_distance
+			,ifnull(t8.distance, 0) as distance
 		</if>
 		from
 		dormitory t1
@@ -720,7 +720,7 @@
 		<result property="description" column="dor_description" />
 		<result property="cityId" column="dor_cityId" />
 		<result property="city" column="dor_city" />
-		<result property="distance" column="dor_distance" />
+		<result property="distance" column="distance" />
 		<result property="rating" column="dor_rating" />
 		<result property="status" column="dor_status" />
 		<collection property="rooms" resultMap="roomInfo" />
