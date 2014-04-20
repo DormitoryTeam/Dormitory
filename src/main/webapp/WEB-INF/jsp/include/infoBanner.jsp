@@ -24,7 +24,7 @@
 	<ul class="city-list">
 		<li class="active"><a href="/dormitory/navigation/navigator.html?countryId=${countries[0]['id']}">${countries[0]['name']}</a></li>
 		<c:forEach var="city" items="${cities}" end="13">
-			<li><a href="/dormitory/dormitory/dormitory-list.html?cityId=${city['id']}">${city['name']}</a></li>
+			<li><a href="/dormitory/navigation/navigator.html?cityId=${city['id']}">${city['name']}</a></li>
 		</c:forEach>
 	</ul>
 </div>

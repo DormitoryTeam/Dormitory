@@ -73,4 +73,33 @@
 			and airportCode = #{flightNum}
 		</if>
 	</select>
+	
+	<select id="queryCityCollegeByCountryId" resultMap="cityCollege" parameterType="int">
+		select t1.id cityId, t1.name cityName, t2.id collegeId, t2.name collegeName, t2.original_name originalName
+		from city t1
+		left join college t2 on t1.id = t2.city_id
+		where t1.status = 1 and t2.status = 1 and t1.country_id = #{countryId}
+		group by t2.id
+	</select>
+	
+	<select id="queryCityCollegeByCityId" resultMap="cityCollege" parameterType="int">
+		select t1.id cityId, t1.name cityName, t2.id collegeId, t2.name collegeName, t2.original_name originalName
+		from city t1
+		left join college t2 on t1.id = t2.city_id
+		where t1.status = 1 and t2.status = 1 and t1.country_id in
+		(
+			select country_id from city where id = #{cityId}
+		)
+		group by t2.id
+	</select>
+	
+	<resultMap id="cityCollege" type="java.util.HashMap">
+		<id property="cityId" column="cityId" />
+		<result property="cityName" column="cityName" />
+		<collection property="colleges" javaType="ArrayList" ofType="java.util.HashMap">
+			<result property="collegeId" column="collegeId" />
+			<result property="collegeName" column="collegeName" />
+			<result property="originalName" column="originalName" />
+		</collection>
+	</resultMap>
 </mapper>

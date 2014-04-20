@@ -56,6 +56,14 @@ public interface INavigationRepository {
 
 
 
+    List<Map<String, Object>> queryCityCollegeByCityId(Integer pCityId);
+
+
+
+    List<Map<String, Object>> queryCityCollegeByCountryId(Integer pCountryId);
+
+
+
     Map<String, Object> queryCollegeById(Integer pCollegeId, Integer pCityId);
 
 
