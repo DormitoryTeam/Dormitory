@@ -112,6 +112,7 @@
 					<tr class="success">
 						<td>RoomType</td>
 						<td>Status</td>
+						<td>RoomName</td>
 						<td>CheckinDate</td>
 						<td>HouseArea</td>
 						<td>BedType</td>
@@ -133,6 +134,7 @@
 								<option value="${status['name']}" ${status eq curRoom['status'] ? 'selected' : ''}>${status['name']}</option>
 							</c:forEach>
 						</select></td>
+						<td><input type="text" name="rooms[${i['index']}].name" value="${curRoom['name']}" /></td>
 						<td><input type="text" name="rooms[${i['index']}].checkinDateString" value="${curRoom['checkinDateString']}" /></td>
 						<td><input type="text" name="rooms[${i['index']}].houseArea" value="${curRoom['houseArea']}" /></td>
 						<td><input type="text" name="rooms[${i['index']}].bedType" value="${curRoom['bedType']}" /></td>
