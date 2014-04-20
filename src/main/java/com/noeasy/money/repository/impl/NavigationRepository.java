@@ -104,6 +104,26 @@ public class NavigationRepository extends BaseRepository implements INavigationR
 
 
     /**
+     * @see com.noeasy.money.repository.INavigationRepository#queryCityCollegeByCityId(java.lang.Integer)
+     */
+    @Override
+    public List<Map<String, Object>> queryCityCollegeByCityId(final Integer pCityId) {
+        return getSqlSession().selectList("com.noeasy.money.model.Navigation.queryCityCollegeByCityId", pCityId);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.INavigationRepository#queryCityCollegeByCountryId(java.lang.Integer)
+     */
+    @Override
+    public List<Map<String, Object>> queryCityCollegeByCountryId(final Integer pCountryId) {
+        return getSqlSession().selectList("com.noeasy.money.model.Navigation.queryCityCollegeByCountryId", pCountryId);
+    }
+
+
+
+    /**
      * @see com.noeasy.money.repository.INavigationRepository#queryCollegeById(java.lang.Integer,
      *      java.lang.Integer)
      */

@@ -1,0 +1,57 @@
+/**
+ * Location: component/fCheck.css
+ * raido and checkbox style
+ * 1. Base radio and checkbox style
+ * 2. Checked radio and checkbox style
+ */
+
+/* 1. Base radio and checkbox style
+----------------------------------------------------------*/
+.fradio,
+.fcheckbox {
+	display: inline-block;
+    padding: 0;
+	vertical-align: middle;
+	background: url("common/icon.png") no-repeat;
+	border: none;
+}
+
+.fradio {
+	width: 16px;
+    height: 16px;
+    background-position: 0px 0px;
+}
+
+.fcheckbox {
+	width: 20px;
+    height: 20px;
+	background-position: -40px 0px;
+}
+
+.secondary .fcheckbox{
+	width: 20px;
+    height: 20px;
+    background-position: -240px -300px;
+}
+
+/* 2. Checked radio and checkbox style
+----------------------------------------------------------*/
+.fradio.fchecked {
+    background-position: -20px 0px;
+}
+
+.fcheckbox.fchecked {
+	background-position: -60px 0px;
+}
+
+.secondary .fcheckbox.fchecked{
+	background-position: -260px -300px;
+}
+
+.fcheckbox.fdisabled{
+	background-position: -240px -320px;
+}
+
+.fcheckbox.fchecked.fdisabled{
+	background-position: -260px -320px;
+}

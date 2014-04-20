@@ -1,0 +1,36 @@
+footer{
+	background: #ae0000 url(common/footer-bg.jpg) repeat-x;
+}
+
+.footer{
+	width: 1000px;
+	margin: 0 auto;
+	color: #fff;
+}
+
+.footer .footer-link{
+	padding: 30px 0;
+}
+
+.footer .footer-link ul{
+	float: left;
+	width: 150px;
+	overflow: hidden;
+}
+
+.footer .footer-link ul + ul{
+	margin-left: 50px;
+}
+
+.footer .footer-link ul li{
+	font-size: 18px;
+}
+
+.footer .footer-link ul li a{
+	font-size: 14px;
+	color: #fff;
+}
+
+.footer .foot-copy{
+	padding: 30px 0 20px 0;
+}

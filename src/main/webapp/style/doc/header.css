@@ -1,0 +1,108 @@
+header{
+	background: url(common/header-bg.jpg) repeat-x;
+}
+
+.header{
+	width: 1000px;
+	margin: 0 auto;
+	height: 93px;
+}
+
+.header .menu{
+	margin: 30px auto;
+	float: right;
+	padding-right: 40px;
+}
+
+.header .menu li{
+	float: left;
+	list-style: none;
+	padding:  0 15px;
+}
+
+.header .menu li.parent{
+	background: url(common/menu_tip.png) no-repeat right bottom;
+	position: relative;
+}
+
+.header .menu li a{
+	font-size: 18px;
+	color: #fff;
+}
+
+.header .phoneNum{
+	float: right;
+	width: 100px;
+	margin-right: -100px;
+	margin-top: 15px;
+	color: #fff;
+}
+
+.header .menu li.parent:hover .sub-menu,
+.header .menu li.parent.hover .sub-menu{
+	display: block;
+}
+
+.header .menu li.parent .sub-menu{
+	position: absolute;
+	z-index: 101;
+	width: 590px;
+	padding: 30px 25px;
+	box-shadow: 0px 0px 20px red;
+	-moz-box-shadow: 0 0 20px red;
+	-webkit-box-shadow: 0 0 20px red;
+	-o-box-shadow: 0 0 20px red;
+	background: #fff;
+	top: 33px;
+	left: 65px;
+	display: none;
+}
+
+.header .menu li.parent .sub-menu > ul{
+	float: left;
+}
+
+.header .menu li.parent .sub-menu > ul > li{
+	float: none;
+	list-style: inside;
+}
+
+.header .menu li.parent .sub-menu > ul > li + li{
+	margin-top: 15px;
+}
+
+.header .menu li.parent .sub-menu > ul > li a{
+	color: #5a5a5a;
+	font-size: 12px;
+}
+
+.header .menu li.parent .sub-menu > ul > li.sub--menu-title{
+	font-size: 14px;
+	color: #ae0000;
+	list-style: none;
+}
+
+div.arrow-up {
+	width: 0px; 
+	height: 0px; 
+	border-left: 10px solid transparent; 
+	border-right: 10px solid transparent;
+	border-bottom: 10px solid #fff; 
+	font-size: 0px;
+	line-height: 0px;
+	position: absolute;
+	top: -10px;
+}
+
+
+.header .menu:before,
+.header .menu:after,
+.header .menu li.parent .sub-menu > ul:before,
+.header .menu li.parent .sub-menu > ul:after {
+  content: " ";
+  display: table;
+}
+.header .menu:after,
+.header .menu li.parent .sub-menu > ul:after {
+  clear: both;
+}

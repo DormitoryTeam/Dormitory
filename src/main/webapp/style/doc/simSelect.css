@@ -1,0 +1,105 @@
+.select-el {
+	position: relative;
+	display: inline-block;
+	z-index: 100;
+	height: 22px;
+	width: 152px;
+}
+
+.select-el select{
+	margin-left: 20px;
+	width: 10px;
+	height: 5px;
+}
+
+.sim-select {
+	background: transparent;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 22px;
+	width: 152px;
+}
+
+.sim-select.open {
+	z-index: 10;
+}
+
+.sim-head {
+	height: 22px;
+}
+
+.sim-select .current {
+	color: #595454;
+	font-size: 13px;
+	padding: 0 15px;
+	cursor: default;
+	height: 22px;
+	display: block;
+	line-height: 22px;
+	word-break: keep-all;
+	white-space: nowrap;
+	overflow: hidden;
+	color: #c3c3c3;
+	background: url(common/select-input.png) no-repeat;
+}
+
+.sim-arrow {
+	position: absolute;
+	right: 10px;
+	top: 5px;
+	width: 6px;
+	height: 12px;
+	cursor: pointer;
+	background: url(common/select-arrow.png) no-repeat;
+}
+
+.sim-select.open .sim-arrow {
+	background: url(common/select-arrow.png) no-repeat;
+}
+
+.sim-select .sim-head:before {
+	content: "";
+	display: block;
+	position: absolute;
+	right: 1px;
+	top: 5px;
+	width: 0px;
+	height: 0px;
+	pointer-events: none;
+	background: #FFF;
+}
+
+.sim-select .sim-list {
+	display: none;
+	border-top: 1px #FFF solid;
+}
+
+.sim-select .sim-list ul {
+	max-height: 300px;
+	background-color: #f9f8f6;
+}
+
+.sim-select .sim-list li {
+	padding: 3px 8px;
+	font-size: 13px;
+	cursor: default;
+	list-style-type: none;
+}
+
+.sim-select .sim-list li.hover {
+	background: #36bae2;
+	color: #fff;
+}
+
+.sim-select .sim-list li.disabled,
+.sim-select .sim-list li.unavailable {
+	background: #dddddd;	
+}
+
+.sim-select .sim-list li.disabled:hover,
+.sim-select .sim-list li.unavailable:hover  {
+	background: #dddddd;
+	color: #828282;
+}

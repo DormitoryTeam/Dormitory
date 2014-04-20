@@ -135,8 +135,8 @@
 		t2.name dor_city,
 		coalesce(avg(t3.score), 0) dor_rating,
 		t4.id ri_id,
-		t4.dormitory_id
-		ri_dormitoryId,
+		t4.dormitory_id ri_dormitoryId,
+		t4.name ri_name,
 		t4.room_type_id ri_roomTypeId,
 		t4.equipment ri_equipment,
 		t4.service ri_service,
@@ -291,7 +291,7 @@
 			#{service,javaType=int,jdbcType=INTEGER},
 			#{description,javaType=String,jdbcType=VARCHAR},
 			#{status}
-		);
+		)
 	</insert>
 
 	<!-- RoomInfo #################################################### -->
@@ -299,6 +299,7 @@
 	<sql id="select-room-info">
 		select
 		t4.id ri_id,
+		t4.name ri_name,
 		t4.dormitory_id ri_dormitoryId,
 		t4.room_type_id ri_roomTypeId,
 		t4.equipment ri_equipment,
@@ -367,9 +368,10 @@
 	</select>
 
 	<insert id="saveRoomInfo" keyProperty="id" useGeneratedKeys='true' parameterType="com.noeasy.money.model.RoomInfoBean">
-		insert into room_info (dormitory_id, room_type_id, equipment, service, description, checkin_date, orientations, floors, bed_type, house_area,
+		insert into room_info (dormitory_id, room_type_id, name, equipment, service, description, checkin_date, orientations, floors, bed_type, house_area,
 			ensuite_bathroom, kitchen_people_number, floor_arrangement, orientation_arrangement, room_language_arrangement, status, kitchen_equipment, bathroom_equipment) values (
 			#{dormitoryId},
+			#{name},
 			#{roomTypeId},
 			#{equipment},
 			#{service},
@@ -394,6 +396,7 @@
 		update room_info set 
 			dormitory_id = #{dormitoryId},
 			room_type_id = #{roomTypeId},
+			name = #{name},
 			equipment = #{equipment},
 			service = #{service},
 			description = #{description},
@@ -482,7 +485,7 @@
 	</insert>
 
 	<delete id="removeMediaPath" parameterType="int">
-		delete from dormitory_media where dormitory_id = #{dormitoryId};
+		delete from dormitory_media where dormitory_id = #{dormitoryId}
 	</delete>
 
 
@@ -731,6 +734,7 @@
 		<result property="dormitoryId" column="ri_dormitoryId" />
 		<result property="roomTypeId" column="ri_roomTypeId" />
 		<result property="roomType" column="ri_roomType" />
+		<result property="name" column="ri_name" />
 		<result property="service" column="ri_service" />
 		<result property="equipment" column="ri_equipment" />
 		<result property="description" column="ri_description" />

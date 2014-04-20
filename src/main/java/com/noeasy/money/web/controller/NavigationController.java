@@ -200,13 +200,16 @@ public class NavigationController {
 
     @RequestMapping("/navigator" + Constants.URL_SUFFIX)
     public String toNavigation(final HttpServletRequest request, final HttpServletResponse response, final Model model,
-            final String countryId) {
-        List<Map<String, Object>> countries = navigationService.queryCountries();
-        List<Map<String, Object>> cities = navigationService.queryCities();
-
-        model.addAttribute("countries", countries);
-        model.addAttribute("cities", cities);
+            final Integer countryId, final Integer cityId) {
+        List<Map<String, Object>> cityColleges = null;
+        if (ParamUtils.isValidIdField(countryId)) {
+            cityColleges = navigationService.queryCityCollegeByCountryId(countryId);
+        } else {
+            cityColleges = navigationService.queryCityCollegeByCityId(cityId);
+        }
+        model.addAttribute("cityColleges", cityColleges);
         model.addAttribute("countryId", countryId);
+        model.addAttribute("cityId", cityId);
 
         return "navigation/citynavigation";
     }

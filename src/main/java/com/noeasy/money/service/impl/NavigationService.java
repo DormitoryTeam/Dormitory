@@ -103,6 +103,26 @@ public class NavigationService implements INavigationService {
 
 
     /**
+     * @see com.noeasy.money.service.INavigationService#queryCityCollegeByCityId(java.lang.Integer)
+     */
+    @Override
+    public List<Map<String, Object>> queryCityCollegeByCityId(final Integer pCityId) {
+        return navigationRepository.queryCityCollegeByCityId(pCityId);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.INavigationService#queryCityCollegeByCountryId(java.lang.Integer)
+     */
+    @Override
+    public List<Map<String, Object>> queryCityCollegeByCountryId(final Integer pCountryId) {
+        return navigationRepository.queryCityCollegeByCityId(pCountryId);
+    }
+
+
+
+    /**
      * @see com.noeasy.money.service.INavigationService#queryCollegeById(java.lang.Integer,
      *      java.lang.Integer)
      */

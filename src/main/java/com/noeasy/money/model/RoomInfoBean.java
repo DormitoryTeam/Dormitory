@@ -50,6 +50,8 @@ public class RoomInfoBean extends DormitoryRoomBean {
 
     private int             mId;
 
+    private String          name;
+
     private Integer         mDormitoryId;
 
     private Integer         mRoomTypeId;
@@ -200,6 +202,15 @@ public class RoomInfoBean extends DormitoryRoomBean {
      */
     public int getKitchenPeople() {
         return mKitchenPeople;
+    }
+
+
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
     }
 
 
@@ -422,6 +433,16 @@ public class RoomInfoBean extends DormitoryRoomBean {
      */
     public void setKitchenPeople(final int pKitchenPeople) {
         mKitchenPeople = pKitchenPeople;
+    }
+
+
+
+    /**
+     * @param pName
+     *            the name to set
+     */
+    public void setName(final String pName) {
+        name = pName;
     }
 
 
