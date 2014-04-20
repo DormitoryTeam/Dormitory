@@ -94,8 +94,8 @@
 		<c:if test="${empty sessionScope.USER_ID}">
 			<div class="login-plan">
 				<ul>
-					<li><a href="/dormitory/user/register.html" class="reg-btn">&nbsp;</a></li>
-					<li><a href="/dormitory/user/login.html" class="login-btn">&nbsp;</a></li>
+					<li><a href="javascript:void(0)" class="reg-btn jQ-regbtn" data-popupSrc="/dormitory/user/toRegister.html">&nbsp;</a></li>
+					<li><a href="javascript:void(0)" class="login-btn jQ-loginbtn" data-popupSrc="/dormitory/user/toLogin.html">&nbsp;</a></li>
 				</ul>
 			</div>
 		</c:if>

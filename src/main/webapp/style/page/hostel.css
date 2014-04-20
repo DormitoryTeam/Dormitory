@@ -1,4 +1,4 @@
-ul li{
+﻿ul li{
 	list-style: none;
 }
 
@@ -984,6 +984,7 @@ a.disabled {
 	padding: 35px;
 	width: 620px;
 	margin-top: 30px;
+	min-height: 1000px;
 }
 
 .news-info h1{
@@ -1015,6 +1016,43 @@ a.disabled {
 	float: none;
 	margin: 25px auto;
 	font-size: 18px;
+}
+
+.news-info .bread-crumb{
+	border-bottom: 1px solid #c3c3c3;
+	padding-bottom: 30px;
+	font-size: 18px;
+}
+
+.news-info .bread-crumb a{
+	font-size: 18px;
+	color: #ae0000;
+}
+
+.news-info .news-list{
+	padding: 20px 10px;
+}
+
+.news-info .news-list li{
+	list-style: inside;
+	float: none;
+	width: 100%;
+	height: 30px;
+	overflow: hidden;
+}
+
+.news-info .news-list li + li{
+	margin-top: 10px;
+}
+
+.news-info .news-list li a{
+	font-size: 18px;
+	color: #5a5a5a;
+}
+
+.news-info .news-list li span{
+	font-size: 10px;
+	margin-left: 20px;
 }
 
 .news-content-text > p{ 
@@ -1338,4 +1376,96 @@ a.disabled {
 .air-tab-personal form > .btnBox{
 	top: 100px;
 	left: 630px;
+}
+
+.popupCov {
+	position: absolute;
+	z-index: 999;
+	background: #fff;
+	border-radius: 5px;
+	border: 1px solid #32b16c;
+	box-shadow: none;
+}
+
+.popupContent{
+}
+
+.quick-pop{
+	width: 190px;
+	height: 120px;
+}
+
+.quick-pop > form{
+	padding: 30px;
+}
+
+.quick-pop dl dt{
+	float: left;
+}
+
+.success dl dt{
+	float: none;
+}
+
+.quick-pop dl.btnBox{
+	margin-top: 20px;
+	text-align: center;
+}
+
+.success dl dt{
+	font-size: 12px;
+}
+
+.success dl.btnBox{
+	margin-top: 0px;
+}
+
+.quick-pop dl.btnBox input[type='button'],
+.quick-pop dl.btnBox a.but-show{
+	width: 100px;
+	height: 30px;
+	color: #fff;
+	background: #32b16c;
+	font-size: 18px;
+	border: none;
+	display: inline-block;
+	line-height: 30px;
+}
+
+.quick-pop .select-el {
+	position: relative;
+	display: inline-block;
+	z-index: 100;
+	height: 20px;
+	width: 70px;
+}
+
+.quick-pop .sim-select {
+	background: transparent;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 20px;
+	width: 70px;
+}
+
+.quick-pop .sim-head {
+	height: 20px;
+}
+
+
+.quick-pop .sim-select .current {
+	color: #595454;
+	font-size: 13px;
+	padding: 0 15px;
+	cursor: default;
+	height: 20px;
+	display: block;
+	line-height: 20px;
+	word-break: keep-all;
+	white-space: nowrap;
+	overflow: hidden;
+	color: #000;
+	background: url(../common/quick-pop-select.png) no-repeat;
 }

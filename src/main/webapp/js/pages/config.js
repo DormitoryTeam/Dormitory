@@ -3,31 +3,32 @@ require.config({
 	waitSeconds: 60,
 	paths: {
 		/* Vendor */
-		jquery: baseUrl + '/js/vendor/jquery-1.10.2.min',
-		modal: baseUrl + '/js/vendor/jquery.modal',
-		Handlebars: baseUrl + '/js/vendor/handlebars',
+		jquery: 'vendor/jquery-1.10.2.min',
+		modal: 'vendor/jquery.modal',
+		Handlebars: 'vendor/handlebars',
 		
 		/* Modules */
 
 		/* Libs */
-		fCheck: baseUrl + '/js/lib/jquery.fCheck',
-		formValidate: baseUrl + '/js/lib/jquery.formValidate',
-		placeholder: baseUrl + '/js/lib/jquery.placeholder',
-		simSelect: baseUrl + '/js/lib/jquery.simSelect',
-		acsScrollBar: baseUrl + '/js/lib/acsScrollBar',
-		jqzoom: baseUrl + '/js/lib/jquery.jqzoom-core',
-		popover: baseUrl + '/js/lib/jquery.popover',
-		utils: baseUrl + '/js/lib/utils',
-		raty: baseUrl + '/js/jquery-raty/jquery.raty.min',
-		jQueryUI: baseUrl + '/js/lib/jquery-ui',
-		jqueryTools: baseUrl + '/js/lib/jquery.tools.min',
+		fCheck: 'lib/jquery.fCheck',
+		formValidate: 'lib/jquery.formValidate',
+		placeholder: 'lib/jquery.placeholder',
+		simSelect: 'lib/jquery.simSelect',
+		acsScrollBar: 'lib/acsScrollBar',
+		jqzoom: 'lib/jquery.jqzoom-core',
+		popover: 'lib/jquery.popover',
+		utils: 'lib/utils',
+		raty: 'lib/jquery.raty.min',
+		jQueryUI: 'lib/jquery-ui',
+		jqueryTools: 'lib/jquery.tools.min',
 
-		common: baseUrl + '/js/lib/common',
-		drawGadget: baseUrl + '/js/lib/drawGadget',
-		gadgets: baseUrl + '/js/lib/gadgets',
-		sliderMethod: baseUrl + '/js/lib/sliderMethod',
-		acsCarousel: baseUrl + '/js/lib/acsCarousel',
-		acsSlider: baseUrl + '/js/lib/acsSlider'
+		common: 'lib/common',
+		drawGadget: 'lib/drawGadget',
+		gadgets: 'lib/gadgets',
+		sliderMethod: 'lib/sliderMethod',
+		acsCarousel: 'lib/acsCarousel',
+		acsSlider: 'lib/acsSlider',
+		acsPopup: 'lib/acsPopup'
 	},
 	shim: {
 		Handlebars: {
@@ -52,6 +53,10 @@ require.config({
         acsSlider: {
         	deps: ['jquery', 'common', 'drawGadget', 'gadgets', 'sliderMethod'],
             exports: 'jQuery.fn.acsSlider'
+        },
+        acsPopup: {
+        	deps: ['jquery', 'common', 'drawGadget', 'gadgets'],
+            exports: 'jQuery.fn.acsPopup'
         },
         jqzoom: {
         	deps: ['jquery'],

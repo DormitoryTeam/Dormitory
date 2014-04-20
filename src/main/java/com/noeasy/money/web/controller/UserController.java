@@ -1,5 +1,6 @@
 package com.noeasy.money.web.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -27,7 +28,6 @@ import com.noeasy.money.model.UserPreferBean;
 import com.noeasy.money.model.UserSearchBean;
 import com.noeasy.money.service.IOrderService;
 import com.noeasy.money.service.IUserService;
-import com.noeasy.money.util.DateUtils;
 import com.noeasy.money.util.EmailUtils;
 import com.noeasy.money.util.PropertiesUtils;
 import com.noeasy.money.util.ServletUtils;
@@ -44,13 +44,63 @@ public class UserController {
 
 
 
-    @RequestMapping(value = "/home.html")
-    public String home(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response) {
-        Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
-        String login = (String) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_LOGIN);
-        model.addAttribute("userId", userId);
-        model.addAttribute("login", login);
-        return "user/home";
+    @RequestMapping("/asynLogin" + Constants.URL_SUFFIX)
+    @ResponseBody
+    public String asynLogin(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response,
+            final String login, final String password) {
+        JSONObject json = null;
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("result", false);
+
+        if (StringUtils.isBlank(login)) {
+            resultMap.put("message", "username should not be blank");
+        } else if (StringUtils.isBlank(password)) {
+            resultMap.put("message", "password should not be blank");
+        } else {
+            UserSearchBean bean = new UserSearchBean();
+            bean.setLogin(login);
+            bean.setPassword(password);
+            List<UserBean> users = userService.queryUser(bean);
+            if (CollectionUtils.isNotEmpty(users)) {
+                UserBean user = users.get(0);
+                request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_ID, user.getId());
+                request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_LOGIN, user.getLogin());
+                resultMap.put("login", user.getLogin());
+                resultMap.put("result", true);
+            } else {
+                resultMap.put("message", "username and passowrd not match");
+            }
+        }
+
+        json = JSONObject.fromObject(resultMap);
+        return json.toString();
+    }
+
+
+
+    @RequestMapping(value = "/asynRegister" + Constants.URL_SUFFIX)
+    @ResponseBody
+    public String asynRegister(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, final String login, final String password) {
+        JSONObject json = null;
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("result", false);
+
+        if (StringUtils.isBlank(login)) {
+            resultMap.put("message", "username should not be blank");
+        } else if (StringUtils.isBlank(password)) {
+            resultMap.put("message", "password should not be blank");
+        } else {
+            model.addAttribute("result", login);
+            UserBean user = userService.register(login, password);
+            request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_ID, user.getId());
+            request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_LOGIN, user.getLogin());
+            resultMap.put("login", user.getLogin());
+            resultMap.put("result", true);
+        }
+
+        json = JSONObject.fromObject(resultMap);
+        return json.toString();
     }
 
 
@@ -133,7 +183,7 @@ public class UserController {
             maintainsUserInfo(request, response);
             break;
         }
-//        Integer nextStep = step + 1;
+        // Integer nextStep = step + 1;
         user = userService.findUserById(userId);
         model.addAttribute("user", user);
         Integer nextStep = step;
@@ -147,65 +197,86 @@ public class UserController {
 
 
 
-
-    private void maintainsUserInfo(HttpServletRequest pRequest, HttpServletResponse pResponse) {
-        Integer userId = (Integer) pRequest.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+    @RequestMapping(value = "/orderDetails.html")
+    public String getOrderDetails(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, final String orderId, final String orderType) {
+        Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+        String message = null;
+        model.addAttribute("type", orderType);
+        if (StringUtils.isBlank(orderId)) {
+            message = "orderId is blank";
+            model.addAttribute("message", message);
+            return "user/orderDetails";
+        }
+        OrderSearchBean searchBean = new OrderSearchBean();
         UserBean user = new UserBean();
         user.setId(userId);
-        UserInfoBean info = ServletUtils.getUserInfoFromRequest(pRequest);
-        user.setInfo(info);
-        userService.saveUserInfo(user);
+        searchBean.setUser(user);
+        searchBean.setOrderNumber(Integer.valueOf(orderId));
+        searchBean.setOrderType(OrderType.getType(orderType));
+        List<OrderBean> orders = orderService.queryOrder(searchBean);
+        if (CollectionUtils.isEmpty(orders)) {
+            message = "no such order";
+            return "user/orderDetails";
+        }
+        model.addAttribute("order", orders.get(0));
+        model.addAttribute("message", message);
+        return "user/orderDetails";
     }
 
 
 
-    private void maintainsNotes(HttpServletRequest pRequest, HttpServletResponse pResponse) {
-        UserPreferBean userPrefer = ServletUtils.getUserPerferFromRequest(pRequest);
-        Integer userId = (Integer) pRequest.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+    @RequestMapping(value = "/orderList.html")
+    public String getOrderList(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, final String orderType, final String currentPage, final String pageSize) {
+        Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+        OrderType type = OrderType.getType(orderType);// "D" means dormitory
+        OrderSearchBean searchBean = new OrderSearchBean();
+        searchBean.setOrderType(type);
         UserBean user = new UserBean();
         user.setId(userId);
-        user.setPrefer(userPrefer);
-        userService.saveUserPrefer(user);
+        searchBean.setUser(user);
+        int rowTotal = orderService.queryOrderCount(searchBean);
+        PageBean page = new PageBean(rowTotal);
+        if (StringUtils.isNotBlank(currentPage)) {
+            page.setPageNum(Integer.valueOf(currentPage));
+        }
+        if (StringUtils.isNotBlank(pageSize)) {
+            page.setPageSize(Integer.valueOf(pageSize));
+        }
+        page.setQueryString(request.getQueryString());
+        searchBean.setPageBean(page);
+        List<OrderBean> orders = orderService.queryOrder(searchBean);
+        model.addAttribute("orders", orders);
+        model.addAttribute("type", orderType);
+        model.addAttribute("page", page);
+        return "user/orderList";
     }
 
 
 
-    private void maintainContactPersonInfo(HttpServletRequest pRequest, HttpServletResponse pResponse) {
-        Integer userId = (Integer) pRequest.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
-        UserBean user = new UserBean();
-        user.setId(userId);
-        UserInfoBean contactPersonInfo = ServletUtils.getUserInfoFromRequest(pRequest);
-        user.setContactPersonInfo(contactPersonInfo);
-        userService.saveUserInfo(user);
-
+    @RequestMapping(value = "/home.html")
+    public String home(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response) {
+        Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+        String login = (String) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_LOGIN);
+        model.addAttribute("userId", userId);
+        model.addAttribute("login", login);
+        return "user/home";
     }
 
 
 
-    private void maintainGuarantee(HttpServletRequest pRequest, HttpServletResponse pResponse) {
-        Integer userId = (Integer) pRequest.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
-        UserBean user = new UserBean();
-        user.setId(userId);
-        UserInfoBean guaranteeInfo = ServletUtils.getUserInfoFromRequest(pRequest);
-        user.setGuaranteeInfo(guaranteeInfo);
-        userService.saveUserInfo(user);
-
+    @RequestMapping("/toLogin" + Constants.URL_SUFFIX)
+    public String loadLoginPage(final HttpServletRequest request, final HttpServletResponse response) {
+        return "include/homepage-login";
     }
 
 
 
-    private void maintainUserPerfer(HttpServletRequest pRequest, HttpServletResponse pResponse) {
-        UserPreferBean userPrefer = ServletUtils.getUserPerferFromRequest(pRequest);
-        Integer userId = (Integer) pRequest.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
-        UserBean user = new UserBean();
-        user.setId(userId);
-        user.setPrefer(userPrefer);
-        userService.saveUserPrefer(user);
+    @RequestMapping("/toRegister" + Constants.URL_SUFFIX)
+    public String loadRegisterPage(final HttpServletRequest request, final HttpServletResponse response) {
+        return "include/homepage-register";
     }
-
-
-
-    
 
 
 
@@ -236,6 +307,63 @@ public class UserController {
         }
         model.addAttribute("message", "username and passowrd not match");
         return "user/loginForm";
+    }
+
+
+
+    private void maintainContactPersonInfo(final HttpServletRequest pRequest, final HttpServletResponse pResponse) {
+        Integer userId = (Integer) pRequest.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+        UserBean user = new UserBean();
+        user.setId(userId);
+        UserInfoBean contactPersonInfo = ServletUtils.getUserInfoFromRequest(pRequest);
+        user.setContactPersonInfo(contactPersonInfo);
+        userService.saveUserInfo(user);
+
+    }
+
+
+
+    private void maintainGuarantee(final HttpServletRequest pRequest, final HttpServletResponse pResponse) {
+        Integer userId = (Integer) pRequest.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+        UserBean user = new UserBean();
+        user.setId(userId);
+        UserInfoBean guaranteeInfo = ServletUtils.getUserInfoFromRequest(pRequest);
+        user.setGuaranteeInfo(guaranteeInfo);
+        userService.saveUserInfo(user);
+
+    }
+
+
+
+    private void maintainsNotes(final HttpServletRequest pRequest, final HttpServletResponse pResponse) {
+        UserPreferBean userPrefer = ServletUtils.getUserPerferFromRequest(pRequest);
+        Integer userId = (Integer) pRequest.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+        UserBean user = new UserBean();
+        user.setId(userId);
+        user.setPrefer(userPrefer);
+        userService.saveUserPrefer(user);
+    }
+
+
+
+    private void maintainsUserInfo(final HttpServletRequest pRequest, final HttpServletResponse pResponse) {
+        Integer userId = (Integer) pRequest.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+        UserBean user = new UserBean();
+        user.setId(userId);
+        UserInfoBean info = ServletUtils.getUserInfoFromRequest(pRequest);
+        user.setInfo(info);
+        userService.saveUserInfo(user);
+    }
+
+
+
+    private void maintainUserPerfer(final HttpServletRequest pRequest, final HttpServletResponse pResponse) {
+        UserPreferBean userPrefer = ServletUtils.getUserPerferFromRequest(pRequest);
+        Integer userId = (Integer) pRequest.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+        UserBean user = new UserBean();
+        user.setId(userId);
+        user.setPrefer(userPrefer);
+        userService.saveUserPrefer(user);
     }
 
 
@@ -355,63 +483,5 @@ public class UserController {
         request.getSession().removeAttribute(SessionConstants.SESSION_KEY_USER_ID);
 
         return "redirect:/navigation/home.html";
-    }
-
-
-
-    @RequestMapping(value = "/orderList.html")
-    public String getOrderList(final ModelMap model, final HttpServletRequest request,
-            final HttpServletResponse response, String orderType, final String currentPage, final String pageSize) {
-        Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
-        OrderType type = OrderType.getType(orderType);// "D" means dormitory
-        OrderSearchBean searchBean = new OrderSearchBean();
-        searchBean.setOrderType(type);
-        UserBean user = new UserBean();
-        user.setId(userId);
-        searchBean.setUser(user);
-        int rowTotal = orderService.queryOrderCount(searchBean);
-        PageBean page = new PageBean(rowTotal);
-        if (StringUtils.isNotBlank(currentPage)) {
-            page.setPageNum(Integer.valueOf(currentPage));
-        }
-        if (StringUtils.isNotBlank(pageSize)) {
-            page.setPageSize(Integer.valueOf(pageSize));
-        }
-        page.setQueryString(request.getQueryString());
-        searchBean.setPageBean(page);
-        List<OrderBean> orders = orderService.queryOrder(searchBean);
-        model.addAttribute("orders", orders);
-        model.addAttribute("type", orderType);
-        model.addAttribute("page", page);
-        return "user/orderList";
-    }
-
-
-
-    @RequestMapping(value = "/orderDetails.html")
-    public String getOrderDetails(final ModelMap model, final HttpServletRequest request,
-            final HttpServletResponse response, String orderId, String orderType) {
-        Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
-        String message = null;
-        model.addAttribute("type", orderType);
-        if (StringUtils.isBlank(orderId)) {
-            message = "orderId is blank";
-            model.addAttribute("message", message);
-            return "user/orderDetails";
-        }
-        OrderSearchBean searchBean = new OrderSearchBean();
-        UserBean user = new UserBean();
-        user.setId(userId);
-        searchBean.setUser(user);
-        searchBean.setOrderNumber(Integer.valueOf(orderId));
-        searchBean.setOrderType(OrderType.getType(orderType));
-        List<OrderBean> orders = orderService.queryOrder(searchBean);
-        if (CollectionUtils.isEmpty(orders)) {
-            message = "no such order";
-            return "user/orderDetails";
-        }
-        model.addAttribute("order", orders.get(0));
-        model.addAttribute("message", message);
-        return "user/orderDetails";
     }
 }

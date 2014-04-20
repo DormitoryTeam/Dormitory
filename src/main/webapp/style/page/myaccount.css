@@ -204,10 +204,16 @@
 
 .order-list{
 	width: 100%;
+	text-align: center;
 }
 
-.order-list > ul{
+.order-list > ul,
+.order-list > thead > tr{
 	border: 1px solid #c3c3c3;
+}
+
+.order-list > thead > tr > td + td{
+	border-left: 1px solid #c3c3c3;
 }
 
 .order-list > ul:before,
@@ -249,7 +255,8 @@
 	text-decoration: underline;
 }
 
-.order-list > ul > li.order-id .progress-content{
+.order-list > ul > li.order-id .progress-content,
+.order-list > tbody > tr > td.order-id .progress-content{
 	background: #fff url(../common/progress.png) no-repeat;
 	width: 735px;
 	height: 166px;
@@ -402,3 +409,21 @@
 	content: "*"
 }
 
+fieldset dl input{
+	width: 120px;
+	height: 30px;
+	border: 1px solid #c3c3c3;
+	padding-left: 10px;
+}
+
+fieldset dl input.min{
+	width: 60px;
+}
+
+fieldset dl input.long{
+	width: 250px;
+}
+
+fieldset dl input.larger{
+	width: 400px;
+}
