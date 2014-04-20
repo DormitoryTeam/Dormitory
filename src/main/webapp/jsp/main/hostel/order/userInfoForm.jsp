@@ -33,7 +33,7 @@
 			<input type="hidden" name="contractId" value="${price.contractId}" /> 
 			<input type="hidden" name="roomInfoId" value="${roomInfo.id}" />
 			<input name="infoId" type="hidden" value="${order.orderContact.belongsToInfo.id}"/>
-			<a href="<c:url value="/order/dormitory-place-order.html?dormitoryId=${dormitory.id}&contractId=${price.contractId}&roomInfoId=${roomInfo.id}"/>" class="addOne">&nbsp;</a>
+			<a href="<c:url value="/order/dormitory-place-order.html?orderType=pickup"/>" class="addOne">&nbsp;</a>
 			<div class="btnBox">
 				<input class="save btn-place-order-save" type="button" value="保存" />
 				<input type="submit" style="background-color: #808080;" value="提交" />
@@ -55,9 +55,9 @@
 						<c:set var="gender" value="${user.info.gender}" />
 						</c:if>
 							<select name="gender">
-							<option value="0" <c:if test="gender eq 0">selected</c:if>>Mr.</option>
-							<option value="1" <c:if test="gender eq 1">selected</c:if>>Mrs.</option>
-							<option value="2" <c:if test="gender eq 2">selected</c:if>>Miss</option>
+							<option value="0" <c:if test="${gender eq 0}">selected</c:if>>Mr.</option>
+							<option value="1" <c:if test="${gender eq 1}">selected</c:if>>Mrs.</option>
+							<option value="2" <c:if test="${gender eq 2}">selected</c:if>>Miss</option>
 							</select>
 						</dd>
 					</dl>

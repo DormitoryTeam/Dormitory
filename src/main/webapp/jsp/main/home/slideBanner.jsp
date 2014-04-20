@@ -11,8 +11,7 @@
 					<li>
 						宿舍
 					</li>
-					<li>
-						接机
+					<li><a style="color:#AE0000;" href="<c:url value="/order/dormitory-place-order.html?orderType=pickup"/>">接机</a>
 					</li>
 				</ul>	
 			</div>

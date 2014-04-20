@@ -24,12 +24,18 @@ Luggage&nbsp;&nbsp;Amount:${order.lineItems[0].luggageAmount}<br>
 </c:otherwise>
 </c:choose>
 <c:choose>
+<%--
 <c:when test="${0 eq order.orderStatus.value}"><c:set value="Waiting for user place order." var="buttonValue"/> <c:set value="0" var="showForm"/></c:when>
 <c:when test="${1 eq order.orderStatus.value}"><c:set value="Reviewed" var="buttonValue"/> <c:set value="1" var="showForm"/></c:when>
 <c:when test="${2 eq order.orderStatus.value}"><c:set value="Waiting for user payment." var="buttonValue"/><c:set value="0" var="showForm"/></c:when>
 <c:when test="${3 eq order.orderStatus.value}"><c:set value="Waiting for user payment." var="buttonValue"/><c:set value="0" var="showForm"/></c:when>
 <c:when test="${4 eq order.orderStatus.value}"><c:set value="ComfirmPayment" var="buttonValue"/> <c:set value="1" var="showForm"/></c:when>
 <c:when test="${5 eq order.orderStatus.value}"><c:set value="Send Contract" var="buttonValue"/> <c:set value="1" var="showForm"/></a></c:when>
+--%>
+<c:when test="${0 eq order.orderStatus.value}"><c:set value="Waiting for user place order." var="buttonValue"/> <c:set value="0" var="showForm"/></c:when>
+<c:when test="${1 eq order.orderStatus.value}"><c:set value="Reviewed" var="buttonValue"/> <c:set value="1" var="showForm"/></c:when>
+<c:when test="${2 eq order.orderStatus.value}"><c:set value="Send Contract" var="buttonValue"/> <c:set value="1" var="showForm"/></c:when>
+<c:when test="${3 eq order.orderStatus.value}"><c:set value="Contract sent" var="buttonValue"/> <c:set value="0" var="showForm"/></a></c:when>
 <c:otherwise><c:set value="0" var="showForm"/></c:otherwise>
 </c:choose>
 

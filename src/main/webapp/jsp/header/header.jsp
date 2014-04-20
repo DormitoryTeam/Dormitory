@@ -11,7 +11,7 @@
 			<a href="#">公寓预订</a>
 		</li>
 		<li class="parent">
-			<a href="#">接机预订</a>
+			<a href="<c:url value="/order/dormitory-place-order.html?orderType=pickup"/>">接机预订</a>
 		</li>
 		<li class="parent">
 			<a href="#">24H安全</a>

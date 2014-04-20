@@ -59,9 +59,9 @@
 							<c:set var="gender" value="${user.contactPersonInfo.gender}" />
 							</c:if>
 							<select name="gender" id="gender" class="same-as" >
-							<option value="0" <c:if test="gender eq 0">selected</c:if>>Mr.</option>
-							<option value="1" <c:if test="gender eq 1">selected</c:if>>Mrs.</option>
-							<option value="2" <c:if test="gender eq 2">selected</c:if>>Miss</option>
+							<option value="0" <c:if test="${gender eq 0}">selected</c:if>>Mr.</option>
+							<option value="1" <c:if test="${gender eq 1}">selected</c:if>>Mrs.</option>
+							<option value="2" <c:if test="${gender eq 2}">selected</c:if>>Miss</option>
 							</select>
 						</dd>
 					</dl>
