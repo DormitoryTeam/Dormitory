@@ -14,15 +14,14 @@
 	</div>
 	<div class="contentBox country-list-box">
 		<ul class="country-list">
-			<c:set var="size" value="${fn:length(cityColleges)}" />
-			<c:forEach var="cityCollege" items="${cityColleges}"  varStatus="i">
-				<li class="${cityId eq cityCollege['cityId'] ? 'open' : 'close' } ${i['count'] eq size ? 'last' : ''}">
+			<c:forEach var="cityColleges" items="${cityColleges}">
+				<li class="${cityId eq cityColleges['cityId'] ? 'open' : 'close' }">
 					<div class="country-title jQ-citylist">
-						<p>${cityCollege['cityName']}</p>
+						<p>${cityColleges['cityName']}</p>
 					</div>
 					<ul class="city-list">
-						<c:forEach var="college" items="${cityCollege['colleges']}">
-							<li><a href="/dormitory/dormitory/dormitory-list.html?cityId=${cityCollege['cityId']}&collegeId=${college['collegeId']}">
+						<c:forEach var="college" items="${cityColleges['colleges']}">
+							<li><a href="/dormitory/dormitory/dormitory-list.html?cityId=${cityColleges['cityId']}&collegeId=${college['collegeId']}">
 									<p>${college['collegeName']}</p> <span>${college['originalName']}</span>
 							</a></li>
 						</c:forEach>
