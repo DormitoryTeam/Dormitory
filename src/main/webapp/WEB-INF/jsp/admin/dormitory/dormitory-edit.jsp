@@ -22,7 +22,7 @@
 		<table class="table table-hover table-bordered table-striped" style="width:1000px">
 			<tbody>
 				<tr>
-					<td>Dormitory Status*</td>
+					<td>Dormitory Status</td>
 					<td><select name="status">
 							<c:forEach var="status" items="${allDormitoryStatus}">
 								<option value="${status['name']}" ${status eq dormitory['status'] ? 'selected' : ''}>${status['name']}</option>
@@ -57,9 +57,9 @@
 					<td><input type="text" name="postcode" value="${dormitory['postcode']}" /></td>
 				</tr>
 				<tr>
-					<td>Latitude*:</td>
+					<td>Latitude:</td>
 					<td><input type="text" name="latitude" value="${dormitory['latitude']}" /></td>
-					<td>Longitude*:</td>
+					<td>Longitude:</td>
 					<td><input type="text" name="longitude" value="${dormitory['longitude']}" /></td>
 				</tr>
 				<tr>
@@ -69,9 +69,9 @@
 					<td><input type="text" name="currency" value="${dormitory['currency']}" /></td>
 				</tr>
 				<tr>
-					<td>Week Price*:</td>
-					<td><input type="text" name="weekPrice" value="${dormitory['weekPrice']}" /></td>
-					<td>Sale Price*:</td>
+					<td>List Price:</td>
+					<td><input type="text" name="listPrice" value="${dormitory['listPrice']}" /></td>
+					<td>Sale Price:</td>
 					<td><input type="text" name="salePrice" value="${dormitory['salePrice']}" /></td>
 				</tr>
 				<tr>
@@ -111,9 +111,9 @@
 					
 					<tr class="success">
 						<td>RoomType</td>
-						<td>Status*</td>
-						<td>RoomName*</td>
-						<td>CheckinDate*</td>
+						<td>Status</td>
+						<td>RoomName</td>
+						<td>CheckinDate</td>
 						<td>HouseArea</td>
 						<td>BedType</td>
 						<td>EnsuitBathroom</td>
@@ -156,10 +156,10 @@
 					</tr>
 					<tr class="warning">
 						<td>Contract</td>
-						<td>Active*</td>
-						<td>Currency*</td>
-						<td>Week Price*</td>
-						<td>Sale Price*</td>
+						<td>Active</td>
+						<td>Currency</td>
+						<td>ListPrice</td>
+						<td>SalePrice</td>
 					</tr>
 					<c:forEach var="contract" items="${contractTypes}" varStatus="j">
 						<c:set var="curPrice" value="${emptyPrice}" />
@@ -176,7 +176,7 @@
 							</td>
 							<td><input type="checkbox" name="prices[${contractCount*i['index']+j['index']}].status" value="1" ${curPrice['status'] == 1 ? 'checked' : ''} /></td>
 							<td><input type="text" name="prices[${contractCount*i['index']+j['index']}].currency" value="${curPrice['currency']}" /></td>
-							<td><input type="text" name="prices[${contractCount*i['index']+j['index']}].weekPrice" value="${empty curPrice['weekPrice'] ? 0.0 : curPrice['weekPrice']}" /></td>
+							<td><input type="text" name="prices[${contractCount*i['index']+j['index']}].listPrice" value="${empty curPrice['listPrice'] ? 0.0 : curPrice['listPrice']}" /></td>
 							<td><input type="text" name="prices[${contractCount*i['index']+j['index']}].salePrice" value="${empty curPrice['salePrice'] ? 0.0 : curPrice['salePrice']}" /></td>
 						</tr>
 					</c:forEach>

@@ -63,7 +63,7 @@
 		t1.equipment dor_equipment,
 		t1.service dor_service,
 		t1.currency dor_currency,
-		t1.weekPrice dor_weekPrice,
+		t1.listPrice dor_listPrice,
 		t1.salePrice dor_salePrice,
 		t1.latitude dor_latitude,
 		t1.longitude dor_longitude,
@@ -125,7 +125,7 @@
 		t1.equipment dor_equipment,
 		t1.service dor_service,
 		t1.currency dor_currency,
-		t1.weekPrice dor_weekPrice,
+		t1.listPrice dor_listPrice,
 		t1.salePrice dor_salePrice,
 		t1.latitude dor_latitude,
 		t1.longitude dor_longitude,
@@ -158,7 +158,7 @@
 		t5.room_info_id rp_roomInfoId,
 		t5.contract_type_id rp_contractId,
 		t5.currency rp_currency,
-		t5.weekPrice rp_weekPrice,
+		t5.listPrice rp_listPrice,
 		t5.salePrice rp_salePrice,
 		t5.status rp_status,
 		t6.name ri_roomType,
@@ -265,7 +265,7 @@
 			postcode = #{postcode},
 			equipment = #{equipment},
 			service = #{service},
-			weekPrice = #{weekPrice},
+			listPrice = #{listPrice},
 			salePrice = #{salePrice},
 			latitude = #{latitude},
 			longitude = #{longitude},
@@ -277,12 +277,12 @@
 	</update>
 
 	<insert id="saveDormitory" keyProperty="id" useGeneratedKeys='true' parameterType="com.noeasy.money.model.DormitoryBean">
-		insert into dormitory (city_id, name, address, postcode, weekPrice, salePrice, currency, latitude, longitude, equipment, service, description, status) values (
+		insert into dormitory (city_id, name, address, postcode, listPrice, salePrice, currency, latitude, longitude, equipment, service, description, status) values (
 			#{cityId,javaType=int,jdbcType=INTEGER},
 			#{name,javaType=String,jdbcType=VARCHAR},
 			#{address,javaType=String,jdbcType=VARCHAR},
 			#{postcode,javaType=String,jdbcType=VARCHAR},
-			#{weekPrice,javaType=Double,jdbcType=DECIMAL},
+			#{listPrice,javaType=Double,jdbcType=DECIMAL},
 			#{salePrice,javaType=Double,jdbcType=DECIMAL},
 			#{currency,javaType=String,jdbcType=VARCHAR},
 			#{latitude,javaType=Double,jdbcType=INTEGER},
@@ -322,7 +322,7 @@
 		t5.room_info_id rp_roomInfoId,
 		t5.contract_type_id rp_contractId,
 		t5.currency rp_currency,
-		t5.weekPrice rp_weekPrice,
+		t5.listPrice rp_listPrice,
 		t5.salePrice rp_salePrice,
 		t5.status rq_statis,
 		t6.name ri_roomType,
@@ -429,8 +429,8 @@
 	</delete>
 
 	<insert id="saveRoomPrice" keyProperty="id" useGeneratedKeys='true' parameterType="com.noeasy.money.model.RoomPrice">
-		insert into room_price (room_info_id, contract_type_id, currency, weekPrice, salePrice, status) values (
-			#{roomInfoId}, #{contractId}, #{currency}, #{weekPrice}, #{salePrice}, #{status}
+		insert into room_price (room_info_id, contract_type_id, currency, listPrice, salePrice, status) values (
+			#{roomInfoId}, #{contractId}, #{currency}, #{listPrice}, #{salePrice}, #{status}
 		)
 	</insert>
 
@@ -439,7 +439,7 @@
 			room_info_id = #{roomInfoId},
 			contract_type_id = #{contractId},
 			currency = #{currency},
-			weekPrice = #{weekPrice},
+			listPrice = #{listPrice},
 			salePrice = #{salePrice},
 			status = #{status}
 		where id = #{id}
@@ -668,7 +668,7 @@
 	</select>
 	
 	<select id="findRoomPrice" resultMap="roomPrice2" parameterType="com.noeasy.money.model.RoomPriceSearchBean">
-		select room_price.id, room_info_id, contract_type_id, currency, weekPrice, salePrice, contract_type.name as contract
+		select room_price.id, room_info_id, contract_type_id, currency, listPrice, salePrice, contract_type.name as contract
 		from room_price
 		inner join contract_type on room_price.contract_type_id = contract_type.id
 		where status = 1 and room_info_id = #{roomInfoId} and contract_type_id = #{contractId}
@@ -680,7 +680,7 @@
 		<result property="roomInfoId" column="room_info_id" />
 		<result property="contractId" column="contract_type_id" />
 		<result property="currency" column="currency" />
-		<result property="weekPrice" column="weekPrice" />
+		<result property="listPrice" column="listPrice" />
 		<result property="salePrice" column="salePrice" />
 		<result property="contract" column="contract" />
 	</resultMap>
@@ -716,7 +716,7 @@
 		<result property="service" column="dor_service" />
 		<result property="currency" column="dor_currency" />
 		<result property="rating" column="dor_rating" />
-		<result property="weekPrice" column="dor_weekPrice" />
+		<result property="listPrice" column="dor_listPrice" />
 		<result property="salePrice" column="dor_salePrice" />
 		<result property="latitude" column="dor_latitude" />
 		<result property="longitude" column="dor_longitude" />
@@ -758,7 +758,7 @@
 		<id property="id" column="rp_id" />
 		<result property="roomInfoId" column="rp_roomInfoId" />
 		<result property="currency" column="rp_currency" />
-		<result property="weekPrice" column="rp_weekPrice" />
+		<result property="listPrice" column="rp_listPrice" />
 		<result property="salePrice" column="rp_salePrice" />
 		<result property="contractId" column="rp_contractId" />
 		<result property="contract" column="rp_contract" />

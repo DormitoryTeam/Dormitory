@@ -51,7 +51,7 @@ public class DormitoryBean extends DormitoryRoomBean {
 
     private Double             mSalePrice;
 
-    private Double             mWeekPrice;
+    private Double             mListPrice;
 
     private String             mCurrency;
 
@@ -176,6 +176,15 @@ public class DormitoryBean extends DormitoryRoomBean {
 
 
     /**
+     * @return the listPrice
+     */
+    public Double getListPrice() {
+        return mListPrice;
+    }
+
+
+
+    /**
      * @return the longitude
      */
     public Double getLongitude() {
@@ -261,15 +270,6 @@ public class DormitoryBean extends DormitoryRoomBean {
      */
     public List<String> getVideoPath() {
         return mVideoPath;
-    }
-
-
-
-    /**
-     * @return the weekPrice
-     */
-    public Double getWeekPrice() {
-        return mWeekPrice;
     }
 
 
@@ -375,6 +375,16 @@ public class DormitoryBean extends DormitoryRoomBean {
 
 
     /**
+     * @param pListPrice
+     *            the listPrice to set
+     */
+    public void setListPrice(final Double pListPrice) {
+        mListPrice = pListPrice;
+    }
+
+
+
+    /**
      * @param pLongitude
      *            the longitude to set
      */
@@ -470,16 +480,6 @@ public class DormitoryBean extends DormitoryRoomBean {
      */
     public void setVideoPath(final List<String> pVideoPath) {
         mVideoPath = pVideoPath;
-    }
-
-
-
-    /**
-     * @param pWeekPrice
-     *            the weekPrice to set
-     */
-    public void setWeekPrice(final Double pWeekPrice) {
-        mWeekPrice = pWeekPrice;
     }
 
 }

@@ -12,7 +12,7 @@
 			</div>
 			<div class="hostel-info">
 				<div class="price">
-					价格<span><em>&#163;</em>${not empty dormitory['rooms'] && not empty dormitory['rooms'][0]['contractPrice'][0] ? dormitory['rooms'][0]['contractPrice'][0]['salePrice'] : dormitory['salePrice']}</span>起
+					价格<span><em>&#163;</em>${dormitory['salePrice']}</span>起
 					<div class="starBox" data-score="${dormitory['rating']}"></div>
 				</div>
 				<div class="title">
@@ -41,7 +41,7 @@
 				<table>
 					<thead>
 						<tr>
-							<th>名称</th>
+							<th>房型</th>
 							<th>床型</th>
 							<th>入住时间</th>
 							<th>价格</th>
@@ -53,7 +53,7 @@
 							<c:forEach var="room" items="${dormitory['rooms']}" varStatus="j" begin="0" end="1">
 								<c:if test="${not empty room}">
 									<tr>
-										<td>${room['name']}</td>
+										<td>${room['roomType']}</td>
 										<td>${room['bedType']}</td>
 										<td>${room['checkinDateString']}</td>
 										<td>

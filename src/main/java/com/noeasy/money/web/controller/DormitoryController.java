@@ -171,11 +171,4 @@ public class DormitoryController {
         return "dormitory/dormitorylist";
     }
 
-
-
-    @RequestMapping("/dormitory-quik-book" + Constants.URL_SUFFIX)
-    public String toDormitoryQuickBook(final HttpServletRequest request, final HttpServletResponse response,
-            final Model model) {
-        return "dormitory/include/dormitorydetail-quickbook";
-    }
 }
