@@ -28,7 +28,7 @@
 	</select>
 
 	<select id="queryCollege" resultType="hashmap" parameterType="java.util.Map">
-		select id, city_id as cityId, name, status, latitude, longitude, status
+		select id, city_id as cityId, name, original_name originalName, status, latitude, longitude, status
 		from college
 		where status = 1
 		<if test="id != null">

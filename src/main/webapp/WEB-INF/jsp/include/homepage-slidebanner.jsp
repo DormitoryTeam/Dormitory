@@ -4,7 +4,7 @@
 			<div class="itembar">
 				<ul>
 					<li>宿舍</li>
-					<li><a style="color:#AE0000;" href="<c:url value="/order/dormitory-place-order.html?orderType=pickup"/>">接机</a></li>
+					<li><a style="color: #AE0000;" href="<c:url value="/order/dormitory-place-order.html?orderType=pickup"/>">接机</a></li>
 				</ul>
 			</div>
 			<div class="selectContent">
@@ -94,8 +94,8 @@
 		<c:if test="${empty sessionScope.USER_ID}">
 			<div class="login-plan">
 				<ul>
-					<li><a href="javascript:void(0)" class="reg-btn jQ-regbtn" data-popupSrc="/dormitory/user/toRegister.html">&nbsp;</a></li>
-					<li><a href="javascript:void(0)" class="login-btn jQ-loginbtn" data-popupSrc="/dormitory/user/toLogin.html">&nbsp;</a></li>
+					<li><a href="javascript:void(0)" class="reg-btn jQ-regbtn" data-popupSrc="/dormitory/user/loadRegister.html">&nbsp;</a></li>
+					<li><a href="javascript:void(0)" class="login-btn jQ-loginbtn" data-popupSrc="/dormitory/user/loadLogin.html">&nbsp;</a></li>
 				</ul>
 			</div>
 		</c:if>
@@ -106,7 +106,8 @@
 				<c:if test="${not empty slides}">
 					<c:forEach var="img" items="${slides}">
 						<div class="sliderItem">
-							<a href="/dormitory/upload/images/slide/${img['path']}"> <img src="/dormitory/upload/images/slide/${img['path']}" alt="${empty img['desc'] ? img['path'] : img['desc']}" />
+							<a href="/dormitory/upload/images/slide/${img['path']}">
+								<img src="/dormitory/upload/images/slide/${img['path']}" alt="${empty img['desc'] ? img['path'] : img['desc']}" />
 							</a>
 							<p class="text"></p>
 						</div>
@@ -114,7 +115,8 @@
 				</c:if>
 				<c:if test="${empty slides}">
 					<div class="sliderItem">
-						<a href="#"> <img src="/dormitory/img/slider/slider-img.jpg" alt="" />
+						<a href="#">
+							<img src="/dormitory/img/slider/slider-img.jpg" alt="" />
 						</a>
 						<p class="text"></p>
 					</div>

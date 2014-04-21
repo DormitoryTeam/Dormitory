@@ -8,7 +8,7 @@
 		<li><a hrf="#">${country['name']}</a></li>
 		<li><a hrf="#"><span>&#62;</span>${city['name']}</a></li>
 		<c:if test="${not empty collegeId}">
-			<li><span>&#62;</span>${college['name']}</li>
+			<li><span>&#62;</span>${college['originalName']}</li>
 		</c:if>
 	</ul>
 	<div class="row filter">

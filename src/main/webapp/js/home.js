@@ -42,4 +42,3 @@ function renderOption(selectId, data) {
         }
     }
 }
-
