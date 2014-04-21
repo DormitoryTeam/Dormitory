@@ -60,7 +60,7 @@ public class AlipayService implements IAlipayService {
         // 6. create payment information
         createPaymentInfor(payment, PaymentInfoType.REQUEST, queryString);
         // 7. update order
-        orderRepository.updateOrderStatus(pOrderId, OrderStatus.PAYMENT);
+//        orderRepository.updateOrderStatus(pOrderId, OrderStatus.PAYMENT);
         // 8. compose redirect url.
         String redirectURL = AlipayUtils.getConfigurableProperty(AlipayConstants.CONFIG_GATEWAY);
         redirectURL += queryString;
@@ -188,10 +188,11 @@ public class AlipayService implements IAlipayService {
 
 
     private OrderStatus getOrderStatus(PaymentStatus pPaymentStatus) {
-        if (PaymentStatus.FINISH == pPaymentStatus) {
-            return OrderStatus.PAYMENT_DONE;
-        }
-        return OrderStatus.PAYMENT;
+//        if (PaymentStatus.FINISH == pPaymentStatus) {
+//            return OrderStatus.PAYMENT_DONE;
+//        }
+//        return OrderStatus.PAYMENT;
+        return null;
     }
 
 

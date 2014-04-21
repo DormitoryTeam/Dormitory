@@ -1,45 +1,52 @@
-<jsp:include page="/jsp/main/hostel/order/include/pickupTopNav.jsp"/>
-<div class="reservation-personal air-tab-personal ui-tabs ui-widget ui-widget-content ui-corner-all">
-	<div class="tip-text">
-		2014年接机名额还剩1000个
-	</div>
-	<form action="<c:url value="/order/dormitory-place-order.html"/>" method="POST" id="placeOrderForm">
-	<input type="hidden" name="pageStep" value="3" />
-	<input type="hidden" name="orderType" value="${orderType}"/>
-	<input type="hidden" name="command" id="command"/>
-	<a href="<c:url value="/order/dormitory-place-order.html?orderType=pickup"/>" class="addOne">&nbsp;</a>
-	<div class="btnBox">
-		<input class="save btn-place-order-save" value="保存" type="button">
-	</div>
-	<ul role="tablist" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-		<li aria-selected="false" aria-labelledby="ui-id-1" aria-controls="tabs-personal" tabindex="-1" role="tab" class="ui-state-default ui-corner-top"><a id="ui-id-1" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="#tabs-personal">个人信息</a></li>
-		<li aria-selected="false" aria-labelledby="ui-id-2" aria-controls="tabs-hobby" tabindex="-1" role="tab" class="ui-state-default ui-corner-top"><a id="ui-id-2" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="#tabs-hobby">航班信息</a></li>
-		<li aria-selected="false" aria-labelledby="ui-id-3" aria-controls="tabs-security" tabindex="-1" role="tab" class="ui-state-default ui-corner-top"><a id="ui-id-3" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="#tabs-security">送达地址</a></li>
-		<li aria-selected="true" aria-labelledby="ui-id-4" aria-controls="tabs-additional" tabindex="0" role="tab" class="ui-state-default ui-corner-top ui-tabs-active ui-state-active"><a id="ui-id-4" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="#tabs-additional">补充信息</a></li>
-	</ul>
-	<div aria-hidden="false" aria-expanded="true" style="display: block;" role="tabpanel" class="ui-tabs-panel ui-widget-content ui-corner-bottom" aria-labelledby="ui-id-4" id="tabs-additional">
-		<fieldset>
-			<dl>
-				<dd>托运行李箱信息(可在订单管理页面更改)</dd>
-			</dl>
-			<dl>
-				<dt>尺寸</dt>
-				<dd>
-					<input type="text" name="luggageSize" value="${item.luggageSize}"/>
-				</dd>
-				<dt class="min">个数</dt>
-				<dd>
-					<input type="text" name="luggageAmount" value="${item.luggageAmount}"/>
-				</dd>
-			</dl>
-			<dl>
-				<dt>&nbsp;</dt>
-				<dd>
-					<button class="btn-style btn-user-info-save">下一步</button>
-				</dd>
-			</dl>
-		</fieldset>
-	</div>
-	</form>
-</div>
+<hostel:container template="hostel">
+    <%-- top section --%>
+    <header>
+    </header>
+    
+    <%-- main section --%>
+	<main>
+		
+		<%-- content --%>
+		<div class="container">
+            <div class="row airport">
+				<jsp:include page="/jsp/main/hostel/order/include/pickupTopNav.jsp"/>
+				<div class="reservation-personal air-tab-personal ui-tabs ui-widget ui-widget-content ui-corner-all">
+					<div class="tip-text">
+						2014年接机名额还剩1000个
+					</div>
+					<form >
+					<div class="btnBox">
+						<a style="color:#AE0000; font-weight: bold; font-size: 20px;" href="<c:url value="/user/orderList.html"/>" >返回</a>
+					</div>
+					<jsp:include page="displayPickupOrderTopNav.jsp">
+						<jsp:param name="pageName" value="luggage"/>
+					</jsp:include>
+					<div aria-hidden="false" aria-expanded="true" style="display: block;" role="tabpanel" class="ui-tabs-panel ui-widget-content ui-corner-bottom" aria-labelledby="ui-id-4" id="tabs-additional">
+						<fieldset>
+							<dl>
+								<dd>托运行李箱信息</dd>
+							</dl>
+							<dl>
+								<dt>尺寸</dt>
+								<dd>
+									${item.luggageSize}
+								</dd>
+								<dt class="min">个数</dt>
+								<dd>
+									${item.luggageAmount}
+								</dd>
+							</dl>
+						</fieldset>
+					</div>
+					</form>
+				</div>
 
+            </div>
+		</div>
+	</main>
+	
+    <%-- bottom section --%>
+    <footer>
+    </footer>
+    <script type="text/javascript" src="<c:url value='/js/order/dormitory-order-place.js'/>"></script>
+</hostel:container>
