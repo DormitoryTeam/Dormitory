@@ -15,9 +15,9 @@
 		
 		<%-- content --%>
 		<div class="container">
-			<jsp:include page="include/slideBanner.jsp"/>
-			<jsp:include page="include/infoBanner.jsp"/>
-			<jsp:include page="include/newsList.jsp"/>
+			<jsp:include page="include/homepage-slidebanner.jsp"/>
+			<jsp:include page="include/homepage-infobanner.jsp"/>
+			<jsp:include page="include/homepage-newslist.jsp"/>
 		</div>
 	</main>
 	
