@@ -266,14 +266,14 @@ public class UserController {
 
 
 
-    @RequestMapping("/toLogin" + Constants.URL_SUFFIX)
+    @RequestMapping("/loadLogin" + Constants.URL_SUFFIX)
     public String loadLoginPage(final HttpServletRequest request, final HttpServletResponse response) {
         return "include/homepage-login";
     }
 
 
 
-    @RequestMapping("/toRegister" + Constants.URL_SUFFIX)
+    @RequestMapping("/loadRegister" + Constants.URL_SUFFIX)
     public String loadRegisterPage(final HttpServletRequest request, final HttpServletResponse response) {
         return "include/homepage-register";
     }
@@ -483,5 +483,19 @@ public class UserController {
         request.getSession().removeAttribute(SessionConstants.SESSION_KEY_USER_ID);
 
         return "redirect:/navigation/home.html";
+    }
+
+
+
+    @RequestMapping("/toLogin" + Constants.URL_SUFFIX)
+    public String toLoginPage(final HttpServletRequest request, final HttpServletResponse response) {
+        return "login";
+    }
+
+
+
+    @RequestMapping("/toRegister" + Constants.URL_SUFFIX)
+    public String toRegisterPage(final HttpServletRequest request, final HttpServletResponse response) {
+        return "register";
     }
 }
