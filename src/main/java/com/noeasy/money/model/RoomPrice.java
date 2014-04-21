@@ -43,7 +43,7 @@ public class RoomPrice {
 
     private String mCurrency;
 
-    private Double mListPrice;
+    private Double mWeekPrice;
 
     private Double mSalePrice;
 
@@ -92,15 +92,6 @@ public class RoomPrice {
 
 
     /**
-     * @return the listPrice
-     */
-    public Double getListPrice() {
-        return mListPrice;
-    }
-
-
-
-    /**
      * @return the roomInfoId
      */
     public int getRoomInfoId() {
@@ -123,6 +114,15 @@ public class RoomPrice {
      */
     public int getStatus() {
         return mStatus;
+    }
+
+
+
+    /**
+     * @return the weekPrice
+     */
+    public Double getWeekPrice() {
+        return mWeekPrice;
     }
 
 
@@ -168,16 +168,6 @@ public class RoomPrice {
 
 
     /**
-     * @param pListPrice
-     *            the listPrice to set
-     */
-    public void setListPrice(final Double pListPrice) {
-        mListPrice = pListPrice;
-    }
-
-
-
-    /**
      * @param pRoomInfoId
      *            the roomInfoId to set
      */
@@ -203,6 +193,16 @@ public class RoomPrice {
      */
     public void setStatus(final int pStatus) {
         mStatus = pStatus;
+    }
+
+
+
+    /**
+     * @param pWeekPrice
+     *            the weekPrice to set
+     */
+    public void setWeekPrice(final Double pWeekPrice) {
+        mWeekPrice = pWeekPrice;
     }
 
 }
