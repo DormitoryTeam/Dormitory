@@ -115,9 +115,19 @@ public class OrderController {
         if (StringUtils.isNotBlank(orderId)) {
             Integer id = Integer.valueOf(orderId);
             if (isDormitoryOrder(pRequest)) {
-                // FIXME: Check placer and belongs to
-                // FIXME: check order status
+                // Check placer and belongs to
+                // check order status
+                if (!ServletUtils.isLogin(pRequest)) {
+                    throw new RuntimeException("Not login");
+                }
+                Integer userId = ServletUtils.getUserId(pRequest);
                 order = orderService.findOrderById(id);
+                if (!userId.equals(order.getUser().getId()) && !userId.equals(order.getBelongsTo().getId())) {
+                    throw new RuntimeException("no authortication to view this order");
+                }
+                if (OrderStatus.REVIEWDE.getValue() <= order.getOrderType().getValue()) {
+                    throw new RuntimeException("Order can not change.");
+                }
                 if (null != order) {
                     // FIXME check this line is need nor not.
                     model.addAttribute("user", order.getUser());
@@ -169,7 +179,7 @@ public class OrderController {
             return new String[] { "order/userInfoForm", "order/preferForm", "order/guaranteeForm",
                     "order/contactPersonForm", "order/notesForm" };
         }
-        return new String[] { "order/userInfoForm", "order/flightInfoForm", "order/destinationInfoForm",
+        return new String[] { "order/pickupUserInfoForm", "order/flightInfoForm", "order/destinationInfoForm",
                 "order/luggageInfoForm" };
     }
 
@@ -194,6 +204,18 @@ public class OrderController {
     private PickupLineItem getPickupItemFromSesssion(final HttpServletRequest pRequest) {
         OrderBean order = ServletUtils.getOrderFromSession(pRequest);
         return getPickupItemFromOrder(order);
+    }
+
+
+
+    private String[] getViewOrdeForwardURL(final HttpServletRequest request) {
+        if (isDormitoryOrder(request)) {
+            return new String[] { "order/display/userInfoForm", "order/display/preferForm",
+                    "order/display/guaranteeForm", "order/display/contactPersonForm", "order/display/notesForm" };
+        } else {
+            return new String[] { "order/display/pickupUserInfoForm", "order/display/flightInfoForm",
+                    "order/display/destinationInfoForm", "order/display/luggageInfoForm" };
+        }
     }
 
 
@@ -304,6 +326,7 @@ public class OrderController {
             break;
         case 3:
             maintainLuggage(pRequest);
+            setOrderCommit(pRequest);
             break;
         }
 
@@ -530,6 +553,7 @@ public class OrderController {
             isExpired(pRequest);
             // 2. maintain prefer.
             maintainsPrefer(pRequest);
+            setOrderCommit(pRequest);
             break;
         default:
             break;
@@ -769,6 +793,16 @@ public class OrderController {
 
 
 
+    private void setOrderCommit(final HttpServletRequest pRequest) {
+        OrderBean order = ServletUtils.getOrderFromSession(pRequest);
+        if (null == order) {
+            throw new RuntimeException("order is null in orderBean");
+        }
+        orderService.updateOrderStatus(order.getId(), OrderStatus.COMMIT);
+    }
+
+
+
     @RequestMapping("/dormitory-order-fill" + Constants.URL_SUFFIX)
     public String toDormitoryOrderFill(final HttpServletRequest request, final HttpServletResponse response,
             final Model model, final String dormitoryId) {
@@ -822,5 +856,52 @@ public class OrderController {
         }
 
         return "order/pickup-order-fill";
+    }
+
+
+
+    @RequestMapping("/view-order" + Constants.URL_SUFFIX)
+    public String viewOrder(final HttpServletRequest request, final HttpServletResponse response, final Model model) {
+        if (!ServletUtils.isLogin(request)) {
+            throw new RuntimeException("User not login");
+        }
+        String[] forwrdURLs = getViewOrdeForwardURL(request);
+        int maxStep = forwrdURLs.length - 1;
+        String pageStep = request.getParameter(Constants.PARAM_PAGE_STEP);
+        Integer step = Integer.valueOf(0);
+        if (StringUtils.isNotBlank(pageStep)) {
+            step = Integer.valueOf(pageStep);
+            if (step < 0) {
+                step = Integer.valueOf(0);
+            }
+            if (step > maxStep) {
+                step = Integer.valueOf(maxStep);
+            }
+        }
+        String orderId = request.getParameter(Constants.PARAM_ORDER_ID);
+        if (StringUtils.isBlank(orderId)) {
+            throw new IllegalArgumentException("orderId is blank");
+        }
+        Integer id = Integer.valueOf(orderId);
+        OrderBean order = null;
+        if (isDormitoryOrder(request)) {
+            order = orderService.findOrderById(Integer.valueOf(orderId));
+        } else {
+            order = orderService.findPickupOrderById(id);
+        }
+        if (null == order) {
+            throw new RuntimeException("No order find. orderId: " + orderId);
+        }
+        Integer userId = ServletUtils.getUserId(request);
+        if (!userId.equals(order.getUser().getId()) && !userId.equals(order.getBelongsTo().getId())) {
+            throw new RuntimeException("no authortication to view this order");
+        }
+        LineItem item = null;
+        if (CollectionUtils.isNotEmpty(order.getLineItems())) {
+            item = order.getLineItems().get(0);
+        }
+        model.addAttribute("item", item);
+        model.addAttribute("order", order);
+        return forwrdURLs[step];
     }
 }
