@@ -84,7 +84,7 @@
 							<a href="#">${user['login']}</a>
 						</div>
 						<ul class="user-links">
-							<li><a href="#">我的订单</a></li>
+							<li><a href="<c:url value="/user/orderList.html?orderType=D"/>">我的订单</a></li>
 							<li><a href="<c:url value="/user/editUserInfo.html"/>">个人中心</a></li>
 						</ul>
 					</li>
