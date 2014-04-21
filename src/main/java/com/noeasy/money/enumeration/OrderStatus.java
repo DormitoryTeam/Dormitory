@@ -37,14 +37,7 @@ package com.noeasy.money.enumeration;
 
 public enum OrderStatus {
 
-    INITIAL, 
-    COMMIT, 
-    REVIEWDE, 
-//    PAYMENT,
-//    PAYMENT_DONE,
-//    PASS, 
-    SENDING_CONTACT,
-    DONE;
+    INITIAL, COMMIT, REVIEWDE, PAYMENT, PAYMENT_DONE, PASS, SENDING_CONTACT;
 
     public String getName() {
         return this.name();
@@ -73,4 +66,13 @@ public enum OrderStatus {
         return this.values()[++ordinal];
     }
     
+    public static void main(String[] args) {
+        System.out.println(INITIAL.getNextStatus());
+        System.out.println(COMMIT.getNextStatus());
+        System.out.println(REVIEWDE.getNextStatus());
+        System.out.println(PAYMENT.getNextStatus());
+        System.out.println(PAYMENT_DONE.getNextStatus());
+        System.out.println(PASS.getNextStatus());
+        System.out.println(SENDING_CONTACT.getNextStatus());
+    }
 }

@@ -10,18 +10,38 @@
 		<div class="container">
             <div class="row">
 				<div class="reservation-content">
-					<jsp:include page="displayOrderHeader.jsp"/>
+					<div class="reservation-info">
+						<span>基本信息</span>
+						<fieldset>
+							<dl>
+								<dt>房屋名</dt>
+								<dd></dd>
+							</dl>
+							<dl>
+								<dt>租期</dt>
+								<dd></dd>
+							</dl>
+							<dl>
+								<dt>单价</dt>
+								<dd>£ </dd>
+							</dl>
+							<dl>
+								<dt>总价</dt>
+								<dd>£</dd>
+							</dl>
+							<dl>
+								<dt>入住时间</dt>
+								<dd></dd>
+							</dl>
+						</fieldset>
+					</div>
 					<div class="reservation-personal reservation-tab ui-tabs ui-widget ui-widget-content ui-corner-all ui-tabs-vertical ui-helper-clearfix">
-						<form>
-							<div class="btnBox">
-								<a style="color:#AE0000; font-weight: bold; font-size: 20px;" href="<c:url value="/user/orderList.html?orderType=D"/>" >返回</a>
-							</div>
 							<ul role="tablist" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-								<li aria-selected="true" aria-labelledby="ui-id-1" aria-controls="tabs-personal" tabindex="0" role="tab" class="ui-state-default ui-tabs-active ui-state-active ui-corner-left" style="background-color: antiquewhite;"><a id="ui-id-1" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="<c:url value="/order/view-order.html?orderId=${order.id}&pageStep=0"/>">个人信息</a></li>
-								<li aria-selected="false" aria-labelledby="ui-id-2" aria-controls="tabs-personal" tabindex="-1" role="tab" class="ui-state-default ui-corner-left"><a id="ui-id-2" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="<c:url value="/order/view-order.html?orderId=${order.id}&pageStep=1"/>">个人偏好</a></li>
-								<li aria-selected="false" aria-labelledby="ui-id-3" aria-controls="tabs-personal" tabindex="-1" role="tab" class="ui-state-default ui-corner-left"><a id="ui-id-3" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="<c:url value="/order/view-order.html?orderId=${order.id}&pageStep=2"/>">担保人信息</a></li>
-								<li aria-selected="false" aria-labelledby="ui-id-4" aria-controls="tabs-personal" tabindex="-1" role="tab" class="ui-state-default ui-corner-left"><a id="ui-id-4" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="<c:url value="/order/view-order.html?orderId=${order.id}&pageStep=3"/>">紧急联系人信息</a></li>
-								<li aria-selected="false" aria-labelledby="ui-id-5" aria-controls="tabs-personal" tabindex="-1" role="tab" class="ui-state-default ui-corner-left"><a id="ui-id-5" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="<c:url value="/order/view-order.html?orderId=${order.id}&pageStep=4"/>">补充信息</a></li>
+								<li aria-selected="true" aria-labelledby="ui-id-1" aria-controls="tabs-personal" tabindex="0" role="tab" class="ui-state-default ui-tabs-active ui-state-active ui-corner-left" style="background-color: antiquewhite;"><a id="ui-id-1" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="<c:url value="/order/view-order.html?orderId=9&pageStep=0"/>">个人信息</a></li>
+								<li aria-selected="false" aria-labelledby="ui-id-2" aria-controls="tabs-personal" tabindex="-1" role="tab" class="ui-state-default ui-corner-left"><a id="ui-id-2" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="<c:url value="/order/view-order.html?orderId=9&pageStep=1"/>">个人偏好</a></li>
+								<li aria-selected="false" aria-labelledby="ui-id-3" aria-controls="tabs-personal" tabindex="-1" role="tab" class="ui-state-default ui-corner-left"><a id="ui-id-3" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="<c:url value="/order/view-order.html?orderId=9&pageStep=2"/>">担保人信息</a></li>
+								<li aria-selected="false" aria-labelledby="ui-id-4" aria-controls="tabs-personal" tabindex="-1" role="tab" class="ui-state-default ui-corner-left"><a id="ui-id-4" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="<c:url value="/order/view-order.html?orderId=9&pageStep=3"/>">紧急联系人信息</a></li>
+								<li aria-selected="false" aria-labelledby="ui-id-5" aria-controls="tabs-personal" tabindex="-1" role="tab" class="ui-state-default ui-corner-left"><a id="ui-id-5" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="<c:url value="/order/view-order.html?orderId=9&pageStep=4"/>">补充信息</a></li>
 							</ul>
 							<div aria-hidden="false" aria-expanded="true" role="tabpanel" class="ui-tabs-panel ui-widget-content ui-corner-bottom" aria-labelledby="ui-id-5" id="tabs-personal">
 								<fieldset>
@@ -114,7 +134,6 @@
 									</dl>
 								</fieldset>
 							</div>
-						</form>
 					</div>
 				</div>
             </div>
