@@ -1,5 +1,5 @@
 require(['config'], function(config) {
-    require(['jquery', 'utils', 'raty', 'jQueryUI', 'jqueryTools'], function($, utils, raty, jQueryUI, jqueryTools) {
+    require(['jquery', 'utils', 'raty', 'jQueryUI', 'jqueryTools', 'acsPopup'], function($, utils, raty, jQueryUI, jqueryTools, acsPopup) {
         $(function() {
             //init header
             utils.init();
@@ -113,10 +113,10 @@ require(['config'], function(config) {
 
             $(".house-tabs").tabs();
 
-            //$(".air-tab-personal").tabs();
+            $(".air-tab-personal").tabs();
 
-            //$(".reservation-tab").tabs().addClass("ui-tabs-vertical ui-helper-clearfix");
-            //$(".reservation-tab li").removeClass("ui-corner-top").addClass("ui-corner-left");
+            $(".reservation-tab").tabs().addClass("ui-tabs-vertical ui-helper-clearfix");
+            $(".reservation-tab li").removeClass("ui-corner-top").addClass("ui-corner-left");
 
             $(".scrollable").scrollable();
 
@@ -137,6 +137,29 @@ require(['config'], function(config) {
                 $(this).addClass("active");
             }).filter(":first").click();
 
+            $('.jQ-quick').on('click', function() {
+                var roomId = $(this).attr("roomId");
+                $("#roomInfoId").val(roomId);
+
+                $(this).acsPopup({
+                    popupSrc : $(this).attr("data-popupSrc"),
+                    callBack : function() {
+                        var contracts = room_contracts[roomId];
+                        for (var i in contracts) {
+                            var bookHTML = '<option value="' + contracts[i].id + '">' + contracts[i].name + '</option>';
+                            var bookDIV = $(bookHTML);
+                            $("#selectContract").append(bookDIV);
+                        }
+
+                        $('select').simSelect();
+                        $('.btnBook').on('click', function() {
+                            var contractId = $("#selectContract").val();
+                            $("#contractId").val(contractId);
+                            $("#placeOrderForm").submit();
+                        });
+                    }
+                });
+            })
         });
     });
 });

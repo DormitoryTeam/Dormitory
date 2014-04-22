@@ -678,7 +678,7 @@ public class OrderController {
             RoomPrice price = dormitoryService.findRoomPrice(dormitoryItem.getRoomInfo().getId(), dormitoryItem
                     .getContractType().getId());
             dormitoryItem.setAmount(new BigDecimal(price.getSalePrice()));
-            dormitoryItem.setListPrice(new BigDecimal(price.getListPrice()));
+            dormitoryItem.setListPrice(new BigDecimal(price.getWeekPrice()));
             dormitoryItem.setCurrency(price.getCurrency());
         } else {
             PickupLineItem pickupItem = (PickupLineItem) item;
@@ -743,7 +743,7 @@ public class OrderController {
             dormitoryLineItem.setDormitory(dormitory);
             dormitoryLineItem.setAmount(new BigDecimal(dormitory.getSalePrice()));
             dormitoryLineItem.setCurrency(dormitory.getCurrency());
-            dormitoryLineItem.setListPrice(new BigDecimal(dormitory.getListPrice()));
+            dormitoryLineItem.setListPrice(new BigDecimal(dormitory.getWeekPrice()));
             List<LineItem> lineItems = new ArrayList<LineItem>();
             lineItems.add(dormitoryLineItem);
             orderBean.setLineItems(lineItems);

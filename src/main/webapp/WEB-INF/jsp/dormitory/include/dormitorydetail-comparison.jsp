@@ -18,9 +18,7 @@
 				<li>
 					<h3>${room['name']}</h3> 
 					<c:forEach var="contractPrice" items="${room['contractPrice']}">
-						<p>
-							<span>${contractPrice['contract']}：</span>&#163;${contractPrice['salePrice']}
-						</p>
+						<p><span><fmt:parseNumber value="${contractPrice['contract'] div 7}" integerOnly="true"/>周${contractPrice['contract'] % 7}天：</span>&#163;${contractPrice['weekPrice']}(&#163;${contractPrice['salePrice']})</p>
 					</c:forEach>
 				</li>
 			</ul>
@@ -33,22 +31,16 @@
 	<div class="scroll-content">
 		<c:forEach var="room" items="${dormitory['rooms']}">
 			<ul class="scroll-content-item item-body">
-				<li>${room['checkinDateString']}</li>
-				<li>${room['houseArea']}</li>
-				<li>${room['bedType']}</li>
-				<li>${room['ensuitBathroom']}</li>
-				<li>${room['kitchenPeople']}</li>
-				<li>${room['orientationArrange']}</li>
-				<li>${room['roomLanguageArrange']}</li>
-				<li class="title-hight">
-					${room['kitchenEquipment']}
-				</li>
-				<li>
-					${room['bathroomEquipment']}
-				</li>
-				<li class="title-hight last">
-					<input class="btn-style btnBookDormitory" type="submit" class="btnBookDormitory" roomId="${room['id']}" value="立即预定" />
-				</li>
+				<li>&nbsp;${room['checkinDateString']}</li>
+				<li>&nbsp;${room['houseArea']}</li>
+				<li>&nbsp;${room['bedType']}</li>
+				<li>&nbsp;${room['ensuitBathroom']}</li>
+				<li>&nbsp;${room['kitchenPeople']}</li>
+				<li>&nbsp;${room['orientationArrange']}</li>
+				<li>&nbsp;${room['roomLanguageArrange']}</li>
+				<li class="title-hight">&nbsp;${room['kitchenEquipment']}</li>
+				<li>&nbsp;${room['bathroomEquipment']}</li>
+				<li class="title-hight last"><a href="javascript:void(0)" class="btn-style jQ-quick" roomId="${room['id']}" data-popupSrc="/dormitory/dormitory/dormitory-quik-book.html">立即预定</a></li>
 			</ul>
 		</c:forEach>
 	</div>
