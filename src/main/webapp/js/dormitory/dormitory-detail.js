@@ -17,6 +17,34 @@ $(function() {
 		path : '../style/img'
 	});
 
+	$("#selectQuickRoom").change(function(e) {
+		var contracts = room_contracts[$(this).val()];
+		var contractOptions = "";
+		$.each(contracts, function(i, e) {
+			contractOptions += "<option value='" + e.id + "'>" + e.name + "</option>";
+		});
+		$("#selectQuickContract").empty().append(contractOptions).simSelect();
+		$("#quickPricePreview").html(contracts[0].currency + " " + contracts[0].salePrice);
+		$("#quickRoomNamePreview").html(contracts[0].roomName);
+	});
+	
+	$("#selectQuickContract").change(function(e) {
+		var contracts = room_contracts[$("#selectQuickRoom").val()];
+		$.each(contracts, function(i, e) {
+			if(e.id == $("#selectQuickContract").val()) {
+				$("#quickPricePreview").html(e.currency + " " + e.salePrice);
+				$("#quickRoomNamePreview").html(e.roomName);
+				return false;
+			}
+		});
+	});
+	
+	$(".btn-quick").on('click', function(e) {
+        $("#quickRoomInfoId").val($("#selectQuickRoom").val());
+        $("#quickContractId").val($("#selectQuickContract").val());
+        $("#quickPlaceOrderForm").submit();
+	});
+	
 	initialize();
 });
 
