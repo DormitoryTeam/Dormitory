@@ -45,7 +45,7 @@
 						</dl>
 						<dl>
 							<dd>出生日期：</dd>
-							<dt><input name="birthday" id="birthday" type="text" value="<fmt:formatDate value='${user.contactPersonInfo.birthday}' pattern='yyyy-MM-dd'/>" class="same-as" /></dt>
+							<dt><input name="birthday" id="birthday" type="text" value="<fmt:formatDate value='${user.contactPersonInfo.birthday}' pattern='yyyy-MM-dd'/>" class="same-as datepicker" /></dt>
 						</dl>
 						<dl>
 							<dd>电子邮箱：</dd>
@@ -68,7 +68,7 @@
 						<dl>
 							<dd>&nbsp;</dd>
 							<dt>
-								<input name="postalcode" id="postalcode" type="text" value="${user.contactPersonInfo.postalcode}" class="larger same-as"/> (邮编)
+								<input name="postalcode" id="postalcode" type="text" value="${user.contactPersonInfo.postalcode}" class="mini same-as"/> (邮编)
 							</dt>
 						</dl>
 					</fieldset>

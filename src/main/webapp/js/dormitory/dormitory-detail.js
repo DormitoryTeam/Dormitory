@@ -28,7 +28,7 @@ function initialize() {
 
 	var mapOptions = {
 		center : dormitoryLatlng,
-		zoom : 8,
+		zoom : 13,
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	};
 	var map = new google.maps.Map(document.getElementById("map_canvas"),

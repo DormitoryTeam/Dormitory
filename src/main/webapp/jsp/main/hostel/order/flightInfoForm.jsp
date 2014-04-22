@@ -23,7 +23,7 @@
 			<dl>
 				<dt>起飞时间</dt>
 				<dd>
-					<input type="text" name="takeOffDate" value="<fmt:formatDate value='${item.takeOffDate}' pattern='yyyy-MM-dd'/>"/>
+					<input type="text" class="datepicker" name="takeOffDate" value="<fmt:formatDate value='${item.takeOffDate}' pattern='yyyy-MM-dd'/>"/>
 				</dd>
 			</dl>
 			<dl>
@@ -51,7 +51,7 @@
 			<dl>
 				<dt>接机时间</dt>
 				<dd>
-					<input type="text" name="pickupDate" value="<fmt:formatDate value='${item.pickupDate}' pattern='yyyy-MM-dd'/>"/>
+					<input type="text" class="datepicker" name="pickupDate" value="<fmt:formatDate value='${item.pickupDate}' pattern='yyyy-MM-dd'/>"/>
 				</dd>
 			</dl>
 			<dl>
