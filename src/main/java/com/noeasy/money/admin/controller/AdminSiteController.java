@@ -77,6 +77,13 @@ public class AdminSiteController {
 
 
 
+    @RequestMapping("/admin-navigation" + Constants.URL_SUFFIX)
+    public String siteNavigation(final HttpServletRequest request, final HttpServletResponse response, final Model model) {
+        return "admin/site/admin-navigation";
+    }
+
+
+
     @RequestMapping("/article-add-or-update" + Constants.URL_SUFFIX)
     public String toArticleAddOrUpdate(final HttpServletRequest request, final HttpServletResponse response,
             final Model model, final Integer id, final String backURL) {
