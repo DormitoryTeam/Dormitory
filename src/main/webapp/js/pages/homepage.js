@@ -93,19 +93,6 @@ function loadCitiesByCountry() {
 
 }
 
-function loadCollegesByCity() {
-    $.ajax({
-        type : "POST",
-        url : "/dormitory/navigation/getCollege.html",
-        data : {
-            cityId : this.value
-        },
-        success : function(data) {
-            renderOption("sltCollege", data);
-        }
-    });
-}
-
 function renderOption(selectId, data) {
     var select = $("#" + selectId).empty();
     var jsonObject = $.parseJSON(data);

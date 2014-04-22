@@ -8,7 +8,7 @@
 				</ul>
 			</div>
 			<div class="selectContent">
-				<form action="/dormitory/dormitory/dormitory-list.html" method="GET">
+				<form action="/dormitory/navigation/navigator.html" method="GET">
 					<fieldset>
 						<dl>
 							<dt>国家</dt>
@@ -35,23 +35,6 @@
 										<c:when test="${not empty cities}">
 											<c:forEach items="${cities}" var="city">
 												<option value="${city['id']}">${city['name']}</option>
-											</c:forEach>
-										</c:when>
-										<c:otherwise>
-											<option value="0">no valid result</option>
-										</c:otherwise>
-									</c:choose>
-								</select>
-							</dd>
-						</dl>
-						<dl>
-							<dt>高校</dt>
-							<dd>
-								<select id="sltCollege" name="collegeId">
-									<c:choose>
-										<c:when test="${not empty colleges}">
-											<c:forEach items="${colleges}" var="college">
-												<option value="${college['id']}">${college['name']}</option>
 											</c:forEach>
 										</c:when>
 										<c:otherwise>
