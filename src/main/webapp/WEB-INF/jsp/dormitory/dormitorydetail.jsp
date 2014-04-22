@@ -16,7 +16,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="sidebar pull-right">
-				<jsp:include page="/jsp/main/hostel/quick.jsp" />
+				<jsp:include page="include/dormitorydetail-quickbook.jsp" />
 				<jsp:include page="include/dormitorydetail-rightbar.jsp" />
 			</div>
 			<div class="contentBox">
