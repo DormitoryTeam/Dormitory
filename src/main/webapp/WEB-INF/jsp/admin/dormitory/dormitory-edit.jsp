@@ -117,7 +117,6 @@
 						<td>HouseArea</td>
 						<td>BedType</td>
 						<td>EnsuitBathroom</td>
-						<td>KitchenPeople</td>
 						<td>OrientationArrange</td>
 						<td>RoomLanguageArrange</td>
 						<td>BathroomEquipment</td>
@@ -142,7 +141,6 @@
 							<option value="false" ${!curRoom['ensuitBathroom'] ? 'selected' : ''}>No</option>
 							<option value="true"  ${ curRoom['ensuitBathroom'] ? 'selected' : ''}>Yes</option>
 						</select></td>
-						<td><input type="text" name="rooms[${i['index']}].kitchenPeople" value="${curRoom['kitchenPeople']}" /></td>
 						<td><select name="rooms[${i['index']}].orientationArrange">
 							<option value="false" ${!curRoom['orientationArrange'] ? 'selected' : ''}>No</option>
 							<option value="true"  ${ curRoom['orientationArrange'] ? 'selected' : ''}>Yes</option>

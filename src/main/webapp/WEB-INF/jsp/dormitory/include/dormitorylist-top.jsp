@@ -49,7 +49,7 @@
 			<dl>
 				<dt>
 					<select>
-						<option value="按区域排列">按区域排列</option>
+						<option value="按区域排列">按区域排列</option>
 					</select>
 				</dt>
 				<dd></dd>
