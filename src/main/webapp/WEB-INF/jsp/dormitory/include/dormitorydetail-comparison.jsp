@@ -33,7 +33,7 @@
 			<ul class="scroll-content-item item-body">
 				<li>&nbsp;${room['checkinDateString']}</li>
 				<li>&nbsp;${room['houseArea']}</li>
-				<li>&nbsp;${room['bedType']}</li>
+				<li>&nbsp;${room['roomType']}</li>
 				<li>&nbsp;${room['ensuitBathroom']}</li>
 				<li>&nbsp;${room['kitchenPeople']}</li>
 				<li>&nbsp;${room['orientationArrange']}</li>

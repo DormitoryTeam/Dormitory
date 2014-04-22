@@ -16,19 +16,18 @@ $(function() {
 		readOnly : true,
 		path : '../style/img'
 	});
-	
+
 	initialize();
 });
-
 
 function initialize() {
 
 	var latitude = $("#dormitoryLatitude").val();
 	var longitdue = $("#dormitoryLongitude").val();
-	var myLatlng = new google.maps.LatLng(latitude, longitdue);
+	var dormitoryLatlng = new google.maps.LatLng(latitude, longitdue);
 
 	var mapOptions = {
-		center : myLatlng,
+		center : dormitoryLatlng,
 		zoom : 8,
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	};
@@ -36,9 +35,9 @@ function initialize() {
 			mapOptions);
 
 	var marker = new google.maps.Marker({
-		position : myLatlng,
+		position : dormitoryLatlng,
 		map : map,
-		title : "Hello World!"
+		title : $("#dormitoryName").val()
 	});
 	marker.setMap(map);
 }
