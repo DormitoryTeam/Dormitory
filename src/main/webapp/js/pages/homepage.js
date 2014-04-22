@@ -11,7 +11,6 @@ require(['config'], function(config) {
             });
 
             $("#sltCountry").bind("change", loadCitiesByCountry);
-            $("#sltCity").bind("change", loadCollegesByCity);
 
             $('.jQ-regbtn').on('click', function() {
                 $(this).acsPopup({
@@ -91,19 +90,6 @@ function loadCitiesByCountry() {
         }
     });
 
-}
-
-function loadCollegesByCity() {
-    $.ajax({
-        type : "POST",
-        url : "/dormitory/navigation/getCollege.html",
-        data : {
-            cityId : this.value
-        },
-        success : function(data) {
-            renderOption("sltCollege", data);
-        }
-    });
 }
 
 function renderOption(selectId, data) {
