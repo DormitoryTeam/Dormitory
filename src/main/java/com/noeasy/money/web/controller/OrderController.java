@@ -98,9 +98,386 @@ public class OrderController {
     @Resource(name = "navigationService")
     INavigationService navigationService;
 
+    @RequestMapping("/view-order" + Constants.URL_SUFFIX)
+    public String viewOrder(final HttpServletRequest request, final HttpServletResponse response, final Model model) {
+        if (!ServletUtils.isLogin(request)) {
+            throw new RuntimeException("User not login");
+        }
+        String[] forwrdURLs = getViewOrdeForwardURL(request);
+        int maxStep = forwrdURLs.length - 1;
+        String pageStep = request.getParameter(Constants.PARAM_PAGE_STEP);
+        Integer step = Integer.valueOf(0);
+        if (StringUtils.isNotBlank(pageStep)) {
+            step = Integer.valueOf(pageStep);
+            if (step < 0) {
+                step = Integer.valueOf(0);
+            }
+            if (step > maxStep) {
+                step = Integer.valueOf(maxStep);
+            }
+        }
+        String orderId = request.getParameter(Constants.PARAM_ORDER_ID);
+        if (StringUtils.isBlank(orderId)) {
+            throw new IllegalArgumentException("orderId is blank");
+        }
+        Integer id = Integer.valueOf(orderId);
+        OrderBean order = null;
+        if (isDormitoryOrder(request)) {
+            order = orderService.findOrderById(Integer.valueOf(orderId));
+        } else {
+            order = orderService.findPickupOrderById(id);
+        }
+        if (null == order) {
+            throw new RuntimeException("No order find. orderId: " + orderId);
+        }
+        Integer userId = ServletUtils.getUserId(request);
+        if (!userId.equals(order.getUser().getId()) && !userId.equals(order.getBelongsTo().getId())) {
+            throw new RuntimeException("no authortication to view this order");
+        }
+        LineItem item = null;
+        if (CollectionUtils.isNotEmpty( order.getLineItems())) {
+            item =  order.getLineItems().get(0);
+        }
+        model.addAttribute("item", item);
+        model.addAttribute("order", order);
+        return forwrdURLs[step];
+    }
+
+    private String[] getViewOrdeForwardURL(HttpServletRequest request) {
+        if (isDormitoryOrder(request)) {
+            return new String[] {"order/display/userInfoForm", "order/display/preferForm", "order/display/guaranteeForm",
+                    "order/display/contactPersonForm", "order/display/notesForm" };
+        } else {
+            return new String[] { "order/display/pickupUserInfoForm", "order/display/flightInfoForm", "order/display/destinationInfoForm",
+            "order/display/luggageInfoForm" };
+        }
+    }
+
+    @RequestMapping("/dormitory-place-order" + Constants.URL_SUFFIX)
+    public String placeOrder(final HttpServletRequest request, final HttpServletResponse response, final Model model) {
+        String[] forwrdURLs = getForwrdURLs(request);
+        int maxStep = forwrdURLs.length - 1;
+        String pageStep = request.getParameter(Constants.PARAM_PAGE_STEP);
+        Integer step = Integer.valueOf(0);
+        if (StringUtils.isNotBlank(pageStep)) {
+            step = Integer.valueOf(pageStep);
+            if (step < 0) {
+                step = Integer.valueOf(0);
+            }
+            if (step > maxStep) {
+                step = Integer.valueOf(maxStep);
+            }
+        }
+        maintainsModel(request, model);
+        if (ServletUtils.isGet(request)) {
+            switch (step) {
+            case 0:
+                ensureOrderSession(request, model);
+                break;
+            default:
+                if (isExpired(request)) {
+                    // TODO: message
+                    return forwrdURLs[0];
+                } 
+                break;
+            }
+            OrderBean order = ServletUtils.getOrderFromSession(request);
+            model.addAttribute("order", order);
+            if (OrderType.PICKUP == order.getOrderType()) {
+                model.addAttribute("item", getPickupItemFromSesssion(request));
+            }
+            return forwrdURLs[step];
+        } else {
+            OrderBean order = ServletUtils.getOrderFromSession(request);
+            model.addAttribute("order", order);
+            if (OrderType.PICKUP == order.getOrderType()) {
+                model.addAttribute("item", getPickupItemFromSesssion(request));
+            }
+            String command = request.getParameter(Constants.PARAM_COMMAND);
+            if (Constants.PARAM_VALUE_COMMAND_SAVE.equalsIgnoreCase(command)) {
+                if (null == order) {
+                    // TODO: session expired. redirect to place order page. show
+                    // error message.
+                    return "";
+                }
+                maintainSessionOrder(request, step);
+
+                return forwrdURLs[step];
+            } else {
+                maintainSessionOrder(request, step);
+                if (step + 1 > maxStep) {
+                    if (isDormitoryOrder(request)){
+                        return "order/dormtiroyOrderSuccess";
+                    } else {
+                        return "order/pickupOrderSuccess";
+                    }
+                }
+                return forwrdURLs[step + 1];
+            }
+        }
+    }
 
 
-    private void ensureOrderSession(final HttpServletRequest pRequest, final Model model) {
+
+    private void maintainSessionOrder(HttpServletRequest pRequest, Integer pStep) {
+        if (isDormitoryOrder(pRequest)) {
+            maitainSissionDormitoryOrder(pRequest, pStep);
+        } else {
+            maintainSessionPickUpOrder(pRequest, pStep);
+        }
+
+    }
+
+
+
+    private String[] getForwrdURLs(final HttpServletRequest request) {
+        if (isDormitoryOrder(request)) {
+            return new String[] { "order/userInfoForm", "order/preferForm", "order/guaranteeForm",
+                    "order/contactPersonForm", "order/notesForm" };
+        }
+        return new String[] { "order/pickupUserInfoForm", "order/flightInfoForm", "order/destinationInfoForm",
+                "order/luggageInfoForm" };
+    }
+
+
+
+    private void maintainsModel(final HttpServletRequest request, final Model model) {
+        String orderType = request.getParameter("orderType");
+        model.addAttribute("orderType", orderType);
+        Integer userId = ServletUtils.getUserId(request);
+        if (null != userId) {
+            UserBean user = userService.findUserById(userId);
+            model.addAttribute("user", user);
+        }
+        String dormitoryIdStr = request.getParameter(Constants.PARAM_DORMITORY_ID);
+        if (StringUtils.isNotBlank(dormitoryIdStr)) {
+            Integer dormitoryId = Integer.valueOf(dormitoryIdStr);
+            DormitoryBean dormitory = dormitoryService.findDormitoryById(dormitoryId);
+            model.addAttribute("dormitory", dormitory);
+        }
+
+        String roomInfoIdStr = request.getParameter(Constants.PARAM_ROOM_INFO_ID);
+        if (StringUtils.isNotBlank(roomInfoIdStr)) {
+            Integer roomInfoId = Integer.valueOf(roomInfoIdStr);
+            RoomInfoBean roomInfo = dormitoryService.findRoomInfoById(roomInfoId);
+            model.addAttribute("roomInfo", roomInfo);
+
+            String contractIdStr = request.getParameter(Constants.PARAM_CONTRACT_ID);
+            if (StringUtils.isNotBlank(contractIdStr)) {
+                Integer contractId = Integer.valueOf(contractIdStr);
+                RoomPrice price = dormitoryService.findRoomPrice(roomInfoId, contractId);
+                model.addAttribute("price", price);
+            }
+        }
+    }
+
+
+
+    private void maintainSessionPickUpOrder(HttpServletRequest pRequest, Integer pStep) {
+        switch (pStep) {
+        case 0:
+            // 1. persistance orderContact(persistence order, order contact,
+            // lineItem)
+            persistenceOrder(pRequest);
+            // 2. maintain contact info.(userInfo)
+            maintainsUserInfo(pRequest);
+            // 3. maintain line item,placer and belongTo,
+            maintainsOrder(pRequest);
+            break;
+        case 1:
+            // flight
+            maintainFlightInfo(pRequest);
+            break;
+        case 2:
+            // destination
+            maintainDestinationInfo(pRequest);
+            break;
+        case 3:
+            maintainLuggage(pRequest);
+            setOrderCommit(pRequest);
+            break;
+        }
+
+    }
+
+
+
+    private PickupLineItem getPickupItemFromSesssion(HttpServletRequest pRequest) {
+        OrderBean order = ServletUtils.getOrderFromSession(pRequest);
+        return getPickupItemFromOrder(order);
+    }
+
+
+
+    private PickupLineItem getPickupItemFromOrder(OrderBean order) {
+        if (null == order) {
+            throw new RuntimeException("no order in session");
+        }
+        if (OrderType.PICKUP != order.getOrderType()) {
+            throw new RuntimeException("not pick up order");
+        }
+        List<LineItem> items = order.getLineItems();
+        if (CollectionUtils.isEmpty(items)) {
+            throw new RuntimeException("not pick up item in order");
+        }
+        return (PickupLineItem) items.get(0);
+    }
+
+
+
+    private void maintainDestinationInfo(HttpServletRequest pRequest) {
+        PickupLineItem item = getPickupItemFromSesssion(pRequest);
+        item.setPickup2City(pRequest.getParameter("pickup2City"));
+        item.setPickup2Address(pRequest.getParameter("pickup2Address"));
+        item.setPickup2Dormitory(pRequest.getParameter("pickup2Dormitory"));
+        item.setPickup2Postalcode(pRequest.getParameter("pickup2Postalcode"));
+        orderService.updateLineItem(ServletUtils.getOrderFromSession(pRequest));
+    }
+
+
+
+    private void maintainFlightInfo(HttpServletRequest pRequest) {
+        PickupLineItem item = getPickupItemFromSesssion(pRequest);
+        String takeOffDateStr = pRequest.getParameter("takeOffDate");
+        if (StringUtils.isNotBlank(takeOffDateStr)) {
+            item.setTakeOffDate(DateUtils.stringToDate(takeOffDateStr));
+        }
+        item.setTakeOffCity(pRequest.getParameter("takeOffCity"));
+        String pickupDateStr = pRequest.getParameter("pickupDate");
+        if (StringUtils.isNotBlank(pickupDateStr)) {
+            item.setPickupDate(DateUtils.stringToDate(pickupDateStr));
+        }
+        item.setArrivalCity(pRequest.getParameter("arrivalCity"));
+        item.setArrivalCountry(pRequest.getParameter("arrivalCountry"));
+        item.setArrivalAirport(pRequest.getParameter("arrivalAirport"));
+        item.setFlightCompany(pRequest.getParameter("flightCompany"));
+        item.setFlightNum(pRequest.getParameter("flightNumber"));
+        orderService.updateLineItem(ServletUtils.getOrderFromSession(pRequest));
+        
+    }
+
+
+
+    private void maintainLuggage(HttpServletRequest pRequest) {
+        PickupLineItem item = getPickupItemFromSesssion(pRequest);
+        String luggageAmount = pRequest.getParameter("luggageAmount");
+        if (StringUtils.isNotBlank(luggageAmount)) {
+            item.setLuggageAmount(Integer.valueOf(luggageAmount));
+        }
+        String luggageSize = pRequest.getParameter("luggageSize");
+        if (StringUtils.isNotBlank(luggageSize)) {
+            item.setLuggageSize(Double.valueOf(luggageSize));
+        }
+        orderService.updateLineItem(ServletUtils.getOrderFromSession(pRequest));
+    }
+
+
+
+    private void maitainSissionDormitoryOrder(HttpServletRequest pRequest, int step) {
+
+        switch (step) {
+        case 0:
+            // 1. persistance orderContact(persistence order, order contact,
+            // lineItem)
+            persistenceOrder(pRequest);
+            // 2. maintain contact info.(userInfo)
+            maintainsUserInfo(pRequest);
+            // 3. maintain order type, line item,placer and belongTo,
+            maintainsOrder(pRequest);
+
+            break;
+        case 1:
+            // 1. check session expired.
+            isExpired(pRequest);
+            // 2. maintain prefer.
+            maintainsPrefer(pRequest);
+            break;
+        case 2:
+            // 1. check session expired.
+            isExpired(pRequest);
+            // 2. maintain contact info(guaranteeInfo)
+            maintainsGuaranteeInfo(pRequest);
+            break;
+        case 3:
+            // 1. check session expired.
+            isExpired(pRequest);
+            // 2. maintain contact info(contactPersonInfo)
+            maintainsContactPersonInfo(pRequest);
+            break;
+        case 4:
+            // 1. check session expired.
+            isExpired(pRequest);
+            // 2. maintain prefer.
+            maintainsPrefer(pRequest);
+            setOrderCommit(pRequest);
+            break;
+        default:
+            break;
+        }
+    }
+
+
+
+    private void setOrderCommit(HttpServletRequest pRequest) {
+        OrderBean order = ServletUtils.getOrderFromSession(pRequest);
+        if (null == order) {
+            throw new RuntimeException("order is null in orderBean");
+        }
+        orderService.updateOrderStatus(order.getId(), OrderStatus.COMMIT);
+    }
+
+
+
+    private void persistenceOrder(HttpServletRequest pRequest) {
+        OrderBean order = ServletUtils.getOrderFromSession(pRequest);
+        if (null == order) {
+            throw new RuntimeException("order is null in orderBean");
+        }
+        if (null == order.getId()) {
+            orderService.createOrder(order);
+        }
+
+    }
+
+
+
+    private void maintainsContactPersonInfo(HttpServletRequest pRequest) {
+        OrderBean order = ServletUtils.getOrderFromSession(pRequest);
+        UserInfoBean info = ServletUtils.getUserInfoFromRequest(pRequest);
+        order.getOrderContact().setContactPersonInfo(info);
+        userService.saveUserInfo(order.getOrderContact(), INFO_TYPE.CONTACT_PERSON_INFO);
+    }
+
+
+
+    private void maintainsGuaranteeInfo(HttpServletRequest pRequest) {
+        OrderBean order = ServletUtils.getOrderFromSession(pRequest);
+        UserInfoBean info = ServletUtils.getUserInfoFromRequest(pRequest);
+        order.getOrderContact().setGuaranteeInfo(info);
+        userService.saveUserInfo(order.getOrderContact(), INFO_TYPE.GUARANTEE_INFO);
+    }
+
+
+
+    private void maintainsUserInfo(HttpServletRequest pRequest) {
+        OrderBean order = ServletUtils.getOrderFromSession(pRequest);
+        UserInfoBean info = ServletUtils.getUserInfoFromRequest(pRequest);
+        order.getOrderContact().setBelongsToInfo(info);
+        userService.saveUserInfo(order.getOrderContact(), INFO_TYPE.USER_INFO);
+    }
+
+
+
+    private void maintainsPrefer(HttpServletRequest pRequest) {
+        OrderBean order = ServletUtils.getOrderFromSession(pRequest);
+        UserPreferBean userPrefer = ServletUtils.getUserPerferFromRequest(pRequest);
+        order.getOrderContact().setPrefer(userPrefer);
+        userService.saveUserPrder(order.getOrderContact());
+    }
+
+
+
+    private void ensureOrderSession(HttpServletRequest pRequest, final Model model) {
         // 1. if no order in session
         // 1.1 if no orderId parameter, just create an new orderBean and set it
         // to session.
@@ -174,208 +551,14 @@ public class OrderController {
 
 
 
-    private String[] getForwrdURLs(final HttpServletRequest request) {
-        if (isDormitoryOrder(request)) {
-            return new String[] { "order/userInfoForm", "order/preferForm", "order/guaranteeForm",
-                    "order/contactPersonForm", "order/notesForm" };
-        }
-        return new String[] { "order/pickupUserInfoForm", "order/flightInfoForm", "order/destinationInfoForm",
-                "order/luggageInfoForm" };
-    }
-
-
-
-    private PickupLineItem getPickupItemFromOrder(final OrderBean order) {
-        if (null == order) {
-            throw new RuntimeException("no order in session");
-        }
-        if (OrderType.PICKUP != order.getOrderType()) {
-            throw new RuntimeException("not pick up order");
-        }
-        List<LineItem> items = order.getLineItems();
-        if (CollectionUtils.isEmpty(items)) {
-            throw new RuntimeException("not pick up item in order");
-        }
-        return (PickupLineItem) items.get(0);
-    }
-
-
-
-    private PickupLineItem getPickupItemFromSesssion(final HttpServletRequest pRequest) {
-        OrderBean order = ServletUtils.getOrderFromSession(pRequest);
-        return getPickupItemFromOrder(order);
-    }
-
-
-
-    private String[] getViewOrdeForwardURL(final HttpServletRequest request) {
-        if (isDormitoryOrder(request)) {
-            return new String[] { "order/display/userInfoForm", "order/display/preferForm",
-                    "order/display/guaranteeForm", "order/display/contactPersonForm", "order/display/notesForm" };
-        } else {
-            return new String[] { "order/display/pickupUserInfoForm", "order/display/flightInfoForm",
-                    "order/display/destinationInfoForm", "order/display/luggageInfoForm" };
-        }
-    }
-
-
-
-    private boolean isDormitoryOrder(final HttpServletRequest pRequest) {
-        String orderTypeStr = pRequest.getParameter(Constants.PARMA_ORDER_TYPE);
-        if (OrderType.PICKUP.toString().equalsIgnoreCase(orderTypeStr)) {
-            return false;
-        }
-        return true;
-    }
-
-
-
-    private boolean isExpired(final HttpServletRequest pRequest) {
+    private boolean isExpired(HttpServletRequest pRequest) {
         OrderBean order = ServletUtils.getOrderFromSession(pRequest);
         return null == order;
     }
 
 
 
-    private void maintainDestinationInfo(final HttpServletRequest pRequest) {
-        PickupLineItem item = getPickupItemFromSesssion(pRequest);
-        item.setPickup2City(pRequest.getParameter("pickup2City"));
-        item.setPickup2Address(pRequest.getParameter("pickup2Address"));
-        item.setPickup2Dormitory(pRequest.getParameter("pickup2Dormitory"));
-        item.setPickup2Postalcode(pRequest.getParameter("pickup2Postalcode"));
-        orderService.updateLineItem(ServletUtils.getOrderFromSession(pRequest));
-    }
-
-
-
-    private void maintainFlightInfo(final HttpServletRequest pRequest) {
-        PickupLineItem item = getPickupItemFromSesssion(pRequest);
-        String takeOffDateStr = pRequest.getParameter("takeOffDate");
-        if (StringUtils.isNotBlank(takeOffDateStr)) {
-            item.setTakeOffDate(DateUtils.stringToDate(takeOffDateStr));
-        }
-        item.setTakeOffCity(pRequest.getParameter("takeOffCity"));
-        String pickupDateStr = pRequest.getParameter("pickupDate");
-        if (StringUtils.isNotBlank(pickupDateStr)) {
-            item.setPickupDate(DateUtils.stringToDate(pickupDateStr));
-        }
-        item.setArrivalCity(pRequest.getParameter("arrivalCity"));
-        item.setArrivalCountry(pRequest.getParameter("arrivalCountry"));
-        item.setArrivalAirport(pRequest.getParameter("arrivalAirport"));
-        item.setFlightCompany(pRequest.getParameter("flightCompany"));
-        item.setFlightNum(pRequest.getParameter("flightNumber"));
-        orderService.updateLineItem(ServletUtils.getOrderFromSession(pRequest));
-
-    }
-
-
-
-    private void maintainLuggage(final HttpServletRequest pRequest) {
-        PickupLineItem item = getPickupItemFromSesssion(pRequest);
-        String luggageAmount = pRequest.getParameter("luggageAmount");
-        if (StringUtils.isNotBlank(luggageAmount)) {
-            item.setLuggageAmount(Integer.valueOf(luggageAmount));
-        }
-        String luggageSize = pRequest.getParameter("luggageSize");
-        if (StringUtils.isNotBlank(luggageSize)) {
-            item.setLuggageSize(Double.valueOf(luggageSize));
-        }
-        orderService.updateLineItem(ServletUtils.getOrderFromSession(pRequest));
-    }
-
-
-
-    private void maintainsContactPersonInfo(final HttpServletRequest pRequest) {
-        OrderBean order = ServletUtils.getOrderFromSession(pRequest);
-        UserInfoBean info = ServletUtils.getUserInfoFromRequest(pRequest);
-        order.getOrderContact().setContactPersonInfo(info);
-        userService.saveUserInfo(order.getOrderContact(), INFO_TYPE.CONTACT_PERSON_INFO);
-    }
-
-
-
-    private void maintainSessionOrder(final HttpServletRequest pRequest, final Integer pStep) {
-        if (isDormitoryOrder(pRequest)) {
-            maitainSissionDormitoryOrder(pRequest, pStep);
-        } else {
-            maintainSessionPickUpOrder(pRequest, pStep);
-        }
-
-    }
-
-
-
-    private void maintainSessionPickUpOrder(final HttpServletRequest pRequest, final Integer pStep) {
-        switch (pStep) {
-        case 0:
-            // 1. persistance orderContact(persistence order, order contact,
-            // lineItem)
-            persistenceOrder(pRequest);
-            // 2. maintain contact info.(userInfo)
-            maintainsUserInfo(pRequest);
-            // 3. maintain line item,placer and belongTo,
-            maintainsOrder(pRequest);
-            break;
-        case 1:
-            // flight
-            maintainFlightInfo(pRequest);
-            break;
-        case 2:
-            // destination
-            maintainDestinationInfo(pRequest);
-            break;
-        case 3:
-            maintainLuggage(pRequest);
-            setOrderCommit(pRequest);
-            break;
-        }
-
-    }
-
-
-
-    private void maintainsGuaranteeInfo(final HttpServletRequest pRequest) {
-        OrderBean order = ServletUtils.getOrderFromSession(pRequest);
-        UserInfoBean info = ServletUtils.getUserInfoFromRequest(pRequest);
-        order.getOrderContact().setGuaranteeInfo(info);
-        userService.saveUserInfo(order.getOrderContact(), INFO_TYPE.GUARANTEE_INFO);
-    }
-
-
-
-    private void maintainsModel(final HttpServletRequest request, final Model model) {
-        String orderType = request.getParameter("orderType");
-        model.addAttribute("orderType", orderType);
-        Integer userId = ServletUtils.getUserId(request);
-        if (null != userId) {
-            UserBean user = userService.findUserById(userId);
-            model.addAttribute("user", user);
-        }
-        String dormitoryIdStr = request.getParameter(Constants.PARAM_DORMITORY_ID);
-        if (StringUtils.isNotBlank(dormitoryIdStr)) {
-            Integer dormitoryId = Integer.valueOf(dormitoryIdStr);
-            DormitoryBean dormitory = dormitoryService.findDormitoryById(dormitoryId);
-            model.addAttribute("dormitory", dormitory);
-        }
-
-        String roomInfoIdStr = request.getParameter(Constants.PARAM_ROOM_INFO_ID);
-        if (StringUtils.isNotBlank(roomInfoIdStr)) {
-            Integer roomInfoId = Integer.valueOf(roomInfoIdStr);
-            RoomInfoBean roomInfo = dormitoryService.findRoomInfoById(roomInfoId);
-            model.addAttribute("roomInfo", roomInfo);
-
-            String contractIdStr = request.getParameter(Constants.PARAM_CONTRACT_ID);
-            if (StringUtils.isNotBlank(contractIdStr)) {
-                Integer contractId = Integer.valueOf(contractIdStr);
-                RoomPrice price = dormitoryService.findRoomPrice(roomInfoId, contractId);
-                model.addAttribute("price", price);
-            }
-        }
-    }
-
-
-
-    private void maintainsOrder(final HttpServletRequest pRequest) {
+    private void maintainsOrder(HttpServletRequest pRequest) {
         OrderBean order = ServletUtils.getOrderFromSession(pRequest);
         OrderType orderType = order.getOrderType();
         // maintains order line item
@@ -429,8 +612,29 @@ public class OrderController {
 
 
 
-    private void maintainsOrderLineItem(final HttpServletRequest pRequest, final OrderBean order,
-            final OrderType orderType) {
+    private OrderType maintainsOrderType(HttpServletRequest pRequest, OrderBean order) {
+
+        OrderType orderType = OrderType.DORMITORY;
+        if (!isDormitoryOrder(pRequest)) {
+            orderType = OrderType.PICKUP;
+        }
+        order.setOrderType(orderType);
+        return orderType;
+    }
+
+
+
+    private boolean isDormitoryOrder(HttpServletRequest pRequest) {
+        String orderTypeStr = pRequest.getParameter(Constants.PARMA_ORDER_TYPE);
+        if (OrderType.PICKUP.toString().equalsIgnoreCase(orderTypeStr)) {
+            return false;
+        }
+        return true;
+    }
+
+
+
+    private void maintainsOrderLineItem(HttpServletRequest pRequest, OrderBean order, OrderType orderType) {
         List<LineItem> lineItems = order.getLineItems();
         if (null == lineItems) {
             lineItems = new ArrayList<LineItem>();
@@ -483,94 +687,6 @@ public class OrderController {
             pickupItem.setListPrice(new BigDecimal("0.00"));
             pickupItem.setCurrency("CNY");
         }
-    }
-
-
-
-    private OrderType maintainsOrderType(final HttpServletRequest pRequest, final OrderBean order) {
-
-        OrderType orderType = OrderType.DORMITORY;
-        if (!isDormitoryOrder(pRequest)) {
-            orderType = OrderType.PICKUP;
-        }
-        order.setOrderType(orderType);
-        return orderType;
-    }
-
-
-
-    private void maintainsPrefer(final HttpServletRequest pRequest) {
-        OrderBean order = ServletUtils.getOrderFromSession(pRequest);
-        UserPreferBean userPrefer = ServletUtils.getUserPerferFromRequest(pRequest);
-        order.getOrderContact().setPrefer(userPrefer);
-        userService.saveUserPrder(order.getOrderContact());
-    }
-
-
-
-    private void maintainsUserInfo(final HttpServletRequest pRequest) {
-        OrderBean order = ServletUtils.getOrderFromSession(pRequest);
-        UserInfoBean info = ServletUtils.getUserInfoFromRequest(pRequest);
-        order.getOrderContact().setBelongsToInfo(info);
-        userService.saveUserInfo(order.getOrderContact(), INFO_TYPE.USER_INFO);
-    }
-
-
-
-    private void maitainSissionDormitoryOrder(final HttpServletRequest pRequest, final int step) {
-
-        switch (step) {
-        case 0:
-            // 1. persistance orderContact(persistence order, order contact,
-            // lineItem)
-            persistenceOrder(pRequest);
-            // 2. maintain contact info.(userInfo)
-            maintainsUserInfo(pRequest);
-            // 3. maintain order type, line item,placer and belongTo,
-            maintainsOrder(pRequest);
-
-            break;
-        case 1:
-            // 1. check session expired.
-            isExpired(pRequest);
-            // 2. maintain prefer.
-            maintainsPrefer(pRequest);
-            break;
-        case 2:
-            // 1. check session expired.
-            isExpired(pRequest);
-            // 2. maintain contact info(guaranteeInfo)
-            maintainsGuaranteeInfo(pRequest);
-            break;
-        case 3:
-            // 1. check session expired.
-            isExpired(pRequest);
-            // 2. maintain contact info(contactPersonInfo)
-            maintainsContactPersonInfo(pRequest);
-            break;
-        case 4:
-            // 1. check session expired.
-            isExpired(pRequest);
-            // 2. maintain prefer.
-            maintainsPrefer(pRequest);
-            setOrderCommit(pRequest);
-            break;
-        default:
-            break;
-        }
-    }
-
-
-
-    private void persistenceOrder(final HttpServletRequest pRequest) {
-        OrderBean order = ServletUtils.getOrderFromSession(pRequest);
-        if (null == order) {
-            throw new RuntimeException("order is null in orderBean");
-        }
-        if (null == order.getId()) {
-            orderService.createOrder(order);
-        }
-
     }
 
 
@@ -641,68 +757,6 @@ public class OrderController {
             model.addAttribute("result", placeOrderResult);
         }
         return "order/dormitory-order-place-result";
-    }
-
-
-
-    @RequestMapping("/dormitory-place-order" + Constants.URL_SUFFIX)
-    public String placeOrder(final HttpServletRequest request, final HttpServletResponse response, final Model model) {
-        String[] forwrdURLs = getForwrdURLs(request);
-        int maxStep = forwrdURLs.length - 1;
-        String pageStep = request.getParameter(Constants.PARAM_PAGE_STEP);
-        Integer step = Integer.valueOf(0);
-        if (StringUtils.isNotBlank(pageStep)) {
-            step = Integer.valueOf(pageStep);
-            if (step < 0) {
-                step = Integer.valueOf(0);
-            }
-            if (step > maxStep) {
-                step = Integer.valueOf(maxStep);
-            }
-        }
-        maintainsModel(request, model);
-        if (ServletUtils.isGet(request)) {
-            switch (step) {
-            case 0:
-                ensureOrderSession(request, model);
-                break;
-            default:
-                if (isExpired(request)) {
-                    // TODO: message
-                    return forwrdURLs[0];
-                }
-                break;
-            }
-            OrderBean order = ServletUtils.getOrderFromSession(request);
-            model.addAttribute("order", order);
-            if (OrderType.PICKUP == order.getOrderType()) {
-                model.addAttribute("item", getPickupItemFromSesssion(request));
-            }
-            return forwrdURLs[step];
-        } else {
-            OrderBean order = ServletUtils.getOrderFromSession(request);
-            model.addAttribute("order", order);
-            if (OrderType.PICKUP == order.getOrderType()) {
-                model.addAttribute("item", getPickupItemFromSesssion(request));
-            }
-            String command = request.getParameter(Constants.PARAM_COMMAND);
-            if (Constants.PARAM_VALUE_COMMAND_SAVE.equalsIgnoreCase(command)) {
-                if (null == order) {
-                    // TODO: session expired. redirect to place order page. show
-                    // error message.
-                    return "";
-                }
-                maintainSessionOrder(request, step);
-
-                return forwrdURLs[step];
-            } else {
-                maintainSessionOrder(request, step);
-                if (step + 1 > maxStep) {
-                    return forwrdURLs[maxStep];
-                }
-                return forwrdURLs[step + 1];
-            }
-        }
     }
 
 
@@ -793,16 +847,6 @@ public class OrderController {
 
 
 
-    private void setOrderCommit(final HttpServletRequest pRequest) {
-        OrderBean order = ServletUtils.getOrderFromSession(pRequest);
-        if (null == order) {
-            throw new RuntimeException("order is null in orderBean");
-        }
-        orderService.updateOrderStatus(order.getId(), OrderStatus.COMMIT);
-    }
-
-
-
     @RequestMapping("/dormitory-order-fill" + Constants.URL_SUFFIX)
     public String toDormitoryOrderFill(final HttpServletRequest request, final HttpServletResponse response,
             final Model model, final String dormitoryId) {
@@ -856,52 +900,5 @@ public class OrderController {
         }
 
         return "order/pickup-order-fill";
-    }
-
-
-
-    @RequestMapping("/view-order" + Constants.URL_SUFFIX)
-    public String viewOrder(final HttpServletRequest request, final HttpServletResponse response, final Model model) {
-        if (!ServletUtils.isLogin(request)) {
-            throw new RuntimeException("User not login");
-        }
-        String[] forwrdURLs = getViewOrdeForwardURL(request);
-        int maxStep = forwrdURLs.length - 1;
-        String pageStep = request.getParameter(Constants.PARAM_PAGE_STEP);
-        Integer step = Integer.valueOf(0);
-        if (StringUtils.isNotBlank(pageStep)) {
-            step = Integer.valueOf(pageStep);
-            if (step < 0) {
-                step = Integer.valueOf(0);
-            }
-            if (step > maxStep) {
-                step = Integer.valueOf(maxStep);
-            }
-        }
-        String orderId = request.getParameter(Constants.PARAM_ORDER_ID);
-        if (StringUtils.isBlank(orderId)) {
-            throw new IllegalArgumentException("orderId is blank");
-        }
-        Integer id = Integer.valueOf(orderId);
-        OrderBean order = null;
-        if (isDormitoryOrder(request)) {
-            order = orderService.findOrderById(Integer.valueOf(orderId));
-        } else {
-            order = orderService.findPickupOrderById(id);
-        }
-        if (null == order) {
-            throw new RuntimeException("No order find. orderId: " + orderId);
-        }
-        Integer userId = ServletUtils.getUserId(request);
-        if (!userId.equals(order.getUser().getId()) && !userId.equals(order.getBelongsTo().getId())) {
-            throw new RuntimeException("no authortication to view this order");
-        }
-        LineItem item = null;
-        if (CollectionUtils.isNotEmpty(order.getLineItems())) {
-            item = order.getLineItems().get(0);
-        }
-        model.addAttribute("item", item);
-        model.addAttribute("order", order);
-        return forwrdURLs[step];
     }
 }
