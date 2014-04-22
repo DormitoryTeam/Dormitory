@@ -10,31 +10,7 @@
 		<div class="container">
             <div class="row">
                <div class="reservation-content">
-					<div class="reservation-info">
-						<span>基本信息</span>
-						<fieldset>
-							<dl>
-								<dt>房屋名</dt>
-								<dd>Clandon House</dd>
-							</dl>
-							<dl>
-								<dt>租期</dt>
-								<dd>51 Weeks</dd>
-							</dl>
-							<dl>
-								<dt>单价</dt>
-								<dd>£ 50.0</dd>
-							</dl>
-							<dl>
-								<dt>总价</dt>
-								<dd>£50.0</dd>
-							</dl>
-							<dl>
-								<dt>入住时间</dt>
-								<dd>2014.03.20</dd>
-							</dl>
-						</fieldset>
-					</div>
+					<jsp:include page="display/displayOrderHeader.jsp"/>
 					<div class="reservation-personal reservation-tab ui-tabs ui-widget ui-widget-content ui-corner-all ui-tabs-vertical ui-helper-clearfix">
 						<form">
 							<a class="addOne" href="/dormitory/order/dormitory-place-order.html?dormitoryId=1&amp;contractId=1&amp;roomInfoId=1">&nbsp;</a>

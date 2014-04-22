@@ -1,29 +1,5 @@
 ﻿<div class="reservation-content">
-	<div class="reservation-info">
-		<span>基本信息</span>
-		<fieldset>
-			<dl>
-				<dt>房屋名</dt>
-				<dd>${dormitory.name}</dd>
-			</dl>
-			<dl>
-				<dt>租期</dt>
-				<dd>${price.contract}</dd>
-			</dl>
-			<dl>
-				<dt>单价</dt>
-				<dd>&#163; ${price.salePrice}</dd>
-			</dl>
-			<dl>
-				<dt>总价</dt>
-				<dd>&#163;${price.salePrice}</dd>
-			</dl>
-			<dl>
-				<dt>入住时间</dt>
-				<dd><fmt:formatDate value='${roomInfo.checkinDate}' pattern='yyyy.MM.dd'/></dd>
-			</dl>
-		</fieldset>
-	</div>
+	<jsp:include page="/jsp/main/hostel/order/include/orderHeader.jsp"/>
 	<div class="reservation-personal reservation-tab ui-tabs ui-widget ui-widget-content ui-corner-all ui-tabs-vertical ui-helper-clearfix">
 		<form action="<c:url value="/order/dormitory-place-order.html"/>" method="POST" id="placeOrderForm">
 			<input type="hidden" name="pageStep" value="0" />
@@ -96,7 +72,7 @@
 							<c:if test="${null == birthday}">
 							<c:set var="birthday" value="${user.info.birthday}" />
 							</c:if>
-							<input name="birthday" type="text" value="<fmt:formatDate value='${birthday}' pattern='yyyy-MM-dd'/>" />
+							<input class="datepicker" name="birthday" type="text" value="<fmt:formatDate value='${birthday}' pattern='yyyy-MM-dd'/>" />
 						</dd>
 					</dl>
 					<dl>

@@ -8,7 +8,9 @@ $(function() {
 	//$( ".myaccount-tab" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
 
   //$( ".personal-info-tab" ).tabs();
-
+	// bind datepicker
+    $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+    $(".datepicker").attr("readonly",true);
 });
 });
 });

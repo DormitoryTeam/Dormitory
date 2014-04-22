@@ -159,7 +159,10 @@ require(['config'], function(config) {
                         });
                     }
                 });
-            })
+            });
+            // bind datepicker
+            $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+            $(".datepicker").attr("readonly",true);
         });
     });
 });

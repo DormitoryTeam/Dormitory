@@ -50,7 +50,7 @@
 		SELECT COUNT(*)
 	</sql>
 	<sql id="select-user-content">
-		SELECT u.id AS uId, u.login, u.password, U.email, u.alias, u.reset_password_sign AS resetPasswordSign, u.user_info_id, u.guarantee_info_id, u.contact_person_info_id, u.user_prefer_id,
+		SELECT u.id AS uId, md5(u.id) as code, u.login, u.password, U.email, u.alias, u.reset_password_sign AS resetPasswordSign, u.user_info_id, u.guarantee_info_id, u.contact_person_info_id, u.user_prefer_id,
 		info.id AS infoId, info.name, info.last_name AS lastName, info.nationality, info.gender, info.birthday, info.email AS infoEmail, info.qq, info.wechat, info.phone, info.country, info.province, info.city, info.county, info.address, info.postalcode, info.relationship,
 		guarantee.id AS guaranteeId, guarantee.name AS guaranteeName, guarantee.last_name as guaranteeLastName, guarantee.nationality AS guaranteeNationality, guarantee.gender AS guaranteeGender, guarantee.birthday AS guaranteeBirthday, guarantee.email AS guaranteeEmail, guarantee.qq AS guaranteeQQ, guarantee.wechat AS guaranteeWechat, guarantee.phone AS guaranteePhone, guarantee.country AS guaranteeCountry, guarantee.province AS guaranteeProvince, guarantee.city AS guaranteeCity, guarantee.county as guaranteeCounty, guarantee.address AS guaranteeAddress, guarantee.postalcode as guaranteePostalcode, guarantee.relationship as guaranteeRelationship,
 		contacter.id AS contacterId, contacter.name AS contacterName, contacter.last_name as contacterLastName, contacter.nationality AS contacterNationality, contacter.gender AS contacterGender, contacter.birthday AS contacterBirthday, contacter.email AS contacterEmail, contacter.qq AS contacterQQ, contacter.wechat AS contacterWechat, contacter.phone AS contacterPhone, contacter.country AS contacterCountry, contacter.province AS contacterProvince, contacter.city AS contacterCity, contacter.county as contacterCounty, contacter.address AS contacterAddress, contacter.postalcode as contacterPostalcode, contacter.relationship as contacterRelationship,
@@ -263,6 +263,7 @@
 		<result property="password" column="password" />
 		<result property="email" column="email" />
 		<result property="alias" column="alias" />
+		<result property="code" column="code" />
 		<result property="resetPasswordSign" column="resetPasswordSign" />
 		<association property="info" column="user_info_id" javaType="com.noeasy.money.model.UserInfoBean">
 			<id property="id" column="infoId" />

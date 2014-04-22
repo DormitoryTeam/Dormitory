@@ -1,27 +1,41 @@
 package com.noeasy.money.model;
 
-
 public class UserBean extends BaseBean {
 
-    private Integer      id;
+    private Integer        id;
 
-    private String       login;
+    private String         login;
 
-    private String       password;
+    private String         password;
 
-    private String       alias;
+    private String         alias;
 
-    private String       email;
+    private String         email;
 
-    private String       resetPasswordSign;
+    private String         resetPasswordSign;
 
-    private UserInfoBean info;
+    private UserInfoBean   info;
 
-    private UserInfoBean guaranteeInfo;
+    private UserInfoBean   guaranteeInfo;
 
-    private UserInfoBean contactPersonInfo;
+    private UserInfoBean   contactPersonInfo;
 
     private UserPreferBean prefer;
+
+    private String         code;
+
+
+
+    public String getCode() {
+        return code;
+    }
+
+
+
+    public void setCode(String pCode) {
+        code = pCode;
+    }
+
 
 
     public Integer getId() {
@@ -142,5 +156,4 @@ public class UserBean extends BaseBean {
         prefer = pPrefer;
     }
 
-    
 }

@@ -78,7 +78,7 @@
 						<c:if test="${null == birthday}">
 						<c:set var="birthday" value="${user.info.birthday}" />
 						</c:if>
-						<input name="birthday" type="text" value="<fmt:formatDate value='${birthday}' pattern='yyyy-MM-dd'/>" />
+						<input class="datepicker" name="birthday" type="text" value="<fmt:formatDate value='${birthday}' pattern='yyyy-MM-dd'/>" />
 					</dd>
 				</dl>
 				<dl>
