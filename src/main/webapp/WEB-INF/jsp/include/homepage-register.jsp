@@ -16,6 +16,7 @@
 
 			</dl>
 			<dl>
+				<dt>&nbsp;</dt>
 				<dd class="error"><span class="errorMessage">&nbsp;</span></dd>
 			</dl>
 			<dl class="btnBox">

@@ -11,7 +11,6 @@ require(['config'], function(config) {
             });
 
             $("#sltCountry").bind("change", loadCitiesByCountry);
-            $("#sltCity").bind("change", loadCollegesByCity);
 
             $('.jQ-regbtn').on('click', function() {
                 $(this).acsPopup({
