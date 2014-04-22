@@ -154,7 +154,7 @@
 						<dl>
 							<dt>&nbsp;</dt>
 							<dd>
-								<input name="postalcode" type="text" value="${user.guaranteeInfo.postalcode}" class="larger"/> (邮编)
+								<input name="postalcode" type="text" value="${user.guaranteeInfo.postalcode}" class="mini"/> (邮编)
 							</dd>
 						</dl>
 					</fieldset>

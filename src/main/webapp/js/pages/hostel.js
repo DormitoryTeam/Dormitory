@@ -113,10 +113,10 @@ require(['config'], function(config) {
 
             $(".house-tabs").tabs();
 
-            $(".air-tab-personal").tabs();
+            //$(".air-tab-personal").tabs();
 
-            $(".reservation-tab").tabs().addClass("ui-tabs-vertical ui-helper-clearfix");
-            $(".reservation-tab li").removeClass("ui-corner-top").addClass("ui-corner-left");
+            //$(".reservation-tab").tabs().addClass("ui-tabs-vertical ui-helper-clearfix");
+            //$(".reservation-tab li").removeClass("ui-corner-top").addClass("ui-corner-left");
 
             $(".scrollable").scrollable();
 

@@ -160,7 +160,7 @@
 						<dl>
 							<dt>&nbsp;</dt>
 							<dd>
-								<input name="postalcode" type="text" value="${user.info.postalcode}" class="larger"/> (邮编)
+								<input name="postalcode" type="text" value="${user.info.postalcode}" class="mini"/> (邮编)
 							</dd>
 						</dl>
 					</fieldset>

@@ -11,7 +11,7 @@
 		</dl>
 		<dl>
 			<dt>单价</dt>
-			<dd>£${order.lineItems[0].weekPrice}</dd>
+			<dd>£${order.lineItems[0].listPrice}</dd>
 		</dl>
 		<dl>
 			<dt>总价</dt>
