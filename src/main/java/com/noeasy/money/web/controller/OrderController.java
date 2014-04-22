@@ -206,7 +206,11 @@ public class OrderController {
             } else {
                 maintainSessionOrder(request, step);
                 if (step + 1 > maxStep) {
-                    return forwrdURLs[maxStep];
+                    if (isDormitoryOrder(request)){
+                        return "order/dormtiroyOrderSuccess";
+                    } else {
+                        return "order/pickupOrderSuccess";
+                    }
                 }
                 return forwrdURLs[step + 1];
             }

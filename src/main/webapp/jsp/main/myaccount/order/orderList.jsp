@@ -75,6 +75,7 @@
 				</ul>
 				</c:forEach>
 			</div>
+			<jsp:include page="/jsp/utils/pagination.jsp" flush="true"/>
 			<div class="order-list-tip">
 				<p>订单处理时，可随时拨打以下电话与我们联系</p>
   				<p>联系电话：010-12345678</p>
