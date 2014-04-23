@@ -11,29 +11,17 @@
 	<li class="item">
 		<h2>附近的大学</h2>
 		<ul class="favorites-hostel-list">
-			<li>
-				<a href="#">伦敦-伦敦大学-宿舍A</a>
-			</li>
-			<li>
-				<a href="#">伦敦-伦敦大学-宿舍B</a>
-			</li>
-			<li>
-				<a href="#">伦敦-伦敦大学-宿舍C</a>
-			</li>
+			<c:forEach var="college" items="${colleges}" end="2" >
+				<li><a href="/dormitory/dormitory/dormitory-list.html?cityId=${city['id']}&collegeId=${college['id']}">${college['name']}</a></li>
+			</c:forEach>
 		</ul>
 	</li>
 	<li class="item">
 		<h2>附近的宿舍</h2>
 		<ul class="favorites-hostel-list">
-			<li>
-				<a href="#">伦敦-伦敦大学-宿舍A</a>
-			</li>
-			<li>
-				<a href="#">伦敦-伦敦大学-宿舍B</a>
-			</li>
-			<li>
-				<a href="#">伦敦-伦敦大学-宿舍C</a>
-			</li>
+			<c:forEach var="relatedDormitory" items="${relatedDormitories}" end="2" >
+				<li><a href="/dormitory/dormitory/dormitory-detail.html?id=${relatedDormitory['id']}">${relatedDormitory['name']}</a></li>
+			</c:forEach>
 		</ul>
 	</li>
 	<li class="bottom">&nbsp;</li>

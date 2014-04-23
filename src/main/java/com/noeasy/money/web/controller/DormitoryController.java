@@ -107,9 +107,17 @@ public class DormitoryController {
                     }
                 }
 
+                searchBean.setId(null);
+                searchBean.setCityId(dormitory.getCityId());
+                List<DormitoryBean> relatedDormitories = dormitoryService.queryDormitoryPage(searchBean);
+                List<Map<String, Object>> colleges = navigationService.queryColleges(dormitory.getCityId());
+
+                model.addAttribute("colleges", colleges);
+                model.addAttribute("relatedDormitories", relatedDormitories);
                 model.addAttribute("dormitory", dormitory);
                 model.addAttribute("history", browsingHistory);
                 model.addAttribute("rates", rates);
+                model.addAttribute("cityId", dormitory.getCityId());
                 model.addAttribute("userId", userId);
                 model.addAttribute("userName", userName);
             }
@@ -169,6 +177,15 @@ public class DormitoryController {
                 List<Map<String, String>> browsingHistory = dormitoryService.queryDormitoryBrowseHistory(userId, 0);
                 model.addAttribute("history", browsingHistory);
             }
+
+            searchBean.setId(null);
+            searchBean.setCityId(NumberUtils.toInt(cityId));
+            List<DormitoryBean> relatedDormitories = dormitoryService.queryDormitoryPage(searchBean);
+            List<Map<String, Object>> colleges = navigationService.queryColleges(NumberUtils.toInt(cityId));
+
+            model.addAttribute("colleges", colleges);
+            model.addAttribute("relatedDormitories", relatedDormitories);
+
             model.addAttribute("keyword", keyword);
             model.addAttribute("sortField", sortField);
             model.addAttribute("country", country);
