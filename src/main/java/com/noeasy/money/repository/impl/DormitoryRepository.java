@@ -429,7 +429,11 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
         int result = getSqlSession().update("com.noeasy.money.model.Dormitory.updateDormitory", pDormitory);
         if (result > 0) {
             for (RoomInfoBean room : pDormitory.getRooms()) {
-                updateRoomInfo(room);
+                if (room.getId() > 0) {
+                    updateRoomInfo(room);
+                } else {
+                    saveRoomInfo(room);
+                }
             }
             // update the media path
             deleteDormitoryMediaPath(pDormitory.getId());
@@ -453,7 +457,11 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
         int result = getSqlSession().update("com.noeasy.money.model.Dormitory.updateRoomInfo", pRoom);
         if (result > 0) {
             for (RoomPrice roomPrice : pRoom.getContractPrice()) {
-                updateRoomPrice(roomPrice);
+                if (roomPrice.getId() > 0) {
+                    updateRoomPrice(roomPrice);
+                } else {
+                    saveRoomPrice(roomPrice);
+                }
             }
         }
         return result;

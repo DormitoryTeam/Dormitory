@@ -16,7 +16,7 @@
 		<div class="row">
 			<div class="sidebar pull-right">
 				<jsp:include page="include/dormitorylist-map.jsp" />
-				<jsp:include page="/jsp/main/hostel/rightinfobar.jsp" />
+				<jsp:include page="include/dormitorylist-rightinfobar.jsp" />
 			</div>
 			<div class="contentBox">
 				<jsp:include page="include/dormitorylist-top.jsp" />

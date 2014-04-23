@@ -41,7 +41,7 @@
 	</sql>
 
 	<sql id="order-by-order-field">
-		order by dor_${sortBy}
+		order by ${sortBy}
 	</sql>
 
 	<sql id="order-by-field">
@@ -71,7 +71,7 @@
 		t1.city_id dor_cityId,
 		t1.status dor_status,
 		t2.name dor_city,
-		coalesce(avg(t3.score), 0) dor_rating
+		coalesce(avg(t3.score), 0) rating
 		<if test="collegeId != null">
 			,ifnull(t8.distance, 0) as distance
 		</if>
@@ -133,7 +133,7 @@
 		t1.city_id dor_cityId,
 		t1.status dor_status,
 		t2.name dor_city,
-		coalesce(avg(t3.score), 0) dor_rating,
+		coalesce(avg(t3.score), 0) rating,
 		t4.id ri_id,
 		t4.dormitory_id ri_dormitoryId,
 		t4.name ri_name,
@@ -523,8 +523,7 @@
 		select distinct t1.dormitory_id dormitoryId, t2.name
 		from browsing_history t1
 		left join dormitory t2 on t1.dormitory_id = t2.id
-		where t1.user_id =
-		#{userId}
+		where t1.user_id = #{userId}
 		<if test="id != null">
 			and t1.dormitory_id != #{id}
 		</if>
@@ -717,7 +716,7 @@
 		<result property="equipment" column="dor_equipment" />
 		<result property="service" column="dor_service" />
 		<result property="currency" column="dor_currency" />
-		<result property="rating" column="dor_rating" />
+		<result property="rating" column="rating" />
 		<result property="weekPrice" column="dor_weekPrice" />
 		<result property="salePrice" column="dor_salePrice" />
 		<result property="latitude" column="dor_latitude" />
@@ -726,7 +725,7 @@
 		<result property="cityId" column="dor_cityId" />
 		<result property="city" column="dor_city" />
 		<result property="distance" column="distance" />
-		<result property="rating" column="dor_rating" />
+		<result property="rating" column="rating" />
 		<result property="status" column="dor_status" />
 		<collection property="rooms" resultMap="roomInfo" />
 	</resultMap>

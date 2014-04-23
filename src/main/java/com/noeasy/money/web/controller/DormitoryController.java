@@ -62,7 +62,7 @@ public class DormitoryController {
             if (userIdObj != null) {
                 userId = NumberUtils.toInt(String.valueOf(userIdObj));
             }
-            dormitoryService.rateDormitory(id, dormitoryId, userId, point, comment, alias);
+            dormitoryService.rateDormitory(id, dormitoryId, userId, point == null ? 0 : point, comment, alias);
         }
         return "redirect:/dormitory/dormitory-detail.html?id=" + dormitoryId;
     }
@@ -160,6 +160,15 @@ public class DormitoryController {
             searchBean.setPageBean(page);
             List<DormitoryBean> dormitories = dormitoryService.queryDormitoryPage(searchBean);
 
+            Object userIdObj = request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+            int userId = 0;
+            if (userIdObj != null) {
+                userId = NumberUtils.toInt(String.valueOf(userIdObj));
+            }
+            if (userId > 0) {
+                List<Map<String, String>> browsingHistory = dormitoryService.queryDormitoryBrowseHistory(userId, 0);
+                model.addAttribute("history", browsingHistory);
+            }
             model.addAttribute("keyword", keyword);
             model.addAttribute("sortField", sortField);
             model.addAttribute("country", country);

@@ -173,7 +173,7 @@
 								<input type="hidden" name="prices[${contractCount*i['index']+j['index']}].contractId" value="${contract['id']}" />
 							</td>
 							<td><input type="checkbox" name="prices[${contractCount*i['index']+j['index']}].status" value="1" ${curPrice['status'] == 1 ? 'checked' : ''} /></td>
-							<td><input type="text" name="prices[${contractCount*i['index']+j['index']}].currency" value="${empty curPrice['currency'] ? 0.0 : curPrice['currency']}" /></td>
+							<td><input type="text" name="prices[${contractCount*i['index']+j['index']}].currency" value="${empty curPrice['currency'] ? '' : curPrice['currency']}" /></td>
 							<td><input type="text" name="prices[${contractCount*i['index']+j['index']}].weekPrice" value="${empty curPrice['weekPrice'] ? 0.0 : curPrice['weekPrice']}" /></td>
 							<td><input type="text" name="prices[${contractCount*i['index']+j['index']}].salePrice" value="${empty curPrice['salePrice'] ? 0.0 : curPrice['salePrice']}" /></td>
 						</tr>
