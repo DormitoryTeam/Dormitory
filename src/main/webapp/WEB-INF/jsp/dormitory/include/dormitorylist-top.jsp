@@ -1,4 +1,6 @@
-<form action="/dormitory/dormitory/dormitory-list.html?collegeId=${college['id']}&cityId=${city['id']}" method="POST">
+<form action="/dormitory/dormitory/dormitory-list.html" method="GET">
+	<input type="hidden" name="collegeId" value="${college['id']}" />
+	<input type="hidden" name="cityId" value="${city['id']}" />
 	<div class="row searchBox">
 		<fieldset>
 			<input type="text" name="keyword" value="${keyword}" /> <input type="submit" class="btn-search" value="" />
