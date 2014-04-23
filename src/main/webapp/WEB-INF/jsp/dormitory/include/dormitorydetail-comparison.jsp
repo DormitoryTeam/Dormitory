@@ -32,10 +32,10 @@
 		<c:forEach var="room" items="${dormitory['rooms']}">
 			<ul class="scroll-content-item item-body">
 				<li>&nbsp;${room['checkinDateString']}</li>
-				<li>&nbsp;${room['houseArea']}</li>
-				<li>&nbsp;${room['roomType']}</li>
+				<li>&nbsp;${room['houseArea']}平米</li>
+				<li>&nbsp;${room['bedType']}</li>
 				<li>&nbsp;${room['ensuitBathroom']}</li>
-				<li>&nbsp;${room['kitchenPeople']}</li>
+				<li>&nbsp;${room['roomType']}</li>
 				<li>&nbsp;${room['orientationArrange']}</li>
 				<li>&nbsp;${room['roomLanguageArrange']}</li>
 				<li class="title-hight">&nbsp;${room['kitchenEquipment']}</li>
