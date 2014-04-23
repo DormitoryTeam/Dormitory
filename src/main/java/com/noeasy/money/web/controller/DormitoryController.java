@@ -77,6 +77,7 @@ public class DormitoryController {
             searchBean.setId(NumberUtils.toInt(id));
             searchBean.setExcludeStatus(DormitoryStatus.INVISIBILITY);
             searchBean.setExcludeRoomStatus(DormitoryStatus.INVISIBILITY);
+            searchBean.setExcludeRoomPriceStatus(0);
             DormitoryBean dormitory = dormitoryService.queryDormitory(searchBean);
 
             if (dormitory.getId() > 0) {
@@ -145,6 +146,7 @@ public class DormitoryController {
             }
             searchBean.setExcludeStatus(DormitoryStatus.INVISIBILITY);
             searchBean.setExcludeRoomStatus(DormitoryStatus.INVISIBILITY);
+            searchBean.setExcludeRoomPriceStatus(0);
             int rowTotal = dormitoryService.queryDormitoryCount(searchBean);
 
             PageBean page = new PageBean(rowTotal);

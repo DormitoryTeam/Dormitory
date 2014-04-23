@@ -10,7 +10,7 @@
 				<dt>
 					<select id="selectQuickRoom">
 						<c:forEach var="room" items="${dormitory['rooms']}">
-							<option value="${room['id']}">${room['roomType']}</option>
+							<option value="${room['id']}">${room['name']}</option>
 						</c:forEach>
 					</select>
 				</dt>
@@ -32,7 +32,7 @@
 				</dt>
 			</dl>
 		</fieldset>
-		<p id="quickRoomNamePreview">${dormitory['rooms'][0]['name']}</p>
+		<p id="quickRoomNamePreview">${dormitory['rooms'][0]['roomType']}</p>
 		<input type="button" class="btn-quick" value="快速预定" />
 	</form>
 </div>
