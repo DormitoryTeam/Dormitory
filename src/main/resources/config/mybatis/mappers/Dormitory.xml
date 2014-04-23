@@ -371,8 +371,8 @@
 		insert into room_info (dormitory_id, room_type_id, name, equipment, service, description, checkin_date, orientations, floors, bed_type, house_area,
 			ensuite_bathroom, kitchen_people_number, floor_arrangement, orientation_arrangement, room_language_arrangement, status, kitchen_equipment, bathroom_equipment) values (
 			#{dormitoryId},
-			#{name},
 			#{roomTypeId},
+			#{name},
 			#{equipment},
 			#{service},
 			#{description},
