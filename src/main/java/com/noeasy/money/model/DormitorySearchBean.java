@@ -44,7 +44,11 @@ public class DormitorySearchBean {
 
     private Integer              mId;
 
+
+
     private String               mDormitoryName;
+
+
 
     private Integer              mCityId;
 
@@ -74,7 +78,7 @@ public class DormitorySearchBean {
 
     private DormitoryStatus      mExcludeRoomStatus;
 
-
+    private Integer              mExcludeRoomPriceStatus;
 
     /**
      * @return the cityId
@@ -83,15 +87,12 @@ public class DormitorySearchBean {
         return mCityId;
     }
 
-
-
     /**
      * @return the cityName
      */
     public String getCityName() {
         return mCityName;
     }
-
 
 
     /**
@@ -126,6 +127,15 @@ public class DormitorySearchBean {
      */
     public Integer getDormitoryTypeId() {
         return mDormitoryTypeId;
+    }
+
+
+
+    /**
+     * @return the excludeRoomPriceStatus
+     */
+    public Integer getExcludeRoomPriceStatus() {
+        return mExcludeRoomPriceStatus;
     }
 
 
@@ -299,6 +309,17 @@ public class DormitorySearchBean {
 
 
     /**
+     * @param pExcludeRoomPriceStatus the excludeRoomPriceStatus to set
+     */
+    public void setExcludeRoomPriceStatus(final Integer pExcludeRoomPriceStatus) {
+        mExcludeRoomPriceStatus = pExcludeRoomPriceStatus;
+    }
+
+
+
+    /**
+     * /**
+     * 
      * @param pExcludeRoomStatus
      *            the excludeRoomStatus to set
      */

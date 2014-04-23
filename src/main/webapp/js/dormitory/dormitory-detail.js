@@ -25,7 +25,7 @@ $(function() {
 		});
 		$("#selectQuickContract").empty().append(contractOptions).simSelect();
 		$("#quickPricePreview").html(contracts[0].currency + " " + contracts[0].salePrice);
-		$("#quickRoomNamePreview").html(contracts[0].roomName);
+		$("#quickRoomNamePreview").html(contracts[0].roomType);
 	});
 	
 	$("#selectQuickContract").change(function(e) {
@@ -33,7 +33,7 @@ $(function() {
 		$.each(contracts, function(i, e) {
 			if(e.id == $("#selectQuickContract").val()) {
 				$("#quickPricePreview").html(e.currency + " " + e.salePrice);
-				$("#quickRoomNamePreview").html(e.roomName);
+				$("#quickRoomNamePreview").html(e.roomType);
 				return false;
 			}
 		});

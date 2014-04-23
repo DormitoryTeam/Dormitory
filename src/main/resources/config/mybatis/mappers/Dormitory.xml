@@ -214,7 +214,9 @@
 		<if test="excludeRoomStatus != null">
 			and t4.status != #{excludeRoomStatus}
 		</if>
-		and t5.status = 1
+		<if test="excludeRoomPriceStatus != null">
+			and t5.status != #{excludeRoomPriceStatus}
+		</if>
 		group by t5.id
 	</select>
 
