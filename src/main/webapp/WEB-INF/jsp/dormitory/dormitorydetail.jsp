@@ -3,8 +3,8 @@
 <%@ taglib prefix="hostel" tagdir="/WEB-INF/tags"%>
 <hostel:container template="hostel">
 	<%-- top section --%>
-	<script type="text/javascript" src="/dormitory/js/jquery-raty/jquery.raty.min.js"></script>
-	<script type="text/javascript" src="/dormitory/js/dormitory/dormitory-detail.js"></script>
+	<script type="text/javascript" src="<c:url value='/js/jquery-raty/jquery.raty.min.js'/>"></script>
+	<script type="text/javascript" src="<c:url value='/js/dormitory/dormitory-detail.js'/>"></script>
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDseYSlaYVhokgVdQuPH9Y35gACzO2n3BM&sensor=false"></script>
 	
 	<header>

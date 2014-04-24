@@ -4,7 +4,7 @@
 		<ul>
 			<li class="tip-header">&nbsp;</li>
 			<li>微信二维码</li>
-			<li class="text-center"><img src="/img/banner/webchat-bar.jpg" alt /></li>
+			<li class="text-center"><img src="<c:url value='/img/banner/webchat-bar.jpg'/>" alt /></li>
 			<li>微信：@abcd</li>
 			<li><a href="#">点击进入城市论坛</a></li>
 			<li><a href="#">点击进入利兹大学百度贴吧</a></li>
@@ -22,7 +22,7 @@
 					</div>
 					<ul class="city-list">
 						<c:forEach var="college" items="${cityCollege['colleges']}">
-							<li><a href="/dormitory/dormitory/dormitory-list.html?cityId=${cityCollege['cityId']}&collegeId=${college['collegeId']}">
+							<li><a href="<c:url value='/dormitory/dormitory-list.html?cityId=${cityCollege.cityId}&collegeId=${college.collegeId}'/>">
 									<p>${college['collegeName']}</p> <span>${college['originalName']}</span>
 							</a></li>
 						</c:forEach>

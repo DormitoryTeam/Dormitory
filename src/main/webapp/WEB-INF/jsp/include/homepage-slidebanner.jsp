@@ -8,7 +8,7 @@
 				</ul>
 			</div>
 			<div class="selectContent">
-				<form action="/dormitory/navigation/navigator.html" method="GET">
+				<form action="<c:value url='/navigation/navigator.html'/>" method="GET">
 					<fieldset>
 						<dl>
 							<dt>国家</dt>
@@ -59,7 +59,7 @@
 				<ul>
 					<li class="user-header">
 						<div class="header-img-opacity">
-							<img src="/dormitory/img/login/header.jpg" alt="" />
+							<img src="<c:url value='/img/login/header.jpg'/>" alt="" />
 						</div>
 					</li>
 					<li>
@@ -89,8 +89,8 @@
 				<c:if test="${not empty slides}">
 					<c:forEach var="img" items="${slides}">
 						<div class="sliderItem">
-							<a href="/dormitory/upload/images/slide/${img['path']}">
-								<img src="/dormitory/upload/images/slide/${img['path']}" alt="${empty img['desc'] ? img['path'] : img['desc']}" />
+							<a href="<c:url value='/upload/images/slide/${img.path}' />">
+								<img src="<c:url valur='/upload/images/slide/${img.path}'/>" alt="${empty img['desc'] ? img['path'] : img['desc']}" />
 							</a>
 							<p class="text"></p>
 						</div>
@@ -99,7 +99,7 @@
 				<c:if test="${empty slides}">
 					<div class="sliderItem">
 						<a href="#">
-							<img src="/dormitory/img/slider/slider-img.jpg" alt="" />
+							<img src="<c:url value='/img/slider/slider-img.jpg'/>" alt="" />
 						</a>
 						<p class="text"></p>
 					</div>

@@ -29,7 +29,7 @@
 			<li class="item">
 				<h2 class="webchat">在微信上关注我们</h2>
 				<p>
-					<img src="/dormitory/img/banner/webchat.jpg" alt />
+					<img src="<c:url value='/img/banner/webchat.jpg'/>" alt />
 				</p>
 			</li>
 		</ul>
@@ -40,7 +40,7 @@
 		<div class="news-details">
 			<div class="news-header">
 				<c:if test="${not empty article['coverPath']}">
-					<img src="/dormitory/upload/images/articleCover/${article['id']}/${article['coverPath']}" />
+					<img src="<c:url value='/upload/images/articleCover/${article.id}/${article.coverPath}'/>" />
 					<a href="${backURL}" class="btn-style">返回</a>
 				</c:if>
 			</div>

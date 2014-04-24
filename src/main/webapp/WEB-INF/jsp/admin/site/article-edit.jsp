@@ -20,7 +20,7 @@
 </head>
 <body>
 	<br />
-	<form id="form" action="/dormitory/admin/site/article-save.html" method="POST" enctype="multipart/form-data">
+	<form id="form" action="<c:url value='/admin/site/article-save.html'/>" method="POST" enctype="multipart/form-data">
 		<input type="hidden" name="id" value="${article['id']}" />
 		<input type="hidden" name="userId" value="${article['userId']}" />
 		<input id="iptTextBody" type="hidden" name="textBody" value="" />
@@ -92,7 +92,7 @@
 				<input type="hidden" name="coverPath" value="${article['coverPath']}" />
 				<input type="file" name="cover" />
 				<c:if test="${not empty article['coverPath']}">
-					<img style="height:160px;" src="/dormitory/upload/images/articleCover/${article['id']}/${article['coverPath']}" />
+					<img style="height:160px;" src="<c:url value='/upload/images/articleCover/${article.id}/${article.coverPath}'/>" />
 					<input id="ckbRemoveCover" type="checkbox" value="Remove Cover" />
 					Remove cover:
 					<input id="hidRemoveCover" type="hidden" name="removeCover" value="false" />

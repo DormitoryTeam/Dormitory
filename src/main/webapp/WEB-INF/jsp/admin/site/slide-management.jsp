@@ -14,7 +14,7 @@
 <link type="text/css" rel="stylesheet" href="<c:url value='/style/dropzone.css' />" />
 </head>
 <body>
-	<form action="/dormitory/admin/slide-save.html" method="POST">
+	<form action="<c:url value='/admin/slide-save.html'/>" method="POST">
 		<table>
 			<tr>
 				<td>Images:</td>
@@ -31,7 +31,7 @@
 						<c:forEach var="slide" items="${slides}" varStatus="index">
 							<tr class="fileRow">
 								<td>${slide}<input type="text" readonly="readonly" name="imageNames" class="fileNames" value="${slide['path']}" /> <input type="hidden" name="imageIndexes" class="fileIndex" value="${slide['index']}" /></td>
-								<td><a href="/dormitory/upload/images/slide/${slide['path']}"> <img src="/dormitory/upload/images/slide/${slide['path']}" /></a></td>
+								<td><a href="<c:url value='/upload/images/slide/${slide.path}'/>"> <img src="<c:url value='/upload/images/slide/${slide.path}'/>" /></a></td>
 								<td><input type="button" value="Up ↑" class="btnUp" /></td>
 								<td><input type="button" value="Down ↓" class="btnDown" /></td>
 								<td><input type="button" value="Remove" class="btnRemove" /></td>
@@ -47,7 +47,7 @@
 			<tr>
 				<td colspan="4">
 					<div style="width: 500px; padding: 20px;">
-						<input id="fileupload" type="file" name="files[]" data-url="/dormitory/admin/slide-image-upload.html?dormitoryId=${dormitory['id']}" multiple="multiple">
+						<input id="fileupload" type="file" name="files[]" data-url="<c:url value='/admin/slide-image-upload.html?dormitoryId=${dormitory.id}'/>" multiple="multiple">
 						<div id="dropzone" class="fade well">Drop files here</div>
 						<div id="progress" class="progress">
 							<div class="bar" style="width: 0%;"></div>

@@ -29,18 +29,18 @@
 			<li class="item">
 				<h2 class="webchat">在微信上关注我们</h2>
 				<p>
-					<img src="../data/hostel/images/banner/webchat.jpg" alt />
+					<img src="<c:url value='/img/banner/webchat.jpg'/>" alt />
 				</p>
 			</li>
 		</ul>
 	</div>
 	<div class="contentBox news-info">
 		<div class="bread-crumb">
-			<a href="/dormitory/navigation/home.html">首页</a> &#62; <a href="#">新闻</a>
+			<a href="<c:url value='/navigation/home.html'/>">首页</a> &#62; <a href="#">新闻</a>
 		</div>
 		<ul class="news-list">
 			<c:forEach var="article" items="${articleTitles}">
-				<li><a href="/dormitory/navigation/article-detail.html?id=${article['id']}&backURL=${pageContext['request']['contextPath']}${requestScope['javax.servlet.forward.servlet_path']}">
+				<li><a href="/navigation/article-detail.html?id=${article.id}&backURL=${pageContext.request.contextPath}${requestScope.javax.servlet.forward.servlet_path}">
 					${article['title']}</a><span>（${article['createTime']}）</span></li>
 			</c:forEach>
 		</ul>

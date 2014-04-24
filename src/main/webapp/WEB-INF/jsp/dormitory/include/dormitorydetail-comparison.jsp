@@ -40,7 +40,7 @@
 				<li>&nbsp;${room['roomLanguageArrange']}</li>
 				<li class="title-hight">&nbsp;${room['kitchenEquipment']}</li>
 				<li>&nbsp;${room['bathroomEquipment']}</li>
-				<li class="title-hight last"><a href="javascript:void(0)" class="btn-style jQ-quick" roomId="${room['id']}" data-popupSrc="/dormitory/dormitory/dormitory-quik-book.html">立即预定</a></li>
+				<li class="title-hight last"><a href="javascript:void(0)" class="btn-style jQ-quick" roomId="${room['id']}" data-popupSrc="<c:url value='/dormitory/dormitory-quik-book.html'/>">立即预定</a></li>
 			</ul>
 		</c:forEach>
 	</div>

@@ -2,7 +2,7 @@
 	<c:forEach var="dormitory" items="${dormitories}" varStatus="i">
 		<li>
 			<div class="hostel-img pull-left">
-				<img src="/dormitory/img/house/house.jpg" alt />
+				<img src="<c:url value='/img/house/house.jpg'/>" alt />
 				<p class="hostel-server">
 					<a href="#" class="video">&nbsp;</a>
 					<a href="#" class="plane">&nbsp;</a>
@@ -75,7 +75,7 @@
 					</tbody>
 				</table>
 				<c:if test="${not empty dormitory['rooms']}">
-					<a href="/dormitory/dormitory/dormitory-detail.html?id=${dormitory['id']}" class="more">更多房型</a>
+					<a href="<c:url value='/dormitory/dormitory-detail.html?id=${dormitory.id}'/>" class="more">更多房型</a>
 				</c:if>
 			</div>
 		</li>

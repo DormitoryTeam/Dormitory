@@ -1,4 +1,4 @@
-<form action="/dormitory/dormitory/dormitory-list.html" method="GET">
+<form action="<c:url value='/dormitory/dormitory-list.html' />" method="GET">
 	<input type="hidden" name="collegeId" value="${college['id']}" />
 	<input type="hidden" name="cityId" value="${city['id']}" />
 	<div class="row searchBox">

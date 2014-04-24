@@ -1,5 +1,5 @@
 <div class="comment">
-	<form action="/dormitory/dormitory/rate.html" method="POST">
+	<form action="<c:url value='/dormitory/rate.html' />" method="POST">
 		<input type="hidden" name="dormitoryId" value="${dormitory['id']}" />
 		<input type="hidden" name="id" value="${curRate['id']}" />
 		<div class="title">发表评论</div>
@@ -20,7 +20,7 @@
 				<dd>评分</dd>
 				<dt>
 					<div id="rate" data-score="${curRate['point']}"></div>
-					<input class="btn-comment" type="submit" ${empty sessionScope['USER_ID'] ? 'disabled value="cannot submit before login"' : 'value="submit"'} />
+					<input class="btn-comment" type="submit" ${empty sessionScope['USER_ID'] ? 'disabled value="login to submit"' : 'value="submit"'} />
 				</dt>
 			</dl>
 		</fieldset>

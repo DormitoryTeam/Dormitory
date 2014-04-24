@@ -1,9 +1,9 @@
 <div class="img-larger-content">
 	<c:if test="${not empty dormitory['picPath']}">
-		<img src="/dormitory/upload/images/dormitory/${dormitory['id']}/${dormitory['picPath'][0]}" />
+		<img src="<c:url value='/upload/images/dormitory/${dormitory.id}/${dormitory.picPath[0]}'/>" />
 	</c:if>
 	<c:if test="${empty dormitory['picPath']}">
-		<img src="/dormitory/img/house/house-larger.jpg" />
+		<img src="<c:url value='/img/house/house-larger.jpg'/>" />
 	</c:if>
 </div>
 
@@ -17,7 +17,7 @@
 					<c:if test="${count eq 1}">
 						<div>
 					</c:if>
-					<img src="/dormitory/upload/images/dormitory/${dormitory['id']}/${img}" />
+					<img src="<c:url value='/upload/images/dormitory/${dormitory.id}/${img}'/>" />
 					<c:if test="${count eq 5}">
 				</div>
 				<c:set var="count" value="0" />
@@ -30,7 +30,7 @@
 			</c:if>
 			<c:if test="${empty dormitory['picPath']}">
 				<div>
-					<img src="/dormitory/img/house/house-larger.jpg" />
+					<img src="<c:url value='/img/house/house-larger.jpg'/>" />
 				</div>
 			</c:if>
 		</div>

@@ -17,7 +17,7 @@
 </head>
 <body>
 	<br />
-	<form id="formDormitory" action="/dormitory/admin/dormitory/dormitory-save.html" method="POST">
+	<form id="formDormitory" action="<c:url value='/admin/dormitory/dormitory-save.html'/>" method="POST">
 		<input type="hidden" name="id" id="hidDormitoryId" value="${empty dormitory['id'] ? 0 : dormitory['id']}" />
 		<table class="table table-hover table-bordered table-striped" style="width:1000px">
 			<tbody>
@@ -184,7 +184,7 @@
 		<c:if test="${not empty dormitory['id']}">
 			<hr />
 			<div style="width: 500px; padding: 20px;">
-				<input id="fileupload" type="file" name="files[]" data-url="/dormitory/admin/dormitory/dormitory-image-upload.html?dormitoryId=${dormitory['id']}" multiple="multiple">
+				<input id="fileupload" type="file" name="files[]" data-url="<c:url value='/admin/dormitory/dormitory-image-upload.html?dormitoryId=${dormitory.id}'/>" multiple="multiple">
 				<div id="dropzone" class="fade well">Drop files here</div>
 				<div id="progress" class="progress">
 					<div class="bar" style="width: 0%;"></div>
@@ -199,7 +199,7 @@
 				<c:forEach var="path" items="${dormitory['picPath']}" varStatus="index">
 					<tr>
 						<td><input type="text" name="imageNames" class="fileNames" value="${path}" /></td>
-						<td><a href="/dormitory/upload/images/dormitory/${dormitory['id']}/${path}"> <img src="/dormitory/upload/images/dormitory/${dormitory['id']}/${path}" /></a></td>
+						<td><a href="<c:url value='/upload/images/dormitory/${dormitory.id}/${path}'/>"> <img src="<c:url value='/upload/images/dormitory/${dormitory.id}/${path}" /></a></td>
 						<td><input type="button" value="Remove" class="btnRemove" fileName="${path}" /></td>
 					</tr>
 				</c:forEach>
