@@ -8,7 +8,7 @@
 				</ul>
 			</div>
 			<div class="selectContent">
-				<form action="<c:value url='/navigation/navigator.html'/>" method="GET">
+				<form action="<c:url value='/navigation/navigator.html'/>" method="GET">
 					<fieldset>
 						<dl>
 							<dt>国家</dt>
@@ -90,7 +90,7 @@
 					<c:forEach var="img" items="${slides}">
 						<div class="sliderItem">
 							<a href="<c:url value='/upload/images/slide/${img.path}' />">
-								<img src="<c:url valur='/upload/images/slide/${img.path}'/>" alt="${empty img['desc'] ? img['path'] : img['desc']}" />
+								<img src="<c:url value='/upload/images/slide/${img.path}'/>" alt="${empty img['desc'] ? img['path'] : img['desc']}" />
 							</a>
 							<p class="text"></p>
 						</div>

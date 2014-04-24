@@ -199,7 +199,7 @@
 				<c:forEach var="path" items="${dormitory['picPath']}" varStatus="index">
 					<tr>
 						<td><input type="text" name="imageNames" class="fileNames" value="${path}" /></td>
-						<td><a href="<c:url value='/upload/images/dormitory/${dormitory.id}/${path}'/>"> <img src="<c:url value='/upload/images/dormitory/${dormitory.id}/${path}" /></a></td>
+						<td><a href="<c:url value='/upload/images/dormitory/${dormitory.id}/${path}'/>"> <img src="<c:url value='/upload/images/dormitory/${dormitory.id}/${path}'/>" /></a></td>
 						<td><input type="button" value="Remove" class="btnRemove" fileName="${path}" /></td>
 					</tr>
 				</c:forEach>

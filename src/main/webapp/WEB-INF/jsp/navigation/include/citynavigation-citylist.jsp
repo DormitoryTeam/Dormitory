@@ -1,4 +1,5 @@
 <div class="row">
+	<%-- 
 	<div class="tip pull-right">
 		<span class="tip-arraw">&nbsp;</span>
 		<ul>
@@ -12,6 +13,7 @@
 			<li class="tip-bottom">&nbsp;</li>
 		</ul>
 	</div>
+	--%>
 	<div class="contentBox country-list-box">
 		<ul class="country-list">
 			<c:set var="size" value="${fn:length(cityColleges)}" />
