@@ -65,6 +65,8 @@
 		t1.currency dor_currency,
 		t1.weekPrice dor_weekPrice,
 		t1.salePrice dor_salePrice,
+		t1.additionalPrice dor_additionalPrice,
+		t1.promotion dor_promotion,
 		t1.latitude dor_latitude,
 		t1.longitude dor_longitude,
 		t1.description dor_description,
@@ -127,6 +129,8 @@
 		t1.currency dor_currency,
 		t1.weekPrice dor_weekPrice,
 		t1.salePrice dor_salePrice,
+		t1.additionalPrice dor_additionalPrice,
+		t1.promotion dor_promotion,
 		t1.latitude dor_latitude,
 		t1.longitude dor_longitude,
 		t1.description dor_description,
@@ -719,6 +723,8 @@
 		<result property="rating" column="rating" />
 		<result property="weekPrice" column="dor_weekPrice" />
 		<result property="salePrice" column="dor_salePrice" />
+		<result property="additionalPrice" column="dor_additionalPrice" />
+		<result property="promotion" column="dor_promotion" />
 		<result property="latitude" column="dor_latitude" />
 		<result property="longitude" column="dor_longitude" />
 		<result property="description" column="dor_description" />

@@ -24,6 +24,8 @@
 				</c:if>
 			</c:forEach>
 		</p>
+		<p>附加费用：<span><em>&#163;</em>${dormitory['additionalPrice']}</span></p>
+		<p>优惠：${dormitory['promotion']}</p>
 	</div>
 	<div class="house-tabs">
 		<ul>

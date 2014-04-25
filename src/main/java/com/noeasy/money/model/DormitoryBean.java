@@ -53,6 +53,10 @@ public class DormitoryBean extends DormitoryRoomBean {
 
     private Double             mWeekPrice;
 
+    private Double             mAdditionalPrice;
+
+    private String             mPromotion;
+
     private String             mCurrency;
 
     private Double             mDistance;
@@ -82,6 +86,15 @@ public class DormitoryBean extends DormitoryRoomBean {
     private DormitoryRateBean  mRate;
 
     private List<RoomInfoBean> mRooms;
+
+
+
+    /**
+     * @return the additionalPrice
+     */
+    public Double getAdditionalPrice() {
+        return mAdditionalPrice;
+    }
 
 
 
@@ -212,6 +225,15 @@ public class DormitoryBean extends DormitoryRoomBean {
 
 
     /**
+     * @return the promotion
+     */
+    public String getPromotion() {
+        return mPromotion;
+    }
+
+
+
+    /**
      * @return the rate
      */
     public DormitoryRateBean getRate() {
@@ -270,6 +292,16 @@ public class DormitoryBean extends DormitoryRoomBean {
      */
     public Double getWeekPrice() {
         return mWeekPrice;
+    }
+
+
+
+    /**
+     * @param pAdditionalPrice
+     *            the additionalPrice to set
+     */
+    public void setAdditionalPrice(final Double pAdditionalPrice) {
+        mAdditionalPrice = pAdditionalPrice;
     }
 
 
@@ -410,6 +442,16 @@ public class DormitoryBean extends DormitoryRoomBean {
      */
     public void setPostcode(final String pPostcode) {
         mPostcode = pPostcode;
+    }
+
+
+
+    /**
+     * @param pPromotion
+     *            the promotion to set
+     */
+    public void setPromotion(final String pPromotion) {
+        mPromotion = pPromotion;
     }
 
 
