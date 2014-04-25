@@ -11,7 +11,7 @@
 		
 		<%-- content --%>
 		<div class="container">
-            <jsp:include page="include/article.jsp"/>
+            <jsp:include page="include/articledetail-article.jsp"/>
 		</div>
 	</main>
 	

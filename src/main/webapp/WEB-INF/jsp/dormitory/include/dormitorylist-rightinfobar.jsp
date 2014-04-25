@@ -12,7 +12,7 @@
 		<h2>附近的大学</h2>
 		<ul class="favorites-hostel-list">
 			<c:forEach var="college" items="${colleges}" end="2" >
-				<li><a href="<c:url value='/dormitory/dormitory-list.html?cityId=${city.id}&collegeId=${college.id}'/>">${college['name']}</a></li>
+				<li><a href="<c:url value='/dormitory/dormitory-list.html?cityId=${city.id}&collegeId=${college.id}'/>">${college['originalName']}</a></li>
 			</c:forEach>
 		</ul>
 	</li>

@@ -5,11 +5,11 @@
 	</div>
 	<div class="house-text-info">
 		<div class="title">${dormitory['name']}</div>
-		<div class="address">${dormitory['address']}</div>
+		<div class="address">${dormitory['address']},&nbsp${dormitory['postcode']}</div>
 		<p>设施：
 			<c:forEach var="binaryEquipment" items="${dormitory['binaryEquipmentArray']}" varStatus="i">
 				<c:if test="${binaryEquipment eq '1'.charAt(0)}">
-					<c:if test="${hasOneEquipment eq 1}">ã</c:if>
+					<c:if test="${hasOneEquipment eq 1}">、</c:if>
 					<c:set var="hasOneEquipment" value="1" />
 					${equipments[i['index']]}
 				</c:if>
@@ -18,7 +18,7 @@
 		<p>服务：
 			<c:forEach var="binaryService" items="${dormitory['binaryServiceArray']}" varStatus="i">
 				<c:if test="${binaryService eq '1'.charAt(0)}">
-					<c:if test="${hasOneService > 0}">ã</c:if>
+					<c:if test="${hasOneService > 0}">、</c:if>
 					<c:set var="hasOneService" value="1" />
 					${services[i['index']]}
 				</c:if>

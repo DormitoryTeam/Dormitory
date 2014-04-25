@@ -9,7 +9,7 @@
 	<%-- main section --%>
 	<main> <%-- content --%>
 	<div class="container">
-		<jsp:include page="include/articles.jsp" />
+		<jsp:include page="include/articlelist-articles.jsp" />
 	</div>
 	</main>
 

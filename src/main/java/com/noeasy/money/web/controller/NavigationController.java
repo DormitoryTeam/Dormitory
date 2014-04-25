@@ -145,7 +145,7 @@ public class NavigationController {
             model.addAttribute("backURL", MessageFormat.format("{0}?type={1}", backURL, article.getType()));
         }
         model.addAttribute("article", article);
-        return "navigation/article-detail";
+        return "navigation/articledetail";
     }
 
 
@@ -156,7 +156,7 @@ public class NavigationController {
         model.addAttribute("backURL", backURL);
         List<Map<String, Object>> articleTitles = siteService.queryArticleTitles(type);
         model.addAttribute("articleTitles", articleTitles);
-        return "navigation/article-list";
+        return "navigation/articlelist";
     }
 
 
