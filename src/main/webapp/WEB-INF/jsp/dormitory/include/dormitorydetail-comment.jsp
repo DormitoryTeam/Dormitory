@@ -1,5 +1,6 @@
 <div class="comment">
-	<form action="<c:url value='/dormitory/rate.html' />" method="POST">
+	<%--<form action="<c:url value='/dormitory/rate.html' />" method="POST"> --%>
+	<form action="#" method="POST">
 		<input type="hidden" name="dormitoryId" value="${dormitory['id']}" />
 		<input type="hidden" name="id" value="${curRate['id']}" />
 		<div class="title">发表评论</div>
@@ -20,7 +21,7 @@
 				<dd>评分</dd>
 				<dt>
 					<div id="rate" data-score="${curRate['point']}"></div>
-					<input class="btn-comment" type="submit" ${empty sessionScope['USER_ID'] ? 'disabled value="login to submit"' : 'value="submit"'} />
+					<input class="btn-comment" type="button" ${empty sessionScope['USER_ID'] ? 'disabled value="登录后才能评论"' : 'value="评论"'} />
 				</dt>
 			</dl>
 		</fieldset>
