@@ -46,7 +46,7 @@ import com.noeasy.money.enumeration.Orientation;
  * @version: 1.0, Mar 22, 2014
  */
 
-public class RoomInfoBean extends DormitoryRoomBean {
+public class RoomInfoBean extends BaseBean {
 
     private int             mId;
 
@@ -89,6 +89,10 @@ public class RoomInfoBean extends DormitoryRoomBean {
     private String          mBathroomEquipment;
 
     private DormitoryStatus mStatus;
+
+    private String          mService;
+
+    private String          mEquipment;
 
 
 
@@ -157,6 +161,15 @@ public class RoomInfoBean extends DormitoryRoomBean {
      */
     public Integer getDormitoryId() {
         return mDormitoryId;
+    }
+
+
+
+    /**
+     * @return the equipment
+     */
+    public String getEquipment() {
+        return mEquipment;
     }
 
 
@@ -238,6 +251,15 @@ public class RoomInfoBean extends DormitoryRoomBean {
      */
     public Integer getRoomTypeId() {
         return mRoomTypeId;
+    }
+
+
+
+    /**
+     * @return the service
+     */
+    public String getService() {
+        return mService;
     }
 
 
@@ -378,6 +400,16 @@ public class RoomInfoBean extends DormitoryRoomBean {
 
 
     /**
+     * @param pEquipment
+     *            the equipment to set
+     */
+    public void setEquipment(final String pEquipment) {
+        mEquipment = pEquipment;
+    }
+
+
+
+    /**
      * @param pFloorArrange
      *            the floorArrange to set
      */
@@ -493,6 +525,16 @@ public class RoomInfoBean extends DormitoryRoomBean {
      */
     public void setRoomTypeId(final Integer pRoomTypeId) {
         mRoomTypeId = pRoomTypeId;
+    }
+
+
+
+    /**
+     * @param pService
+     *            the service to set
+     */
+    public void setService(final String pService) {
+        mService = pService;
     }
 
 

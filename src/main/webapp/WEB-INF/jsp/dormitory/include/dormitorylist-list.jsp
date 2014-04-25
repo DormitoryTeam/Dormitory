@@ -37,24 +37,8 @@
 					</span>
 				</div>
 				<div class="address">${dormitory['address']}<br /><em>${dormitory['postcode']}</em></div>
-				<p>设施：
-					<c:forEach var="binaryEquipment" items="${dormitory['binaryEquipmentArray']}" varStatus="i">
-						<c:if test="${binaryEquipment eq '1'.charAt(0)}">
-							<c:if test="${hasOneEquipment eq 1}">、 </c:if>
-							<c:set var="hasOneEquipment" value="1" />
-							${equipments[i['index']]}
-						</c:if>
-					</c:forEach>
-				</p>
-				<p>服务：
-					<c:forEach var="binaryService" items="${dormitory['binaryServiceArray']}" varStatus="i">
-						<c:if test="${binaryService eq '1'.charAt(0)}">
-							<c:if test="${hasOneService > 0}">、</c:if>
-							<c:set var="hasOneService" value="1" />
-							${services[i['index']]}
-						</c:if>
-					</c:forEach>
-				</p>
+				<p>设施：${dormitory['equipment']}</p>
+				<p>服务：${dormitory['service']}</p>
 				<table>
 					<thead>
 						<tr>

@@ -89,11 +89,6 @@ public class AdminDormitoryController {
 
         int roomTypeCount = ((List) request.getSession().getServletContext().getAttribute("roomTypes")).size();
         int contractCount = ((List) request.getSession().getServletContext().getAttribute("contractTypes")).size();
-        int equipmentCount = ((List) request.getSession().getServletContext().getAttribute("equipments")).size();
-        int serviceCount = ((List) request.getSession().getServletContext().getAttribute("services")).size();
-
-        dormitory.setBinaryService(paramVector.getService(serviceCount));
-        dormitory.setBinaryEquipment(paramVector.getEquipment(equipmentCount));
 
         if (ArrayUtils.isNotEmpty(paramVector.getImageNames())) {
             dormitory.setPicPath(Arrays.asList(paramVector.getImageNames()));

@@ -39,7 +39,7 @@ import com.noeasy.money.enumeration.DormitoryStatus;
  * @version: 1.0, Jan 21, 2014
  */
 
-public class DormitoryBean extends DormitoryRoomBean {
+public class DormitoryBean extends BaseBean {
 
     private int                mId;
 
@@ -86,6 +86,10 @@ public class DormitoryBean extends DormitoryRoomBean {
     private DormitoryRateBean  mRate;
 
     private List<RoomInfoBean> mRooms;
+
+    private String             mService;
+
+    private String             mEquipment;
 
 
 
@@ -166,6 +170,15 @@ public class DormitoryBean extends DormitoryRoomBean {
      */
     public Double getDistance() {
         return mDistance;
+    }
+
+
+
+    /**
+     * @return the equipment
+     */
+    public String getEquipment() {
+        return mEquipment;
     }
 
 
@@ -265,6 +278,15 @@ public class DormitoryBean extends DormitoryRoomBean {
      */
     public Double getSalePrice() {
         return mSalePrice;
+    }
+
+
+
+    /**
+     * @return the service
+     */
+    public String getService() {
+        return mService;
     }
 
 
@@ -387,6 +409,16 @@ public class DormitoryBean extends DormitoryRoomBean {
 
 
     /**
+     * @param pEquipment
+     *            the equipment to set
+     */
+    public void setEquipment(final String pEquipment) {
+        mEquipment = pEquipment;
+    }
+
+
+
+    /**
      * @param pId
      *            the id to set
      */
@@ -492,6 +524,16 @@ public class DormitoryBean extends DormitoryRoomBean {
      */
     public void setSalePrice(final Double pSalePrice) {
         mSalePrice = pSalePrice;
+    }
+
+
+
+    /**
+     * @param pService
+     *            the service to set
+     */
+    public void setService(final String pService) {
+        mService = pService;
     }
 
 

@@ -75,6 +75,15 @@
 					<td><input type="text" name="salePrice" value="${dormitory['salePrice']}" /></td>
 				</tr>
 				<tr>
+					<td>Equipment:</td>
+					<td><input type="text" name="equipment" value="${dormitory['equipment']}" /></td>
+				</tr>
+				<tr>
+					<td>Service:</td>
+					<td><input type="text" name="service" value="${dormitory['service']}" /></td>
+				</tr>
+				<%--
+				<tr>
 					<td>Service:</td>
 					<td colspan="3">
 						<c:forEach var="service" items="${services}" varStatus="i">
@@ -91,6 +100,7 @@
 						</c:forEach>
 					</td>
 				</tr>
+ 				--%>
 				<tr>
 					<td>Description:</td>
 					<td colspan="3"><textarea name="description" cols="600" rows="5">${dormitory['description']}</textarea></td>
