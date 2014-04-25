@@ -7,8 +7,8 @@
 		</fieldset>
 	</div>
 	<ul class="row bread-crumb">
-		<li><a hrf="#">${country['name']}</a></li>
-		<li><a hrf="#"><span>&#62;</span>${city['name']}</a></li>
+		<li><a href="<c:url value='/navigation/navigator.html?countryId=${country.id}'/>">${country['name']}</a></li>
+		<li><a href="<c:url value='/navigation/navigator.html?cityId=${city.id}'/>"><span>&#62;</span>${city['name']}</a></li>
 		<c:if test="${not empty collegeId}">
 			<li><span>&#62;</span>${college['originalName']}</li>
 		</c:if>
