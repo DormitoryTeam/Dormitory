@@ -1,5 +1,6 @@
 <ul class="compare-title">
 	<li class="title-hight">&nbsp;</li>
+	<li>房间状态</li>
 	<li>入住时间</li>
 	<li>房间面积</li>
 	<li>床型</li>
@@ -29,6 +30,10 @@
 	<div class="scroll-content">
 		<c:forEach var="room" items="${dormitory['rooms']}">
 			<ul class="scroll-content-item item-body">
+				<li>&nbsp;
+					<c:if test="${room['status'] eq 'HAS_VACANCY'}">尚有空房</c:if>
+					<c:if test="${room['status'] eq 'NO_VACANCY'}">已注满</c:if>
+				</li>
 				<li>&nbsp;${room['checkinDateString']}</li>
 				<li>&nbsp;${room['houseArea']}${empty room['houseArea'] ? '' : '平米'}</li>
 				<li>&nbsp;${room['bedType']}</li>
@@ -36,7 +41,11 @@
 				<li>&nbsp;${room['kitchenPeople']}</li>
 				<li>&nbsp;${room['orientationArrange'] ? '可以' : '不可以'}</li>
 				<li>&nbsp;${room['roomLanguageArrange'] ? '可以' : '不可以'}</li>
-				<li class="title-hight last"><a href="javascript:void(0)" class="btn-style jQ-quick" roomId="${room['id']}" data-popupSrc="<c:url value='/dormitory/dormitory-quik-book.html'/>">立即预定</a></li>
+				<li class="title-hight last">
+					<c:if test="${room['status'] eq 'HAS_VACANCY'}">
+						<a href="javascript:void(0)" class="btn-style jQ-quick" roomId="${room['id']}" data-popupSrc="<c:url value='/dormitory/dormitory-quik-book.html'/>">立即预定</a>
+					</c:if>
+				</li>
 			</ul>
 		</c:forEach>
 	</div>
