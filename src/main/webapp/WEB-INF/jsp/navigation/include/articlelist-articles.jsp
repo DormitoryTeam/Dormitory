@@ -1,4 +1,4 @@
-﻿<div class="row">
+<div class="row">
 	<div class="sidebar ml-10 pull-right">
 		<div class="hot-news-list">
 			<div class="title">热门信息</div>
@@ -29,22 +29,20 @@
 			<li class="item">
 				<h2 class="webchat">在微信上关注我们</h2>
 				<p>
-					<img src="/dormitory/img/banner/webchat.jpg" alt />
+					<img src="<c:url value='/img/banner/webchat.jpg'/>" alt />
 				</p>
 			</li>
 		</ul>
 	</div>
 	<div class="contentBox news-info">
-		<h1>${article['title']}</h1>
-		<p>发布时间 : ${article['createTime']}</p>
-		<div class="news-details">
-			<div class="news-header">
-				<c:if test="${not empty article['coverPath']}">
-					<img src="/dormitory/upload/images/articleCover/${article['id']}/${article['coverPath']}" />
-					<a href="${backURL}" class="btn-style">返回</a>
-				</c:if>
-			</div>
-			<div class="news-content-text">${article['textBody']}</div>
+		<div class="bread-crumb">
+			<a href="<c:url value='/navigation/home.html'/>">首页</a> &#62; <a href="#">新闻</a>
 		</div>
+		<ul class="news-list">
+			<c:forEach var="article" items="${articleTitles}">
+				<li><a href="<c:url value='/navigation/article-detail.html?id=${article.id}&backURL=${pageContext.request.contextPath}${requestScope[\'javax.servlet.forward.servlet_path\']}'/>">
+					${article['title']}</a><span>（${article['createTime']}）</span></li>
+			</c:forEach>
+		</ul>
 	</div>
 </div>

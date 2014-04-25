@@ -18,7 +18,7 @@
 			<c:if test="${not empty dormitories}">
 				<c:forEach var="dormitory" items="${dormitories}" varStatus="i">
 					<tr>
-						<td><img style="float: left;margin-right:30px;" src="/dormitory/img/dormitory_sample.jpg" />
+						<td><img style="float: left;margin-right:30px;" src="<c:url value='/img/dormitory_sample.jpg'/>" />
 							<ul>
 								<li>Name: ${dormitory['name']} ${dormitory['status']} &nbsp; 
 									<input type="button" class="btnEdit" dormitoryId="${dormitory['id']}" value="Edit" /></li>

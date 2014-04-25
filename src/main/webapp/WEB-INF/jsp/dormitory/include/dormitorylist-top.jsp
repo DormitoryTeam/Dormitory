@@ -1,9 +1,9 @@
-<form action="/dormitory/dormitory/dormitory-list.html" method="GET">
+<form action="<c:url value='/dormitory/dormitory-list.html' />" method="GET">
 	<input type="hidden" name="collegeId" value="${college['id']}" />
 	<input type="hidden" name="cityId" value="${city['id']}" />
 	<div class="row searchBox">
 		<fieldset>
-			<input type="text" name="keyword" value="${keyword}" /> <input type="submit" class="btn-search" value="" />
+			搜索当前城市<input type="text" name="keyword" value="${keyword}" /> <input type="submit" class="btn-search" value="" />
 		</fieldset>
 	</div>
 	<ul class="row bread-crumb">
@@ -47,14 +47,6 @@
 				<dd>
 					<label for="sales">按销量</label>
 				</dd>
-			</dl>
-			<dl>
-				<dt>
-					<select>
-						<option value="按区域排列">按区域排列</option>
-					</select>
-				</dt>
-				<dd></dd>
 			</dl>
 		</fieldset>
 	</div>

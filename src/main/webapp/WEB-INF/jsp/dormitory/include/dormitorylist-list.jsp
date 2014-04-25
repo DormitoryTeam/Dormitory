@@ -2,7 +2,15 @@
 	<c:forEach var="dormitory" items="${dormitories}" varStatus="i">
 		<li>
 			<div class="hostel-img pull-left">
-				<img src="/dormitory/img/house/house.jpg" alt />
+			
+				<c:if test="${not empty dormitory['rooms']}">
+					<a href="<c:url value='/dormitory/dormitory-detail.html?id=${dormitory.id}'/>"><img src="<c:url value='/img/house/house.jpg'/>" alt /></a>
+				</c:if>
+				
+				<c:if test="${empty dormitory['rooms']}">
+					<img src="<c:url value='/img/house/house.jpg'/>" alt />
+				</c:if>
+				
 				<p class="hostel-server">
 					<a href="#" class="video">&nbsp;</a>
 					<a href="#" class="plane">&nbsp;</a>
@@ -17,10 +25,18 @@
 					<div class="starBox" data-score="${dormitory['rating']}"></div>
 				</div>
 				<div class="title">
-					${dormitory['name']}
-					<span class="ml-10"><%--已入住 <em>3</em> 人，${dormitory['status']}--%></span>
+					<c:if test="${not empty dormitory['rooms']}">
+						<a href="<c:url value='/dormitory/dormitory-detail.html?id=${dormitory.id}'/>">${dormitory['name']}</a>
+					</c:if>
+					<c:if test="${empty dormitory['rooms']}">
+						<a href="#">${dormitory['name']}</a>
+					</c:if>
+					<span>
+						<c:if test="${dormitory['status'] eq 'HAS_VACANCY'}">尚有空房</c:if>
+						<c:if test="${dormitory['status'] eq 'NO_VACANCY'}">已注满</c:if>
+					</span>
 				</div>
-				<div class="address">${dormitory['address']}</div>
+				<div class="address">${dormitory['address']}<br /><em>${dormitory['postcode']}</em></div>
 				<p>设施：
 					<c:forEach var="binaryEquipment" items="${dormitory['binaryEquipmentArray']}" varStatus="i">
 						<c:if test="${binaryEquipment eq '1'.charAt(0)}">
@@ -59,10 +75,13 @@
 										<td>${room['checkinDateString']}</td>
 										<td>
 											<c:if test="${not empty room['contractPrice'][0]}">
-												${room['contractPrice'][0]['salePrice']}
+												<em>&#163;</em>${room['contractPrice'][0]['salePrice']}
 											</c:if>
 										</td>
-										<td>${room['status']}</td>
+										<td>
+											<c:if test="${room['status'] eq 'HAS_VACANCY'}">尚有空房</c:if>
+											<c:if test="${room['status'] eq 'NO_VACANCY'}">已注满</c:if>
+										</td>
 									</tr>
 								</c:if>
 							</c:forEach>
@@ -74,9 +93,6 @@
 						</c:if>
 					</tbody>
 				</table>
-				<c:if test="${not empty dormitory['rooms']}">
-					<a href="/dormitory/dormitory/dormitory-detail.html?id=${dormitory['id']}" class="more">更多房型</a>
-				</c:if>
 			</div>
 		</li>
 	</c:forEach>

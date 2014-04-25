@@ -14,7 +14,7 @@
 		<%-- content --%>
 		<div class="container">
 			<input type="hidden" id="hidPageType" value="register" />
-			<a id="popupLink" href="javascript:void(0)" class="hidden" data-popupSrc="/dormitory/user/loadRegister.html">&nbsp;</a>
+			<a id="popupLink" href="javascript:void(0)" class="hidden" data-popupSrc="<c:url value='/user/loadRegister.html'/>">&nbsp;</a>
 		</div>
 	</main>
 	

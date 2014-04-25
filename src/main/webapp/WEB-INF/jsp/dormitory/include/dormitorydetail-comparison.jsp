@@ -4,11 +4,9 @@
 	<li>房间面积</li>
 	<li>床型</li>
 	<li>独立卫浴</li>
-	<li>share厨房人数</li>
+	<li>共用厨房人数</li>
 	<li>可否安排朝向</li>
-	<li>是否提供语言宿舍</li>
-	<li class="title-hight">厨房/客厅设施</li>
-	<li>卧室/浴室设施</li>
+	<li>可否提供语言宿舍</li>
 	<li class="title-hight last">&nbsp;</li>
 </ul>
 <div class="scroll-pane">
@@ -32,15 +30,13 @@
 		<c:forEach var="room" items="${dormitory['rooms']}">
 			<ul class="scroll-content-item item-body">
 				<li>&nbsp;${room['checkinDateString']}</li>
-				<li>&nbsp;${room['houseArea']}平米</li>
+				<li>&nbsp;${room['houseArea']}${empty room['houseArea'] ? '' : '平米'}</li>
 				<li>&nbsp;${room['bedType']}</li>
-				<li>&nbsp;${room['ensuitBathroom']}</li>
-				<li>&nbsp;${room['roomType']}</li>
-				<li>&nbsp;${room['orientationArrange']}</li>
-				<li>&nbsp;${room['roomLanguageArrange']}</li>
-				<li class="title-hight">&nbsp;${room['kitchenEquipment']}</li>
-				<li>&nbsp;${room['bathroomEquipment']}</li>
-				<li class="title-hight last"><a href="javascript:void(0)" class="btn-style jQ-quick" roomId="${room['id']}" data-popupSrc="/dormitory/dormitory/dormitory-quik-book.html">立即预定</a></li>
+				<li>&nbsp;${room['ensuitBathroom'] ? '有' : '没有'}</li>
+				<li>&nbsp;${room['kitchenPeople']}</li>
+				<li>&nbsp;${room['orientationArrange'] ? '可以' : '不可以'}</li>
+				<li>&nbsp;${room['roomLanguageArrange'] ? '可以' : '不可以'}</li>
+				<li class="title-hight last"><a href="javascript:void(0)" class="btn-style jQ-quick" roomId="${room['id']}" data-popupSrc="<c:url value='/dormitory/dormitory-quik-book.html'/>">立即预定</a></li>
 			</ul>
 		</c:forEach>
 	</div>

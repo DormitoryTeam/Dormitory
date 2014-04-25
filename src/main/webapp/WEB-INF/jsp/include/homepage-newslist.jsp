@@ -18,7 +18,7 @@
 			<li class="item">
 				<h2 class="webchat">在微信上关注我们</h2>
 				<p>
-					<img src="/dormitory/img/banner/webchat.jpg" alt />
+					<img src="<c:url value='/img/banner/webchat.jpg'/>" alt />
 				</p>
 			</li>
 			<li class="bottom">&nbsp;</li>
@@ -32,10 +32,10 @@
 			<c:forEach var="article" items="${goTravles}" end="2">
 				<li class="news-itme">
 					<div class="news-img pull-left">
-						<img src="/dormitory/upload/images/articleCover/${article['id']}/${article['coverPath']}" />
+						<img src="<c:url value='/upload/images/articleCover/${article.id}/${article.coverPath}' />" />
 					</div>
 					<div class="news-info">
-						<h2><a href="/dormitory/navigation/article-detail.html?id=${article['id']}&backURL=${pageContext['request']['contextPath']}${requestScope['javax.servlet.forward.servlet_path']}">${article['title']}</a></h2>
+						<h2><a href="<c:url value='/navigation/article-detail.html?id=${article.id}&backURL=${pageContext.request.contextPath}${requestScope.javax.servlet.forward.servlet_path}'/>">${article['title']}</a></h2>
 						<p>${article['textBody']}</p>
 					</div>
 				</li>

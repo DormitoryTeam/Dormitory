@@ -10,7 +10,7 @@
 </head>
 <body>
 
-	<form action="/dormitory/admin/dormitory/dormitory-save.html" method="POST">
+	<form action="<c:url value='/admin/dormitory/dormitory-save.html'/>" method="POST">
 		<table>
 			<tbody>
 				<tr>
