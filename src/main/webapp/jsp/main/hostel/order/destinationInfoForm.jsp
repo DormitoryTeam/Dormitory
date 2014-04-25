@@ -9,7 +9,7 @@
 	<input type="hidden" name="command" id="command"/>
 	<a href="<c:url value="/order/dormitory-place-order.html?orderType=pickup"/>" class="addOne">&nbsp;</a>
 	<div class="btnBox">
-		<input class="save btn-place-order-save" value="保存" type="button ">
+		<input class="save btn-place-order-save" value="保存" type="button">
 	</div>
 	<ul role="tablist" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
 		<li aria-selected="false" aria-labelledby="ui-id-1" aria-controls="tabs-personal" tabindex="-1" role="tab" class="ui-state-default ui-corner-top"><a id="ui-id-1" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="#tabs-personal">个人信息</a></li>

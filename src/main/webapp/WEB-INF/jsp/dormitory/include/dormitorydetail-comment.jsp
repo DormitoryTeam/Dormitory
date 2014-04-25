@@ -20,7 +20,7 @@
 				<dd>评分</dd>
 				<dt>
 					<div id="rate" data-score="${curRate['point']}"></div>
-					<input class="btn-comment" type="submit" ${empty sessionScope['USER_ID'] ? 'disabled value="cannot submit before login"' : 'value="submit"'} />
+					<input class="btn-comment" type="submit" ${empty sessionScope['USER_ID'] ? 'disabled value="发表评论"' : 'value="submit"'} />
 				</dt>
 			</dl>
 		</fieldset>

@@ -119,6 +119,7 @@
 	float: left;
 	padding: 15px 20px;
 	width: 150px;
+	height: 200px;
 }
 
 .country-list > li > ul.city-list li a{

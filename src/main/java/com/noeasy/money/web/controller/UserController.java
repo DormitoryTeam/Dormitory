@@ -230,11 +230,11 @@ public class UserController {
     public String getOrderList(final ModelMap model, final HttpServletRequest request,
             final HttpServletResponse response, final String orderType, final String currentPage, final String pageSize) {
         Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+        UserBean user = userService.findUserById(userId);
+        
         OrderType type = OrderType.getType(orderType);// "D" means dormitory
         OrderSearchBean searchBean = new OrderSearchBean();
         searchBean.setOrderType(type);
-        UserBean user = new UserBean();
-        user.setId(userId);
         searchBean.setUser(user);
         int rowTotal = orderService.queryOrderCount(searchBean);
         PageBean page = new PageBean(rowTotal);
@@ -250,6 +250,7 @@ public class UserController {
         model.addAttribute("orders", orders);
         model.addAttribute("type", orderType);
         model.addAttribute("page", page);
+        model.addAttribute("user", user);
         return "user/orderList";
     }
 

@@ -18,7 +18,7 @@
 				</div>
 				<div class="title">
 					${dormitory['name']}
-					<span class="ml-10">已入住 <em>3</em> 人，${dormitory['status']}</span>
+					<span class="ml-10"><%--已入住 <em>3</em> 人，${dormitory['status']}--%></span>
 				</div>
 				<div class="address">${dormitory['address']}</div>
 				<p>设施：

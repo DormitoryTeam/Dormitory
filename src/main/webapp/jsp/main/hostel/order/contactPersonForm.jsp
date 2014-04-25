@@ -61,7 +61,7 @@
 							<c:if test="${null == lastName}">
 							<c:set var="lastName" value="${user.contactPersonInfo.lastName}" />
 							</c:if>
-							<input type="text" name="lastName" value="${lastName}" class="min" id="lastName" class="same-as"/>  
+							<input type="text" name="lastName" value="${lastName}" class="min same-as" id="lastName" />  
 						</dd>
 						<dt>名</dt>
 						<dd>
@@ -69,7 +69,7 @@
 							<c:if test="${null == name}">
 							<c:set var="name" value="${user.contactPersonInfo.name}" />
 							</c:if>
-							<input type="text" name="name" value="${name}" class="min" id="name" class="same-as"/> 
+							<input type="text" name="name" value="${name}" class="min same-as" id="name"/> 
 						</dd>
 					</dl>
 					<dl>
@@ -89,7 +89,7 @@
 							<c:if test="${null == birthday}">
 							<c:set var="birthday" value="${user.contactPersonInfo.birthday}" />
 							</c:if>
-							<input class="datepicker" name="birthday" type="text" value="<fmt:formatDate value='${birthday}' pattern='yyyy-MM-dd'/>" id="birthday" class="same-as"/>
+							<input class="datepicker same-as" name="birthday" type="text" value="<fmt:formatDate value='${birthday}' pattern='yyyy-MM-dd'/>" id="birthday" class="same-as"/>
 						</dd>
 					</dl>
 					<dl>
@@ -99,7 +99,7 @@
 							<c:if test="${null == email}">
 							<c:set var="email" value="${user.contactPersonInfo.email}" />
 							</c:if>
-							<input name="email" value="${email}" type="text" class="long" id="email" class="same-as"/>
+							<input name="email" value="${email}" type="text" class="long same-as" id="email" />
 						</dd>
 					</dl>
 					<dl>
