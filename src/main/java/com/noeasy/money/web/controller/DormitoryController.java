@@ -151,6 +151,8 @@ public class DormitoryController {
                 if (StringUtils.isNoneBlank(sortType)) {
                     searchBean.setSortType(sortType);
                 }
+            } else {
+                searchBean.setSortField("distance");
             }
             searchBean.setExcludeStatus(DormitoryStatus.INVISIBILITY);
             searchBean.setExcludeRoomStatus(DormitoryStatus.INVISIBILITY);

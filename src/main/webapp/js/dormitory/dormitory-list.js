@@ -23,4 +23,7 @@ $(function() {
 		marker.setMap(map);
 	});
 
+	$(".ckbSortField").bind("click", function() {
+		$("#btnSearchAndSortBy").click();
+	});
 });
