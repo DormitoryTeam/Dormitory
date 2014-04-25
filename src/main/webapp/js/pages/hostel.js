@@ -146,7 +146,15 @@ require(['config'], function(config) {
                     callBack : function() {
                         var contracts = room_contracts[roomId];
                         for (var i in contracts) {
-                            var bookHTML = '<option value="' + contracts[i].id + '">' + contracts[i].name + '</option>';
+                			var days = parseInt(contracts[i].name);
+                			var weekday = "";
+                			if(days / 7 != 0) {
+                				weekday = days / 7 + "周";
+                			}
+                			if(days % 7 != 0) {
+                				weekday = days % 7 + "天";
+                			}
+                            var bookHTML = '<option value="' + contracts[i].id + '">' + weekday + '</option>';
                             var bookDIV = $(bookHTML);
                             $("#selectContract").append(bookDIV);
                         }

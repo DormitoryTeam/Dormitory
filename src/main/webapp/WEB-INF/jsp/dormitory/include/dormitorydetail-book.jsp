@@ -2,7 +2,7 @@
 	<form>
 		<fieldset>
 			<dl>
-				<dt>选择租期</dt>
+				<dt>选择租期&nbsp;</dt>
 				<dd>
 					<select id="selectContract">
 					</select>
