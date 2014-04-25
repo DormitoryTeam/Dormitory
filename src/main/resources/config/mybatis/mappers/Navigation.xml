@@ -15,7 +15,7 @@
 	</select>
 
 	<select id="queryCity" resultType="hashmap" parameterType="java.util.Map">
-		select id, country_id as countryId, name, status
+		select id, country_id as countryId, name, topCity, status
 		from city
 		where status = 1
 		<if test="id != null">
@@ -28,7 +28,7 @@
 	</select>
 
 	<select id="queryCollege" resultType="hashmap" parameterType="java.util.Map">
-		select id, city_id as cityId, name, original_name originalName, status, latitude, longitude, status
+		select id, city_id as cityId, name, original_name originalName, status, latitude, longitude, topCollege, status
 		from college
 		where status = 1
 		<if test="id != null">
@@ -40,18 +40,15 @@
 	</select>
 
 	<select id="queryCityInSameCountry" resultType="hashmap" parameterType="java.util.Map">
-		select id, country_id as countryId, name, status
+		select id, country_id as countryId, name, topCity, status
 		from city
-		where status =
-		1
-		and country_id = (
+		where status = 1 and country_id = (
 		select country_id from city where id = #{id} and status = 1
 		)
 	</select>
 
 	<select id="queryCountryByCityId" resultType="hashmap" parameterType="int">
-		select country.id, country.name, countrycode as countryCode,
-		country.status
+		select country.id, country.name, countrycode as countryCode, country.status
 		from country
 		left join city on country.id = city.country_id and city.id
 		where
@@ -74,8 +71,8 @@
 		</if>
 	</select>
 	
-	<select id="queryCityCollegeByCountryId" resultMap="cityCollege" parameterType="int">
-		select t1.id cityId, t1.name cityName, t2.id collegeId, t2.name collegeName, t2.original_name originalName
+	<select id="queryCityCollegeByCountryId" resultMap="cityCollege" parameterType="hashmap">
+		select t1.id cityId, t1.name cityName, t1.topCity, t2.id collegeId, t2.name collegeName, t2.original_name originalName, t2.topCollege
 		from city t1
 		left join college t2 on t1.id = t2.city_id
 		where t1.status = 1 and t2.status = 1 and t1.country_id = #{countryId}
@@ -83,7 +80,7 @@
 	</select>
 	
 	<select id="queryCityCollegeByCityId" resultMap="cityCollege" parameterType="int">
-		select t1.id cityId, t1.name cityName, t2.id collegeId, t2.name collegeName, t2.original_name originalName
+		select t1.id cityId, t1.name cityName, t1.topCity, t2.id collegeId, t2.name collegeName, t2.original_name originalName, t2.topCollege
 		from city t1
 		left join college t2 on t1.id = t2.city_id
 		where t1.status = 1 and t2.status = 1 and t1.country_id in
@@ -95,10 +92,13 @@
 	
 	<resultMap id="cityCollege" type="java.util.HashMap">
 		<id property="cityId" column="cityId" />
+		<id property="cityName" column="cityName" />
+		<id property="topCity" column="topCity" />
 		<result property="cityName" column="cityName" />
 		<collection property="colleges" javaType="ArrayList" ofType="java.util.HashMap">
 			<result property="collegeId" column="collegeId" />
 			<result property="collegeName" column="collegeName" />
+			<result property="topCollege" column="topCollege" />
 			<result property="originalName" column="originalName" />
 		</collection>
 	</resultMap>

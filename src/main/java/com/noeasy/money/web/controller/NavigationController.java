@@ -193,6 +193,11 @@ public class NavigationController {
             model.addAttribute("goTravles", goTravles);
         }
 
+        List<Map<String, Object>> allColleges = navigationService.queryColleges();
+        List<Map<String, Object>> allCities = navigationService.queryCities();
+        model.addAttribute("allCities", allCities);
+        model.addAttribute("allColleges", allColleges);
+
         return "homepage";
     }
 
