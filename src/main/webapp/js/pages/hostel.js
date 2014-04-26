@@ -3,7 +3,7 @@ require(['config'], function(config) {
         $(function() {
             //init header
             utils.init();
-/**
+
             //scrollpane parts
             var scrollPane = $(".scroll-pane"), scrollContent = $(".scroll-content");
 
@@ -68,12 +68,17 @@ require(['config'], function(config) {
             //init scrollbar size
             setTimeout(sizeScrollbar, 10);
             //safari wants a timeout
-*/
 
-            $(".jQ-citylist").on('click', function() {
-                $(this).parent().siblings().removeClass('open').addClass('close');
-                $(this).parent().removeClass('close').addClass('open');
-            })
+			$(".jQ-citylist").on('click', function(){
+				if($(this).parent().hasClass('open')){
+					$(this).parent().siblings().removeClass('open').addClass('close');
+					$(this).parent().removeClass('open').addClass('close');	
+				}else{
+					$(this).parent().siblings().removeClass('open').addClass('close');
+					$(this).parent().removeClass('close').addClass('open');	
+				}
+			});
+
 
             $('.comment .starBox').raty({
                 path : '../www.static.war/css/common',

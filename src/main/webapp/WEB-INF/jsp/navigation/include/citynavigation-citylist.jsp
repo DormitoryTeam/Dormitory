@@ -25,7 +25,7 @@
 					<ul class="city-list">
 						<c:forEach var="college" items="${cityCollege['colleges']}">
 							<li><a href="<c:url value='/dormitory/dormitory-list.html?cityId=${cityCollege.cityId}&collegeId=${college.collegeId}'/>">
-									<p>${college['collegeName']}</p> <span>${college['originalName']}</span>
+									<p>${college['originalName']}</p> <span>${college['collegeName']}</span>
 							</a></li>
 						</c:forEach>
 					</ul>

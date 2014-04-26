@@ -70,9 +70,10 @@
 }
 
 .country-list .country-title p{
-	width: 190px;
+	width: 140px;
 	float: left;
-	padding-left: 40px;
+	padding-left: 70px;
+	text-align: left;
 	font-size: 23px;
 }
 
@@ -367,18 +368,29 @@
 
 .hostel-info table thead{
 	background: #eadfd1;
-	padding: 5px;
+	padding: 5px 0px;
 	font-size: 14px;
 }
 
 .hostel-info table thead th{
 	font-weight: 400;
-	padding: 5px 10px;
+	padding: 5px 0;
 	text-align: center;
 }
 
+.hostel-info table .td-min{
+	width: 70px;
+}
+
+.hostel-info table .td-long{
+	width: 90px;
+}
+.hostel-info table .td-larger{
+	width: 150px;
+}
+
 .hostel-info table tbody td{
-	padding: 0 10px;
+	padding: 2px 0px;
 	text-align: center;
 }
 
@@ -433,6 +445,10 @@ button.btn-style{
 
 .quick form fieldset dl > *{
 	float: left;
+}
+
+.quick form fieldset dl > dd{
+	line-height: 30px;
 }
 
 .quick form fieldset dl > dt{
@@ -713,7 +729,7 @@ button.btn-style{
 
 .house-detail-info .compare-title li.title-hight,
 .house-detail-info .scroll-content-item li.title-hight{
-	height: 110px;
+	height: 130px;
 }
 
 .house-detail-info .compare-title li.title-hight.last,
@@ -743,7 +759,7 @@ button.btn-style{
 }
 
 .house-detail-info .scroll-content-item.itme-header{
-	height: 105px;
+	height: 125px;
 	overflow: hidden;
 	width: 139px;
 }
@@ -764,6 +780,8 @@ button.btn-style{
 
 .house-detail-info .scroll-content-item li p{
 	font-size: 12px;
+	padding-left: 10px;
+	text-align: left;
 }
 
 .house-detail-info .scroll-content-item li p span{
@@ -1393,7 +1411,7 @@ a.disabled {
 }
 
 .quick-pop{
-	width: 190px;
+	width: 200px;
 	height: 120px;
 }
 
@@ -1403,6 +1421,7 @@ a.disabled {
 
 .quick-pop dl dt{
 	float: left;
+	margin-right: 10px;
 }
 
 .success dl dt{

@@ -45,11 +45,11 @@
 				<table>
 					<thead>
 						<tr>
-							<th>名称</th>
-							<th>床型</th>
-							<th>入住时间</th>
-							<th>价格</th>
-							<th>状态</th>
+							<th class="td-larger">名称</th>
+							<th class="td-long">床型</th>
+							<th class="td-long">入住时间</th>
+							<th class="td-min">价格</th>
+							<th class="td-min">状态</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -57,15 +57,15 @@
 							<c:forEach var="room" items="${dormitory['rooms']}" varStatus="j" begin="0" end="1">
 								<c:if test="${not empty room}">
 									<tr>
-										<td>${room['name']}</td>
-										<td>${room['bedType']}</td>
-										<td>${room['checkinDateString']}</td>
-										<td>
+										<td class="td-larger" style="text-align: left;">${room['name']}</td>
+										<td class="td-long">${room['bedType']}</td>
+										<td class="td-long">${room['checkinDateString']}</td>
+										<td class="td-min">
 											<c:if test="${not empty room['contractPrice'][0]}">
 												<em>&#163;</em>${room['contractPrice'][0]['salePrice']}
 											</c:if>
 										</td>
-										<td>
+										<td class="td-min">
 											<c:if test="${room['status'] eq 'HAS_VACANCY'}">尚有空房</c:if>
 											<c:if test="${room['status'] eq 'NO_VACANCY'}">已注满</c:if>
 										</td>

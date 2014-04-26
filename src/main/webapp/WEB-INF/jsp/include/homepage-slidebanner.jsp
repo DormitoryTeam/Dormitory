@@ -9,7 +9,7 @@
 			</div>
 			<div class="selectContent">
 				<form action="<c:url value='/navigation/navigator.html'/>" method="GET">
-					<fieldset>
+					<fieldset class="select-show-info">
 						<dl>
 							<dt>国家</dt>
 							<dd>
@@ -46,6 +46,8 @@
 								</select>
 							</dd>
 						</dl>
+					</fieldset>
+					<fieldset>
 						<dl class="btnBox">
 							<dt>&nbsp;</dt>
 							<dd>

@@ -100,11 +100,11 @@
     background-position: 0 -22px
 }
 
-.sidebar > .serviceBox {
+.sidebar > .serviceBox{
     background: #eadfd1;
 }
 
-.sidebar > .serviceBox > .itembar {
+.sidebar > .serviceBox > .itembar{
     color: #ae0000;
     border-left: 1px solid #ae0000;
     padding: 0 5px;
@@ -113,25 +113,25 @@
     height: 260px;
 }
 
-.sidebar > .serviceBox > .itembar > ul > li {
+.sidebar > .serviceBox > .itembar > ul > li{
     padding: 20px 0;
     text-align: center;
     list-style: none;
 }
 
-.sidebar > .serviceBox > .itembar > ul > li + li {
+.sidebar > .serviceBox > .itembar > ul > li + li{
     border-top: 1px dashed #ae0000;
 }
 
-.sidebar > .serviceBox > .selectContent {
+.sidebar > .serviceBox > .selectContent{
     height: 260px;
 }
 
-.sidebar > .serviceBox > .selectContent > form {
+.sidebar > .serviceBox > .selectContent > form{
     padding: 30px 15px;
 }
 
-.sidebar > .serviceBox > .selectContent .btn-search {
+.sidebar > .serviceBox > .selectContent .btn-search{
     background: url(../common/btn.png) no-repeat;
     width: 115px;
     height: 30px;
@@ -140,106 +140,106 @@
     border: 0;
 }
 
-.sidebar > .serviceBox > .selectContent dl + dl {
+.sidebar > .serviceBox > .selectContent dl + dl{
     margin-top: 10px;
 }
 
-.sidebar > .serviceBox > .selectContent .select-show-info {
+.sidebar > .serviceBox > .selectContent .select-show-info{
     height: 180px;
 }
 
-.sidebar > .serviceBox > .selectContent dl.btnBox dd {
+.sidebar > .serviceBox > .selectContent dl.btnBox dd{
     text-align: center;
 }
 
-.sidebar > .serviceBox > .selectContent dl dt {
+.sidebar > .serviceBox > .selectContent dl dt{
     float: left;
     color: #ae0000;
     padding-right: 15px;
 }
 
 .sidebar > .login-plan,
-.sidebar > .userInfo {
+.sidebar > .userInfo{
     padding-top: 25px;
     padding-left: 20px;
 }
 
 .sidebar > .login-plan >ul>li,
 .sidebar > .userInfo > ul >li,
-.sidebar > .userInfo ul li > ul.user-links li {
+.sidebar > .userInfo ul li > ul.user-links li{
     float: left;
     list-style: none;
 }
 
-.sidebar > .login-plan >ul>li a {
+.sidebar > .login-plan >ul>li a{
     width: 110px;
     height: 50px;
     display: block;
 }
 
-.sidebar > .login-plan >ul>li + li {
+.sidebar > .login-plan >ul>li + li{
     margin-left: 30px;
 }
 
-.sidebar > .login-plan .reg-btn {
+.sidebar > .login-plan .reg-btn{
     background: url(../common/nologin-reg-btn.png) no-repeat center;
 }
 
-.sidebar > .login-plan .login-btn {
+.sidebar > .login-plan .login-btn{
     background: url(../common/nologin-login-btn.png) no-repeat center;
 }
 
-.sidebar > .userInfo .user-header {
+.sidebar > .userInfo .user-header{
     width: 60px;
     height: 60px;
 }
 
-.sidebar > .userInfo .header-img-opacity {
+.sidebar > .userInfo .header-img-opacity{
     background: url(../common/login-img-opacity.png) no-repeat center;
 }
 
-.sidebar > .userInfo >ul>li + li {
+.sidebar > .userInfo >ul>li + li{
     border-left: 1px solid #dfdfdf;
     margin-left: 25px;
     padding-left: 20px;
     margin-top: 5px;
 }
 
-.sidebar > .userInfo ul li > ul.user-links {
+.sidebar > .userInfo ul li > ul.user-links{
     margin-top: 10px;
 }
 
-.sidebar > .userInfo a {
+.sidebar > .userInfo a{
     color: #32b16c;
 }
 
-.sidebar > .userInfo ul li > ul.user-links li + li {
+.sidebar > .userInfo ul li > ul.user-links li + li{
     border-left: 1px solid #32b16c;
     padding-left: 15px;
     margin-left: 15px;
 }
 
-.sidebar > .news-box {
+.sidebar > .news-box{
     background: url(../common/news-background.jpg) no-repeat;
     width: 290px;
     height: 300px;
 }
 
-.sidebar > .news-box ul {
+.sidebar > .news-box ul{
     padding: 30px 0;
 }
 
-.sidebar > .news-box a {
+.sidebar > .news-box a{
     color: #5a5a5a;
 }
 
-.sidebar > .news-box a.more {
+.sidebar > .news-box a.more{
     display: block;
     text-align: right;
     padding-right: 20px;
 }
 
-.sidebar > .news-box ul li {
+.sidebar > .news-box ul li{
     padding: 5px 0;
     margin-left: 40px;
     overflow: hidden;
@@ -248,36 +248,36 @@
     height: 20px;
 }
 
-.row.hot-city {
+.row.hot-city{
     border: 1px solid #b47200;
 }
 
-.row .title {
+.row .title{
     height: 35px;
 }
 
-.row .title a.more {
+.row .title a.more{
     color: #5a5a5a;
     margin-left: 15px;
     vertical-align: bottom;
 }
 
-.row .title span {
+.row .title span{
     display: inline-block;
-    background: #b47200 url(../common/icon-list-title.jpg) no-repeat;
-    padding: 0 10px 0 41px;
+    background:#b47200 url(../common/icon-list-title.jpg) no-repeat;
+    padding:0 10px 0 41px;
     height: 34px;
     line-height: 34px;
     font-size: 18px;
     color: #fff;
 }
 
-.hot-city .city-list {
+.hot-city .city-list{
     padding: 20px;
     overflow: hidden;
 }
 
-.hot-city .city-list li {
+.hot-city .city-list li{
     background: url(../common/icon-city-backgrond.jpg) no-repeat;
     width: 56px;
     height: 76px;
@@ -289,7 +289,7 @@
     padding: 0 10px;
 }
 
-.hot-city .city-list li a {
+.hot-city .city-list li a{
     color: #fff;
     display: table-cell;
     vertical-align: middle;
@@ -297,7 +297,7 @@
     word-wrap: break-word;
 }
 
-.hot-city .city-list.show-list-c li {
+.hot-city .city-list.show-list-c li{
     background: #ffb400;
     padding: 5px 15px;
     border: 4px solid #b47200;
@@ -308,14 +308,14 @@
     border-radius: 10px;
 }
 
-.hot-city .city-list.show-list-c li a {
+.hot-city .city-list.show-list-c li a{
     display: block;
     width: auto;
     word-spacing: normal;
 }
 
 .hot-city .city-list li.active,
-.hot-city .city-list.show-list-c li.active {
+.hot-city .city-list.show-list-c li.active{
     background: url(../common/icon-city-active.jpg) no-repeat;
     padding: 0 10px;
     border: none;
@@ -324,41 +324,41 @@
     display: table;
 }
 
-.hot-city .city-list li.active a {
+.hot-city .city-list li.active a{
     color: #ae0000;
     display: table-cell;
     width: 60px;
 }
 
-.news-list li {
+.news-list li{
     margin: 10px 0;
     list-style: none;
     overflow: hidden;
 }
 
-.news-list .news-itme .news-img {
+.news-list .news-itme .news-img{
     background: url(../common/news-img-background.jpg) no-repeat;
     width: 350px;
     height: 238px;
 }
 
-.news-list .news-itme .news-img img {
+.news-list .news-itme .news-img img{
     width: 330px;
     height: 212px;
     margin: 10px;
 }
 
-.news-list .news-itme .news-info {
+.news-list .news-itme .news-info{
     color: #5a5a5a;
     margin-left: 370px;
 }
 
-.news-list .news-itme .news-info h2 a {
+.news-list .news-itme .news-info h2 a{
     font-size: 18px;
     color: #5a5a5a;
 }
 
-.news-list .news-itme .news-info p {
+.news-list .news-itme .news-info p{
     font-size: 12px;
     margin-top: 10px;
 }

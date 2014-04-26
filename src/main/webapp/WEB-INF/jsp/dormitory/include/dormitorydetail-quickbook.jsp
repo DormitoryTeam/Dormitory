@@ -31,7 +31,7 @@
 				</dt>
 			</dl>
 			<dl class="clearfix">
-				<dd>价格</dd>
+				<dd style="line-height: 20px;">价格</dd>
 				<dt id="quickPricePreview">
 					${dormitory['rooms'][0]['contractPrice'][0]['currency']}&nbsp;${dormitory['rooms'][0]['contractPrice'][0]['salePrice']}
 				</dt>

@@ -19,10 +19,9 @@
 					<c:forEach var="contractPrice" items="${room['contractPrice']}">
 						<fmt:parseNumber value="${contractPrice['contract'] div 7}" integerOnly="true" var="week"/>
 						<c:set var="day" value="${contractPrice['contract'] % 7}" />
-						<p><span>
-							<c:if test="${week > 0}">${week}周</c:if>
-							<c:if test="${day > 0}">${day}天</c:if>
-						</span>&#163;${contractPrice['weekPrice']}(&#163;${contractPrice['salePrice']})</p>
+						<p><span>周期：</span><c:if test="${week > 0}">${week}周</c:if><c:if test="${day > 0}">${day}天</c:if></p>
+						<p><span>周价：</span>&#163;${contractPrice['weekPrice']}</p>
+						<p><span>总价：</span>&#163;${contractPrice['salePrice']}</p>
 					</c:forEach>
 				</li>
 			</ul>
