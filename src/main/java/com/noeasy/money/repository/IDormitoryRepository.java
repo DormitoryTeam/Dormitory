@@ -31,6 +31,7 @@ package com.noeasy.money.repository;
 import java.util.List;
 import java.util.Map;
 
+import com.noeasy.money.model.ContractType;
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitoryRateBean;
 import com.noeasy.money.model.DormitorySearchBean;
@@ -168,5 +169,9 @@ public interface IDormitoryRepository {
 
 
     RoomPrice findRoomPrice(RoomPriceSearchBean seachBean);
+
+
+
+    ContractType findContractTypeById(Integer pId);
 
 }

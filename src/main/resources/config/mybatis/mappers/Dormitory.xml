@@ -679,6 +679,11 @@
 		where status = 1 and room_info_id = #{roomInfoId} and contract_type_id = #{contractId}
 	</select>
 	
+	<select id="findContractTypeById" resultType="com.noeasy.money.model.ContractType" parameterType="int">
+		select id, name from contract_type
+		where id = #{id}
+	</select>
+	
 	<!-- Result Map ############################################### -->
 	<resultMap id="roomPrice2" type="com.noeasy.money.model.RoomPrice">
 		<id property="id" column="id" />

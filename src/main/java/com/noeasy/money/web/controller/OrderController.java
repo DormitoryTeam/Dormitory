@@ -533,17 +533,9 @@ public class OrderController {
             order.setOrderContact(new OrderContactInfo());
             order.setOrderStatus(OrderStatus.INITIAL);
             maintainsOrderType(pRequest, order);
-            order.setLineItems(new ArrayList<LineItem>());
-            LineItem item = null;
-            if (OrderType.DORMITORY == order.getOrderType()) {
-                item = new DormitoryLineItem();
-                order.setCurrency("GBP");
-            } else {
-                item = new PickupLineItem();
-                order.setCurrency("CNY");
-            }
-            order.getLineItems().add(item);
-            order.setAmount(new BigDecimal("0"));
+            
+            maintainsOrderLineItem(pRequest, order, order.getOrderType());
+            priceOrder(pRequest, order);
 
         }
         ServletUtils.setOrder2Session(pRequest, order);
@@ -562,7 +554,7 @@ public class OrderController {
         OrderBean order = ServletUtils.getOrderFromSession(pRequest);
         OrderType orderType = order.getOrderType();
         // maintains order line item
-        maintainsOrderLineItem(pRequest, order, orderType);
+        // maintainsOrderLineItem(pRequest, order, orderType);
         UserBean belongsTo = null;
         UserBean placer = null;
         String email = order.getOrderContact().getBelongsToInfo().getEmail();
@@ -635,17 +627,21 @@ public class OrderController {
 
 
     private void maintainsOrderLineItem(HttpServletRequest pRequest, OrderBean order, OrderType orderType) {
-        List<LineItem> lineItems = order.getLineItems();
-        if (null == lineItems) {
-            lineItems = new ArrayList<LineItem>();
-            order.setLineItems(lineItems);
+        List<LineItem> lineItems = new ArrayList<LineItem>();
+        order.setLineItems(lineItems);
+        LineItem item = null;
+        if (OrderType.DORMITORY == order.getOrderType()) {
+            item = new DormitoryLineItem();
+        } else {
+            item = new PickupLineItem();
         }
+        order.getLineItems().add(item);
 
         List<LineItem> items = order.getLineItems();
         if (CollectionUtils.isEmpty(items)) {
             throw new RuntimeException("no line item on order.");
         }
-        LineItem item = items.get(0);
+//        item = items.get(0);
         item.setOrderId(order.getId());
         // collection item information
         if (orderType == OrderType.DORMITORY) {
@@ -657,248 +653,267 @@ public class OrderController {
             if (StringUtils.isBlank(dormitoryIdStr)) {
                 throw new RuntimeException("dormitoryId is blank.");
             }
-            dormitoryItem.setDormitory(new DormitoryBean());
-            dormitoryItem.getDormitory().setId(Integer.valueOf(dormitoryIdStr));
+            DormitoryBean dormitory = dormitoryService.findDormitoryById(Integer.valueOf(dormitoryIdStr));
+            dormitoryItem.setDormitory(dormitory);
 
             // contract
             String contractIdStr = pRequest.getParameter(Constants.PARAM_CONTRACT_ID);
             if (StringUtils.isBlank(contractIdStr)) {
                 throw new RuntimeException("contractId is blank");
             }
-            dormitoryItem.setContractType(new ContractType());
-            dormitoryItem.getContractType().setId(Integer.valueOf(contractIdStr));
+            ContractType contractType = dormitoryService.findContractTypeById(Integer.valueOf(contractIdStr));
+            dormitoryItem.setContractType(contractType);
 
             // roomInfo
             String roomInfoIdStr = pRequest.getParameter(Constants.PARAM_ROOM_INFO_ID);
             if (StringUtils.isBlank(roomInfoIdStr)) {
                 throw new RuntimeException("roomInfoId is blank");
             }
-            dormitoryItem.setRoomInfo(new RoomInfoBean());
-            dormitoryItem.getRoomInfo().setId(Integer.valueOf(roomInfoIdStr));
+            RoomInfoBean roomInfo = dormitoryService.findRoomInfoById(Integer.valueOf(roomInfoIdStr));
+            dormitoryItem.setRoomInfo(roomInfo);
+            
+        } 
+//        else {
+//            PickupLineItem pickupItem = (PickupLineItem) item;
+//            
+//        }
+    }
+
+    private void priceOrder(HttpServletRequest pRequest, OrderBean pOrder) {
+        if (OrderType.DORMITORY == pOrder.getOrderType()) {
+            DormitoryLineItem dormitoryItem = (DormitoryLineItem)pOrder.getLineItems().get(0);
             RoomPrice price = dormitoryService.findRoomPrice(dormitoryItem.getRoomInfo().getId(), dormitoryItem
                     .getContractType().getId());
-            dormitoryItem.setAmount(new BigDecimal(price.getSalePrice()));
+            DormitoryBean dormitory = dormitoryItem.getDormitory();
+            BigDecimal amount = new BigDecimal(price.getSalePrice());
+            amount = amount.add(new BigDecimal(dormitory.getAdditionalPrice()));
+            dormitoryItem.setAmount(amount);
+            // week price
             dormitoryItem.setListPrice(new BigDecimal(price.getWeekPrice()));
-            dormitoryItem.setCurrency(price.getCurrency());
+            // FIXME: get currentcy from price, if needed
+            dormitoryItem.setCurrency("GBP");
+            pOrder.setAmount(amount);
+            pOrder.setCurrency("GBP");
         } else {
-            PickupLineItem pickupItem = (PickupLineItem) item;
-            // TODO: change default price
+            // FIXME: change default price, if needed
+            PickupLineItem pickupItem = (PickupLineItem)pOrder.getLineItems().get(0);
             pickupItem.setAmount(new BigDecimal("0.00"));
             pickupItem.setListPrice(new BigDecimal("0.00"));
             pickupItem.setCurrency("CNY");
+            pOrder.setAmount(new BigDecimal("0.00"));
+            pOrder.setCurrency("CNY");
         }
+        
     }
 
-
-
-    @RequestMapping("/dormitory-order-place" + Constants.URL_SUFFIX)
-    public String placeDormitoryOrder(final HttpServletRequest request, final HttpServletResponse response,
-            final Model model, final UserBean user, final boolean orderFor) {
-        DormitoryBean dormitory = (DormitoryBean) request.getSession().getAttribute("dormitory");
-        if (dormitory != null) {
-            OrderBean orderBean = new OrderBean();
-            if (user.getId() == null || user.getId() <= 0) {
-                user.setPassword(System.currentTimeMillis() + "");
-                user.setLogin(user.getEmail());
-                userService.saveOrUpdate(user);
-                orderBean.setBelongsTo(user);
-            } else {
-                UserBean newLitigantUser = new UserBean();
-                // newLitigantUser.setName(request.getParameter("othername"));
-                // newLitigantUser.setGender(request.getParameter("othergender").equals("1"));
-                // newLitigantUser.setQq(request.getParameter("otherqq"));
-                // newLitigantUser.setPhone(request.getParameter("otherphone"));
-                // newLitigantUser.setAddress(request.getParameter("otheraddress"));
-                if (StringUtils.isNoneBlank(request.getParameter("otherid")) || orderFor) {
-                    newLitigantUser.setId(user.getId());
-                    newLitigantUser.setLogin(user.getLogin());
-                    newLitigantUser.setEmail(user.getEmail());
-                } else {
-                    newLitigantUser.setLogin(request.getParameter("otheremail"));
-                    newLitigantUser.setEmail(request.getParameter("otheremail"));
-                    newLitigantUser.setPassword(System.currentTimeMillis() + "");
-                    userService.saveOrUpdate(newLitigantUser);
-                }
-                orderBean.setBelongsTo(newLitigantUser);
-            }
-            orderBean.setUser(user);
-
-            OrderContactInfo contact = new OrderContactInfo();
-            UserBean litigantUser = orderBean.getBelongsTo();
-            // contact.setName(litigantUser.getName());
-            // contact.setGender(litigantUser.isGender());
-            // contact.setPhone(litigantUser.getPhone());
-            // contact.setQQ(litigantUser.getQq());
-            // contact.setAddress(litigantUser.getAddress());
-            orderBean.setOrderContact(contact);
-
-            OrderTail createOrderRecord = new OrderTail();
-            createOrderRecord.setOperation(Operation.CREATE);
-            createOrderRecord.setOperator(user);
-            List<OrderTail> orderRecords = new ArrayList<OrderTail>();
-            orderRecords.add(createOrderRecord);
-            orderBean.setTails(orderRecords);
-
-            DormitoryLineItem dormitoryLineItem = new DormitoryLineItem();
-            dormitoryLineItem.setDormitory(dormitory);
-            dormitoryLineItem.setAmount(new BigDecimal(dormitory.getSalePrice()));
-            dormitoryLineItem.setCurrency(dormitory.getCurrency());
-            dormitoryLineItem.setListPrice(new BigDecimal(dormitory.getWeekPrice()));
-            List<LineItem> lineItems = new ArrayList<LineItem>();
-            lineItems.add(dormitoryLineItem);
-            orderBean.setLineItems(lineItems);
-
-            orderBean.setOrderType(OrderType.DORMITORY);
-            orderBean.setAmount(new BigDecimal(dormitory.getSalePrice()));
-            orderBean.setCurrency(dormitory.getCurrency());
-            orderBean.setOrderStatus(OrderStatus.COMMIT);
-
-            boolean placeOrderResult = orderService.placeOrder(orderBean);
-            model.addAttribute("result", placeOrderResult);
-        }
-        return "order/dormitory-order-place-result";
-    }
-
-
-
-    @RequestMapping("/pickup-order-place" + Constants.URL_SUFFIX)
-    public String placePickupOrder(final HttpServletRequest request, final HttpServletResponse response,
-            final Model model, final UserBean user, final boolean orderFor) throws ParseException {
-        String flightNum = request.getParameter("flightNum");
-        if (StringUtils.isNoneBlank(flightNum)) {
-            Integer countryId = NumberUtils.toInt(request.getParameter("countryId"));
-            Integer cityId = NumberUtils.toInt(request.getParameter("cityId"));
-            List<Map<String, Object>> flights = navigationService.queryFlightByConditions(countryId, cityId, flightNum);
-            PickupLineItem pickupLineItem = new PickupLineItem();
-            pickupLineItem.setCityId(cityId);
-            if (CollectionUtils.isNotEmpty(flights)) {
-                pickupLineItem.setFlightNum(flights.get(0).get("flightNum").toString());
-                pickupLineItem.setCityId(cityId);
-                String pickupDateStr = request.getParameter("pickupDate");
-                if (StringUtils.isNoneBlank(pickupDateStr)) {
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    Date pickupDate = dateFormat.parse(pickupDateStr);
-                    pickupLineItem.setPickupDate(pickupDate);
-                }
-                pickupLineItem.setPickupType(PickupType.valueOf(request.getParameter("pickupType")));
-                pickupLineItem.setLuggageAmount(NumberUtils.toInt(request.getParameter("luggageAmount")));
-                pickupLineItem.setLuggageSize(NumberUtils.toDouble(request.getParameter("luggageSize")));
-                pickupLineItem.setCurrency("USD");
-                pickupLineItem.setAmount(new BigDecimal(0));
-
-                OrderBean orderBean = new OrderBean();
-                if (user.getId() == null || user.getId() <= 0) {
-                    user.setPassword(System.currentTimeMillis() + "");
-                    user.setLogin(user.getEmail());
-                    userService.saveOrUpdate(user);
-                    orderBean.setBelongsTo(user);
-                } else {
-                    UserBean newLitigantUser = new UserBean();
-                    // newLitigantUser.setName(request.getParameter("othername"));
-                    // newLitigantUser.setGender(request.getParameter("othergender").equals("1"));
-                    // newLitigantUser.setQq(request.getParameter("otherqq"));
-                    // newLitigantUser.setPhone(request.getParameter("otherphone"));
-                    // newLitigantUser.setAddress(request.getParameter("otheraddress"));
-                    if (StringUtils.isNoneBlank(request.getParameter("otherid")) || orderFor) {
-                        newLitigantUser.setId(user.getId());
-                        newLitigantUser.setLogin(user.getLogin());
-                        newLitigantUser.setEmail(user.getEmail());
-                    } else {
-                        newLitigantUser.setLogin(request.getParameter("otheremail"));
-                        newLitigantUser.setEmail(request.getParameter("otheremail"));
-                        newLitigantUser.setPassword(System.currentTimeMillis() + "");
-                        userService.saveOrUpdate(newLitigantUser);
-                    }
-                    orderBean.setBelongsTo(newLitigantUser);
-                }
-                orderBean.setUser(user);
-
-                OrderContactInfo contact = new OrderContactInfo();
-                UserBean litigantUser = orderBean.getBelongsTo();
-                // contact.setName(litigantUser.getName());
-                // contact.setGender(litigantUser.isGender());
-                // contact.setPhone(litigantUser.getPhone());
-                // contact.setQQ(litigantUser.getQq());
-                // contact.setAddress(litigantUser.getAddress());
-                orderBean.setOrderContact(contact);
-
-                OrderTail createOrderRecord = new OrderTail();
-                createOrderRecord.setOperation(Operation.CREATE);
-                createOrderRecord.setOperator(user);
-                List<OrderTail> orderRecords = new ArrayList<OrderTail>();
-                orderRecords.add(createOrderRecord);
-                orderBean.setTails(orderRecords);
-
-                List<LineItem> lineItems = new ArrayList<LineItem>();
-                lineItems.add(pickupLineItem);
-                orderBean.setLineItems(lineItems);
-
-                orderBean.setCurrency("CNY");
-                orderBean.setAmount(new BigDecimal(0));
-                orderBean.setOrderType(OrderType.PICKUP);
-                orderBean.setOrderStatus(OrderStatus.COMMIT);
-
-                boolean placeOrderResult = orderService.placeOrder(orderBean);
-                model.addAttribute("result", placeOrderResult);
-            }
-        }
-        return "order/dormitory-order-place-result";
-    }
-
-
-
-    @RequestMapping("/dormitory-order-fill" + Constants.URL_SUFFIX)
-    public String toDormitoryOrderFill(final HttpServletRequest request, final HttpServletResponse response,
-            final Model model, final String dormitoryId) {
-        if (StringUtils.isNoneBlank(dormitoryId)) {
-            DormitorySearchBean dormitorySearchBean = new DormitorySearchBean();
-            dormitorySearchBean.setId(NumberUtils.toInt(dormitoryId));
-            DormitoryBean dormitory = dormitoryService.queryDormitory(dormitorySearchBean);
-
-            Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
-            UserSearchBean userSearchBean = new UserSearchBean();
-            userSearchBean.setId(userId != null ? userId : 0);
-
-            List<UserBean> result = userService.queryUser(userSearchBean);
-            if (CollectionUtils.isNotEmpty(result)) {
-                UserBean user = result.get(0);
-
-                model.addAttribute("user", user);
-            }
-            request.getSession().setAttribute("dormitory", dormitory);
-        }
-        return "order/dormitory-order-fill";
-    }
+//    @RequestMapping("/dormitory-order-place" + Constants.URL_SUFFIX)
+//    public String placeDormitoryOrder(final HttpServletRequest request, final HttpServletResponse response,
+//            final Model model, final UserBean user, final boolean orderFor) {
+//        DormitoryBean dormitory = (DormitoryBean) request.getSession().getAttribute("dormitory");
+//        if (dormitory != null) {
+//            OrderBean orderBean = new OrderBean();
+//            if (user.getId() == null || user.getId() <= 0) {
+//                user.setPassword(System.currentTimeMillis() + "");
+//                user.setLogin(user.getEmail());
+//                userService.saveOrUpdate(user);
+//                orderBean.setBelongsTo(user);
+//            } else {
+//                UserBean newLitigantUser = new UserBean();
+//                // newLitigantUser.setName(request.getParameter("othername"));
+//                // newLitigantUser.setGender(request.getParameter("othergender").equals("1"));
+//                // newLitigantUser.setQq(request.getParameter("otherqq"));
+//                // newLitigantUser.setPhone(request.getParameter("otherphone"));
+//                // newLitigantUser.setAddress(request.getParameter("otheraddress"));
+//                if (StringUtils.isNoneBlank(request.getParameter("otherid")) || orderFor) {
+//                    newLitigantUser.setId(user.getId());
+//                    newLitigantUser.setLogin(user.getLogin());
+//                    newLitigantUser.setEmail(user.getEmail());
+//                } else {
+//                    newLitigantUser.setLogin(request.getParameter("otheremail"));
+//                    newLitigantUser.setEmail(request.getParameter("otheremail"));
+//                    newLitigantUser.setPassword(System.currentTimeMillis() + "");
+//                    userService.saveOrUpdate(newLitigantUser);
+//                }
+//                orderBean.setBelongsTo(newLitigantUser);
+//            }
+//            orderBean.setUser(user);
+//
+//            OrderContactInfo contact = new OrderContactInfo();
+//            UserBean litigantUser = orderBean.getBelongsTo();
+//            // contact.setName(litigantUser.getName());
+//            // contact.setGender(litigantUser.isGender());
+//            // contact.setPhone(litigantUser.getPhone());
+//            // contact.setQQ(litigantUser.getQq());
+//            // contact.setAddress(litigantUser.getAddress());
+//            orderBean.setOrderContact(contact);
+//
+//            OrderTail createOrderRecord = new OrderTail();
+//            createOrderRecord.setOperation(Operation.CREATE);
+//            createOrderRecord.setOperator(user);
+//            List<OrderTail> orderRecords = new ArrayList<OrderTail>();
+//            orderRecords.add(createOrderRecord);
+//            orderBean.setTails(orderRecords);
+//
+//            DormitoryLineItem dormitoryLineItem = new DormitoryLineItem();
+//            dormitoryLineItem.setDormitory(dormitory);
+//            dormitoryLineItem.setAmount(new BigDecimal(dormitory.getSalePrice()));
+//            dormitoryLineItem.setCurrency(dormitory.getCurrency());
+//            dormitoryLineItem.setListPrice(new BigDecimal(dormitory.getWeekPrice()));
+//            List<LineItem> lineItems = new ArrayList<LineItem>();
+//            lineItems.add(dormitoryLineItem);
+//            orderBean.setLineItems(lineItems);
+//
+//            orderBean.setOrderType(OrderType.DORMITORY);
+//            orderBean.setAmount(new BigDecimal(dormitory.getSalePrice()));
+//            orderBean.setCurrency(dormitory.getCurrency());
+//            orderBean.setOrderStatus(OrderStatus.COMMIT);
+//
+//            boolean placeOrderResult = orderService.placeOrder(orderBean);
+//            model.addAttribute("result", placeOrderResult);
+//        }
+//        return "order/dormitory-order-place-result";
+//    }
+//
+//
+//
+//    @RequestMapping("/pickup-order-place" + Constants.URL_SUFFIX)
+//    public String placePickupOrder(final HttpServletRequest request, final HttpServletResponse response,
+//            final Model model, final UserBean user, final boolean orderFor) throws ParseException {
+//        String flightNum = request.getParameter("flightNum");
+//        if (StringUtils.isNoneBlank(flightNum)) {
+//            Integer countryId = NumberUtils.toInt(request.getParameter("countryId"));
+//            Integer cityId = NumberUtils.toInt(request.getParameter("cityId"));
+//            List<Map<String, Object>> flights = navigationService.queryFlightByConditions(countryId, cityId, flightNum);
+//            PickupLineItem pickupLineItem = new PickupLineItem();
+//            pickupLineItem.setCityId(cityId);
+//            if (CollectionUtils.isNotEmpty(flights)) {
+//                pickupLineItem.setFlightNum(flights.get(0).get("flightNum").toString());
+//                pickupLineItem.setCityId(cityId);
+//                String pickupDateStr = request.getParameter("pickupDate");
+//                if (StringUtils.isNoneBlank(pickupDateStr)) {
+//                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//                    Date pickupDate = dateFormat.parse(pickupDateStr);
+//                    pickupLineItem.setPickupDate(pickupDate);
+//                }
+//                pickupLineItem.setPickupType(PickupType.valueOf(request.getParameter("pickupType")));
+//                pickupLineItem.setLuggageAmount(NumberUtils.toInt(request.getParameter("luggageAmount")));
+//                pickupLineItem.setLuggageSize(NumberUtils.toDouble(request.getParameter("luggageSize")));
+//                pickupLineItem.setCurrency("USD");
+//                pickupLineItem.setAmount(new BigDecimal(0));
+//
+//                OrderBean orderBean = new OrderBean();
+//                if (user.getId() == null || user.getId() <= 0) {
+//                    user.setPassword(System.currentTimeMillis() + "");
+//                    user.setLogin(user.getEmail());
+//                    userService.saveOrUpdate(user);
+//                    orderBean.setBelongsTo(user);
+//                } else {
+//                    UserBean newLitigantUser = new UserBean();
+//                    // newLitigantUser.setName(request.getParameter("othername"));
+//                    // newLitigantUser.setGender(request.getParameter("othergender").equals("1"));
+//                    // newLitigantUser.setQq(request.getParameter("otherqq"));
+//                    // newLitigantUser.setPhone(request.getParameter("otherphone"));
+//                    // newLitigantUser.setAddress(request.getParameter("otheraddress"));
+//                    if (StringUtils.isNoneBlank(request.getParameter("otherid")) || orderFor) {
+//                        newLitigantUser.setId(user.getId());
+//                        newLitigantUser.setLogin(user.getLogin());
+//                        newLitigantUser.setEmail(user.getEmail());
+//                    } else {
+//                        newLitigantUser.setLogin(request.getParameter("otheremail"));
+//                        newLitigantUser.setEmail(request.getParameter("otheremail"));
+//                        newLitigantUser.setPassword(System.currentTimeMillis() + "");
+//                        userService.saveOrUpdate(newLitigantUser);
+//                    }
+//                    orderBean.setBelongsTo(newLitigantUser);
+//                }
+//                orderBean.setUser(user);
+//
+//                OrderContactInfo contact = new OrderContactInfo();
+//                UserBean litigantUser = orderBean.getBelongsTo();
+//                // contact.setName(litigantUser.getName());
+//                // contact.setGender(litigantUser.isGender());
+//                // contact.setPhone(litigantUser.getPhone());
+//                // contact.setQQ(litigantUser.getQq());
+//                // contact.setAddress(litigantUser.getAddress());
+//                orderBean.setOrderContact(contact);
+//
+//                OrderTail createOrderRecord = new OrderTail();
+//                createOrderRecord.setOperation(Operation.CREATE);
+//                createOrderRecord.setOperator(user);
+//                List<OrderTail> orderRecords = new ArrayList<OrderTail>();
+//                orderRecords.add(createOrderRecord);
+//                orderBean.setTails(orderRecords);
+//
+//                List<LineItem> lineItems = new ArrayList<LineItem>();
+//                lineItems.add(pickupLineItem);
+//                orderBean.setLineItems(lineItems);
+//
+//                orderBean.setCurrency("CNY");
+//                orderBean.setAmount(new BigDecimal(0));
+//                orderBean.setOrderType(OrderType.PICKUP);
+//                orderBean.setOrderStatus(OrderStatus.COMMIT);
+//
+//                boolean placeOrderResult = orderService.placeOrder(orderBean);
+//                model.addAttribute("result", placeOrderResult);
+//            }
+//        }
+//        return "order/dormitory-order-place-result";
+//    }
 
 
 
-    @RequestMapping("/pickup-order-fill" + Constants.URL_SUFFIX)
-    public String toPickupOrderFill(final HttpServletRequest request, final HttpServletResponse response,
-            final Model model) {
-        Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
-        UserSearchBean userSearchBean = new UserSearchBean();
-        userSearchBean.setId(userId != null ? userId : 0);
-
-        List<UserBean> result = userService.queryUser(userSearchBean);
-        if (CollectionUtils.isNotEmpty(result)) {
-            UserBean user = result.get(0);
-
-            model.addAttribute("user", user);
-        }
-
-        List<Map<String, Object>> countries = navigationService.queryCountries();
-        if (CollectionUtils.isNotEmpty(countries)) {
-            Integer firstCountryId = (Integer) countries.get(0).get("id");
-            List<Map<String, Object>> cities = navigationService.queryCities(firstCountryId);
-            Integer firstCityId = NumberUtils.toInt(cities.get(0).get("id").toString());
-            List<Map<String, Object>> flights = navigationService.queryFlightByConditions(firstCountryId, firstCityId,
-                    null);
-
-            model.addAttribute("countries", countries);
-            model.addAttribute("cities", cities);
-            model.addAttribute("flights", flights);
-        }
-
-        return "order/pickup-order-fill";
-    }
+//    @RequestMapping("/dormitory-order-fill" + Constants.URL_SUFFIX)
+//    public String toDormitoryOrderFill(final HttpServletRequest request, final HttpServletResponse response,
+//            final Model model, final String dormitoryId) {
+//        if (StringUtils.isNoneBlank(dormitoryId)) {
+//            DormitorySearchBean dormitorySearchBean = new DormitorySearchBean();
+//            dormitorySearchBean.setId(NumberUtils.toInt(dormitoryId));
+//            DormitoryBean dormitory = dormitoryService.queryDormitory(dormitorySearchBean);
+//
+//            Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+//            UserSearchBean userSearchBean = new UserSearchBean();
+//            userSearchBean.setId(userId != null ? userId : 0);
+//
+//            List<UserBean> result = userService.queryUser(userSearchBean);
+//            if (CollectionUtils.isNotEmpty(result)) {
+//                UserBean user = result.get(0);
+//
+//                model.addAttribute("user", user);
+//            }
+//            request.getSession().setAttribute("dormitory", dormitory);
+//        }
+//        return "order/dormitory-order-fill";
+//    }
+//
+//
+//
+//    @RequestMapping("/pickup-order-fill" + Constants.URL_SUFFIX)
+//    public String toPickupOrderFill(final HttpServletRequest request, final HttpServletResponse response,
+//            final Model model) {
+//        Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+//        UserSearchBean userSearchBean = new UserSearchBean();
+//        userSearchBean.setId(userId != null ? userId : 0);
+//
+//        List<UserBean> result = userService.queryUser(userSearchBean);
+//        if (CollectionUtils.isNotEmpty(result)) {
+//            UserBean user = result.get(0);
+//
+//            model.addAttribute("user", user);
+//        }
+//
+//        List<Map<String, Object>> countries = navigationService.queryCountries();
+//        if (CollectionUtils.isNotEmpty(countries)) {
+//            Integer firstCountryId = (Integer) countries.get(0).get("id");
+//            List<Map<String, Object>> cities = navigationService.queryCities(firstCountryId);
+//            Integer firstCityId = NumberUtils.toInt(cities.get(0).get("id").toString());
+//            List<Map<String, Object>> flights = navigationService.queryFlightByConditions(firstCountryId, firstCityId,
+//                    null);
+//
+//            model.addAttribute("countries", countries);
+//            model.addAttribute("cities", cities);
+//            model.addAttribute("flights", flights);
+//        }
+//
+//        return "order/pickup-order-fill";
+//    }
 }

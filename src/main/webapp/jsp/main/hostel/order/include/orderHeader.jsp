@@ -7,15 +7,15 @@
 		</dl>
 		<dl>
 			<dt>租期</dt>
-			<dd><fmt:parseNumber value="${price.contract div 7}" integerOnly="true"/>周${price.contract % 7}天</dd>
+			<dd><fmt:parseNumber value="${order.lineItems[0].contractType.name div 7}" integerOnly="true"/>周${order.lineItems[0].contractType.name % 7}天</dd>
 		</dl>
 		<dl>
 			<dt>单价</dt>
-			<dd>£${price.weekPrice}</dd>
+			<dd>£${order.lineItems[0].listPrice}</dd>
 		</dl>
 		<dl>
 			<dt>总价</dt>
-			<dd>£${price.salePrice}</dd>
+			<dd>£${order.amount}</dd>
 		</dl>
 		<dl>
 			<dt>入住时间</dt>

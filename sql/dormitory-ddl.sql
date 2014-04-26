@@ -74,8 +74,8 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`dormitory` (
   `name` VARCHAR(200) NOT NULL ,
   `address` VARCHAR(500) NULL ,
   `postcode` VARCHAR(200) NULL ,
-  `equipment` INT NULL ,
-  `service` INT NULL ,
+  `equipment` VARCHAR(500) NULL ,
+  `service` VARCHAR(500) NULL ,
   `weekPrice` DECIMAL(5,2) NULL ,
   `salePrice` DECIMAL(5,2) NULL ,
   `currency` VARCHAR(3) NULL ,
@@ -85,6 +85,8 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`dormitory` (
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_time` TIMESTAMP NULL ,
   `status` VARCHAR(45) NULL DEFAULT 'INVISIBILITY' ,
+  `additionalPrice` DECIMAL(5,2) NULL ,
+  `promotion` VARCHAR(1000) NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `index_dormitory` (`city_id` ASC) )
 ENGINE = InnoDB;

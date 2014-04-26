@@ -37,6 +37,7 @@ import javax.annotation.Resource;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
+import com.noeasy.money.model.ContractType;
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitoryRateBean;
 import com.noeasy.money.model.DormitorySearchBean;
@@ -272,6 +273,13 @@ public class DormitoryService implements IDormitoryService {
             }
         }
         return false;
+    }
+
+
+
+    @Override
+    public ContractType findContractTypeById(Integer pId) {
+        return dormitoryRepository.findContractTypeById(pId);
     }
 
 }

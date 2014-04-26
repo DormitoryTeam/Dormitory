@@ -37,6 +37,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
 import com.noeasy.money.enumeration.DormitoryStatus;
+import com.noeasy.money.model.ContractType;
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitoryRateBean;
 import com.noeasy.money.model.DormitorySearchBean;
@@ -475,6 +476,13 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
     @Override
     public Integer updateRoomPrice(final RoomPrice pRoomPrice) {
         return getSqlSession().update("com.noeasy.money.model.Dormitory.updateRoomPrice", pRoomPrice);
+    }
+
+
+
+    @Override
+    public ContractType findContractTypeById(Integer pId) {
+        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.findContractTypeById", pId);
     }
 
 }
