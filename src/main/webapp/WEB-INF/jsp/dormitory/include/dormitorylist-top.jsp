@@ -13,13 +13,22 @@
 			<li><span>&#62;</span>${college['originalName']}</li>
 		</c:if>
 	</ul>
+	<c:choose>
+	<c:when test="${fn:endsWith (sortField, '+')}">
+		<c:set var="arr" value="&uarr;"/>
+	</c:when>
+	<c:otherwise>
+		<c:set var="arr" value="&darr;"/>
+	</c:otherwise>
+	</c:choose>
+	
 	<div class="row filter">
 		<fieldset>
 			<dl>
 				<dt>
 					<input type="radio" class="ckbSortField" name="sortField" value="<c:choose><c:when test="${fn:startsWith (sortField, 'salePrice') and fn:endsWith (sortField, '+')}">salePrice-</c:when><c:otherwise>salePrice+</c:otherwise></c:choose>" <c:if test="${fn:startsWith (sortField, 'salePrice')}">checked</c:if> />
 				<dd>
-					<label for="price">按价格</label>
+					<label for="price">按价格<c:if test="${fn:startsWith (sortField, 'salePrice')}">${arr}</c:if></label>
 				</dd>
 			</dl>
 			<c:if test="${not empty collegeId}">
@@ -28,7 +37,7 @@
 						<input type="radio" class="ckbSortField" name="sortField" value="<c:choose><c:when test="${fn:startsWith(sortField, 'distance') and fn:endsWith(sortField, '+')}">distance-</c:when><c:otherwise>distance+</c:otherwise></c:choose>" <c:if test="${fn:startsWith(sortField, 'distance') or empty sortField}">checked</c:if> />
 					</dt>
 					<dd>
-						<label for="range">按距离</label>
+						<label for="range">按距离<c:if test="${fn:startsWith (sortField, 'distance')}">${arr}</c:if></label>
 					</dd>
 				</dl>
 			</c:if>
@@ -37,7 +46,7 @@
 					<input type="radio" class="ckbSortField" name="sortField" value="<c:choose><c:when test="${fn:startsWith(sortField, 'rating') and fn:endsWith(sortField, '-')}">rating+</c:when><c:otherwise>rating-</c:otherwise></c:choose>" <c:if test="${fn:startsWith(sortField, 'rating')}">checked</c:if> />
 				</dt>
 				<dd>
-					<label for="score">按评分</label>
+					<label for="score">按评分<c:if test="${fn:startsWith (sortField, 'rating')}">${arr}</c:if></label>
 				</dd>
 			</dl>
 			<dl>
@@ -45,7 +54,7 @@
 					<input type="radio" class="ckbSortField" name="sortField" value="<c:choose><c:when test="${fn:startsWith(sortField, 'dormitory_order_count') and fn:endsWith(sortField, '-')}">dormitory_order_count+</c:when><c:otherwise>dormitory_order_count-</c:otherwise></c:choose>" <c:if test="${fn:startsWith(sortField, 'dormitory_order_count')}">checked</c:if> />
 				</dt>
 				<dd>
-					<label for="sales">按销量</label>
+					<label for="sales">按销量<c:if test="${fn:startsWith (sortField, 'dormitory_order_count')}">${arr}</c:if></label>
 				</dd>
 			</dl>
 		</fieldset>
