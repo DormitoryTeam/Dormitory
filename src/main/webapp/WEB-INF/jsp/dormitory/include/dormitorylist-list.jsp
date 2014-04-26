@@ -39,6 +39,8 @@
 				<div class="address">${dormitory['address']}<br /><em>${dormitory['postcode']}</em></div>
 				<p>设施：${dormitory['equipment']}</p>
 				<p>服务：${dormitory['service']}</p>
+				<p>附加费用：<span><em>&#163;</em>${dormitory['additionalPrice']}</span></p>
+				<p>优惠：${dormitory['promotion']}</p>
 				<table>
 					<thead>
 						<tr>

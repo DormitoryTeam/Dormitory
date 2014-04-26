@@ -20,7 +20,12 @@
 				<dt>
 					<select id="selectQuickContract">
 						<c:forEach var="contractPrice" items="${dormitory['rooms'][0]['contractPrice']}">
-							<option value="${contractPrice['contractId']}">${contractPrice['contract']}</option>
+							<fmt:parseNumber value="${contractPrice['contract'] div 7}" integerOnly="true" var="week"/>
+							<c:set var="day" value="${contractPrice['contract'] % 7}" />
+							<option value="${contractPrice['contractId']}">
+								<c:if test="${week > 0}">${week}周</c:if>
+								<c:if test="${day > 0}">${day}天</c:if>
+							</option>
 						</c:forEach>
 					</select>
 				</dt>

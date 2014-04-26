@@ -21,7 +21,15 @@ $(function() {
 		var contracts = room_contracts[$(this).val()];
 		var contractOptions = "";
 		$.each(contracts, function(i, e) {
-			contractOptions += "<option value='" + e.id + "'>" + e.name + "</option>";
+			var days = parseInt(e.name);
+			var weekday = "";
+			if(days / 7 != 0) {
+				weekday = days / 7 + "周";
+			}
+			if(days % 7 != 0) {
+				weekday = days % 7 + "天";
+			}
+			contractOptions += "<option value='" + e.id + "'>" + weekday + "</option>";
 		});
 		$("#selectQuickContract").empty().append(contractOptions).simSelect();
 		$("#quickPricePreview").html(contracts[0].currency + " " + contracts[0].salePrice);

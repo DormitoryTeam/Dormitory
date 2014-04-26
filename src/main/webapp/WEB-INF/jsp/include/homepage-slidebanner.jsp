@@ -34,7 +34,9 @@
 									<c:choose>
 										<c:when test="${not empty cities}">
 											<c:forEach items="${cities}" var="city">
-												<option value="${city['id']}">${city['name']}</option>
+												<c:if test="${city['topCity']}">
+													<option value="${city['id']}">${city['name']}</option>
+												</c:if>
 											</c:forEach>
 										</c:when>
 										<c:otherwise>

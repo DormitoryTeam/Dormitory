@@ -17,7 +17,12 @@
 				<li>
 					<h3>${room['name']}</h3> 
 					<c:forEach var="contractPrice" items="${room['contractPrice']}">
-						<p><span><fmt:parseNumber value="${contractPrice['contract'] div 7}" integerOnly="true"/>周${contractPrice['contract'] % 7}天：</span>&#163;${contractPrice['weekPrice']}(&#163;${contractPrice['salePrice']})</p>
+						<fmt:parseNumber value="${contractPrice['contract'] div 7}" integerOnly="true" var="week"/>
+						<c:set var="day" value="${contractPrice['contract'] % 7}" />
+						<p><span>
+							<c:if test="${week > 0}">${week}周</c:if>
+							<c:if test="${day > 0}">${day}天</c:if>
+						</span>&#163;${contractPrice['weekPrice']}(&#163;${contractPrice['salePrice']})</p>
 					</c:forEach>
 				</li>
 			</ul>
