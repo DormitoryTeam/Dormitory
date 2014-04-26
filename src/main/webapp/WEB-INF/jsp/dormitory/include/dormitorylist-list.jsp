@@ -31,9 +31,10 @@
 					<c:if test="${empty dormitory['rooms']}">
 						<a href="#">${dormitory['name']}</a>
 					</c:if>
-					<span>
-						<c:if test="${dormitory['status'] eq 'HAS_VACANCY'}">尚有空房</c:if>
-						<c:if test="${dormitory['status'] eq 'NO_VACANCY'}">已注满</c:if>
+					<span style="color: #ff5400;">
+						<fmt:formatNumber value="${dormitory['distance']}" pattern="#,#0.00#"/>KM
+						<%--<c:if test="${dormitory['status'] eq 'HAS_VACANCY'}">尚有空房</c:if>
+						<c:if test="${dormitory['status'] eq 'NO_VACANCY'}">已注满</c:if>--%>
 					</span>
 				</div>
 				<div class="address">${dormitory['address']}<br /><em>${dormitory['postcode']}</em></div>

@@ -28,14 +28,15 @@
 	</select>
 
 	<select id="queryCollege" resultType="hashmap" parameterType="java.util.Map">
-		select id, city_id as cityId, name, original_name originalName, status, latitude, longitude, topCollege, status
+		select college.id, college.city_id as cityId, college.name, college.original_name originalName, college.status, college.latitude, college.longitude, college.topCollege
 		from college
-		where status = 1
+		inner join city on city.id = college.city_id
+		where college.status = 1 and city.status = 1
 		<if test="id != null">
-			and id = #{id}
+			and college.id = #{id}
 		</if>
 		<if test="cityId != null">
-			and city_id = #{cityId}
+			and college.city_id = #{cityId}
 		</if>
 	</select>
 

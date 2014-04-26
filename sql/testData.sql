@@ -699,3 +699,6 @@ update dormitory set equipment = 0, service=0;
 update room_info set equipment = 0, service=0;
 update college set status = '1';
 update room_info set orientations = 'WEST';
+update dormitory set additionalPrice = 20;
+update city set topCity = 'true';
+update college set topCollege = 'true';

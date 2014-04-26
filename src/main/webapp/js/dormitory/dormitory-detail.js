@@ -65,7 +65,11 @@ function initialize() {
 	var mapOptions = {
 		center : dormitoryLatlng,
 		zoom : 13,
-		mapTypeId : google.maps.MapTypeId.ROADMAP
+		mapTypeId : google.maps.MapTypeId.ROADMAP,
+		scaleControl: true,
+		scaleControlOptions: {
+			position: google.maps.ControlPosition.BOTTOM_CENTER
+		}
 	};
 	var map = new google.maps.Map(document.getElementById("map_canvas"),
 			mapOptions);

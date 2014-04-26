@@ -134,8 +134,11 @@ public class DormitoryController {
         if (StringUtils.isNotBlank(cityId)) {
 
             Map<String, Object> city = navigationService.queryCityById(NumberUtils.toInt(cityId), null);
-            Integer countryId = (Integer) city.get("countryId");
-            Map<String, Object> country = navigationService.queryCountryById(countryId);
+            Map<String, Object> country = null;
+            if (null != city) {
+                Integer countryId = (Integer) city.get("countryId");
+                country = navigationService.queryCountryById(countryId);
+            }
             Map<String, Object> college = navigationService.queryCollegeById(NumberUtils.toInt(collegeId), null);
 
             DormitorySearchBean searchBean = new DormitorySearchBean();
@@ -147,9 +150,11 @@ public class DormitoryController {
                 searchBean.setKeyword(keyword);
             }
             if (StringUtils.isNoneBlank(sortField)) {
-                searchBean.setSortField(sortField);
-                if (StringUtils.isNoneBlank(sortType)) {
-                    searchBean.setSortType(sortType);
+                searchBean.setSortField(sortField.substring(0, sortField.length() - 1));
+                if (sortField.endsWith("+")) {
+                    searchBean.setSortType("ASC");
+                } else {
+                    searchBean.setSortType("DESC");
                 }
             } else {
                 searchBean.setSortField("distance");

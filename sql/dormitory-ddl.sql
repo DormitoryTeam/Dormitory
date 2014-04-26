@@ -37,6 +37,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`city` (
   `status` VARCHAR(45) NULL ,
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_time` TIMESTAMP NULL ,
+  `topCity` VARCHAR(10) NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `index_city` (`country_id` ASC, `name` ASC) )
 ENGINE = InnoDB;
@@ -58,6 +59,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`college` (
   `status` VARCHAR(45) NULL ,
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_time` TIMESTAMP NULL ,
+  `topCollege` VARCHAR(10) NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `index_college` (`city_id` ASC, `name` ASC) )
 ENGINE = InnoDB;
@@ -691,6 +693,11 @@ CREATE TABLE IF NOT EXISTS `dormitory`.`view_college_glb` (`college_id` INT, `ci
 CREATE TABLE IF NOT EXISTS `dormitory`.`view_dormitory_glb` (`dormitory_id` INT, `city_id` INT, `dormitory_name` INT, `x` INT, `y` INT, `z` INT);
 
 -- -----------------------------------------------------
+-- Placeholder table for view `dormitory`.`view_dormitory_order_count`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `dormitory`.`view_dormitory_order_count` (`dormitory_id` INT, `dormitory_order_count` INT);
+
+-- -----------------------------------------------------
 -- View `dormitory`.`view_college_rad`
 -- -----------------------------------------------------
 DROP VIEW IF EXISTS `dormitory`.`view_college_rad` ;
@@ -759,6 +766,19 @@ CREATE  OR REPLACE VIEW `dormitory`.`view_dormitory_glb` AS
                R*cos_lat*sin_lon AS y,
                R*sin_lat         AS z
     FROM `dormitory`.`view_dormitory_trig`;
+
+-- -----------------------------------------------------
+-- View `dormitory`.`view_dormitory_order_count`
+-- -----------------------------------------------------
+DROP VIEW IF EXISTS `dormitory`.`view_dormitory_order_count` ;
+DROP TABLE IF EXISTS `dormitory`.`view_dormitory_order_count`;
+USE `dormitory`;
+CREATE  OR REPLACE VIEW `dormitory`.`view_dormitory_order_count` AS 
+select li.dormitory_id as dormitory_id, count(*) as dormitory_order_count from `order` as orders
+inner join line_item_dormitory as li on li.order_id = orders.id
+where orders.status = 'SENDING_CONTACT' or orders.status = 'DONE'
+group by dormitory_id
+;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
