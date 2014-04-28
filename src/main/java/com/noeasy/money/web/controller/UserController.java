@@ -53,9 +53,9 @@ public class UserController {
         resultMap.put("result", false);
 
         if (StringUtils.isBlank(login)) {
-            resultMap.put("message", "username should not be blank");
+            resultMap.put("message", "用户名不能为空。");
         } else if (StringUtils.isBlank(password)) {
-            resultMap.put("message", "password should not be blank");
+            resultMap.put("message", "密码不能为空。");
         } else {
             UserSearchBean bean = new UserSearchBean();
             bean.setLogin(login);
@@ -68,7 +68,7 @@ public class UserController {
                 resultMap.put("login", user.getLogin());
                 resultMap.put("result", true);
             } else {
-                resultMap.put("message", "username and passowrd not match");
+                resultMap.put("message", "用户名和密码不匹配。");
             }
         }
 
@@ -87,9 +87,9 @@ public class UserController {
         resultMap.put("result", false);
 
         if (StringUtils.isBlank(login)) {
-            resultMap.put("message", "username should not be blank");
+            resultMap.put("message", "用户名不能为空。");
         } else if (StringUtils.isBlank(password)) {
-            resultMap.put("message", "password should not be blank");
+            resultMap.put("message", "密码不能为空。");
         } else {
             model.addAttribute("result", login);
             UserBean user = userService.register(login, password);
@@ -231,7 +231,7 @@ public class UserController {
             final HttpServletResponse response, final String orderType, final String currentPage, final String pageSize) {
         Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
         UserBean user = userService.findUserById(userId);
-        
+
         OrderType type = OrderType.getType(orderType);// "D" means dormitory
         OrderSearchBean searchBean = new OrderSearchBean();
         searchBean.setOrderType(type);
@@ -288,11 +288,11 @@ public class UserController {
             return "user/loginForm";
         }
         if (StringUtils.isBlank(login)) {
-            model.addAttribute("message", "username should not be blank");
+            model.addAttribute("message", "用户名不能为空。");
             return "user/loginForm";
         }
         if (StringUtils.isBlank(password)) {
-            model.addAttribute("message", "password should not be blank");
+            model.addAttribute("message", "密码不能为空。");
             return "user/loginForm";
         }
         model.addAttribute("login", login);
@@ -306,7 +306,7 @@ public class UserController {
             request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_LOGIN, user.getLogin());
             return "redirect:/navigation/home.html";
         }
-        model.addAttribute("message", "username and passowrd not match");
+        model.addAttribute("message", "用户名和密码不匹配。");
         return "user/loginForm";
     }
 
@@ -397,11 +397,11 @@ public class UserController {
             return "user/registerForm";
         }
         if (StringUtils.isBlank(login)) {
-            model.addAttribute("message", "username should not be blank");
+            model.addAttribute("message", "用户名不能为空。");
             return "user/registerForm";
         }
         if (StringUtils.isBlank(password)) {
-            model.addAttribute("message", "password should not be blank");
+            model.addAttribute("message", "密码不能为空。");
             return "user/registerForm";
         }
         model.addAttribute("login", login);
@@ -451,12 +451,12 @@ public class UserController {
             return "user/sendResetPasswordEmailForm";
         }
         if (StringUtils.isBlank(login)) {
-            model.addAttribute("message", "Username should not be blank");
+            model.addAttribute("message", "用户名不能为空。");
             return "user/changePasswordMessage";
         }
         boolean isExist = userService.exist(login);
         if (!isExist) {
-            model.addAttribute("message", "User not exist");
+            model.addAttribute("message", "用户名不存在。");
             return "user/changePasswordMessage";
         }
         UserBean user = userService.generateResetPasswordSign(login);
