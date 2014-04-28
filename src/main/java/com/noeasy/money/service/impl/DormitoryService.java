@@ -28,6 +28,7 @@
  */
 package com.noeasy.money.service.impl;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -187,6 +188,17 @@ public class DormitoryService implements IDormitoryService {
     @Override
     public Integer queryDormitoryCount(final DormitorySearchBean pSearchBean) {
         return dormitoryRepository.queryDormitoryCount(pSearchBean);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.IDormitoryService#queryDormitoryImages(int)
+     */
+    @Override
+    public List<String> queryDormitoryImages(final int pId) {
+        List<String> picPath = dormitoryRepository.queryImagePathByDormitoryId(pId);
+        return CollectionUtils.isEmpty(picPath) ? new ArrayList<String>() : picPath;
     }
 
 

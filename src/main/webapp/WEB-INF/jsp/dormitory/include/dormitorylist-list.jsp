@@ -4,11 +4,23 @@
 			<div class="hostel-img pull-left">
 			
 				<c:if test="${not empty dormitory['rooms']}">
-					<a href="<c:url value='/dormitory/dormitory-detail.html?id=${dormitory.id}'/>"><img src="<c:url value='/img/house/house.jpg'/>" alt /></a>
+					<a href="<c:url value='/dormitory/dormitory-detail.html?id=${dormitory.id}'/>">
+						<c:if test="${empty dormitory['picPath']}">
+							<img src="<c:url value='/img/house/house.jpg'/>" alt /></a>
+						</c:if>
+						<c:if test="${not empty dormitory['picPath']}">
+							<img src="<c:url value='/upload/images/dormitory/${dormitory.id}/${dormitory.picPath[0]}'/>" alt /></a>
+						</c:if>
+						
 				</c:if>
 				
 				<c:if test="${empty dormitory['rooms']}">
-					<img src="<c:url value='/img/house/house.jpg'/>" alt />
+					<c:if test="${empty dormitory['picPath']}">
+						<img src="<c:url value='/img/house/house.jpg'/>" alt /></a>
+					</c:if>
+					<c:if test="${not empty dormitory['picPath']}">
+						<img src="<c:url value='/upload/images/dormitory/${dormitory.id}/${dormitory.picPath[0]}'/>" alt /></a>
+					</c:if>
 				</c:if>
 				
 				<p class="hostel-server">

@@ -84,6 +84,10 @@ public interface IDormitoryService {
 
 
 
+    List<String> queryDormitoryImages(int pId);
+
+
+
     DormitoryBean queryDormitory(DormitorySearchBean pSearchBean);
 
 

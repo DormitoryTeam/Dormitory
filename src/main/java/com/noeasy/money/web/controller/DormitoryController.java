@@ -174,6 +174,9 @@ public class DormitoryController {
             page.setQueryString(request.getQueryString());
             searchBean.setPageBean(page);
             List<DormitoryBean> dormitories = dormitoryService.queryDormitoryPage(searchBean);
+            for (DormitoryBean dormitory : dormitories) {
+                dormitory.setPicPath(dormitoryService.queryDormitoryImages(dormitory.getId()));
+            }
 
             Object userIdObj = request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
             int userId = 0;
