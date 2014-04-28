@@ -695,10 +695,10 @@ insert into room_price (id, room_info_id, contract_type_id, currency, weekPrice,
 insert into room_price (id, room_info_id, contract_type_id, currency, weekPrice, salePrice, status, create_time, update_time) value(20,20,2,'GBP',111,4773, '1', now(), now());
 insert into room_price (id, room_info_id, contract_type_id, currency, weekPrice, salePrice, status, create_time, update_time) value(21,21,2,'GBP',156,6716, '1', now(), now());
 
-update dormitory set equipment = 0, service=0;
+
 update room_info set equipment = 0, service=0;
 update college set status = '1';
 update room_info set orientations = 'WEST';
-update dormitory set additionalPrice = 20;
+update dormitory set additionalPrice = 20, equipment = '这里是设施介绍', service='这里是服务介绍', promotion='这里是优惠介绍';
 update city set topCity = 'true';
 update college set topCollege = 'true';
