@@ -23,26 +23,8 @@
 								<li>Name: ${dormitory['name']} ${dormitory['status']} &nbsp; 
 									<input type="button" class="btnEdit" dormitoryId="${dormitory['id']}" value="Edit" /></li>
 								<li>Addr: ${dormitory['address']}</li>
-								<li>
-									Service: 
-									<c:forEach var="binaryService" items="${dormitory['binaryServiceArray']}" varStatus="i">
-					 					<c:if test="${binaryService eq '1'.charAt(0)}">
-					 						<c:if test="${hasOneService > 0}">, </c:if>
-					 						<c:set var="hasOneService" value="1" />
-					 						${services[i['index']]}
-					 					</c:if>
-									</c:forEach>
-								</li>
-								<li>
-									Equipment: 
-									<c:forEach var="binaryEquipment" items="${dormitory['binaryEquipmentArray']}" varStatus="i">
-					 					<c:if test="${binaryEquipment eq '1'.charAt(0)}">
-					 						<c:if test="${hasOneEquipment eq 1}">, </c:if>
-					 						<c:set var="hasOneEquipment" value="1" />
-					 						${equipments[i['index']]}
-					 					</c:if>
-									</c:forEach>
-								</li>
+								<li>Equipment:${dormitory['equipment']}</li>
+								<li>Service: ${dormitory['service']}</li>
 								<li>Price: ${dormitory['salePrice']}</li>
 								<li>Rating: ${dormitory['rating']}</li>
 								<li>Room Count: ${fn:length(dormitory['rooms'])}</li>
