@@ -111,6 +111,13 @@ public class DormitoryService implements IDormitoryService {
 
 
     @Override
+    public ContractType findContractTypeById(final Integer pId) {
+        return dormitoryRepository.findContractTypeById(pId);
+    }
+
+
+
+    @Override
     public DormitoryBean findDormitoryById(final Integer pDormitoryId) {
         DormitorySearchBean searchBean = new DormitorySearchBean();
         searchBean.setId(pDormitoryId);
@@ -152,6 +159,9 @@ public class DormitoryService implements IDormitoryService {
     @Override
     public DormitoryBean queryDormitory(final DormitorySearchBean pSearchBean) {
         DormitoryBean dormitory = dormitoryRepository.queryDormitory(pSearchBean);
+        if (dormitory == null && pSearchBean.getId() != null) {
+            dormitory = dormitoryRepository.querySimpleDormitoryById(pSearchBean.getId());
+        }
         if (dormitory.getId() > 0) {
             List<String> picPath = dormitoryRepository.queryImagePathByDormitoryId(dormitory.getId());
             dormitory.setPicPath(picPath);
@@ -273,13 +283,6 @@ public class DormitoryService implements IDormitoryService {
             }
         }
         return false;
-    }
-
-
-
-    @Override
-    public ContractType findContractTypeById(Integer pId) {
-        return dormitoryRepository.findContractTypeById(pId);
     }
 
 }

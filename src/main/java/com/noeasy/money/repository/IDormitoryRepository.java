@@ -80,6 +80,18 @@ public interface IDormitoryRepository {
 
 
 
+    ContractType findContractTypeById(Integer pId);
+
+
+
+    RoomInfoBean findRoomInfoById(Integer pRoomInfoId);
+
+
+
+    RoomPrice findRoomPrice(RoomPriceSearchBean seachBean);
+
+
+
     Boolean initialDistanceResult();
 
 
@@ -124,6 +136,10 @@ public interface IDormitoryRepository {
 
 
 
+    DormitoryBean querySimpleDormitoryById(int pId);
+
+
+
     List<String> queryVideoPathByDormitoryId(Integer pDormitoryId);
 
 
@@ -161,17 +177,5 @@ public interface IDormitoryRepository {
 
 
     Integer updateRoomPrice(RoomPrice pRoomPrice);
-
-
-
-    RoomInfoBean findRoomInfoById(Integer pRoomInfoId);
-
-
-
-    RoomPrice findRoomPrice(RoomPriceSearchBean seachBean);
-
-
-
-    ContractType findContractTypeById(Integer pId);
 
 }

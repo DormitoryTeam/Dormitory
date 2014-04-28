@@ -138,6 +138,13 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
 
 
     @Override
+    public ContractType findContractTypeById(final Integer pId) {
+        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.findContractTypeById", pId);
+    }
+
+
+
+    @Override
     public RoomInfoBean findRoomInfoById(final Integer pRoomInfoId) {
         return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.findRoomInfoById", pRoomInfoId);
     }
@@ -296,6 +303,16 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
     @Override
     public List<String> queryService() {
         return getSqlSession().selectList("com.noeasy.money.model.Dormitory.selectService");
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#querySimpleDormitoryById(int)
+     */
+    @Override
+    public DormitoryBean querySimpleDormitoryById(final int pId) {
+        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.querySimpleDormitory", pId);
     }
 
 
@@ -476,13 +493,6 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
     @Override
     public Integer updateRoomPrice(final RoomPrice pRoomPrice) {
         return getSqlSession().update("com.noeasy.money.model.Dormitory.updateRoomPrice", pRoomPrice);
-    }
-
-
-
-    @Override
-    public ContractType findContractTypeById(Integer pId) {
-        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.findContractTypeById", pId);
     }
 
 }
