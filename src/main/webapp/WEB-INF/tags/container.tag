@@ -1,5 +1,6 @@
 <!doctype html>
 <%@attribute name="template"%>
+<%@ tag pageEncoding="UTF-8"%> 
 <head>
 <%
     String ctx = request.getContextPath();
