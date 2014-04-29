@@ -21,12 +21,12 @@
 		<span>公寓预定热门城市</span>
 		<a href="<c:url value='/navigation/navigator.html?countryId=${countries[0].id}'/>" class="more">> 更多城市</a>
 	</div>
-	<ul class="city-list show-list-c">
+	<ul class="city-list">
 		<li class="active"><a href="<c:url value='/navigation/navigator.html?countryId=${countries[0].id}'/>">${countries[0]['name']}</a></li>
 		<c:set var="count" value="0" />
 		<c:forEach var="city" items="${allCities}">
-			<c:if test="${city['topCity'] && count < 10}">
-				<li><a href="<c:url value='/navigation/navigator.html?cityId=${city.id}'/>">${city['name']}</a></li>
+			<c:if test="${city['topCity'] && count < 15}">
+				<li><a href="<c:url value='/navigation/navigator.html?cityId=${city.id}'/>">${city['name_ch']}</a></li>
 				<c:set var="count" value="${count + 1}" />
 			</c:if>
 		</c:forEach>
