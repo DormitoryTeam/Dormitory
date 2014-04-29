@@ -15,7 +15,7 @@
 	</select>
 
 	<select id="queryCity" resultType="hashmap" parameterType="java.util.Map">
-		select id, country_id as countryId, name, topCity, status
+		select id, country_id as countryId, name, name_ch, topCity, status
 		from city
 		where status = 1
 		<if test="id != null">

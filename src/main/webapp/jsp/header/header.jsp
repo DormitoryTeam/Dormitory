@@ -12,6 +12,7 @@
 		</li>	
 		<li class="parent">
 			<a href="#">特色服务</a>
+	<%--
 			<div class="sub-menu">
 				<div class="arrow-up">&nbsp;</div>
 				<ul>
@@ -39,6 +40,7 @@
 					<li><a href="#">多城多商户覆盖</a></li>
 				</ul>
 			</div>
+	--%>
 		</li>
 		<li class="parent">
 			<a href="<c:url value="/navigation/navigator.html?countryId=1"/>">公寓预订</a>
