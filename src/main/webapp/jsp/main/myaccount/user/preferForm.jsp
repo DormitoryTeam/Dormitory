@@ -32,25 +32,25 @@
 						</dl>
 						<dl>
 							<dd style="width: 250px;">您的年级</dd>
-							<dt>
+							<dt style="width: 240px;">
 							<c:set var="yourGrade" value="${user.prefer.yourGrade}" />
 							<input type="radio" name="yourGrade" value="1" <c:if test="${'1' eq yourGrade}">checked</c:if> /><label>&nbsp;大一&nbsp;</label>
 							<input type="radio" name="yourGrade" value="2" <c:if test="${'2' eq yourGrade}">checked</c:if> /><label>&nbsp;大二&nbsp;</label>
 							<input type="radio" name="yourGrade" value="3" <c:if test="${'3' eq yourGrade}">checked</c:if> /><label>&nbsp;大三&nbsp;</label>
 							<input type="radio" name="yourGrade" value="4" <c:if test="${'4' eq yourGrade}">checked</c:if> /><label>&nbsp;大四&nbsp;</label>
-							<input type="radio" name="yourGrade" value="5" <c:if test="${'5' eq yourGrade}">checked</c:if> /><label>&nbsp;硕士&nbsp;</label>
+							<input type="radio" name="yourGrade" value="5" <c:if test="${'5' eq yourGrade}">checked</c:if> /><label>硕士&nbsp;</label>
 							<input type="radio" name="yourGrade" value="6" <c:if test="${'6' eq yourGrade}">checked</c:if> /><label>&nbsp;博士&nbsp;</label>
 							</dt>
 						</dl>
 						<dl>
 							<dd style="width: 250px;">您想和哪个年级的人一起住</dd>
-							<dt>
+							<dt  style="width: 240px;">
 							<c:set var="roomMemberGrade" value="${user.prefer.roomMemberGrade}" />
 							<input type="radio" name="roomMemberGrade" value="1" <c:if test="${'1' eq roomMemberGrade}">checked</c:if> /><label>&nbsp;大一&nbsp;</label>
 							<input type="radio" name="roomMemberGrade" value="2" <c:if test="${'2' eq roomMemberGrade}">checked</c:if> /><label>&nbsp;大二&nbsp;</label>
 							<input type="radio" name="roomMemberGrade" value="3" <c:if test="${'3' eq roomMemberGrade}">checked</c:if> /><label>&nbsp;大三&nbsp;</label>
 							<input type="radio" name="roomMemberGrade" value="4" <c:if test="${'4' eq roomMemberGrade}">checked</c:if> /><label>&nbsp;大四&nbsp;</label>
-							<input type="radio" name="roomMemberGrade" value="5" <c:if test="${'5' eq roomMemberGrade}">checked</c:if> /><label>&nbsp;硕士&nbsp;</label>
+							<input type="radio" name="roomMemberGrade" value="5" <c:if test="${'5' eq roomMemberGrade}">checked</c:if> /><label>硕士&nbsp;</label>
 							<input type="radio" name="roomMemberGrade" value="6" <c:if test="${'6' eq roomMemberGrade}">checked</c:if> /><label>&nbsp;博士&nbsp;</label>
 							</dt>
 						</dl>

@@ -19,7 +19,7 @@
 				</p>
 			</div>
 			<div class="hostel-info">
-				<input type="hidden" class="hidLocation" value="${dormitory['name']},${dormitory['latitude']},${dormitory['longitude']}"/>
+				<input type="hidden" class="hidLocation" value="${dormitory['name']},${dormitory['latitude']},${dormitory['longitude']},${dormitory['id']}"/>
 				<div class="price">
 					价格<span><em>&#163;</em>${not empty dormitory['rooms'] && not empty dormitory['rooms'][0]['contractPrice'][0] ? dormitory['rooms'][0]['contractPrice'][0]['salePrice'] : dormitory['salePrice']}</span>起
 					<div class="starBox" data-score="${dormitory['rating']}"></div>

@@ -314,6 +314,19 @@
 	background-position: -77px 0;
 }
 
+.hostel-list-page li .hostel-img .hostel-server a.video.disabled{
+	background-position: 0 -15px;
+}
+.hostel-list-page li .hostel-img .hostel-server a.plane.disabled{
+	background-position: -27px -15px;
+}
+.hostel-list-page li .hostel-img .hostel-server a.sale.disabled{
+	background-position: -53px -15px;
+}
+.hostel-list-page li .hostel-img .hostel-server a.sunlight.disabled{
+	background-position: -77px -15px;
+}
+
 .hostel-list-page li .hostel-info{
 	margin-left: 220px;
 	position: relative;
@@ -543,7 +556,6 @@ button.btn-style{
 
 .comment form .btn-comment{
 	font-size: 18px;
-	background: transparent;
 	border: none;
 	float: right;
 }
@@ -742,7 +754,7 @@ button.btn-style{
 }
 
 .house-detail-info .scroll-pane { 
-	overflow: hidden; 
+	/**overflow: auto;*/ 
 	width: 548px; 
 	float: left; 
 }
@@ -755,7 +767,7 @@ button.btn-style{
 .house-detail-info .scroll-content-item { 
 	width: 139px; 
 	float: left; 
-	text-align: center;
+	text-align: center; 
 	height: 34px;
 }
 
@@ -818,10 +830,9 @@ button.btn-style{
 	background: none;
 }
 
-.house-detail-info .scroll-bar-wrap .ui-slider-handle { 
-	width: 50px;
-	/**background: #515567;
-	height: 15px;
+.house-detail-info .scroll-bar-wrap .ui-slider-handle {
+	width: 50px; 
+	/**background: #515567;	height: 15px;
 	border: 0;
 	border-radius: 0;*/
 }
@@ -1260,7 +1271,11 @@ a.disabled {
 }
 
 .reservation-personal dl dd .btn-style{
-	margin-left: 200px;
+	float: left;
+}
+
+.reservation-personal dl dd .btn-style + .btn-style{
+	margin-left: 20px;
 }
 
 .reservation-personal dl dd + dd{
@@ -1269,14 +1284,6 @@ a.disabled {
 
 .reservation-personal dl dd > *{
 	vertical-align: middle;
-}
-
-.reservation-personal dl dd label + label.fradio{
-	margin-left: 10px;
-}
-
-.reservation-personal dl dd label.fradio + label{
-	margin-left: 5px;
 }
 
 .airport{

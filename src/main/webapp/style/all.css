@@ -875,7 +875,7 @@ textarea{
 }
 
 label + label.fradio{
-	margin-left: 10px;
+	/**margin-left: 10px;*/
 }
 
 label.fradio + label{
