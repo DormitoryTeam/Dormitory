@@ -57,7 +57,7 @@
 							</dt>
 						</dl>
 						<dl>
-							<dd>邮编</dd>
+							<dd>邮编：</dd>
 							<dt>
 								${user.contactPersonInfo.postalcode}
 							</dt>

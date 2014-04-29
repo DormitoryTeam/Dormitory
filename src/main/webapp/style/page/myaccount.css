@@ -427,3 +427,147 @@ fieldset dl input.long{
 fieldset dl input.larger{
 	width: 400px;
 }
+
+.reservation-personal{
+	position: relative;
+}
+
+reservation-personal{
+	position: relative;
+}
+
+.reservation-personal form > a.addOne{
+	background: url(../common/add.png) no-repeat;
+	width: 75px;
+	height: 74px;
+	display: block;
+	position: absolute;
+	top: 310px;
+	left: 60px;
+}
+
+.reservation-personal form > .btnBox{
+	position: absolute;
+	bottom: 20px;
+	width: 60px;
+	left: 60px;
+
+}
+
+.reservation-personal form > .btnBox > input{
+	width: 60px;
+	height: 60px;
+	background: #ff8a00;
+	border: none;
+	font-size: 18px;
+	line-height: 60px;
+	color: #fff;
+}
+
+.reservation-personal form > .btnBox > input.save{
+	background: #2cb111;
+	margin-bottom: 20px;
+}
+
+.reservation-personal .ui-tabs-panel input{
+	width: 120px;
+	height: 30px;
+	border: 1px solid #c3c3c3;
+	padding-left: 10px;
+}
+
+.reservation-personal .ui-tabs-panel input.min{
+	width: 60px;
+}
+
+.reservation-personal .ui-tabs-panel input.long{
+	width: 250px;
+}
+
+.reservation-personal .ui-tabs-panel input.larger{
+	width: 400px;
+}
+
+.reservation-personal .select-el,
+.reservation-personal .sim-select,
+.reservation-personal .sim-head{
+	height: 30px;
+	width: 80px;
+}
+
+.reservation-personal .sim-select .current{
+	background: #fff;
+	border-radius: 10px;
+	width: 50px;
+	height: 28px;
+	border: 1px solid #c3c3c3;
+	line-height: 30px;
+	color: #5a5a5a;
+}
+
+.reservation-personal .sim-arrow{
+	top: 10px;
+}
+
+.reservation-personal dl{
+	display: block;
+	width: 100%;
+}
+
+.reservation-personal dl + dl{
+	margin-top: 20px;
+}
+
+.reservation-personal dl:before,
+.reservation-personal dl:after {
+	content: " ";
+	display: table;
+}
+
+.reservation-personal dl:after {
+	clear: both;
+}
+
+.reservation-personal dl > *{
+	float: left;
+	line-height: 30px;
+}
+
+.reservation-personal dl dt{
+	font-size: 18px;
+	width: 90px;
+	text-align: right;
+}
+
+.reservation-personal dl dd,
+.reservation-personal dl dd + dt{
+	margin-left: 10px;
+}
+
+.reservation-personal dl dd + dt{
+	width: 30px;
+}
+
+.reservation-personal dl dd + dt.long{
+	width: 80px;
+}
+
+.reservation-personal dl dd + dt.min{
+	width: 45px;
+}
+
+.reservation-personal dl dd .btn-style{
+	float: left;
+}
+
+.reservation-personal dl dd .btn-style + .btn-style{
+	margin-left: 20px;
+}
+
+.reservation-personal dl dd + dd{
+	width: 100%;
+}
+
+.reservation-personal dl dd > *{
+	vertical-align: middle;
+}

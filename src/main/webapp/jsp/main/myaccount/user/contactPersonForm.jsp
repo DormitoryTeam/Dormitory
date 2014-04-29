@@ -57,18 +57,18 @@
 						</dl>
 						<dl>
 							<dd>家庭住址：</dd>
-							<dt><input name="country" id="country" type="text" value="${user.contactPersonInfo.country}" class="min same-as" /> (国家)<input name="province" id="province" type="text" value="${user.contactPersonInfo.province}" class="min same-as" /> (省)<input name="city" id="city" type="text" value="${user.contactPersonInfo.city}" class="min same-as" /> (市)<input name="county" id="county" type="text" value="${user.contactPersonInfo.county}" class="min same-as" /> (区县)</dt>
+							<dt><input name="country" id="country" type="text" value="${user.contactPersonInfo.country}" class="min same-as" />&nbs-p;(国家)&nbsp;<input name="province" id="province" type="text" value="${user.contactPersonInfo.province}" class="min same-as" />&nbsp;(省)&nbsp;<input name="city" id="city" type="text" value="${user.contactPersonInfo.city}" class="min same-as" />&nbsp;(市)&nbsp;<input name="county" id="county" type="text" value="${user.contactPersonInfo.county}" class="min same-as" />&nbsp;(区县)</dt>
 						</dl>
 						<dl>
 							<dd>&nbsp;</dd>
 							<dt>
-								<input name="address" id="address" type="text" value="${user.contactPersonInfo.address}" class="larger same-as"/> (街道地址)
+								<input name="address" id="address" type="text" value="${user.contactPersonInfo.address}" class="larger same-as"/>&nbsp;(街道地址)
 							</dt>
 						</dl>
 						<dl>
 							<dd>&nbsp;</dd>
 							<dt>
-								<input name="postalcode" id="postalcode" type="text" value="${user.contactPersonInfo.postalcode}" class="mini same-as"/> (邮编)
+								<input name="postalcode" id="postalcode" type="text" value="${user.contactPersonInfo.postalcode}" class="mini same-as"/>&nbsp;(邮编)
 							</dt>
 						</dl>
 					</fieldset>
