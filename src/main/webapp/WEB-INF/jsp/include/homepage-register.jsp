@@ -13,7 +13,6 @@
 				<dd>
 					<input id="iptPassword" name="password" type="password" />
 				</dd>
-
 			</dl>
 			<dl>
 				<dt>&nbsp;</dt>

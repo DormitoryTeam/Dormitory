@@ -3,26 +3,14 @@
 		<li>
 			<div class="hostel-img pull-left">
 			
-				<c:if test="${not empty dormitory['rooms']}">
-					<a href="<c:url value='/dormitory/dormitory-detail.html?id=${dormitory.id}'/>">
-						<c:if test="${empty dormitory['picPath']}">
-							<img src="<c:url value='/img/house/house.jpg'/>" alt /></a>
-						</c:if>
-						<c:if test="${not empty dormitory['picPath']}">
-							<img src="<c:url value='/upload/images/dormitory/${dormitory.id}/${dormitory.picPath[0]}'/>" alt /></a>
-						</c:if>
+				<a href="<c:url value='/dormitory/dormitory-detail.html?id=${dormitory.id}'/>">
+				<c:if test="${empty dormitory['picPath']}">
+					<img src="<c:url value='/img/house/house.jpg'/>" alt /></a>
+				</c:if>
+				<c:if test="${not empty dormitory['picPath']}">
+					<img src="<c:url value='/upload/images/dormitory/${dormitory.id}/${dormitory.picPath[0]}'/>" alt /></a>
+				</c:if>
 						
-				</c:if>
-				
-				<c:if test="${empty dormitory['rooms']}">
-					<c:if test="${empty dormitory['picPath']}">
-						<img src="<c:url value='/img/house/house.jpg'/>" alt /></a>
-					</c:if>
-					<c:if test="${not empty dormitory['picPath']}">
-						<img src="<c:url value='/upload/images/dormitory/${dormitory.id}/${dormitory.picPath[0]}'/>" alt /></a>
-					</c:if>
-				</c:if>
-				
 				<p class="hostel-server">
 					<a href="#" class="video">&nbsp;</a>
 					<a href="#" class="plane">&nbsp;</a>
@@ -37,12 +25,7 @@
 					<div class="starBox" data-score="${dormitory['rating']}"></div>
 				</div>
 				<div class="title">
-					<c:if test="${not empty dormitory['rooms']}">
-						<a href="<c:url value='/dormitory/dormitory-detail.html?id=${dormitory.id}'/>">${dormitory['name']}</a>
-					</c:if>
-					<c:if test="${empty dormitory['rooms']}">
-						<a href="#">${dormitory['name']}</a>
-					</c:if>
+					<a href="<c:url value='/dormitory/dormitory-detail.html?id=${dormitory.id}'/>">${dormitory['name']}</a>
 					<span style="color: #ff5400;">
 						(<fmt:formatNumber value="${dormitory['distance']}" pattern="#,#0.00"/>KM)
 						<%--<c:if test="${dormitory['status'] eq 'HAS_VACANCY'}">尚有空房</c:if>

@@ -73,6 +73,7 @@
 						<ul class="user-links">
 							<li><a href="<c:url value="/user/orderList.html?orderType=D"/>">我的订单</a></li>
 							<li><a href="<c:url value="/user/editUserInfo.html"/>">个人中心</a></li>
+							<li><a href="<c:url value="/user/signout.html"/>">注销</a></li>
 						</ul>
 					</li>
 				</ul>
