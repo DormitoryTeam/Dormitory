@@ -38,6 +38,6 @@
 			</dl>
 		</fieldset>
 		<p id="quickRoomNamePreview">${dormitory['rooms'][0]['roomType']}</p>
-		<input type="button" class="btn-quick" value="快速预定" />
+		<input type="button" class="btn-quick" value="快速预定" ${empty dormitory['rooms'] ? 'disabled' : ''} />
 	</form>
 </div>

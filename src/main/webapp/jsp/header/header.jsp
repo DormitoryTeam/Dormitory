@@ -1,4 +1,7 @@
 ﻿<div class="header">
+	<div class="logo">
+		<img src="<c:url value="/img/house/logo.png" />" alt />
+	</div>
 	<div class="phoneNum">
 		<p>联系电话</p>
 		010-00000000
@@ -6,15 +9,45 @@
 	<ul class="menu">
 		<li class="parent">
 			<a href="<c:url value="/navigation/home.html"/>">首页</a>
-		</li>		
+		</li>	
 		<li class="parent">
 			<a href="#">特色服务</a>
+			<div class="sub-menu">
+				<div class="arrow-up">&nbsp;</div>
+				<ul>
+					<li class="sub--menu-title">公寓预定特色</li>
+					<li><a href="#">小伙伴一起住</a></li>
+					<li><a href="#">全英接机优惠</a></li>
+					<li><a href="#">高层向阳优先选</a></li>
+					<li><a href="#">零手续费</a></li>
+					<li><a href="#">免费寄送新生Package</a></li>
+					<li><a href="#">协助找House</a></li>
+				</ul>
+				<ul>
+					<li class="sub--menu-title">接机特色</li>
+					<li><a href="#">中英客服双边保障</a></li>
+					<li><a href="#">更低价格</a></li>
+					<li><a href="#">更安全的保护</a></li>
+				</ul>
+				<ul>
+					<li class="sub--menu-title">视频采访</li>
+					<li><a href="#">留学城市先睹为快</a></li>
+					<li><a href="#">公寓采访眼见为实</a></li>
+				</ul>
+				<ul>
+					<li class="sub--menu-title">会员卡</li>
+					<li><a href="#">多城多商户覆盖</a></li>
+				</ul>
+			</div>
 		</li>
 		<li class="parent">
-			<a href="#">公寓预订</a>
+			<a href="<c:url value="/navigation/navigator.html?countryId=1"/>">公寓预订</a>
 		</li>
 		<li class="parent">
 			<a href="<c:url value="/order/dormitory-place-order.html?orderType=pickup"/>">接机预订</a>
+		</li>
+		<li class="parent">
+			<a href="#">24H安全</a>
 		</li>
 		<li>
 			<a href="#">会员卡</a>

@@ -200,7 +200,7 @@
 
 .sidebar > .userInfo >ul>li + li{
     border-left: 1px solid #dfdfdf;
-    margin-left: 25px;
+    margin-left: 10px;
     padding-left: 20px;
     margin-top: 5px;
 }
@@ -215,8 +215,8 @@
 
 .sidebar > .userInfo ul li > ul.user-links li + li{
     border-left: 1px solid #32b16c;
-    padding-left: 15px;
-    margin-left: 15px;
+    padding-left: 8px;
+    margin-left: 8px;
 }
 
 .sidebar > .news-box{
