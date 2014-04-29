@@ -64,7 +64,27 @@ public interface IDormitoryService {
 
 
 
+    ContractType findContractTypeById(Integer pValueOf);
+
+
+
+    DormitoryBean findDormitoryById(Integer pDormitoryId);
+
+
+
+    RoomInfoBean findRoomInfoById(Integer pRoomInfoId);
+
+
+
+    RoomPrice findRoomPrice(Integer pRoomInfoId, Integer pContractId);
+
+
+
     List<Map<String, Object>> queryContractTypes();
+
+
+
+    List<String> queryDormitoryImages(int pId);
 
 
 
@@ -88,11 +108,11 @@ public interface IDormitoryService {
 
 
 
-    List<Map<String, Object>> queryRoomTypes();
-
-
-
     List<String> queryEquipment();
+
+
+
+    List<Map<String, Object>> queryRoomTypes();
 
 
 
@@ -109,20 +129,4 @@ public interface IDormitoryService {
 
 
     Boolean saveOrUpdateDormitory(DormitoryBean pDormitory);
-
-
-
-    DormitoryBean findDormitoryById(Integer pDormitoryId);
-
-
-
-    RoomInfoBean findRoomInfoById(Integer pRoomInfoId);
-
-
-
-    RoomPrice findRoomPrice(Integer pRoomInfoId, Integer pContractId);
-
-
-
-    ContractType findContractTypeById(Integer pValueOf);
 }

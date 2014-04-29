@@ -93,10 +93,14 @@ public class UserController {
         } else {
             model.addAttribute("result", login);
             UserBean user = userService.register(login, password);
-            request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_ID, user.getId());
-            request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_LOGIN, user.getLogin());
-            resultMap.put("login", user.getLogin());
-            resultMap.put("result", true);
+            if (user == null) {
+                resultMap.put("message", "该用户名已存在。");
+            } else {
+                request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_ID, user.getId());
+                request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_LOGIN, user.getLogin());
+                resultMap.put("login", user.getLogin());
+                resultMap.put("result", true);
+            }
         }
 
         json = JSONObject.fromObject(resultMap);
@@ -406,6 +410,10 @@ public class UserController {
         }
         model.addAttribute("login", login);
         UserBean user = userService.register(login, password);
+        if (user == null) {
+            model.addAttribute("message", "该用户名已存在。");
+            return "user/registerForm";
+        }
         request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_ID, user.getId());
         request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_LOGIN, user.getLogin());
 

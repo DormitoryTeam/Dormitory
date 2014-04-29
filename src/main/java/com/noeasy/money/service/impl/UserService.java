@@ -31,12 +31,12 @@ public class UserService implements IUserService {
     @Resource(name = "authenticationRepository")
     private IAuthenticationRepository authenticationRepository;
 
-   
+
 
     @Override
     public int changePassword(final String pLogin, final String pOldPassword, final String pNewPassword) {
         boolean isExist = exist(pLogin, pOldPassword);
-        if (!isExist) {    
+        if (!isExist) {
             return PASSWORD_NOT_MATCH;
         }
         UserBean user = new UserBean();
@@ -44,6 +44,69 @@ public class UserService implements IUserService {
         user.setPassword(pNewPassword);
         userRepository.resetPassword(user);
         return 0;
+    }
+
+
+
+    private void createUserInfo(final OrderContactInfo pContactInfo, final UserInfoBean pUserInfo,
+            final INFO_TYPE pInfoType) {
+        userRepository.createUserInfo(pUserInfo);
+        switch (pInfoType.ordinal()) {
+        case 0:
+            pContactInfo.setBelongsToInfo(pUserInfo);
+            userRepository.setInfo2Order(pContactInfo);
+            break;
+        case 1:
+            pContactInfo.setGuaranteeInfo(pUserInfo);
+            userRepository.setGuaranteeInfo2Order(pContactInfo);
+            break;
+        case 2:
+            pContactInfo.setContactPersonInfo(pUserInfo);
+            userRepository.setContactPersonInfo2Order(pContactInfo);
+            break;
+        default:
+            assert false : "Not support this type of UserInfo";
+        }
+
+    }
+
+
+
+    private void createUserInfo(final UserBean pUser, final UserInfoBean pUserInfo, final INFO_TYPE pInfoType) {
+        userRepository.createUserInfo(pUserInfo);
+        switch (pInfoType.ordinal()) {
+        case 0:
+            pUser.setInfo(pUserInfo);
+            userRepository.setInfo2User(pUser);
+            break;
+        case 1:
+            pUser.setGuaranteeInfo(pUserInfo);
+            userRepository.setGuaranteeInfo2User(pUser);
+            break;
+        case 2:
+            pUser.setContactPersonInfo(pUserInfo);
+            userRepository.setContactPersonInfo2User(pUser);
+            break;
+        default:
+            assert false : "Not support this type of UserInfo";
+        }
+    }
+
+
+
+    private void createUserPrefer(final UserPreferBean pUserPrefer, final OrderContactInfo pContactInfo) {
+        userRepository.createUserPrefer(pUserPrefer);
+        pContactInfo.setPrefer(pUserPrefer);
+        userRepository.setPrefer2Order(pContactInfo);
+
+    }
+
+
+
+    private void createUserPrefer(final UserPreferBean pUserPrefer, final UserBean pUser) {
+        userRepository.createUserPrefer(pUserPrefer);
+        pUser.setPrefer(pUserPrefer);
+        userRepository.setPrefer2User(pUser);
     }
 
 
@@ -70,6 +133,35 @@ public class UserService implements IUserService {
 
 
     @Override
+    public UserBean findUserById(final Integer pUserId) {
+        if (null == pUserId) {
+            return null;
+        }
+        UserSearchBean searchBean = new UserSearchBean();
+        searchBean.setId(pUserId);
+        List<UserBean> users = queryUser(searchBean);
+        if (CollectionUtils.isEmpty(users)) {
+            return null;
+        }
+        return users.get(0);
+    }
+
+
+
+    @Override
+    public UserBean findUserByLogin(final String pLogin) {
+        UserSearchBean searchBean = new UserSearchBean();
+        searchBean.setLogin(pLogin);
+        List<UserBean> matchUsers = userRepository.queryUser(searchBean);
+        if (CollectionUtils.isNotEmpty(matchUsers)) {
+            return matchUsers.get(0);
+        }
+        return null;
+    }
+
+
+
+    @Override
     public UserBean generateResetPasswordSign(final String pLogin) {
         String sign = DateUtils.dateToString(new Date(), DateUtils.SIMPLE_DATE_FROMAT_RULE)
                 + UUID.randomUUID().toString();
@@ -91,20 +183,12 @@ public class UserService implements IUserService {
         }
         return result;
     }
-    
-    
+
+
+
     @Override
-    public UserBean  findUserById(Integer pUserId) {
-        if (null == pUserId) {
-            return null;
-        }
-        UserSearchBean searchBean = new UserSearchBean();
-        searchBean.setId(pUserId);
-        List<UserBean> users = queryUser(searchBean);
-        if (CollectionUtils.isEmpty(users)) {
-            return null;
-        }
-        return users.get(0);
+    public Integer queryUserCount(final UserSearchBean pSearchBean) {
+        return userRepository.queryUserCount(pSearchBean);
     }
 
 
@@ -113,7 +197,7 @@ public class UserService implements IUserService {
     public UserBean register(final String pLogin, final String pPassword) {
         // check user exit or not.
         if (exist(pLogin)) {
-            throw new BaseException(UserErrorMetadata.USER_EXIST);
+            return null;
         }
         UserBean bean = new UserBean();
         bean.setLogin(pLogin);
@@ -154,21 +238,36 @@ public class UserService implements IUserService {
 
 
     @Override
-    public int updateUser(final UserBean pUser) {
-        return userRepository.updateUser(pUser);
+    public void saveUserInfo(final OrderContactInfo contactInfo, final INFO_TYPE infoType) {
+        if (null == contactInfo) {
+            return;
+        }
+        UserInfoBean userInfo = null;
+        if (INFO_TYPE.USER_INFO == infoType) {
+            userInfo = contactInfo.getBelongsToInfo();
+        }
+        if (INFO_TYPE.GUARANTEE_INFO == infoType) {
+            userInfo = contactInfo.getGuaranteeInfo();
+        }
+        if (INFO_TYPE.CONTACT_PERSON_INFO == infoType) {
+            userInfo = contactInfo.getContactPersonInfo();
+            ;
+        }
+        if (null == userInfo) {
+            return;
+        }
+        if (null == userInfo.getId()) {
+            createUserInfo(contactInfo, userInfo, infoType);
+        } else {
+            updateUserInfo(userInfo);
+        }
+
     }
 
 
 
     @Override
-    public Integer queryUserCount(UserSearchBean pSearchBean) {
-        return userRepository.queryUserCount(pSearchBean);
-    }
-
-
-
-    @Override
-    public void saveUserInfo(UserBean pUser) {
+    public void saveUserInfo(final UserBean pUser) {
         if (null == pUser) {
             return;
         }
@@ -194,127 +293,13 @@ public class UserService implements IUserService {
         } else {
             updateUserInfo(userInfo);
         }
-        
-    }
 
-
-
-    private void updateUserInfo(UserInfoBean pUserInfo) {
-        userRepository.updateUserInfo(pUserInfo);
-        
-    }
-
-
-
-    private void createUserInfo(UserBean pUser, UserInfoBean pUserInfo, INFO_TYPE pInfoType) {
-        userRepository.createUserInfo(pUserInfo);
-        switch (pInfoType.ordinal()) {
-        case 0:
-            pUser.setInfo(pUserInfo);
-            userRepository.setInfo2User(pUser);
-            break;
-        case 1:
-            pUser.setGuaranteeInfo(pUserInfo);
-            userRepository.setGuaranteeInfo2User(pUser);
-            break;
-        case 2:
-            pUser.setContactPersonInfo(pUserInfo);
-            userRepository.setContactPersonInfo2User(pUser);
-            break;
-        default:
-            assert false : "Not support this type of UserInfo";
-        }
     }
 
 
 
     @Override
-    public void saveUserPrefer(UserBean pUser) {
-        if (null == pUser) {
-            return;
-        }
-        UserPreferBean userPrefer = pUser.getPrefer();
-        if (null == userPrefer) {
-            return;
-        }
-        if (null == userPrefer.getId()) {
-            createUserPrefer(userPrefer, pUser);
-        } else {
-            updateUserPrefer(userPrefer);
-        }
-        
-    }
-
-
-
-    private void updateUserPrefer(UserPreferBean pUserPrefer) {
-        userRepository.updateUserPrefer(pUserPrefer);
-    }
-
-
-
-    private void createUserPrefer(UserPreferBean pUserPrefer, UserBean pUser) {
-        userRepository.createUserPrefer(pUserPrefer);
-        pUser.setPrefer(pUserPrefer);
-        userRepository.setPrefer2User(pUser);
-    }
-
-
-
-    @Override
-    public void saveUserInfo(OrderContactInfo contactInfo, INFO_TYPE infoType) {
-        if (null == contactInfo) {
-            return;
-        }
-        UserInfoBean userInfo = null;
-        if (INFO_TYPE.USER_INFO == infoType) {
-            userInfo = contactInfo.getBelongsToInfo();
-        }
-        if (INFO_TYPE.GUARANTEE_INFO == infoType) {
-            userInfo = contactInfo.getGuaranteeInfo();
-        }
-        if (INFO_TYPE.CONTACT_PERSON_INFO == infoType) {
-            userInfo = contactInfo.getContactPersonInfo();
-            ;
-        }
-        if (null == userInfo) {
-            return;
-        }
-        if (null == userInfo.getId()) {
-            createUserInfo(contactInfo, userInfo, infoType);
-        } else {
-            updateUserInfo(userInfo);
-        }
-        
-    }
-
-
-
-    private void createUserInfo(OrderContactInfo pContactInfo, UserInfoBean pUserInfo, INFO_TYPE pInfoType) {
-        userRepository.createUserInfo(pUserInfo);
-        switch (pInfoType.ordinal()) {
-        case 0:
-            pContactInfo.setBelongsToInfo(pUserInfo);
-            userRepository.setInfo2Order(pContactInfo);
-            break;
-        case 1:
-            pContactInfo.setGuaranteeInfo(pUserInfo);
-            userRepository.setGuaranteeInfo2Order(pContactInfo);
-            break;
-        case 2:
-            pContactInfo.setContactPersonInfo(pUserInfo);
-            userRepository.setContactPersonInfo2Order(pContactInfo);
-            break;
-        default:
-            assert false : "Not support this type of UserInfo";
-        }
-        
-    }
-
-
-
-    @Override
-    public void saveUserPrder(OrderContactInfo contactInfo) {
+    public void saveUserPrder(final OrderContactInfo contactInfo) {
         if (null == contactInfo) {
             return;
         }
@@ -327,30 +312,46 @@ public class UserService implements IUserService {
         } else {
             updateUserPrefer(userPrefer);
         }
-        
-    }
 
-
-
-    private void createUserPrefer(UserPreferBean pUserPrefer, OrderContactInfo pContactInfo) {
-        userRepository.createUserPrefer(pUserPrefer);
-        pContactInfo.setPrefer(pUserPrefer);
-        userRepository.setPrefer2Order(pContactInfo);
-        
     }
 
 
 
     @Override
-    public UserBean findUserByLogin(String pLogin) {
-        UserSearchBean searchBean = new UserSearchBean();
-        searchBean.setLogin(pLogin);
-        List<UserBean> matchUsers = userRepository.queryUser(searchBean);
-        if (CollectionUtils.isNotEmpty(matchUsers)) {
-            return matchUsers.get(0); 
+    public void saveUserPrefer(final UserBean pUser) {
+        if (null == pUser) {
+            return;
         }
-        return null;
+        UserPreferBean userPrefer = pUser.getPrefer();
+        if (null == userPrefer) {
+            return;
+        }
+        if (null == userPrefer.getId()) {
+            createUserPrefer(userPrefer, pUser);
+        } else {
+            updateUserPrefer(userPrefer);
+        }
+
     }
 
-    
+
+
+    @Override
+    public int updateUser(final UserBean pUser) {
+        return userRepository.updateUser(pUser);
+    }
+
+
+
+    private void updateUserInfo(final UserInfoBean pUserInfo) {
+        userRepository.updateUserInfo(pUserInfo);
+
+    }
+
+
+
+    private void updateUserPrefer(final UserPreferBean pUserPrefer) {
+        userRepository.updateUserPrefer(pUserPrefer);
+    }
+
 }

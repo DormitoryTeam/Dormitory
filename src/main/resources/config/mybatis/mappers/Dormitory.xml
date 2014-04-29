@@ -270,6 +270,36 @@
 		group by t1.id
 		) t
 	</select>
+	
+	<select id="querySimpleDormitory" parameterType='int' resultMap="dormitory">
+		select
+		t1.id dor_id,
+		t1.name dor_name,
+		t1.address dor_address,
+		t1.postcode dor_postcode,
+		t1.equipment dor_equipment,
+		t1.service dor_service,
+		t1.currency dor_currency,
+		t1.weekPrice dor_weekPrice,
+		t1.salePrice dor_salePrice,
+		t1.additionalPrice dor_additionalPrice,
+		t1.promotion dor_promotion,
+		t1.latitude dor_latitude,
+		t1.longitude dor_longitude,
+		t1.description dor_description,
+		t1.city_id dor_cityId,
+		t1.status dor_status,
+		t2.name dor_city,
+		coalesce(avg(t3.score), 0) rating
+		from
+		dormitory t1
+		left join
+		city t2 on t2.id = t1.city_id
+		left outer join
+		dormitory_rating t3 on t3.dormitory_id = t1.id
+		<include refid="where" />
+		and t1.id = #{id}
+	</select>
 
 	<update id="updateDormitory" parameterType="com.noeasy.money.model.DormitoryBean">
 		update dormitory set

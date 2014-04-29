@@ -28,6 +28,7 @@
  */
 package com.noeasy.money.service.impl;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -111,6 +112,13 @@ public class DormitoryService implements IDormitoryService {
 
 
     @Override
+    public ContractType findContractTypeById(final Integer pId) {
+        return dormitoryRepository.findContractTypeById(pId);
+    }
+
+
+
+    @Override
     public DormitoryBean findDormitoryById(final Integer pDormitoryId) {
         DormitorySearchBean searchBean = new DormitorySearchBean();
         searchBean.setId(pDormitoryId);
@@ -152,6 +160,9 @@ public class DormitoryService implements IDormitoryService {
     @Override
     public DormitoryBean queryDormitory(final DormitorySearchBean pSearchBean) {
         DormitoryBean dormitory = dormitoryRepository.queryDormitory(pSearchBean);
+        if (dormitory == null && pSearchBean.getId() != null) {
+            dormitory = dormitoryRepository.querySimpleDormitoryById(pSearchBean.getId());
+        }
         if (dormitory.getId() > 0) {
             List<String> picPath = dormitoryRepository.queryImagePathByDormitoryId(dormitory.getId());
             dormitory.setPicPath(picPath);
@@ -177,6 +188,17 @@ public class DormitoryService implements IDormitoryService {
     @Override
     public Integer queryDormitoryCount(final DormitorySearchBean pSearchBean) {
         return dormitoryRepository.queryDormitoryCount(pSearchBean);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.IDormitoryService#queryDormitoryImages(int)
+     */
+    @Override
+    public List<String> queryDormitoryImages(final int pId) {
+        List<String> picPath = dormitoryRepository.queryImagePathByDormitoryId(pId);
+        return CollectionUtils.isEmpty(picPath) ? new ArrayList<String>() : picPath;
     }
 
 
@@ -273,13 +295,6 @@ public class DormitoryService implements IDormitoryService {
             }
         }
         return false;
-    }
-
-
-
-    @Override
-    public ContractType findContractTypeById(Integer pId) {
-        return dormitoryRepository.findContractTypeById(pId);
     }
 
 }
