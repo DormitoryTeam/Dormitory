@@ -23,7 +23,7 @@ $(function() {
 function loadCitiesByCountry() {
     $.ajax({
         type : "POST",
-        url : "/dormitory/navigation/getCity.html",
+        url : ctx + "/navigation/getCity.html",
         data : {
             countryId : this.value
         },
@@ -37,7 +37,7 @@ function loadCitiesByCountry() {
 function loadCollegesByCity() {
     $.ajax({
         type : "POST",
-        url : "/dormitory/navigation/getCollege.html",
+        url : ctx + "/navigation/getCollege.html",
         data : {
             cityId : this.value
         },
@@ -80,7 +80,7 @@ function removeFileFromSubmitForm() {
 
 function appendLastestImagePreview(data) {
     $.each(data.result, function(i, e) {
-        var imageURL = "/dormitory/upload/images/dormitory/" + $("#hidDormitoryId").val() + "/" + e.name;
+        var imageURL = ctx + "/upload/images/dormitory/" + $("#hidDormitoryId").val() + "/" + e.name;
         var row = $('<tr>');
         row.append($('<td>').html("<input type=\"text\" name=\"imageNames\" class=\"fileNames\" value=\"" + e.name + "\" />"));
         row.append($('<td>').html("<a href='" + imageURL + "'><img src='" + imageURL + "' /></a>"));

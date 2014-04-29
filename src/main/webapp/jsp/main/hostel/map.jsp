@@ -1,3 +1,3 @@
 <div class="map">
-	<img src="/dormitory/img/map/map.jpg" alt />
+	<img src="<c:url value="/img/map/map.jpg"/>" alt />
 </div>

@@ -81,8 +81,8 @@
 		<c:if test="${empty sessionScope.USER_ID}">
 			<div class="login-plan">
 				<ul>
-					<li><a href="javascript:void(0)" class="reg-btn jQ-regbtn" data-popupSrc="/dormitory/user/loadRegister.html">&nbsp;</a></li>
-					<li><a href="javascript:void(0)" class="login-btn jQ-loginbtn" data-popupSrc="/dormitory/user/loadLogin.html">&nbsp;</a></li>
+					<li><a href="javascript:void(0)" class="reg-btn jQ-regbtn" data-popupSrc="<c:url value="/user/loadRegister.html"/>">&nbsp;</a></li>
+					<li><a href="javascript:void(0)" class="login-btn jQ-loginbtn" data-popupSrc="<c:url value="/user/loadLogin.html"/>">&nbsp;</a></li>
 				</ul>
 			</div>
 		</c:if>

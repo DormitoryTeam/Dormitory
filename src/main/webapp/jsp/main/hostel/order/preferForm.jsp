@@ -87,7 +87,7 @@
 							<c:set var="roomMemberGender" value="${user.prefer.roomMemberGender}" />
 							</c:if>
 							<input name="roomMemberGender" type="radio" value="0" <c:if test="${0 eq roomMemberGender}">checked</c:if> /><label>混合性别</label>
-							<input name="roomMemberGender" type="radio" value="1" <c:if test="${1 eq roomMemberGender}">checked</c:if> />我是男性想和所有男性一起住</label>
+							<input name="roomMemberGender" type="radio" value="1" <c:if test="${1 eq roomMemberGender}">checked</c:if> /><label>我是男性想和所有男性一起住</label>
 							<input name="roomMemberGender" type="radio" value="2" <c:if test="${2 eq roomMemberGender}">checked</c:if> /><label>我是女性想和所有女性一起住</label>
 							<input name="roomMemberGender" type="radio" value="3" <c:if test="${3 eq roomMemberGender}">checked</c:if> /><label>无所谓</label>
 						</dd>
@@ -125,7 +125,7 @@
 					<dl>
 						<dt>&nbsp;</dt>
 						<dd>
-							<button class="btn-style btn-place-order-next">下一步</button>
+							<c:if test="${not empty order.id}"><button class="btn-style btn-place-order-pre" preStep="<c:url value="/order/dormitory-place-order.html?orderId=${order.id}&pageStep=0"/>">上一步</button></c:if><button class="btn-style btn-place-order-next">下一步</button>
 						</dd>
 					</dl>
 				</fieldset>

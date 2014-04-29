@@ -1,6 +1,16 @@
 $(function() {
-	$(".btn-place-order-next").click(function() {
-		$("#placeOrderForm").submit();
+	$(".btn-place-order-next").click(function(event) {
+		event.preventDefault();
+		if (validate()) {
+			$("#placeOrderForm").submit();
+		}
+	});
+	
+	
+	$(".btn-place-order-pre").click(function(event) {
+		event.preventDefault();
+		var preStep = $(this).attr("preStep");
+		window.location.href = preStep;
 	});
 	
 	$("#sameas").click(function() {
@@ -24,8 +34,30 @@ $(function() {
 	
 	}) ;
 	
-	$(".btn-place-order-save").click(function() {
+	$(".btn-place-order-save").click(function(event) {
+		event.preventDefault();
 		$("#command").val("SAVE");
-		$("#placeOrderForm").submit();
-	}); 
+		if (validate()) {
+			$("#placeOrderForm").submit();
+		}
+		
+	});
+
+	
 });
+
+var validate = function() {
+	var fieldName = "";
+	var pass = true;
+	$(".validate").each(function(i, e) {
+		if ("" == $(e).val() || NaN == $(e).val()) {
+			fieldName = $(e).attr("errorFieldName");
+			pass = false;
+		}
+		
+	}); 
+	if (!pass) {
+		alert(fieldName + " 不能为空");
+	}
+	return pass;
+};

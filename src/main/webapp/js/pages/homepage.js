@@ -22,14 +22,14 @@ require(['config'], function(config) {
                             $.ajax({
                                 type : "POST",
                                 dataType : "json",
-                                url : "/dormitory/user/asynRegister.html",
+                                url : ctx + "/user/asynRegister.html",
                                 data : {
                                     login : $("#iptLogin").val(),
                                     password : $("#iptPassword").val()
                                 },
                                 success : function(data) {
                                     if (data.result) {
-                                        window.location.href = "/dormitory/navigation/home.html?login=" + data.login
+                                        window.location.href = ctx + "/navigation/home.html?login=" + data.login
                                     } else {
                                         $(".errorMessage").html(data.message);
                                     }
@@ -53,14 +53,14 @@ require(['config'], function(config) {
                             $.ajax({
                                 type : "POST",
                                 dataType : "json",
-                                url : "/dormitory/user/asynLogin.html",
+                                url : ctx + "/user/asynLogin.html",
                                 data : {
                                     login : $("#iptLogin").val(),
                                     password : $("#iptPassword").val()
                                 },
                                 success : function(data) {
                                     if (data.result) {
-                                        window.location.href = "/dormitory/navigation/home.html?login=" + data.login
+                                        window.location.href = ctx + "/navigation/home.html?login=" + data.login
                                     } else {
                                         $(".errorMessage").html(data.message);
                                     }
@@ -81,7 +81,7 @@ require(['config'], function(config) {
 function loadCitiesByCountry() {
     $.ajax({
         type : "POST",
-        url : "/dormitory/navigation/getCity.html",
+        url : ctx + "/navigation/getCity.html",
         data : {
             countryId : this.value
         },

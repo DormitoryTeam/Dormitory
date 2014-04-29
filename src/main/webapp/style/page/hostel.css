@@ -742,7 +742,7 @@ button.btn-style{
 }
 
 .house-detail-info .scroll-pane { 
-	overflow: auto; 
+	overflow: hidden; 
 	width: 548px; 
 	float: left; 
 }
@@ -755,7 +755,8 @@ button.btn-style{
 .house-detail-info .scroll-content-item { 
 	width: 139px; 
 	float: left; 
-	text-align: center; 
+	text-align: center;
+	height: 34px;
 }
 
 .house-detail-info .scroll-content-item.itme-header{
@@ -776,6 +777,7 @@ button.btn-style{
 	font-size: 14px;
 	font-weight: normal;
 	margin-bottom: 15px;
+	height: 34px;
 }
 
 .house-detail-info .scroll-content-item li p{
@@ -817,10 +819,11 @@ button.btn-style{
 }
 
 .house-detail-info .scroll-bar-wrap .ui-slider-handle { 
-	background: #515567;
+	width: 50px;
+	/**background: #515567;
 	height: 15px;
 	border: 0;
-	border-radius: 0;
+	border-radius: 0;*/
 }
 .house-detail-info .scroll-bar-wrap .ui-slider-handle .ui-icon {}
 

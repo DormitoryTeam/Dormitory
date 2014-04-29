@@ -33,7 +33,7 @@
 	</div>
 	<div class="scroll-content">
 		<c:forEach var="room" items="${dormitory['rooms']}">
-			<ul class="scroll-content-item item-body">
+			<ul class="scroll-content-item item-body" style="height:634px;">
 				<li>&nbsp;
 					<c:if test="${room['status'] eq 'HAS_VACANCY'}">尚有空房</c:if>
 					<c:if test="${room['status'] eq 'NO_VACANCY'}">已注满</c:if>

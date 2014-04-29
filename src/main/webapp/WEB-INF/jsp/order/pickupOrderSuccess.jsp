@@ -28,7 +28,7 @@
 					<div class="tip-text">
 						2014年接机名额还剩1000个
 					</div>
-						<form action="/dormitory/order/dormitory-place-order.html" method="POST" id="placeOrderForm">
+						<form action="<c:url value="/order/dormitory-place-order.html"/>" method="POST" id="placeOrderForm">
 						<input name="pageStep" value="0" type="hidden">
 						<input name="command" id="command" type="hidden">
 						<input name="orderType" value="pickup" type="hidden">
@@ -36,7 +36,7 @@
 						<input name="contractId" value="" type="hidden"> 
 						<input name="roomInfoId" value="" type="hidden">
 						<input name="infoId" value="" type="hidden">
-						<a class="addOne" href="/dormitory/order/dormitory-place-order.html?orderType=pickup">&nbsp;</a>
+						<a class="addOne" href="<c:url value="/order/dormitory-place-order.html?orderType=pickup"/>">&nbsp;</a>
 						<div class="btnBox">
 						</div>
 						<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist">

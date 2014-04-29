@@ -9,6 +9,9 @@
 		<%-- content --%>
 		<div class="container">
             <div class="row">
+            	<div class="backhome">
+					<a href="<c:url value="/navigation/home.html"/>" class="btn-style">回首页</a>
+				</div>
                 <jsp:include page="/jsp/main/hostel/order/notesForm.jsp"/>
             </div>
 		</div>

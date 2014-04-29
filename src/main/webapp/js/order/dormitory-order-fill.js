@@ -3,7 +3,7 @@ $(function() {
     $("#btnSearchOtherUserByEmail").bind('click', function() {
         $.ajax({
             type : "POST",
-            url : "/dormitory/user/queryUserInfoByEmail.html",
+            url : ctx + "/user/queryUserInfoByEmail.html",
             data : {
                 email : $("#otheremail").val()
             },

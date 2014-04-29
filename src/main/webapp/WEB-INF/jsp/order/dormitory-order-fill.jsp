@@ -9,7 +9,7 @@
 <title></title>
 </head>
 <body>
-	<form action="/dormitory/order/dormitory-order-place.html" method="POST">
+	<form action="<c:url value="/order/dormitory-order-place.html"/>" method="POST">
 		<table>
 			<tr>
 				<td>Dormitory:</td>

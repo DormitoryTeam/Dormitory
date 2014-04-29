@@ -37,15 +37,15 @@
 						<div class="progress-content">
 							<div class="title">订单进度</div>
 							<ul class="progress">
-								<li class="first <c:if test="${order.orderStatus.value == 0}">wait</c:if><c:if test="${order.orderStatus.value == 1}">now</c:if><c:if test="${order.orderStatus.value > 1}">complete</c:if>">
+								<li class="first <c:if test="${order.orderStatus.value == 0}">wait</c:if><c:if test="${order.orderStatus.value == 1}">complete</c:if><c:if test="${order.orderStatus.value > 1}">complete</c:if>">
 									<div class="num">1</div>
 									<div class="progress-tip">申请已提交</div>
 								</li>
-								<li class="second <c:if test="${order.orderStatus.value < 2}">wait</c:if><c:if test="${order.orderStatus.value == 2}">now</c:if><c:if test="${order.orderStatus.value >2}">complete</c:if>">
+								<li class="second <c:if test="${order.orderStatus.value < 2}">wait</c:if><c:if test="${order.orderStatus.value == 2}">complete</c:if><c:if test="${order.orderStatus.value >2}">complete</c:if>">
 									<div class="num">2</div>
 									<div class="progress-tip">审核中</div>
 								</li>
-								<li class="third <c:if test="${order.orderStatus.value < 3}">wait</c:if><c:if test="${order.orderStatus.value == 3}">now</c:if><c:if test="${order.orderStatus.value >3}">complete</c:if>">
+								<li class="third <c:if test="${order.orderStatus.value < 3}">wait</c:if><c:if test="${order.orderStatus.value == 3}">complete</c:if><c:if test="${order.orderStatus.value >3}">complete</c:if>">
 									<div class="num">3</div>
 									<div class="progress-tip">合同发送</div>
 								</li>
@@ -75,7 +75,9 @@
 				</ul>
 				</c:forEach>
 			</div>
+			<div class="row pager">
 			<jsp:include page="/jsp/utils/pagination.jsp" flush="true"/>
+			</div>
 			<div class="order-list-tip">
 				<p>订单处理时，可随时拨打以下电话与我们联系</p>
   				<p>联系电话：010-12345678</p>

@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="<%=ctx%>/style/page/${template}.css">
 <script>
 	var baseUrl = "<%=ctx%>/js/";
+	var ctx = "<%=ctx%>";
 </script>
 <script src="<%=ctx%>/js/vendor/modernizr.custom.33292.js"></script>
 <script src="<%=ctx%>/js/vendor/require.js" data-main="<%=ctx%>/js/pages/${template}"></script>
@@ -18,7 +19,7 @@
 <!--[if lt IE 9]>
 	<link rel="stylesheet" href="<%=ctx%>/css/hostel/ie.css">
 <![endif]-->
-<title>Hostel-Mockup</title>
+<title>英国留学生活服务-留学生活网(www.liuxuelife.com)</title>
 </head>
 <body>
 	<div id="wrapper" class="${template}">

@@ -9,6 +9,34 @@ require(['config'], function(config) {
 
             scrollContent.css("width", $(".scroll-content  > .scroll-content-item.itme-header").length * 140);
 
+			
+			
+			// build slider
+			console.log($(".scroll-pane").width());
+			console.log($(".scroll-content").width());
+			var perPage = 140;
+			var paneWidth = $(".scroll-pane").width()
+			var contentWidth = $(".scroll-content").width();
+			console.log((contentWidth - paneWidth)/perPage);
+			var totalPage = Math.ceil((contentWidth - paneWidth)/perPage);
+			
+			console.log(totalPage);
+			//var pageSize = (contentWidth - paneWidth) % perPage == 0 ?
+			$( ".scroll-bar" ).slider({
+			  range: "max",
+			  min: 1,
+			  max: totalPage,
+			  value: 1,
+			  slide: function( event, ui ) {
+			    var left = 0 - perPage * (ui.value - 1);
+				$(".scroll-content").css("margin-left", left + "px");
+				//$( "#amount" ).val( ui.value );
+			  }
+			});
+			/**
+			139
+			scroll-pane
+			scroll-content 
             //build slider
             var scrollbar = $(".scroll-bar").slider({
                 slide : function(event, ui) {
@@ -68,7 +96,7 @@ require(['config'], function(config) {
             //init scrollbar size
             setTimeout(sizeScrollbar, 10);
             //safari wants a timeout
-
+			*/
 			$(".jQ-citylist").on('click', function(){
 				if($(this).parent().hasClass('open')){
 					$(this).parent().siblings().removeClass('open').addClass('close');

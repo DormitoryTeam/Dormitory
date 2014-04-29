@@ -130,13 +130,13 @@
 						<c:if test="${null == address}">
 						<c:set var="address" value="${user.guaranteeInfo.address}" />
 						</c:if>
-						<input name="country" type="text" value="${country}" class="min" /> (国家)<input name="province" type="text" value="${province}" class="min" /> (省)<input name="city" type="text" value="${city}" class="min" /> (市)<input type="text" name="county" value="${county}" class="min" /> (区县)
+						<input name="country" type="text" value="${country}" class="min" />&nbsp;(国家)&nbsp;<input name="province" type="text" value="${province}" class="min" />&nbsp;(省)&nbsp;<input name="city" type="text" value="${city}" class="min" />&nbsp;(市)&nbsp;<input type="text" name="county" value="${county}" class="min" />&nbsp;(区县)
 						</dd>
 					</dl>
 					<dl>
 						<dt>&nbsp;</dt>
 						<dd>
-							<input name="address" type="text" value="${address}" class="larger"/> (街道地址)
+							<input name="address" type="text" value="${address}" class="larger"/>&nbsp;(街道地址)
 						</dd>
 					</dl>
 					<dl>
@@ -146,13 +146,13 @@
 							<c:if test="${null == postalcode}">
 							<c:set var="postalcode" value="${user.guaranteeInfo.postalcode}" />
 							</c:if>
-							<input type="text" name="postalcode" value="${postalcode}" /> (邮编)
+							<input type="text" name="postalcode" value="${postalcode}" />&nbsp;(邮编)
 						</dd>
 					</dl>
 					<dl>
 						<dt>&nbsp;</dt>
 						<dd>
-							<button class="btn-style btn-place-order-next">下一步</button>
+							<c:if test="${not empty order.id}"><button class="btn-style btn-place-order-pre" preStep="<c:url value="/order/dormitory-place-order.html?orderId=${order.id}&pageStep=1"/>">上一步</button></c:if><button class="btn-style btn-place-order-next">下一步</button>
 						</dd>
 					</dl>
 				</fieldset>

@@ -3,7 +3,7 @@
 	<input type="hidden" name="cityId" value="${city['id']}" />
 	<div class="row searchBox">
 		<fieldset>
-			搜索当前城市<input type="text" name="keyword" value="${keyword}" /> <input type="submit" id="btnSearchAndSortBy" class="btn-search" value="" />
+			搜索当前城市&nbsp;<input type="text" name="keyword" value="${keyword}" /> <input type="submit" id="btnSearchAndSortBy" class="btn-search" value="" />
 		</fieldset>
 	</div>
 	<ul class="row bread-crumb">

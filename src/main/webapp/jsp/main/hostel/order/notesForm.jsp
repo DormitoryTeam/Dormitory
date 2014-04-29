@@ -62,7 +62,7 @@
 					<dl>
 						<dt>&nbsp;</dt>
 						<dd>
-							<button class="btn-style btn-place-order-next">提交</button>
+							<c:if test="${not empty order.id}"><button class="btn-style btn-place-order-pre" preStep="<c:url value="/order/dormitory-place-order.html?orderId=${order.id}&pageStep=3"/>">上一步</button></c:if><button class="btn-style btn-place-order-next">提交</button>
 						</dd>
 					</dl>
 				</fieldset>

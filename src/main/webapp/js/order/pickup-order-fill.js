@@ -5,7 +5,7 @@ $(function() {
     $("#btnSearchOtherUserByEmail").bind('click', function() {
         $.ajax({
             type : "POST",
-            url : "/dormitory/user/queryUserInfoByEmail.html",
+            url : ctx + "/user/queryUserInfoByEmail.html",
             data : {
                 email : $("#otheremail").val()
             },
@@ -43,7 +43,7 @@ $(function() {
 function loadCitiesByCountry() {
     $.ajax({
         type : "POST",
-        url : "/dormitory/navigation/getCity.html",
+        url : ctx + "/navigation/getCity.html",
         data : {
             countryId : this.value
         },
@@ -57,7 +57,7 @@ function loadCitiesByCountry() {
 function loadFlightsByCity() {
     $.ajax({
         type : "POST",
-        url : "/dormitory/navigation/getFlight.html",
+        url : ctx + "/navigation/getFlight.html",
         data : {
             cityId : this.value
         },
