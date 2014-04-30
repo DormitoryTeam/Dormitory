@@ -20,8 +20,8 @@
 			<c:set var="size" value="${fn:length(cityColleges)}" />
 			<c:forEach var="cityCollege" items="${cityColleges}"  varStatus="i">
 				<li class="${cityId eq cityCollege['cityId'] ? 'open' : 'close' } ${i['count'] eq size ? 'last' : ''}">
-					<div class="country-title">
-						<p><a name='${cityCollege.cityName}' href="<c:url value='/navigation/hot-cities.html?cityId=${cityCollege.cityId}#${cityCollege.cityName}'/>">${cityCollege['cityName']}</a></p>
+					<div class="country-title jQ-citylist">
+						<p>${cityCollege['cityName']}</p>
 					</div>
 					<ul class="city-list">
 						<c:forEach var="college" items="${cityCollege['colleges']}">

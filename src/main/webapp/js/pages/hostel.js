@@ -97,7 +97,8 @@ require(['config'], function(config) {
             setTimeout(sizeScrollbar, 10);
             //safari wants a timeout
 			*/
-			$(".jQ-citylist").on('click', function(){
+
+			$(".jQ-citylist").on('click', function(e){
 				if($(this).parent().hasClass('open')){
 					$(this).parent().siblings().removeClass('open').addClass('close');
 					$(this).parent().removeClass('open').addClass('close');	
@@ -106,7 +107,6 @@ require(['config'], function(config) {
 					$(this).parent().removeClass('close').addClass('open');	
 				}
 			});
-
 
             $('.comment .starBox').raty({
                 path : '../www.static.war/css/common',
