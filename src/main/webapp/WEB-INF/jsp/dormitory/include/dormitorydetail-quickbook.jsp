@@ -1,5 +1,9 @@
 ﻿<div class="quick">
 	<div class="title">快速预定</div>
+	
+	<a id="arcPopLogin" style="display: none;" href="javascript:void(0)" class="login-btn jQ-loginbtn" data-popupSrc="<c:url value="/user/loadLogin.html"/>">&nbsp;</a>
+	<input type="hidden" id="hidUserId" value="${sessionScope.USER_ID}" />
+	
 	<form id="quickPlaceOrderForm" action="<c:url value="/order/dormitory-place-order.html"/>" method="GET">
 		<input type="hidden" name="dormitoryId" value="${dormitory['id']}" />
 		<input type="hidden" id="quickContractId" name="contractId" /> 
