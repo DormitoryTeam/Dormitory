@@ -16,11 +16,12 @@
 	--%>
 	<div class="contentBox country-list-box">
 		<ul class="country-list">
+			<li><a href="<c:url value='/navigation/hot-colleges.html?countryId=${countries[0].id}'/>" class="more">> 更多学校</a></li>
 			<c:set var="size" value="${fn:length(cityColleges)}" />
 			<c:forEach var="cityCollege" items="${cityColleges}"  varStatus="i">
 				<li class="${cityId eq cityCollege['cityId'] ? 'open' : 'close' } ${i['count'] eq size ? 'last' : ''}">
-					<div class="country-title jQ-citylist">
-						<p>${cityCollege['cityName']}</p>
+					<div class="country-title">
+						<p><a name='${cityCollege.cityName}' href="<c:url value='/navigation/hot-cities.html?cityId=${cityCollege.cityId}#${cityCollege.cityName}'/>">${cityCollege['cityName']}</a></p>
 					</div>
 					<ul class="city-list">
 						<c:forEach var="college" items="${cityCollege['colleges']}">

@@ -23,10 +23,10 @@ $(function() {
 		$.each(contracts, function(i, e) {
 			var days = parseInt(e.name);
 			var weekday = "";
-			if(days / 7 != 0) {
+			if (days / 7 != 0) {
 				weekday = days / 7 + "周";
 			}
-			if(days % 7 != 0) {
+			if (days % 7 != 0) {
 				weekday = days % 7 + "天";
 			}
 			contractOptions += "<option value='" + e.id + "'>" + weekday + "</option>";
@@ -35,24 +35,91 @@ $(function() {
 		$("#quickPricePreview").html(contracts[0].currency + " " + contracts[0].salePrice);
 		$("#quickRoomNamePreview").html(contracts[0].roomType);
 	});
-	
+
 	$("#selectQuickContract").change(function(e) {
 		var contracts = room_contracts[$("#selectQuickRoom").val()];
 		$.each(contracts, function(i, e) {
-			if(e.id == $("#selectQuickContract").val()) {
+			if (e.id == $("#selectQuickContract").val()) {
 				$("#quickPricePreview").html(e.currency + " " + e.salePrice);
 				$("#quickRoomNamePreview").html(e.roomType);
 				return false;
 			}
 		});
 	});
-	
+
 	$(".btn-quick").on('click', function(e) {
-        $("#quickRoomInfoId").val($("#selectQuickRoom").val());
-        $("#quickContractId").val($("#selectQuickContract").val());
-        $("#quickPlaceOrderForm").submit();
+		if (checkCustomHasLogin()) {
+			$("#quickRoomInfoId").val($("#selectQuickRoom").val());
+			$("#quickContractId").val($("#selectQuickContract").val());
+			$("#quickPlaceOrderForm").submit();
+		}
 	});
-	
+
+	$('.jQ-loginbtn').on('click', function() {
+		$(this).acsPopup({
+			popupSrc : $(this).attr("data-popupSrc"),
+			callBack : function() {
+				$("#btnLoginSubmit").unbind('click').bind('click', function(e) {
+					e.preventDefault();
+					$(".errorMessage").html("&nbsp;");
+					$.ajax({
+						type : "POST",
+						dataType : "json",
+						url : ctx + "/user/asynLogin.html",
+						data : {
+							login : $("#iptLogin").val(),
+							password : $("#iptPassword").val()
+						},
+						success : function(data) {
+							if (data.result) {
+								window.location.href = window.location.href + "&login=" + data.login
+							} else {
+								$(".errorMessage").html(data.message);
+							}
+						},
+						error : function(e) {
+							alert(e);
+						}
+					})
+				});
+			}
+		});
+	});
+
+	$('.jQ-quick').on('click', function() {
+		if (checkCustomHasLogin()) {
+			var roomId = $(this).attr("roomId");
+			$("#roomInfoId").val(roomId);
+
+			$(this).acsPopup({
+				popupSrc : $(this).attr("data-popupSrc"),
+				callBack : function() {
+					var contracts = room_contracts[roomId];
+					for (var i in contracts) {
+						var days = parseInt(contracts[i].name);
+						var weekday = "";
+						if (days / 7 != 0) {
+							weekday = days / 7 + "周";
+						}
+						if (days % 7 != 0) {
+							weekday = days % 7 + "天";
+						}
+						var bookHTML = '<option value="' + contracts[i].id + '">' + weekday + '</option>';
+						var bookDIV = $(bookHTML);
+						$("#selectContract").append(bookDIV);
+					}
+
+					$('select').simSelect();
+					$('.btnBook').on('click', function() {
+						var contractId = $("#selectContract").val();
+						$("#contractId").val(contractId);
+						$("#placeOrderForm").submit();
+					});
+				}
+			});
+		}
+	});
+
 	initialize();
 });
 
@@ -66,13 +133,12 @@ function initialize() {
 		center : dormitoryLatlng,
 		zoom : 13,
 		mapTypeId : google.maps.MapTypeId.ROADMAP,
-		scaleControl: true,
-		scaleControlOptions: {
-			position: google.maps.ControlPosition.BOTTOM_CENTER
+		scaleControl : true,
+		scaleControlOptions : {
+			position : google.maps.ControlPosition.BOTTOM_CENTER
 		}
 	};
-	var map = new google.maps.Map(document.getElementById("map_canvas"),
-			mapOptions);
+	var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
 	var marker = new google.maps.Marker({
 		position : dormitoryLatlng,
@@ -80,4 +146,12 @@ function initialize() {
 		title : $("#dormitoryName").val()
 	});
 	marker.setMap(map);
+}
+
+function checkCustomHasLogin() {
+	var userId = $("#hidUserId").val();
+	if (userId == "") {
+		$("#arcPopLogin").click();
+	}
+	return !(userId == "");
 }

@@ -43,7 +43,7 @@
 	--%>
 		</li>
 		<li class="parent">
-			<a href="<c:url value="/navigation/navigator.html?countryId=1"/>">公寓预订</a>
+			<a href="<c:url value="/navigation/hot-cities.html?countryId=1"/>">公寓预订</a>
 		</li>
 		<li class="parent">
 			<a href="<c:url value="/order/dormitory-place-order.html?orderType=pickup"/>">接机预订</a>

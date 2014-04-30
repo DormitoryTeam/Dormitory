@@ -9,16 +9,16 @@
 				<dt>密码:</dt>
 				<dd><input id="iptPassword" name="password" type="password" /></dd>
 			</dl>
-			<dl class="tip">
+			<dl class="tip" style="width: auto;">
 				<dt>&nbsp;</dt>
 				<dd>
 					<a href="#" class="foget">忘记密码</a> 
 					<input type="checkbox"><label>记住我</label>
 				</dd>
+			</dl>
 			<dl>
 				<dt>&nbsp;</dt>
 				<dd class="error"><span class="errorMessage">&nbsp;</span></dd>
-			</dl>
 			</dl>
 			<dl class="btnBox">
 				<dt>&nbsp;</dt>

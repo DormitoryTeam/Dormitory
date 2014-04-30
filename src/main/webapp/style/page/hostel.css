@@ -69,12 +69,13 @@
 	cursor: pointer;
 }
 
-.country-list .country-title p{
+.country-list .country-title p a{
 	width: 140px;
 	float: left;
 	padding-left: 70px;
 	text-align: left;
 	font-size: 23px;
+	color: #FFFFFF;
 }
 
 .country-list .country-title span{

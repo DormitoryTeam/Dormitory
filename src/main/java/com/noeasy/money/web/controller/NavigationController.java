@@ -203,8 +203,8 @@ public class NavigationController {
 
 
 
-    @RequestMapping("/navigator" + Constants.URL_SUFFIX)
-    public String toNavigation(final HttpServletRequest request, final HttpServletResponse response, final Model model,
+    @RequestMapping("/hot-cities" + Constants.URL_SUFFIX)
+    public String toHotCities(final HttpServletRequest request, final HttpServletResponse response, final Model model,
             final Integer countryId, final Integer cityId) {
         List<Map<String, Object>> cityColleges = null;
         if (ParamUtils.isValidIdField(countryId)) {
@@ -217,5 +217,17 @@ public class NavigationController {
         model.addAttribute("cityId", cityId);
 
         return "navigation/citynavigation";
+    }
+
+
+
+    @RequestMapping("/hot-colleges" + Constants.URL_SUFFIX)
+    public String toHotColleges(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final Integer countryId, final Integer cityId) {
+
+        List<Map<String, Object>> allColleges = navigationService.queryColleges();
+        model.addAttribute("allColleges", allColleges);
+
+        return "navigation/collegenavigation";
     }
 }

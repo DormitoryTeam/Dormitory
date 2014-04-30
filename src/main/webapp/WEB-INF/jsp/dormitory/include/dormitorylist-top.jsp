@@ -7,10 +7,10 @@
 		</fieldset>
 	</div>
 	<ul class="row bread-crumb">
-		<li><a href="<c:url value='/navigation/navigator.html?countryId=${country.id}'/>">${country['name']}</a></li>
-		<li><a href="<c:url value='/navigation/navigator.html?cityId=${city.id}'/>"><span>&#62;</span>${city['name']}</a></li>
+		<li><a style="color: #dfdfdf;" href="<c:url value='/navigation/hot-cities.html?countryId=${country.id}'/>">${country['name']}</a></li>
+		<li><a style="color: #dfdfdf;" href="<c:url value='/navigation/hot-cities.html?cityId=${city.id}#${city.name}'/>"><span>&#62;</span>${city['name']}</a></li>
 		<c:if test="${not empty collegeId}">
-			<li><span>&#62;</span>${college['originalName']}</li>
+			<li style="color: #ae0000;"><span>&#62;</span>${college['originalName']}</li>
 		</c:if>
 	</ul>
 	<c:choose>
