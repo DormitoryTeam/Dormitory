@@ -1,6 +1,7 @@
 <hostel:container template="hostel">
     <%-- top section --%>
     <header>
+    	<jsp:include page="/jsp/header/header.jsp" />
     </header>
     
     <%-- main section --%>
@@ -9,9 +10,6 @@
 		<%-- content --%>
 		<div class="container">
             <div class="row">
-            	<div class="backhome">
-					<a href="<c:url value="/navigation/home.html"/>" class="btn-style">回首页</a>
-				</div>
                 <jsp:include page="/jsp/main/hostel/order/notesForm.jsp"/>
             </div>
 		</div>
@@ -19,6 +17,7 @@
 	
     <%-- bottom section --%>
     <footer>
+    <jsp:include page="/jsp/footer/footer.jsp" />
     </footer>
     <script type="text/javascript" src="<c:url value='/js/order/dormitory-order-place.js'/>"></script>
 </hostel:container>

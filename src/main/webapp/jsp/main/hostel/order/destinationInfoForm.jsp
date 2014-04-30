@@ -48,7 +48,10 @@
 			<dl>
 				<dt>&nbsp;</dt>
 				<dd>
-					<button class="btn-style btn-user-info-save">下一步</button>
+					<c:if test="${not empty order.id}">
+					<button class="btn-style btn-place-order-pre" preStep="<c:url value="/order/dormitory-place-order.html?orderType=pickup&orderId=${order.id}&pageStep=1"/>">下一步</button>
+					</c:if>
+					<button class="btn-style btn-place-order-next">下一步</button>
 				</dd>
 			</dl>
 		</fieldset>

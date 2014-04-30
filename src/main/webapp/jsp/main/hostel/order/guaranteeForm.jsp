@@ -56,7 +56,7 @@
 							<c:if test="${null == lastName}">
 							<c:set var="lastName" value="${user.guaranteeInfo.lastName}" />
 							</c:if>
-							<input type="text" name="lastName" value="${lastName}" class="min" />  
+							<input type="text" name="lastName" value="${lastName}" class="min validate" errorFieldName="姓" />  
 						</dd>
 						<dt>名</dt>
 						<dd>
@@ -64,7 +64,7 @@
 							<c:if test="${null == name}">
 							<c:set var="name" value="${user.guaranteeInfo.name}" />
 							</c:if>
-							<input type="text" name="name" value="${name}" class="min" />
+							<input type="text" name="name" value="${name}" class="min validate" errorFieldName="名" />
 						</dd>
 					</dl>
 					<dl>
@@ -74,7 +74,7 @@
 							<c:if test="${null == nationality}">
 							<c:set var="nationality" value="${user.guaranteeInfo.nationality}" />
 							</c:if>
-							<input name="nationality" type="text" value="${nationality}" />
+							<input name="nationality" type="text" value="${nationality}" class="validate" errorFieldName="国籍"/>
 						</dd>
 					</dl>
 					<dl>
@@ -84,7 +84,7 @@
 							<c:if test="${null == birthday}">
 							<c:set var="birthday" value="${user.guaranteeInfo.birthday}" />
 							</c:if>
-							<input class="datepicker" name="birthday" type="text" value="<fmt:formatDate value='${birthday}' pattern='yyyy-MM-dd'/>" />
+							<input class="datepicker validate" errorFieldName="出生日期" name="birthday" type="text" value="<fmt:formatDate value='${birthday}' pattern='yyyy-MM-dd'/>" />
 						</dd>
 					</dl>
 					<dl>
@@ -94,7 +94,7 @@
 							<c:if test="${null == email}">
 							<c:set var="email" value="${user.guaranteeInfo.email}" />
 							</c:if>
-							<input name="email" type="text" class="long"  value="${email}"/> 
+							<input name="email" type="text" class="long validate" errorFieldName="电子邮件" value="${email}"/> 
 						</dd>
 					</dl>
 					<dl>
@@ -104,7 +104,7 @@
 							<c:if test="${null == phone}">
 							<c:set var="phone" value="${user.guaranteeInfo.phone}" />
 							</c:if>
-							<input name="phone" type="text" value="${phone}" />
+							<input name="phone" type="text" value="${phone}" class="validate" errorFieldName="手机号码" />
 						</dd>
 					</dl>
 					<dl>
@@ -130,13 +130,13 @@
 						<c:if test="${null == address}">
 						<c:set var="address" value="${user.guaranteeInfo.address}" />
 						</c:if>
-						<input name="country" type="text" value="${country}" class="min" />&nbsp;(国家)&nbsp;<input name="province" type="text" value="${province}" class="min" />&nbsp;(省)&nbsp;<input name="city" type="text" value="${city}" class="min" />&nbsp;(市)&nbsp;<input type="text" name="county" value="${county}" class="min" />&nbsp;(区县)
+						<input name="country" type="text" value="${country}" class="min validate" errorFieldName="国家"  />&nbsp;(国家)&nbsp;<input name="province" type="text" value="${province}" class="min validate" errorFieldName="省" />&nbsp;(省)&nbsp;<input name="city" type="text" value="${city}" class="min validate" errorFieldName="市" />&nbsp;(市)&nbsp;<input type="text" name="county" value="${county}" class="min validate" errorFieldName="区县" />&nbsp;(区县)
 						</dd>
 					</dl>
 					<dl>
 						<dt>&nbsp;</dt>
 						<dd>
-							<input name="address" type="text" value="${address}" class="larger"/>&nbsp;(街道地址)
+							<input name="address" type="text" value="${address}" class="larger validate" errorFieldName="街道地址"/>&nbsp;(街道地址)
 						</dd>
 					</dl>
 					<dl>
@@ -146,7 +146,7 @@
 							<c:if test="${null == postalcode}">
 							<c:set var="postalcode" value="${user.guaranteeInfo.postalcode}" />
 							</c:if>
-							<input type="text" name="postalcode" value="${postalcode}" />&nbsp;(邮编)
+							<input type="text" name="postalcode" value="${postalcode}" class="mini validate" errorFieldName="邮编" />&nbsp;(邮编)
 						</dd>
 					</dl>
 					<dl>

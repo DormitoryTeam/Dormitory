@@ -204,6 +204,7 @@ public class OrderService implements IOrderService {
             return;
         }
         LineItem item = items.get(0);
+        item.setOrderId(pOrder.getId());
         if (null != item && null != item.getId()) {
             item.setCurrency(pOrder.getCurrency());
             if (OrderType.DORMITORY == pOrder.getOrderType()) {

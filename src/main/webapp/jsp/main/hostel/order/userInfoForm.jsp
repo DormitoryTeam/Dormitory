@@ -44,7 +44,7 @@
 							<c:if test="${null == lastName}">
 							<c:set var="lastName" value="${user.info.lastName}" />
 							</c:if>
-							<input name="lastName" type="text" value="${lastName}" class="min validate" errorFieldName="姓"/>
+							<input name="lastName" type="text" value="${lastName}" class="min validate" errorFieldName="姓" />
 						</dd>
 						<dt>名</dt>
 						<dd>
@@ -62,7 +62,7 @@
 							<c:if test="${null == nationality}">
 							<c:set var="nationality" value="${user.info.nationality}" />
 							</c:if>
-							<input name="nationality" type="text" value="${nationality}" class="validate" errorFieldName="国籍"/>
+							<input name="nationality" type="text" value="${nationality}" class="validate" errorFieldName="国籍" />
 						</dd>
 					</dl>
 					<dl>
@@ -144,7 +144,7 @@
 					<dl>
 						<dt>&nbsp;</dt>
 						<dd>
-							<input name="address" type="text" value="${address}" class="larger validate" errorFieldName="街道地址"/>&nbsp;(街道地址)
+							<input name="address" type="text" value="${address}" class="larger validate" errorFieldName="街道地址" />&nbsp;(街道地址)
 						</dd>
 					</dl>
 					<dl>

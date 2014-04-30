@@ -1,6 +1,7 @@
 <hostel:container template="hostel">
     <%-- top section --%>
     <header>
+    	<jsp:include page="/jsp/header/header.jsp" />
     </header>
     
     <%-- main section --%>
@@ -59,6 +60,7 @@
 	
     <%-- bottom section --%>
     <footer>
+    <jsp:include page="/jsp/footer/footer.jsp" />
     </footer>
     <script type="text/javascript" src="<c:url value='/js/order/dormitory-order-place.js'/>"></script>
 </hostel:container>
