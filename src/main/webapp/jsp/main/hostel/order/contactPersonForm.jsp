@@ -61,7 +61,7 @@
 							<c:if test="${null == lastName}">
 							<c:set var="lastName" value="${user.contactPersonInfo.lastName}" />
 							</c:if>
-							<input type="text" name="lastName" value="${lastName}" class="min same-as" id="lastName" />  
+							<input type="text" name="lastName" value="${lastName}" class="min same-as validate" errorFieldName="姓" id="lastName" />  
 						</dd>
 						<dt>名</dt>
 						<dd>
@@ -69,7 +69,7 @@
 							<c:if test="${null == name}">
 							<c:set var="name" value="${user.contactPersonInfo.name}" />
 							</c:if>
-							<input type="text" name="name" value="${name}" class="min same-as" id="name"/> 
+							<input type="text" name="name" value="${name}" class="min same-as validate" errorFieldName="名" id="name"/> 
 						</dd>
 					</dl>
 					<dl>
@@ -79,7 +79,7 @@
 							<c:if test="${null == nationality}">
 							<c:set var="nationality" value="${user.contactPersonInfo.nationality}" />
 							</c:if>
-							<input name="nationality" type="text" value="${nationality}" id="nationality" class="same-as"/>
+							<input name="nationality" type="text" value="${nationality}" id="nationality" class="same-as validate" errorFieldName="国籍"/>
 						</dd>
 					</dl>
 					<dl>
@@ -89,7 +89,7 @@
 							<c:if test="${null == birthday}">
 							<c:set var="birthday" value="${user.contactPersonInfo.birthday}" />
 							</c:if>
-							<input class="datepicker same-as" name="birthday" type="text" value="<fmt:formatDate value='${birthday}' pattern='yyyy-MM-dd'/>" id="birthday" class="same-as"/>
+							<input class="datepicker same-as validate" errorFieldName="出生日期" name="birthday" type="text" value="<fmt:formatDate value='${birthday}' pattern='yyyy-MM-dd'/>" id="birthday" class="same-as"/>
 						</dd>
 					</dl>
 					<dl>
@@ -99,7 +99,7 @@
 							<c:if test="${null == email}">
 							<c:set var="email" value="${user.contactPersonInfo.email}" />
 							</c:if>
-							<input name="email" value="${email}" type="text" class="long same-as" id="email" />
+							<input name="email" value="${email}" type="text" class="long same-as validate" errorFieldName="电子邮件" id="email" />
 						</dd>
 					</dl>
 					<dl>
@@ -109,7 +109,7 @@
 							<c:if test="${null == phone}">
 							<c:set var="phone" value="${user.contactPersonInfo.phone}" />
 							</c:if>
-							<input name="phone" type="text" value="${phone}" id="phone" class="same-as"/> 
+							<input name="phone" type="text" value="${phone}" id="phone" class="same-as validate" errorFieldName="手机号码"/> 
 						</dd>
 					</dl>
 					<dl>
@@ -135,13 +135,13 @@
 							<c:if test="${null == address}">
 							<c:set var="address" value="${user.contactPersonInfo.address}" />
 							</c:if>
-							<input name="country" type="text" value="${country}" class="min same-as" id="country" />&nbsp;(国家)&nbsp;<input name="province" type="text" value="${province}" class="min same-as" id="province" />&nbsp;(省)&nbsp;<input name="city" type="text" value="${city}" class="min same-as" id="city" />&nbsp;(市)&nbsp;<input type="text" name="county" value="${county}" class="min same-as" id="county" />&nbsp;(区县)
+							<input name="country" type="text" value="${country}" class="min same-as validate" errorFieldName="国家" id="country" />&nbsp;(国家)&nbsp;<input name="province" type="text" value="${province}" class="min same-as validate" errorFieldName="省" id="province" />&nbsp;(省)&nbsp;<input name="city" type="text" value="${city}" class="min same-as validate" errorFieldName="市" id="city" />&nbsp;(市)&nbsp;<input type="text" name="county" value="${county}" class="min same-as validate" errorFieldName="区县" id="county" />&nbsp;(区县)
 						</dd>
 					</dl>
 					<dl>
 						<dt>&nbsp;</dt>
 						<dd>
-							<input name="address" type="text" value="${address}" class="larger same-as" id="address"/>&nbsp;(街道地址)
+							<input name="address" type="text" value="${address}" class="larger same-as validate" errorFieldName="街道地址" id="address"/>&nbsp;(街道地址)
 						</dd>
 					</dl>
 					<dl>
@@ -151,7 +151,7 @@
 							<c:if test="${null == postalcode}">
 							<c:set var="postalcode" value="${user.contactPersonInfo.postalcode}" />
 							</c:if>
-							<input type="text" name="postalcode" value="${postalcode}" id="postalcode" class="same-as"/>&nbsp;(邮编)
+							<input type="text" name="postalcode" value="${postalcode}" id="postalcode" class="same-as validate" errorFieldName="邮编"/>&nbsp;(邮编)
 						</dd>
 					</dl>
 					<dl>

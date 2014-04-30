@@ -33,42 +33,42 @@
 						</dl>
 						<dl>
 							<dd>姓：</dd>
-							<dt><input name="lastName" id="lastName" type="text" value="${user.contactPersonInfo.lastName}" class="same-as" /></dt>
+							<dt><input name="lastName" id="lastName" type="text" value="${user.contactPersonInfo.lastName}" class="same-as validate" errorFieldName="姓" /></dt>
 						</dl>
 						<dl>
 							<dd>名：</dd>
-							<dt><input name="name" id="name" type="text" value="${user.contactPersonInfo.name}" class="same-as" /></dt>
+							<dt><input name="name" id="name" type="text" value="${user.contactPersonInfo.name}" class="same-as validate" errorFieldName="名" /></dt>
 						</dl>
 						<dl>
 							<dd>国籍：</dd>
-							<dt><input name="nationality" id="nationality" type="text" value="${user.contactPersonInfo.nationality}" class="same-as" /></dt>
+							<dt><input name="nationality" id="nationality" type="text" value="${user.contactPersonInfo.nationality}" class="same-as validate" errorFieldName="国籍" /></dt>
 						</dl>
 						<dl>
 							<dd>出生日期：</dd>
-							<dt><input name="birthday" id="birthday" type="text" value="<fmt:formatDate value='${user.contactPersonInfo.birthday}' pattern='yyyy-MM-dd'/>" class="same-as datepicker" /></dt>
+							<dt><input name="birthday" id="birthday" type="text" value="<fmt:formatDate value='${user.contactPersonInfo.birthday}' pattern='yyyy-MM-dd'/>" class="same-as datepicker validate" errorFieldName="出生日期" /></dt>
 						</dl>
 						<dl>
 							<dd>电子邮箱：</dd>
-							<dt><input name="email" id="email" value="${user.contactPersonInfo.email}" class="same-as" /></dt>
+							<dt><input name="email" id="email" value="${user.contactPersonInfo.email}" class="same-as validate" errorFieldName="电子邮件" /></dt>
 						</dl>
 						<dl>
-							<dd>手机号：</dd>
-							<dt><input name="phone" id="phone" type="text" value="${user.contactPersonInfo.phone}" class="same-as" /></dt>
+							<dd>手机号码：</dd>
+							<dt><input name="phone" id="phone" type="text" value="${user.contactPersonInfo.phone}" class="same-as validate" errorFieldName="手机号码" /></dt>
 						</dl>
 						<dl>
 							<dd>家庭住址：</dd>
-							<dt><input name="country" id="country" type="text" value="${user.contactPersonInfo.country}" class="min same-as" />&nbs-p;(国家)&nbsp;<input name="province" id="province" type="text" value="${user.contactPersonInfo.province}" class="min same-as" />&nbsp;(省)&nbsp;<input name="city" id="city" type="text" value="${user.contactPersonInfo.city}" class="min same-as" />&nbsp;(市)&nbsp;<input name="county" id="county" type="text" value="${user.contactPersonInfo.county}" class="min same-as" />&nbsp;(区县)</dt>
+							<dt><input name="country" id="country" type="text" value="${user.contactPersonInfo.country}" class="min same-as validate" errorFieldName="国家" />&nbs-p;(国家)&nbsp;<input name="province" id="province" type="text" value="${user.contactPersonInfo.province}" class="min same-as validate" errorFieldName="省" />&nbsp;(省)&nbsp;<input name="city" id="city" type="text" value="${user.contactPersonInfo.city}" class="min same-as validate" errorFieldName="市" />&nbsp;(市)&nbsp;<input name="county" id="county" type="text" value="${user.contactPersonInfo.county}" class="min same-as validate" errorFieldName="区县" />&nbsp;(区县)</dt>
 						</dl>
 						<dl>
 							<dd>&nbsp;</dd>
 							<dt>
-								<input name="address" id="address" type="text" value="${user.contactPersonInfo.address}" class="larger same-as"/>&nbsp;(街道地址)
+								<input name="address" id="address" type="text" value="${user.contactPersonInfo.address}" class="larger same-as validate" errorFieldName="街道地址"/>&nbsp;(街道地址)
 							</dt>
 						</dl>
 						<dl>
 							<dd>&nbsp;</dd>
 							<dt>
-								<input name="postalcode" id="postalcode" type="text" value="${user.contactPersonInfo.postalcode}" class="mini same-as"/>&nbsp;(邮编)
+								<input name="postalcode" id="postalcode" type="text" value="${user.contactPersonInfo.postalcode}" class="mini same-as validate" errorFieldName="邮编"/>&nbsp;(邮编)
 							</dt>
 						</dl>
 					</fieldset>

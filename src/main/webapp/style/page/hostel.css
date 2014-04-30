@@ -754,7 +754,7 @@ button.btn-style{
 }
 
 .house-detail-info .scroll-pane { 
-	/**overflow: auto;*/ 
+	overflow: hidden; 
 	width: 548px; 
 	float: left; 
 }
@@ -1287,7 +1287,7 @@ a.disabled {
 }
 
 .airport{
-	margin-top: 100px;
+	margin-top: 50px;
 }
 
 .airport .nav-box{
