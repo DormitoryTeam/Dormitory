@@ -26,7 +26,7 @@
 		<c:set var="count" value="0" />
 		<c:forEach var="city" items="${allCities}">
 			<c:if test="${city['topCity'] && count < 15}">
-				<li><a href="<c:url value='/navigation/hot-cities.html?cityId=${city.id}'/>">${city['name_ch']}</a></li>
+				<li><a href="<c:url value='/navigation/hot-cities.html?cityId=${city.id}#${city.name}'/>">${city['name_ch']}</a></li>
 				<c:set var="count" value="${count + 1}" />
 			</c:if>
 		</c:forEach>
