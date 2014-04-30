@@ -68,15 +68,17 @@
 					<li class="order-active"><a href="<c:url value="/order/view-order.html?orderId=${order.id}"/>">查看</a><c:if test="${order.orderStatus.value < 2}">|<a href="<c:url value="/order/dormitory-place-order.html?orderId=${order.id}"/>">修改</a>|<a href="#">取消</a></c:if></li>
 					</c:when>
 					<c:otherwise>
-					<li class="order-active"><a href="<c:url value="/order/view-order.html?orderId=${order.id}&orderType=pickup"/>">查看</a><c:if test="${order.orderStatus.value < 2}">|<a href="<c:url value="/order/dormitory-place-order.html?orderId=${order.id}&orderType=pickup"/>">修改</a>|<a href="#">取消</a></c:if></li>
+					<li class="order-active"><a href="<c:url value="/order/view-order.html?orderId=${order.id}&orderType=pickup"/>">查看</a><c:if test="${order.orderStatus.value < 2}">|<a href="<c:url value="/order/dormitory-place-order.html?orderId=${order.id}&orderType=pickup"/>">修改</a><!--|<a href="#">取消</a>--></c:if></li>
 					</c:otherwise>
 					</c:choose>
 					
 				</ul>
 				</c:forEach>
 			</div>
-			<div class="row pager">
-			<jsp:include page="/jsp/utils/pagination.jsp" flush="true"/>
+			<div class="row pager" style="margin-top: 15px;">
+			<jsp:include page="/jsp/utils/pagination.jsp" flush="true">
+				<jsp:param name="pageName" value="myaccount"/>
+			</jsp:include>
 			</div>
 			<div class="order-list-tip">
 				<p>订单处理时，可随时拨打以下电话与我们联系</p>

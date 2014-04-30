@@ -15,20 +15,20 @@
 					<input name="pageStep" type="hidden" value="4"/>
 					<fieldset>
 						<dl>
-							<dd>毕业院校</dd>
+							<dd style="width: 350px;">毕业院校</dd>
 							<dt>
 							${user.prefer.graduateSchool}
 							</dt>
 						</dl>
 						<dl>
-							<dd>是否需要推送你的入读城市信息?</dd>
+							<dd style="width: 350px;">是否需要推送你的入读城市信息</dd>
 							<dt>
 							<c:if test="${user.prefer.needPush}"><label>是</label></c:if>
 							<c:if test="${not user.prefer.needPush}"><label>否</label></c:if>
 							</dt>
 						</dl>
 						<dl>
-							<dd>我已阅读并同意留学生活网的《条款条例》</dd>
+							<dd style="width: 350px;">我已阅读并同意留学生活网的《条款条例》</dd>
 							<dt>
 							<c:if test="${user.prefer.readClause}"><label>是</label></c:if>
 							<c:if test="${not user.prefer.readClause}"><label>否</label></c:if>

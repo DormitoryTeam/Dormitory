@@ -57,18 +57,18 @@
 						</dl>
 						<dl>
 							<dd>家庭住址：</dd>
-							<dt><input name="country" type="text" value="${user.info.country}" class="min" /> (国家)<input name="province" type="text" value="${user.info.province}" class="min" /> (省)<input name="city" type="text" value="${user.info.city}" class="min" /> (市)<input name="county" type="text" value="${user.info.county}" class="min" /> (区县)</dt>
+							<dt><input name="country" type="text" value="${user.info.country}" class="min" />&nbsp;(国家)&nbsp;<input name="province" type="text" value="${user.info.province}" class="min" />&nbsp;(省)&nbsp;<input name="city" type="text" value="${user.info.city}" class="min" />&nbsp;(市)&nbsp;<input name="county" type="text" value="${user.info.county}" class="min" />&nbsp;(区县)</dt>
 						</dl>
 						<dl>
 							<dd>&nbsp;</dd>
 							<dt>
-								<input name="address" type="text" value="${user.info.address}" class="larger"/> (街道地址)
+								<input name="address" type="text" value="${user.info.address}" class="larger"/>&nbsp;(街道地址)
 							</dt>
 						</dl>
 						<dl>
 							<dd>&nbsp;</dd>
 							<dt>
-								<input name="postalcode" type="text" value="${user.info.postalcode}" class="mini"/> (邮编)
+								<input name="postalcode" type="text" value="${user.info.postalcode}" class="mini"/>&nbsp;(邮编)
 							</dt>
 						</dl>
 					</fieldset>

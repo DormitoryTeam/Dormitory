@@ -15,7 +15,7 @@
 					<input name="pageStep" type="hidden" value="1"/>
 					<fieldset>
 						<dl>
-							<dd>您是否抽烟?</dd>
+							<dd style="width: 250px;">您是否抽烟</dd>
 							<dt>
 							<c:set var="smoke" value="${user.prefer.smoke}" />
 							<c:if test="${smoke}"><label>是</label></c:if>
@@ -23,7 +23,7 @@
 							</dt>
 						</dl>
 						<dl>
-							<dd>您是否是素食主义者?</dd>
+							<dd style="width: 250px;">您是否是素食主义者</dd>
 							<dt>
 							<c:set var="vegetarianism" value="${user.prefer.vegetarianism}" />
 							<c:if test="${vegetarianism}"><label>是</label></c:if>
@@ -31,7 +31,7 @@
 							</dt>
 						</dl>
 						<dl>
-							<dd>您的年级?</dd>
+							<dd style="width: 250px;">您的年级</dd>
 							<dt>
 							<c:set var="yourGrade" value="${user.prefer.yourGrade}" />
 							<c:if test="${'1' eq yourGrade}"><label>大一</label></c:if>
@@ -43,7 +43,7 @@
 							</dt>
 						</dl>
 						<dl>
-							<dd>您想和哪个年级的人一起住?</dd>
+							<dd style="width: 250px;">您想和哪个年级的人一起住</dd>
 							<dt>
 							<c:set var="roomMemberGrade" value="${user.prefer.roomMemberGrade}" />
 							<c:if test="${'1' eq roomMemberGrade}"><label>大一</label></c:if>
@@ -55,7 +55,7 @@
 							</dt>
 						</dl>
 						<dl>
-							<dd>室友性别要求?</dd>
+							<dd style="width: 250px;">室友性别要求</dd>
 							<dt>
 							<c:set var="roomMemberGender" value="${user.prefer.roomMemberGender}" />
 							<c:if test="${0 eq roomMemberGender}"><label>混合性别</label></c:if>
@@ -65,15 +65,15 @@
 							</dt>
 						</dl>
 						<dl>
-							<dd>您的专业</dd>
+							<dd style="width: 250px;">您的专业</dd>
 							<dt>${user.prefer.major}</dt>
 						</dl>
 						<dl>
-							<dd>学校</dd>
+							<dd style="width: 250px;">学校</dd>
 							<dt>${user.prefer.college}</dt>
 						</dl>
 						<dl>
-							<dd>特殊要求</dd>
+							<dd style="width: 250px;">特殊要求</dd>
 							<dt>${user.prefer.floor}</dt>
 						</dl>
 					</fieldset>
