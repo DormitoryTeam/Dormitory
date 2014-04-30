@@ -8,7 +8,7 @@
 				</ul>
 			</div>
 			<div class="selectContent">
-				<form action="<c:url value='/navigation/navigator.html'/>" method="GET">
+				<form action="<c:url value='/navigation/hot-cities.html'/>" method="GET">
 					<fieldset class="select-show-info">
 						<dl>
 							<dt>国家</dt>
