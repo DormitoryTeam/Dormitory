@@ -44,6 +44,43 @@ public class UserController {
 
 
 
+    @RequestMapping(value = "/asynForgetPassword" + Constants.URL_SUFFIX)
+    @ResponseBody
+    public String asynForgetPassword(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, final String login, final String password) {
+        JSONObject json = null;
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("result", false);
+
+        model.addAttribute("login", login);
+        boolean isExist = userService.exist(login);
+
+        if (StringUtils.isBlank(login)) {
+            resultMap.put("message", "邮箱不能为空。");
+        } else if (!isExist) {
+            resultMap.put("message", "邮箱不存在。");
+        } else {
+            UserBean user = userService.generateResetPasswordSign(login);
+            String sign = user.getResetPasswordSign();
+            String from = EmailUtils.getServiceEmail();
+            String fromAlias = EmailUtils.getServiceAlias();
+            String subject = EmailUtils.getSubject();
+            String domain = PropertiesUtils.getConfigurableProperty(Constants.CONFIG_PATH, Constants.CONFIG_DOMAIN);
+            String context = PropertiesUtils.getConfigurableProperty(Constants.CONFIG_PATH, Constants.CONFIG_CONTEXT);
+            String resetPasswordURL = domain + Constants.SLASH + context + "/user/resetPassword.html?sign=" + sign;
+            boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, user.getEmail(), user.getAlias(), subject,
+                    resetPasswordURL);
+            resultMap.put("result", sendSuccess);
+            if (!sendSuccess) {
+                resultMap.put("message", "发送重置密码邮件失败。");
+            }
+        }
+        json = JSONObject.fromObject(resultMap);
+        return json.toString();
+    }
+
+
+
     @RequestMapping("/asynLogin" + Constants.URL_SUFFIX)
     @ResponseBody
     public String asynLogin(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response,
@@ -53,7 +90,7 @@ public class UserController {
         resultMap.put("result", false);
 
         if (StringUtils.isBlank(login)) {
-            resultMap.put("message", "用户名不能为空。");
+            resultMap.put("message", "邮箱不能为空。");
         } else if (StringUtils.isBlank(password)) {
             resultMap.put("message", "密码不能为空。");
         } else {
@@ -68,7 +105,7 @@ public class UserController {
                 resultMap.put("login", user.getLogin());
                 resultMap.put("result", true);
             } else {
-                resultMap.put("message", "用户名和密码不匹配。");
+                resultMap.put("message", "邮箱和密码不匹配。");
             }
         }
 
@@ -87,14 +124,14 @@ public class UserController {
         resultMap.put("result", false);
 
         if (StringUtils.isBlank(login)) {
-            resultMap.put("message", "用户名不能为空。");
+            resultMap.put("message", "邮箱不能为空。");
         } else if (StringUtils.isBlank(password)) {
             resultMap.put("message", "密码不能为空。");
         } else {
             model.addAttribute("result", login);
             UserBean user = userService.register(login, password);
             if (user == null) {
-                resultMap.put("message", "该用户名已存在。");
+                resultMap.put("message", "该邮箱已存在。");
             } else {
                 request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_ID, user.getId());
                 request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_LOGIN, user.getLogin());
@@ -271,6 +308,13 @@ public class UserController {
 
 
 
+    @RequestMapping("/loadForgetPassword" + Constants.URL_SUFFIX)
+    public String loadForgetPasswordPage(final HttpServletRequest request, final HttpServletResponse response) {
+        return "include/homepage-forgetpassword";
+    }
+
+
+
     @RequestMapping("/loadLogin" + Constants.URL_SUFFIX)
     public String loadLoginPage(final HttpServletRequest request, final HttpServletResponse response) {
         return "include/homepage-login";
@@ -292,7 +336,7 @@ public class UserController {
             return "user/loginForm";
         }
         if (StringUtils.isBlank(login)) {
-            model.addAttribute("message", "用户名不能为空。");
+            model.addAttribute("message", "邮箱不能为空。");
             return "user/loginForm";
         }
         if (StringUtils.isBlank(password)) {
@@ -310,7 +354,7 @@ public class UserController {
             request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_LOGIN, user.getLogin());
             return "redirect:/navigation/home.html";
         }
-        model.addAttribute("message", "用户名和密码不匹配。");
+        model.addAttribute("message", "邮箱和密码不匹配。");
         return "user/loginForm";
     }
 
@@ -401,7 +445,7 @@ public class UserController {
             return "user/registerForm";
         }
         if (StringUtils.isBlank(login)) {
-            model.addAttribute("message", "用户名不能为空。");
+            model.addAttribute("message", "邮箱不能为空。");
             return "user/registerForm";
         }
         if (StringUtils.isBlank(password)) {
@@ -411,7 +455,7 @@ public class UserController {
         model.addAttribute("login", login);
         UserBean user = userService.register(login, password);
         if (user == null) {
-            model.addAttribute("message", "该用户名已存在。");
+            model.addAttribute("message", "该邮箱已存在。");
             return "user/registerForm";
         }
         request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_ID, user.getId());
@@ -459,12 +503,12 @@ public class UserController {
             return "user/sendResetPasswordEmailForm";
         }
         if (StringUtils.isBlank(login)) {
-            model.addAttribute("message", "用户名不能为空。");
+            model.addAttribute("message", "邮箱不能为空。");
             return "user/changePasswordMessage";
         }
         boolean isExist = userService.exist(login);
         if (!isExist) {
-            model.addAttribute("message", "用户名不存在。");
+            model.addAttribute("message", "邮箱不存在。");
             return "user/changePasswordMessage";
         }
         UserBean user = userService.generateResetPasswordSign(login);
@@ -496,6 +540,13 @@ public class UserController {
 
 
 
+    @RequestMapping("/toForgetPassword" + Constants.URL_SUFFIX)
+    public String toForgetPasswordPage(final HttpServletRequest request, final HttpServletResponse response) {
+        return "forgetPassword";
+    }
+
+
+
     @RequestMapping("/toLogin" + Constants.URL_SUFFIX)
     public String toLoginPage(final HttpServletRequest request, final HttpServletResponse response) {
         return "login";
@@ -506,5 +557,14 @@ public class UserController {
     @RequestMapping("/toRegister" + Constants.URL_SUFFIX)
     public String toRegisterPage(final HttpServletRequest request, final HttpServletResponse response) {
         return "register";
+    }
+
+
+
+    @RequestMapping("/toForgetPasswordResult" + Constants.URL_SUFFIX)
+    public String totoForgetPasswordResultPage(final HttpServletRequest request, final HttpServletResponse response,
+            final ModelMap model, final String login) {
+        model.addAttribute("login", login);
+        return "include/homepage-forgetpasswordresult";
     }
 }
