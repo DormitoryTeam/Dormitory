@@ -44,6 +44,34 @@ public class UserController {
 
 
 
+    @RequestMapping(value = "/asynChangePassword" + Constants.URL_SUFFIX)
+    @ResponseBody
+    public String asynChangePassword(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, final String oldPassword, final String newPassword) {
+        JSONObject json = null;
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("result", false);
+
+        String login = (String) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_LOGIN);
+        if (!ServletUtils.isLogin(request)) {
+            resultMap.put("message", "请先登录。");
+        } else {
+            int result = userService.changePassword(login, oldPassword, newPassword);
+            if (IUserService.PASSWORD_NOT_MATCH == result) {
+                resultMap.put("message", "旧密码不匹配。");
+            }
+            if (IUserService.PASSWORD_CHANGE_SUCCESS == result) {
+                resultMap.put("message", "修改成功。");
+                resultMap.put("result", true);
+            }
+        }
+
+        json = JSONObject.fromObject(resultMap);
+        return json.toString();
+    }
+
+
+
     @RequestMapping(value = "/asynForgetPassword" + Constants.URL_SUFFIX)
     @ResponseBody
     public String asynForgetPassword(final ModelMap model, final HttpServletRequest request,
@@ -308,6 +336,13 @@ public class UserController {
 
 
 
+    @RequestMapping("/loadChangePassword" + Constants.URL_SUFFIX)
+    public String loadChangePasswordPage(final HttpServletRequest request, final HttpServletResponse response) {
+        return "include/homepage-changepassword";
+    }
+
+
+
     @RequestMapping("/loadForgetPassword" + Constants.URL_SUFFIX)
     public String loadForgetPasswordPage(final HttpServletRequest request, final HttpServletResponse response) {
         return "include/homepage-forgetpassword";
@@ -536,6 +571,13 @@ public class UserController {
         request.getSession().removeAttribute(SessionConstants.SESSION_KEY_USER_ID);
 
         return "redirect:/navigation/home.html";
+    }
+
+
+
+    @RequestMapping("/toChangePassword" + Constants.URL_SUFFIX)
+    public String toChangePasswordPage(final HttpServletRequest request, final HttpServletResponse response) {
+        return "changePassword";
     }
 
 
