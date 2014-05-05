@@ -21,7 +21,7 @@
 			<dl class="btnBox">
 				<dt>&nbsp;</dt>
 				<dd>
-					<input id="btnRegisterSubmit" name="submit" type="button" value="注册" />
+					<input id="btnRegisterSubmit" name="submit" type="button" value="注&nbsp;册" />
 				</dd>
 			</dl>
 		</fieldset>

@@ -34,6 +34,9 @@
 			<input type="hidden" id="dormitoryName" value="${dormitory['name']}" />
 			<input type="hidden" id="dormitoryLatitude" value="${dormitory['latitude']}" />
 			<input type="hidden" id="dormitoryLongitude" value="${dormitory['longitude']}" />
+			<input type="hidden" id="collegeLatitude" value="${college['latitude']}" />
+			<input type="hidden" id="collegeLongitude" value="${college['longitude']}" />
+			<input type="hidden" id="collegeOriginalName" value="${college['originalName']}" />
 		</div>
 		<div id="tabs-air">接机</div>
 		<div id="tabs-pay">付款取消政策</div>

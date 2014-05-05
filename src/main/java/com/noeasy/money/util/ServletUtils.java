@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.noeasy.money.constant.SessionConstants;
 import com.noeasy.money.model.OrderBean;
+import com.noeasy.money.model.UserBean;
 import com.noeasy.money.model.UserInfoBean;
 import com.noeasy.money.model.UserPreferBean;
 
@@ -58,6 +59,12 @@ public class ServletUtils {
         pRequest.getSession().setAttribute(SessionConstants.SESSION_KEY_ORDER, order);
     }
 
+    
+    public static void setUser2Session(HttpServletRequest request, UserBean user) {
+        request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_ID, user.getId());
+        request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_LOGIN, user.getLogin());
+        
+    }
 
 
     public static UserInfoBean getUserInfoFromRequest(HttpServletRequest pRequest) {

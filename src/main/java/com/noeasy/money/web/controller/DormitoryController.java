@@ -71,7 +71,7 @@ public class DormitoryController {
 
     @RequestMapping("/dormitory-detail" + Constants.URL_SUFFIX)
     public String toDormitoryDetail(final HttpServletRequest request, final HttpServletResponse response,
-            final Model model, final String id) {
+            final Model model, final String id, final String collegeId) {
         if (StringUtils.isNotBlank(id)) {
             DormitorySearchBean searchBean = new DormitorySearchBean();
             searchBean.setId(NumberUtils.toInt(id));
@@ -111,7 +111,10 @@ public class DormitoryController {
                 searchBean.setCityId(dormitory.getCityId());
                 List<DormitoryBean> relatedDormitories = dormitoryService.queryDormitoryPage(searchBean);
                 List<Map<String, Object>> colleges = navigationService.queryColleges(dormitory.getCityId());
-
+                if (StringUtils.isNotBlank(collegeId)) {
+                    Map<String, Object> college = navigationService.queryCollegeById(NumberUtils.toInt(collegeId), null);
+                    model.addAttribute("college", college);
+                }
                 model.addAttribute("colleges", colleges);
                 model.addAttribute("relatedDormitories", relatedDormitories);
                 model.addAttribute("dormitory", dormitory);

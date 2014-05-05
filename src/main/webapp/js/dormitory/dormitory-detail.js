@@ -128,7 +128,7 @@ function initialize() {
 	var latitude = $("#dormitoryLatitude").val();
 	var longitdue = $("#dormitoryLongitude").val();
 	var dormitoryLatlng = new google.maps.LatLng(latitude, longitdue);
-
+	
 	var mapOptions = {
 		center : dormitoryLatlng,
 		zoom : 13,
@@ -144,6 +144,19 @@ function initialize() {
 		position : dormitoryLatlng,
 		map : map,
 		title : $("#dormitoryName").val()
+	});
+	marker.setMap(map);
+	
+	var collegeLatitude = $("#collegeLatitude").val();
+	var collegeLongitdue = $("#collegeLongitude").val();
+	var collegeOriginalName = $("#collegeOriginalName").val();
+	var collegeLatlng = new google.maps.LatLng(collegeLatitude, collegeLongitdue);
+	
+	marker = new google.maps.Marker({
+		position : collegeLatlng,
+		map : map,
+		title : collegeOriginalName,
+		icon : "http://www.liuxuelife.com/img/map/university.png"
 	});
 	marker.setMap(map);
 }

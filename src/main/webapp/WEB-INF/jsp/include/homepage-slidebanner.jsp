@@ -51,7 +51,7 @@
 						<dl class="btnBox">
 							<dt>&nbsp;</dt>
 							<dd>
-								<input type="submit" value="搜索" class="btn-search" />
+								<input type="submit" value="搜&nbsp;索" class="btn-search" />
 							</dd>
 						</dl>
 					</fieldset>

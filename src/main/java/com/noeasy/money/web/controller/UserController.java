@@ -63,8 +63,7 @@ public class UserController {
             List<UserBean> users = userService.queryUser(bean);
             if (CollectionUtils.isNotEmpty(users)) {
                 UserBean user = users.get(0);
-                request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_ID, user.getId());
-                request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_LOGIN, user.getLogin());
+                ServletUtils.setUser2Session(request, user);
                 resultMap.put("login", user.getLogin());
                 resultMap.put("result", true);
             } else {
@@ -96,8 +95,7 @@ public class UserController {
             if (user == null) {
                 resultMap.put("message", "该用户名已存在。");
             } else {
-                request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_ID, user.getId());
-                request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_LOGIN, user.getLogin());
+                ServletUtils.setUser2Session(request, user);
                 resultMap.put("login", user.getLogin());
                 resultMap.put("result", true);
             }
@@ -306,8 +304,7 @@ public class UserController {
         List<UserBean> users = userService.queryUser(bean);
         if (CollectionUtils.isNotEmpty(users)) {
             UserBean user = users.get(0);
-            request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_ID, user.getId());
-            request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_LOGIN, user.getLogin());
+            ServletUtils.setUser2Session(request, user);
             return "redirect:/navigation/home.html";
         }
         model.addAttribute("message", "用户名和密码不匹配。");
@@ -414,8 +411,7 @@ public class UserController {
             model.addAttribute("message", "该用户名已存在。");
             return "user/registerForm";
         }
-        request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_ID, user.getId());
-        request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_LOGIN, user.getLogin());
+        ServletUtils.setUser2Session(request, user);
 
         return "redirect:/user/home.html";
     }
