@@ -29,51 +29,43 @@
 package com.noeasy.money.web.controller;
 
 import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.noeasy.money.constant.Constants;
-import com.noeasy.money.constant.SessionConstants;
-import com.noeasy.money.enumeration.Operation;
 import com.noeasy.money.enumeration.OrderStatus;
 import com.noeasy.money.enumeration.OrderType;
-import com.noeasy.money.enumeration.PickupType;
 import com.noeasy.money.model.ContractType;
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitoryLineItem;
-import com.noeasy.money.model.DormitorySearchBean;
 import com.noeasy.money.model.LineItem;
 import com.noeasy.money.model.OrderBean;
 import com.noeasy.money.model.OrderContactInfo;
-import com.noeasy.money.model.OrderTail;
 import com.noeasy.money.model.PickupLineItem;
 import com.noeasy.money.model.RoomInfoBean;
 import com.noeasy.money.model.RoomPrice;
 import com.noeasy.money.model.UserBean;
 import com.noeasy.money.model.UserInfoBean;
 import com.noeasy.money.model.UserPreferBean;
-import com.noeasy.money.model.UserSearchBean;
 import com.noeasy.money.service.IDormitoryService;
 import com.noeasy.money.service.INavigationService;
 import com.noeasy.money.service.IOrderService;
 import com.noeasy.money.service.IUserService;
 import com.noeasy.money.service.IUserService.INFO_TYPE;
 import com.noeasy.money.util.DateUtils;
+import com.noeasy.money.util.EmailUtils;
+import com.noeasy.money.util.PropertiesUtils;
 import com.noeasy.money.util.ServletUtils;
 
 /**
@@ -576,6 +568,7 @@ public class OrderController {
                 if (null == belongsTo) {
                     belongsTo = userService.register(email, "");
                     // TODO send email.
+                    // should not be here.
                 }
 
             }
@@ -588,8 +581,16 @@ public class OrderController {
             // 3. if exist, use the exist user to place an order
             UserBean user = userService.findUserByLogin(email);
             if (null == user) {
-                user = userService.register(email, "");
-                // TODO send email.
+                String password = RandomStringUtils.randomAlphanumeric(8);
+                user = userService.register(email, password);
+                String from = EmailUtils.getServiceEmail();
+                String fromAlias = EmailUtils.getServiceAlias();
+                String subject = EmailUtils.getSubject();
+                String domain = PropertiesUtils.getConfigurableProperty(Constants.CONFIG_PATH, Constants.CONFIG_DOMAIN);
+                String context = PropertiesUtils.getConfigurableProperty(Constants.CONFIG_PATH, Constants.CONFIG_CONTEXT);
+                EmailUtils.sendEmail(from, fromAlias, email, email, subject, "你在留学生活注册了新用户， 用户名：" + email +" / 密码: " + password + "请访问 www.liuxuelife.com 登录后修改密码。");
+                // send email.
+                ServletUtils.setUser2Session(pRequest, user);
             }
             belongsTo = user;
             placer = user;
@@ -916,4 +917,5 @@ public class OrderController {
 //
 //        return "order/pickup-order-fill";
 //    }
+
 }

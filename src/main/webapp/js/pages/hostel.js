@@ -106,6 +106,7 @@ require(['config'], function(config) {
 					$(this).parent().siblings().removeClass('open').addClass('close');
 					$(this).parent().removeClass('close').addClass('open');	
 				}
+				$(document).scrollTop($(this).offset().top);
 			});
 
             $('.comment .starBox').raty({

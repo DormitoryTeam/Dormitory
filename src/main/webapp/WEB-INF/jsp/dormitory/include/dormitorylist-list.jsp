@@ -3,7 +3,7 @@
 		<li>
 			<div class="hostel-img pull-left">
 			
-				<a href="<c:url value='/dormitory/dormitory-detail.html?id=${dormitory.id}'/>">
+				<a href="<c:url value='/dormitory/dormitory-detail.html?id=${dormitory.id}&collegeId=${collegeId}'/>">
 				<c:if test="${empty dormitory['picPath']}">
 					<img src="<c:url value='/img/house/house.jpg'/>" alt /></a>
 				</c:if>
@@ -25,7 +25,7 @@
 					<div class="starBox" data-score="${dormitory['rating']}"></div>
 				</div>
 				<div class="title">
-					<a href="<c:url value='/dormitory/dormitory-detail.html?id=${dormitory.id}'/>">${dormitory['name']}</a>
+					<a href="<c:url value='/dormitory/dormitory-detail.html?id=${dormitory.id}&collegeId=${collegeId}'/>">${dormitory['name']}</a>
 					<span style="color: #ff5400;">
 						(<fmt:formatNumber value="${dormitory['distance']}" pattern="#,#0.00"/>KM)
 						<%--<c:if test="${dormitory['status'] eq 'HAS_VACANCY'}">尚有空房</c:if>

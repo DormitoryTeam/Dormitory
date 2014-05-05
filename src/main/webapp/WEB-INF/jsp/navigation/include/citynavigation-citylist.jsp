@@ -20,8 +20,8 @@
 			<c:set var="size" value="${fn:length(cityColleges)}" />
 			<c:forEach var="cityCollege" items="${cityColleges}"  varStatus="i">
 				<li class="${cityId eq cityCollege['cityId'] ? 'open' : 'close' } ${i['count'] eq size ? 'last' : ''}">
-					<div class="country-title jQ-citylist">
-						<p>${cityCollege['cityName']}</p>
+					<div class="country-title jQ-citylist" style="text-align: left;">
+						<p style="margin-left:60px;<c:if test="${fn:length(cityCollege['cityName']) > 12}">font-size: 20px;</c:if>">${cityCollege['cityName']}</p>
 					</div>
 					<ul class="city-list">
 						<c:forEach var="college" items="${cityCollege['colleges']}">

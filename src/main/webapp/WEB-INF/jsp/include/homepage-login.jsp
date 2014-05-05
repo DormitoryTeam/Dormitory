@@ -23,7 +23,7 @@
 			<dl class="btnBox">
 				<dt>&nbsp;</dt>
 				<dd>
-					<input id="btnLoginSubmit" name="submit" type="button" value="登录" />
+					<input id="btnLoginSubmit" name="submit" type="button" value="登&nbsp;录" />
 				</dd>
 			</dl>
 		</fieldset>

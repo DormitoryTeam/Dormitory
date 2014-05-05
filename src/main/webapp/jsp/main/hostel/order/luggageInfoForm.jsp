@@ -36,7 +36,7 @@
 				<dt>&nbsp;</dt>
 				<dd>
 					<c:if test="${not empty order.id}">
-					<button class="btn-style btn-place-order-pre" preStep="<c:url value="/order/dormitory-place-order.html?orderType=pickup&orderId=${order.id}&pageStep=2"/>">下一步</button>
+					<button class="btn-style btn-place-order-pre" preStep="<c:url value="/order/dormitory-place-order.html?orderType=pickup&orderId=${order.id}&pageStep=2"/>">上一步</button>
 					</c:if>
 					<button class="btn-style btn-place-order-next">下一步</button>
 				</dd>
