@@ -48,11 +48,9 @@ $(function() {
 	});
 
 	$(".btn-quick").on('click', function(e) {
-		if (checkCustomHasLogin()) {
-			$("#quickRoomInfoId").val($("#selectQuickRoom").val());
-			$("#quickContractId").val($("#selectQuickContract").val());
-			$("#quickPlaceOrderForm").submit();
-		}
+		$("#quickRoomInfoId").val($("#selectQuickRoom").val());
+		$("#quickContractId").val($("#selectQuickContract").val());
+		$("#quickPlaceOrderForm").submit();
 	});
 
 	$('.jQ-loginbtn').on('click', function() {
@@ -87,37 +85,35 @@ $(function() {
 	});
 
 	$('.jQ-quick').on('click', function() {
-		if (checkCustomHasLogin()) {
-			var roomId = $(this).attr("roomId");
-			$("#roomInfoId").val(roomId);
+		var roomId = $(this).attr("roomId");
+		$("#roomInfoId").val(roomId);
 
-			$(this).acsPopup({
-				popupSrc : $(this).attr("data-popupSrc"),
-				callBack : function() {
-					var contracts = room_contracts[roomId];
-					for (var i in contracts) {
-						var days = parseInt(contracts[i].name);
-						var weekday = "";
-						if (days / 7 != 0) {
-							weekday = days / 7 + "周";
-						}
-						if (days % 7 != 0) {
-							weekday = days % 7 + "天";
-						}
-						var bookHTML = '<option value="' + contracts[i].id + '">' + weekday + '</option>';
-						var bookDIV = $(bookHTML);
-						$("#selectContract").append(bookDIV);
+		$(this).acsPopup({
+			popupSrc : $(this).attr("data-popupSrc"),
+			callBack : function() {
+				var contracts = room_contracts[roomId];
+				for (var i in contracts) {
+					var days = parseInt(contracts[i].name);
+					var weekday = "";
+					if (days / 7 != 0) {
+						weekday = days / 7 + "周";
 					}
-
-					$('select').simSelect();
-					$('.btnBook').on('click', function() {
-						var contractId = $("#selectContract").val();
-						$("#contractId").val(contractId);
-						$("#placeOrderForm").submit();
-					});
+					if (days % 7 != 0) {
+						weekday = days % 7 + "天";
+					}
+					var bookHTML = '<option value="' + contracts[i].id + '">' + weekday + '</option>';
+					var bookDIV = $(bookHTML);
+					$("#selectContract").append(bookDIV);
 				}
-			});
-		}
+
+				$('select').simSelect();
+				$('.btnBook').on('click', function() {
+					var contractId = $("#selectContract").val();
+					$("#contractId").val(contractId);
+					$("#placeOrderForm").submit();
+				});
+			}
+		});
 	});
 
 	initialize();

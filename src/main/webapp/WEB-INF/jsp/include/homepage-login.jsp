@@ -12,7 +12,7 @@
 			<dl class="tip" style="width: auto;">
 				<dt>&nbsp;</dt>
 				<dd>
-					<a href="#" class="foget">忘记密码</a> 
+					<a href="<c:url value='/user/toForgetPassword.html'/>" class="foget">忘记密码</a> 
 					<input type="checkbox"><label>记住我</label>
 				</dd>
 			</dl>
