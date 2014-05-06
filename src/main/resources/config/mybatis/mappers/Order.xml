@@ -207,6 +207,18 @@
 		'PAYMENT_DONE' OR status = 'PASS' OR status = 'SENDING_CONTACT');
 	</select>
 
+	<select id="queryUserOrderCount" resultType="int">
+		select count(*)
+		from `order` as o
+		where o.type = #{orderType} and o.user_id = #{user.id};
+	</select>
+	
+	<select id="belongsTo" resultType="int">
+		select count(*)
+		from `order` as o
+		where o.id = #{orderNumber} and o.user_id = #{user.id};
+	</select>
+	
 	<update id="updateOrderStatus" parameterType="com.noeasy.money.model.OrderBean">
 		UPDATE `order` SET
 		status = #{orderStatus.name,javaType=String,jdbcType=VARCHAR},

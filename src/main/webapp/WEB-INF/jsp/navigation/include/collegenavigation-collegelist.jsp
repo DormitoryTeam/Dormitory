@@ -5,7 +5,7 @@
 <div class="row hot-city">
 	<div class="title">
 		<span>公寓预定热门学校</span>
-		<a href="<c:url value='/navigation/hot-cities.html?countryId=1'/>" class="more">> 更多城市</a>
+		<a href="<c:url value='/navigation/hot-cities.html?countryId=1'/>" class="more">> 切换到城市列表</a>
 	</div>
 	<ul class="city-list show-list-c">
 		<c:forEach var="college" items="${allColleges}">

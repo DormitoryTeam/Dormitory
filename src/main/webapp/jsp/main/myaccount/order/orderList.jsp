@@ -65,7 +65,7 @@
 					<li class="order-price">&#163;${order.amount}</li>
 					<c:choose>
 					<c:when test='${"D" eq type}'>
-					<li class="order-active"><a href="<c:url value="/order/view-order.html?orderId=${order.id}"/>">查看</a><c:if test="${order.orderStatus.value < 2}">|<a href="<c:url value="/order/dormitory-place-order.html?orderId=${order.id}"/>">修改</a>|<a href="#">取消</a></c:if></li>
+					<li class="order-active"><a href="<c:url value="/order/view-order.html?orderId=${order.id}"/>">查看</a><c:if test="${order.orderStatus.value < 2}">|<a href="<c:url value="/order/dormitory-place-order.html?orderId=${order.id}"/>">修改</a><!--|<a href="#">取消</a>--></c:if></li>
 					</c:when>
 					<c:otherwise>
 					<li class="order-active"><a href="<c:url value="/order/view-order.html?orderId=${order.id}&orderType=pickup"/>">查看</a><c:if test="${order.orderStatus.value < 2}">|<a href="<c:url value="/order/dormitory-place-order.html?orderId=${order.id}&orderType=pickup"/>">修改</a><!--|<a href="#">取消</a>--></c:if></li>

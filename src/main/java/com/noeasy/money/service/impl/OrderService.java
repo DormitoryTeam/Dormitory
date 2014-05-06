@@ -45,6 +45,7 @@ import com.noeasy.money.model.OrderBean;
 import com.noeasy.money.model.OrderContactInfo;
 import com.noeasy.money.model.OrderSearchBean;
 import com.noeasy.money.model.PickupLineItem;
+import com.noeasy.money.model.UserBean;
 import com.noeasy.money.repository.IDormitoryRepository;
 import com.noeasy.money.repository.IOrderRepository;
 import com.noeasy.money.service.IOrderService;
@@ -228,5 +229,21 @@ public class OrderService implements IOrderService {
     public OrderBean findPickupOrderById(Integer pId) {
         return orderRepository.findPickupOrderById(pId);
     }
+    
+    @Override
+    public boolean hasOrder(UserBean user, OrderType type) {
+        Integer amount = orderRepository.queryUserOrderCount(user, type);
+        return amount >= 1;
+    }
 
+
+
+    @Override
+    public boolean belongsTo(UserBean pUser, OrderBean pOrder) {
+        OrderSearchBean searchBean = new OrderSearchBean();
+        Integer amount = orderRepository.belongsTo(searchBean);
+        return amount >= 1;
+    }
+    
+    
 }

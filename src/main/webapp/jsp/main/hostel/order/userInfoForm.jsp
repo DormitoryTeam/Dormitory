@@ -2,7 +2,7 @@
 	<jsp:include page="/jsp/main/hostel/order/include/orderHeader.jsp"/>
 	<div class="reservation-personal reservation-tab ui-tabs ui-widget ui-widget-content ui-corner-all ui-tabs-vertical ui-helper-clearfix">
 		<form action="<c:url value="/order/dormitory-place-order.html"/>" method="POST" id="placeOrderForm">
-			<input type="hidden" name="pageStep" value="0" />
+			<input type="hidden" id="pageStep" name="pageStep" value="0" />
 			<input type="hidden" name="command" id="command"/>
 			<input type="hidden" name="orderType" value="${orderType}"/>
 			<input type="hidden" name="dormitoryId" value="${dormitory.id}" />
@@ -80,9 +80,9 @@
 						<dd>
 							<c:set var="email" value="${order.orderContact.belongsToInfo.email}" />
 							<c:if test="${null == email}">
-							<c:set var="email" value="${user.info.email}" />
+							<c:set var="email" value="${user.login}" />
 							</c:if>
-							<input name="email" type="text" class="long validate" errorFieldName="电子邮件" value="${email}"/> 
+							<input id="login" name="email" type="text" class="long validate" errorFieldName="电子邮件" value="${email}" <c:if test="${ not empty email}">readonly</c:if> /> 
 						</dd>
 					</dl>
 					<dl>
