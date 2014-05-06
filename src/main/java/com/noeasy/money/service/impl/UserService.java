@@ -42,8 +42,7 @@ public class UserService implements IUserService {
         UserBean user = new UserBean();
         user.setLogin(pLogin);
         user.setPassword(pNewPassword);
-        userRepository.resetPassword(user);
-        return 0;
+        return userRepository.resetPassword(user);
     }
 
 
