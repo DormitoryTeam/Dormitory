@@ -18,7 +18,7 @@
 			新的密码: <input name="password" type="password" />
 			<input name="sign" type="hidden" value="${sign}" /> 
 			<input name="login" type="hidden" value="${user.login}" /> 
-			<input name="submit" type="submit" value="submit" />
+			<input name="submit" type="submit" value="修改密码！" />
 		</form>
 	</div>
 	</main>

@@ -506,7 +506,7 @@ public class UserController {
         searchBean.setSign(sign);
         List<UserBean> users = userService.queryUser(searchBean);
         if (CollectionUtils.isEmpty(users)) {
-            model.addAttribute("message", "Invalide sign");
+            model.addAttribute("message", "标识无效。");
             return "changePasswordMessage";
         }
         UserBean user = users.get(0);
@@ -518,7 +518,7 @@ public class UserController {
         boolean sucess = userService.resetPassword(login, password);
         String message = "Unkown Issue";
         if (sucess) {
-            message = "Success";
+            message = "修改成功。";
         }
         model.addAttribute("message", message);
         return "user/changePasswordMessage";
