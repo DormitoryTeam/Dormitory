@@ -47,7 +47,10 @@ $(function() {
 			var hasOrder = false;
 			$.ajax({
 				url: ctx + "/order/hasOrder.html",
-				data: {login: $("#login").val()},
+				data: {
+					login: $("#login").val(),
+					orderType: $("#orderType").val()
+				},
 				async: false,
 				dataType: "json",
 				success: function(data) {

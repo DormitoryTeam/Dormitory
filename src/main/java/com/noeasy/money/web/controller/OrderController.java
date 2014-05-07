@@ -31,6 +31,7 @@ package com.noeasy.money.web.controller;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -615,6 +616,7 @@ public class OrderController {
                     throw new RuntimeException("One user One orde");
                 }
             }
+            ServletUtils.setUser2Session(pRequest, user);
             // TODO: rollback
         }
         order.setBelongsTo(belongsTo);
@@ -695,11 +697,23 @@ public class OrderController {
             RoomInfoBean roomInfo = dormitoryService.findRoomInfoById(Integer.valueOf(roomInfoIdStr));
             dormitoryItem.setRoomInfo(roomInfo);
             
-        } 
-//        else {
-//            PickupLineItem pickupItem = (PickupLineItem) item;
-//            
-//        }
+        } else {
+            PickupLineItem pickupItem = (PickupLineItem) item;
+            String countryId = pRequest.getParameter("countryId");
+            String airprotId = pRequest.getParameter("airportId");
+            if (StringUtils.isNotBlank(countryId)) {
+                Map<String, Object> country = navigationService.queryCountryById(Integer.valueOf(countryId));
+                if (null != country) {
+                    pickupItem.setArrivalCountry((String)country.get("name"));
+                }
+            }
+            if (StringUtils.isNotBlank(airprotId)) {
+                Map<String, Object> airport = navigationService.queryAirprotById(Integer.valueOf(airprotId));
+                if (null != airport) {
+                    pickupItem.setArrivalAirport((String)airport.get("name"));
+                }
+            }
+        }
     }
 
     private void priceOrder(HttpServletRequest pRequest, OrderBean pOrder) {
@@ -734,8 +748,14 @@ public class OrderController {
     public String hasOrder(final HttpServletRequest request, final HttpServletResponse response, final String login) {
         UserBean user = userService.findUserByLogin(login);
         if (null != user) {
-            if (orderService.hasOrder(user, OrderType.DORMITORY)) {
-                return "{\"result\": true}";
+            if (isDormitoryOrder(request)) {
+                if (orderService.hasOrder(user, OrderType.DORMITORY)) {
+                    return "{\"result\": true}";
+                }
+            } else {
+                if (orderService.hasOrder(user, OrderType.PICKUP)) {
+                    return "{\"result\": true}";
+                }
             }
         }
         return "{\"result\": false}";

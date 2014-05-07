@@ -3,11 +3,11 @@
 		<div class="serviceBox">
 			<div class="itembar">
 				<ul>
-					<li>宿舍</li>
-					<li><a style="color: #AE0000;" href="<c:url value="/order/dormitory-place-order.html?orderType=pickup"/>">接机</a></li>
+					<li id="dormitory-tab">宿舍</li>
+					<li id="pickup-tab">接机</li>
 				</ul>
 			</div>
-			<div class="selectContent">
+			<div class="selectContent" id="dormitory-form">
 				<form action="<c:url value='/navigation/hot-cities.html'/>" method="GET">
 					<fieldset class="select-show-info">
 						<dl>
@@ -52,6 +52,55 @@
 							<dt>&nbsp;</dt>
 							<dd>
 								<input type="submit" value="搜&nbsp;索" class="btn-search" />
+							</dd>
+						</dl>
+					</fieldset>
+				</form>
+			</div>
+			<div class="selectContent" style="display:none;" id="pickup-form">
+				<form id="pickupForm" action="<c:url value="/order/dormitory-place-order.html"/>" method="GET">
+					<input type="hidden" name="orderType" value="pickup" />
+					<fieldset class="select-show-info">
+						<dl>
+							<dt>国家</dt>
+							<dd>
+								<select id="sltPickupCountry" name="countryId">
+									<c:choose>
+										<c:when test="${not empty countries}">
+											<c:forEach items="${countries}" var="country">
+												<option value="${country['id']}">${country['name']}</option>
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<option value="0">no valid result</option>
+										</c:otherwise>
+									</c:choose>
+								</select>
+							</dd>
+						</dl>
+						<dl>
+							<dt>机场</dt>
+							<dd>
+								<select id="sltAirport" name="airportId">
+									<c:choose>
+										<c:when test="${not empty airports}">
+											<c:forEach items="${airports}" var="airport">
+												<option value="${airport['id']}">${airport['name']}</option>
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<option value="0">no valid result</option>
+										</c:otherwise>
+									</c:choose>
+								</select>
+							</dd>
+						</dl>
+					</fieldset>
+					<fieldset>
+						<dl class="btnBox">
+							<dt>&nbsp;</dt>
+							<dd>
+								<input type="submit" value="接&nbsp;机&nbsp;预&nbsp;定" class="btn-search" id="pickupBtn" hasPickupOrder="${hasPickupOrder}"/>
 							</dd>
 						</dl>
 					</fieldset>

@@ -194,6 +194,15 @@ public class NavigationRepository extends BaseRepository implements INavigationR
 
 
 
+    @Override
+    public Map<String, Object> queryAirprotById(final Integer pId) {
+        Map<String, Integer> params = new HashMap<String, Integer>();
+        params.put(ID, pId);
+        return getSqlSession().selectOne("com.noeasy.money.model.Navigation.queryAirprotById", params);
+    }
+
+
+
     /**
      * @see com.noeasy.money.repository.INavigationRepository#queryFlightByConditions(java.lang.Integer,
      *      java.lang.Integer, String)
@@ -206,6 +215,15 @@ public class NavigationRepository extends BaseRepository implements INavigationR
         params.put(CITY_ID, pCityId);
         params.put("flightNum", pFilghtNum);
         return getSqlSession().selectList("com.noeasy.money.model.Navigation.queryFlight", params);
+    }
+
+
+
+    @Override
+    public List<Map<String, Object>> queryAirports(int pCountryId) {
+        Map<String, Integer> params = new HashMap<String, Integer>();
+        params.put(COUNTRY_ID, pCountryId);
+        return getSqlSession().selectList("com.noeasy.money.model.Navigation.queryAirports", params);
     }
 
 }

@@ -4,7 +4,7 @@
 		<form action="<c:url value="/order/dormitory-place-order.html"/>" method="POST" id="placeOrderForm">
 			<input type="hidden" id="pageStep" name="pageStep" value="0" />
 			<input type="hidden" name="command" id="command"/>
-			<input type="hidden" name="orderType" value="${orderType}"/>
+			<input type="hidden" name="orderType" value="${orderType}" id="orderType"/>
 			<input type="hidden" name="dormitoryId" value="${dormitory.id}" />
 			<input type="hidden" name="contractId" value="${price.contractId}" /> 
 			<input type="hidden" name="roomInfoId" value="${roomInfo.id}" />
