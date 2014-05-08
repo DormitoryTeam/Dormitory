@@ -1,6 +1,38 @@
 $(function() {
     $("#sltCountry").bind("change", loadCitiesByCountry);
     $("#sltCity").bind("change", loadCollegesByCity);
+    $("#dormitory-tab").click(function() {
+    	$("#dormitory-form").show();
+    	$("#pickup-form").hide();
+    });
+    
+    $("#pickup-tab").click(function() {
+    	$("#dormitory-form").hide();
+    	$("#pickup-form").show();
+    });
+    
+    $("#sltPickupCountry").bind("change", function() {
+    	$.ajax({
+        type : "POST",
+        url : ctx + "/navigation/getAirport.html",
+        data : {
+            countryId : $(this).val()
+        },
+        success : function(data) {
+            renderOption("sltAirport", data);
+            $('select').simSelect();
+        }
+    });
+    });
+    
+    $("#pickupForm").submit(function() {
+    	var hasPickupOrder = $("#pickupBtn").attr("hasPickupOrder");
+    	if('true' == hasPickupOrder) {
+    		alert("你只能拥有一个订单，请到个人中心查看。");
+    		return false;
+    	}
+    	return true;
+    });
 });
 
 function loadCitiesByCountry() {
@@ -12,6 +44,7 @@ function loadCitiesByCountry() {
         },
         success : function(data) {
             renderOption("sltCity", data);
+            $('select').simSelect();
         }
     });
 
@@ -26,6 +59,7 @@ function loadCollegesByCity() {
         },
         success : function(data) {
             renderOption("sltCollege", data);
+            $('select').simSelect();
         }
     });
 }

@@ -31,6 +31,7 @@ package com.noeasy.money.repository;
 import java.util.List;
 
 import com.noeasy.money.enumeration.OrderStatus;
+import com.noeasy.money.enumeration.OrderType;
 import com.noeasy.money.model.DormitoryLineItem;
 import com.noeasy.money.model.LineItem;
 import com.noeasy.money.model.OrderBean;
@@ -38,6 +39,7 @@ import com.noeasy.money.model.OrderContactInfo;
 import com.noeasy.money.model.OrderSearchBean;
 import com.noeasy.money.model.OrderTail;
 import com.noeasy.money.model.PickupLineItem;
+import com.noeasy.money.model.UserBean;
 
 /**
  * <class description>
@@ -125,5 +127,13 @@ public interface IOrderRepository {
 
 
     OrderBean findPickupOrderById(Integer pId);
+
+
+
+    Integer queryUserOrderCount(UserBean pUser, OrderType pType);
+
+
+
+    Integer belongsTo(OrderSearchBean pSearchBean);
 
 }

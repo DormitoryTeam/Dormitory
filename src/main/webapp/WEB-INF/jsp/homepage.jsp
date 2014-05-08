@@ -22,5 +22,6 @@
     <%-- bottom section --%>
     <footer>
     	<jsp:include page="/jsp/footer/footer.jsp"/>
-    </footer>  
+    </footer>
+    <script type="text/javascript" src="<c:url value='/js/home.js'/>"></script>
 </hostel:container>

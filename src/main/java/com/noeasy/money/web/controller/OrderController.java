@@ -31,6 +31,7 @@ package com.noeasy.money.web.controller;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -42,6 +43,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.noeasy.money.constant.Constants;
 import com.noeasy.money.enumeration.OrderStatus;
@@ -521,6 +523,22 @@ public class OrderController {
             }
             model.addAttribute("order", order);
         } else {
+            // make sure use has one order.
+            if (ServletUtils.isLogin(pRequest)) {
+                Integer userId = ServletUtils.getUserId(pRequest);
+                UserBean user = new UserBean();
+                user.setId(userId);
+                boolean hasOrder = false;
+                if (isDormitoryOrder(pRequest)) {
+                    hasOrder = orderService.hasOrder(user, OrderType.DORMITORY);
+                } else {
+                    hasOrder = orderService.hasOrder(user, OrderType.PICKUP);
+                }
+                if (hasOrder) {
+                    throw new RuntimeException("One user One order.");
+                }
+            }
+            
             order = new OrderBean();
             order.setOrderContact(new OrderContactInfo());
             order.setOrderStatus(OrderStatus.INITIAL);
@@ -590,10 +608,16 @@ public class OrderController {
                 String context = PropertiesUtils.getConfigurableProperty(Constants.CONFIG_PATH, Constants.CONFIG_CONTEXT);
                 EmailUtils.sendEmail(from, fromAlias, email, email, subject, "你在留学生活注册了新用户， 用户名：" + email +" / 密码: " + password + "请访问 www.liuxuelife.com 登录后修改密码。");
                 // send email.
-                ServletUtils.setUser2Session(pRequest, user);
             }
             belongsTo = user;
             placer = user;
+            if (orderService.hasOrder(user, orderType)) {
+                if (!orderService.belongsTo(user, order)) {
+                    throw new RuntimeException("One user One orde");
+                }
+            }
+            ServletUtils.setUser2Session(pRequest, user);
+            // TODO: rollback
         }
         order.setBelongsTo(belongsTo);
         order.setUser(placer);
@@ -673,11 +697,23 @@ public class OrderController {
             RoomInfoBean roomInfo = dormitoryService.findRoomInfoById(Integer.valueOf(roomInfoIdStr));
             dormitoryItem.setRoomInfo(roomInfo);
             
-        } 
-//        else {
-//            PickupLineItem pickupItem = (PickupLineItem) item;
-//            
-//        }
+        } else {
+            PickupLineItem pickupItem = (PickupLineItem) item;
+            String countryId = pRequest.getParameter("countryId");
+            String airprotId = pRequest.getParameter("airportId");
+            if (StringUtils.isNotBlank(countryId)) {
+                Map<String, Object> country = navigationService.queryCountryById(Integer.valueOf(countryId));
+                if (null != country) {
+                    pickupItem.setArrivalCountry((String)country.get("name"));
+                }
+            }
+            if (StringUtils.isNotBlank(airprotId)) {
+                Map<String, Object> airport = navigationService.queryAirprotById(Integer.valueOf(airprotId));
+                if (null != airport) {
+                    pickupItem.setArrivalAirport((String)airport.get("name"));
+                }
+            }
+        }
     }
 
     private void priceOrder(HttpServletRequest pRequest, OrderBean pOrder) {
@@ -705,6 +741,24 @@ public class OrderController {
             pOrder.setCurrency("CNY");
         }
         
+    }
+    
+    @RequestMapping("/hasOrder" + Constants.URL_SUFFIX)
+    @ResponseBody
+    public String hasOrder(final HttpServletRequest request, final HttpServletResponse response, final String login) {
+        UserBean user = userService.findUserByLogin(login);
+        if (null != user) {
+            if (isDormitoryOrder(request)) {
+                if (orderService.hasOrder(user, OrderType.DORMITORY)) {
+                    return "{\"result\": true}";
+                }
+            } else {
+                if (orderService.hasOrder(user, OrderType.PICKUP)) {
+                    return "{\"result\": true}";
+                }
+            }
+        }
+        return "{\"result\": false}";
     }
 
 //    @RequestMapping("/dormitory-order-place" + Constants.URL_SUFFIX)

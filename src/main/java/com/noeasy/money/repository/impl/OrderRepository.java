@@ -33,6 +33,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.noeasy.money.enumeration.OrderStatus;
+import com.noeasy.money.enumeration.OrderType;
 import com.noeasy.money.model.DormitoryLineItem;
 import com.noeasy.money.model.LineItem;
 import com.noeasy.money.model.OrderBean;
@@ -40,6 +41,7 @@ import com.noeasy.money.model.OrderContactInfo;
 import com.noeasy.money.model.OrderSearchBean;
 import com.noeasy.money.model.OrderTail;
 import com.noeasy.money.model.PickupLineItem;
+import com.noeasy.money.model.UserBean;
 import com.noeasy.money.repository.IOrderRepository;
 
 /**
@@ -239,6 +241,23 @@ public class OrderRepository extends BaseRepository implements IOrderRepository 
     public OrderBean findPickupOrderById(Integer pId) {
         
         return getSqlSession().selectOne("com.noeasy.money.model.Order.findPickupOrderById", pId);
+    }
+
+
+
+    @Override
+    public Integer queryUserOrderCount(UserBean pUser, OrderType pType) {
+        OrderSearchBean searchBean = new OrderSearchBean();
+        searchBean.setUser(pUser);
+        searchBean.setOrderType(pType);
+        return getSqlSession().selectOne("com.noeasy.money.model.Order.queryUserOrderCount", searchBean);
+    }
+
+
+
+    @Override
+    public Integer belongsTo(OrderSearchBean pSearchBean) {
+        return getSqlSession().selectOne("com.noeasy.money.model.Order.belongsTo", pSearchBean);
     }
 
 }

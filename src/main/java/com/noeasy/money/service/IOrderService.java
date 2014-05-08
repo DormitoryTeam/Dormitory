@@ -34,6 +34,7 @@ import com.noeasy.money.enumeration.OrderStatus;
 import com.noeasy.money.enumeration.OrderType;
 import com.noeasy.money.model.OrderBean;
 import com.noeasy.money.model.OrderSearchBean;
+import com.noeasy.money.model.UserBean;
 
 /**
  * <class description>
@@ -89,4 +90,10 @@ public interface IOrderService {
 
 
     OrderBean findPickupOrderById(Integer pId);
+    
+    boolean hasOrder(UserBean user, OrderType type);
+
+
+
+    boolean belongsTo(UserBean pUser, OrderBean pOrder);
 }

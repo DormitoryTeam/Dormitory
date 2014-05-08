@@ -41,7 +41,7 @@
 						</dl>
 						<dl>
 							<dd>电子邮箱：</dd>
-							<dt><input name="email" value="${user.info.email}"/></dt>
+							<dt><input name="email" value="${user.login}" readonly/></dt>
 						</dl>
 						<dl>
 							<dd>QQ：</dd>

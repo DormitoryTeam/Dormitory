@@ -49,9 +49,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.noeasy.money.constant.Constants;
 import com.noeasy.money.constant.SessionConstants;
+import com.noeasy.money.enumeration.OrderType;
 import com.noeasy.money.model.RichTextBean;
 import com.noeasy.money.model.UserBean;
 import com.noeasy.money.service.INavigationService;
+import com.noeasy.money.service.IOrderService;
 import com.noeasy.money.service.ISiteService;
 import com.noeasy.money.service.IUserService;
 import com.noeasy.money.util.ParamUtils;
@@ -74,6 +76,20 @@ public class NavigationController {
 
     @Resource(name = "userService")
     IUserService       userService;
+
+    @Resource(name = "orderService")
+    IOrderService      orderService;
+
+
+
+    @RequestMapping("/getAirport" + Constants.URL_SUFFIX)
+    @ResponseBody
+    public String getAirport(final HttpServletRequest request, final HttpServletResponse response,
+            final String countryId) {
+        List<Map<String, Object>> cities = navigationService.queryAirports(NumberUtils.toInt(countryId));
+        JSONArray cityJson = JSONArray.fromObject(cities);
+        return cityJson.toString();
+    }
 
 
 
@@ -170,7 +186,9 @@ public class NavigationController {
         }
         if (userId > 0) {
             UserBean user = userService.findUserById(userId);
+            boolean hasPickupOrder = orderService.hasOrder(user, OrderType.PICKUP);
             model.addAttribute("user", user);
+            model.addAttribute("hasPickupOrder", hasPickupOrder);
         }
 
         List<Map<String, Object>> countries = navigationService.queryCountries();
@@ -184,6 +202,7 @@ public class NavigationController {
 
             List<Map<String, Object>> news = siteService.queryArticleTitles(RichTextBean.NEWS);
             List<Map<String, Object>> goTravles = siteService.queryArticleTitles(RichTextBean.GO_TRAVEL);
+            List<Map<String, Object>> airports = navigationService.queryAirports(firstCountryId);
 
             model.addAttribute("countries", countries);
             model.addAttribute("cities", cities);
@@ -191,6 +210,7 @@ public class NavigationController {
             model.addAttribute("slides", slides);
             model.addAttribute("news", news);
             model.addAttribute("goTravles", goTravles);
+            model.addAttribute("airports", airports);
         }
 
         List<Map<String, Object>> allColleges = navigationService.queryColleges();

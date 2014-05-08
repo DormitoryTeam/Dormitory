@@ -89,4 +89,12 @@ public interface INavigationRepository {
 
 
     List<Map<String, Object>> queryFlightByConditions(Integer pCountryId, Integer pCityId, String pFilghtNum);
+
+
+
+    List<Map<String, Object>> queryAirports(int pCountryId);
+
+
+
+    Map<String, Object> queryAirprotById(Integer pCountryId);
 }

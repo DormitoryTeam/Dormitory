@@ -42,7 +42,31 @@ $(function() {
 		}
 		
 	});
-
+	$("#placeOrderForm").submit(function() {
+		if (0 == $("#pageStep").val()) {
+			var hasOrder = false;
+			$.ajax({
+				url: ctx + "/order/hasOrder.html",
+				data: {
+					login: $("#login").val(),
+					orderType: $("#orderType").val()
+				},
+				async: false,
+				dataType: "json",
+				success: function(data) {
+					hasOrder = data.result;
+				},
+				error:function(data) {
+					alert(data);
+				}
+			});
+			if (hasOrder) {
+				alert("您使用的邮箱：" + $("#login").val() + "已拥有一个订单。请登录查看");
+			}
+			return !hasOrder;
+		}
+		return true;
+	});
 	
 });
 

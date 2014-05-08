@@ -17,12 +17,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.noeasy.money.constant.Constants;
 import com.noeasy.money.constant.SessionConstants;
 import com.noeasy.money.enumeration.DormitoryStatus;
+import com.noeasy.money.enumeration.OrderType;
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitoryRateBean;
 import com.noeasy.money.model.DormitorySearchBean;
 import com.noeasy.money.model.PageBean;
+import com.noeasy.money.model.UserBean;
 import com.noeasy.money.service.IDormitoryService;
 import com.noeasy.money.service.INavigationService;
+import com.noeasy.money.service.IOrderService;
+import com.noeasy.money.util.ServletUtils;
 
 @Controller
 @RequestMapping("/dormitory")
@@ -33,6 +37,10 @@ public class DormitoryController {
 
     @Resource(name = "navigationService")
     INavigationService navigationService;
+    
+    
+    @Resource(name = "orderService")
+    IOrderService      orderService;
 
 
 
@@ -83,20 +91,23 @@ public class DormitoryController {
             if (dormitory.getId() > 0) {
                 int dormitoryId = dormitory.getId();
 
-                Object userIdObj = request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
-                int userId = 0;
-                if (userIdObj != null) {
-                    userId = NumberUtils.toInt(String.valueOf(userIdObj));
-                }
+                Integer userId= ServletUtils.getUserId(request);
                 Object userNameObj = request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_LOGIN);
                 String userName = "Guest";
                 if (userNameObj != null) {
                     userName = String.valueOf(userNameObj);
                 }
-
-                List<Map<String, String>> browsingHistory = dormitoryService.queryDormitoryBrowseHistory(userId,
-                        dormitoryId);
-                dormitoryService.saveDormitoryBrowseHistory(userId, dormitory.getId());
+                List<Map<String, String>> browsingHistory = null;
+                if (null == userId) {
+                    browsingHistory = dormitoryService.queryDormitoryBrowseHistory(0,
+                            dormitoryId);
+                    dormitoryService.saveDormitoryBrowseHistory(0, dormitory.getId());
+                } else {
+                    browsingHistory = dormitoryService.queryDormitoryBrowseHistory(userId,
+                            dormitoryId);
+                    dormitoryService.saveDormitoryBrowseHistory(userId, dormitory.getId());    
+                }
+                
 
                 model.addAttribute("curRate", new DormitoryRateBean());
                 List<DormitoryRateBean> rates = dormitoryService.queryDormitoryRates(dormitoryId);
@@ -115,6 +126,14 @@ public class DormitoryController {
                     Map<String, Object> college = navigationService.queryCollegeById(NumberUtils.toInt(collegeId), null);
                     model.addAttribute("college", college);
                 }
+                boolean hasOrder = false;
+                if (null != userId) {
+                    UserBean user = new UserBean();
+                    user.setId(userId);
+                    hasOrder = orderService.hasOrder(user, OrderType.DORMITORY);
+                    
+                }
+                model.addAttribute("hasOrder", hasOrder);
                 model.addAttribute("colleges", colleges);
                 model.addAttribute("relatedDormitories", relatedDormitories);
                 model.addAttribute("dormitory", dormitory);
