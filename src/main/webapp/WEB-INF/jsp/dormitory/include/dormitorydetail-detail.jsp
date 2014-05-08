@@ -8,7 +8,7 @@
 		<div class="address">${dormitory['address']},&nbsp${dormitory['postcode']}</div>
 		<p>设施：${dormitory['equipment']}</p>
 		<p>服务：${dormitory['service']}</p>
-		<p>附加费用：<span><em>&#163;</em>${dormitory['additionalPrice']}</span></p>
+		<p>附加费用：<span><c:if test="${dormitory['additionalPrice']>=0}"><em>&#163;</em>${dormitory['additionalPrice']}</c:if><c:if test="${dormitory['additionalPrice']<0}">暂未定价</c:if></span></p>
 		<p>优惠：${dormitory['promotion']}</p>
 	</div>
 	<div class="house-tabs">

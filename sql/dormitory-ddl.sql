@@ -208,7 +208,7 @@ DROP TABLE IF EXISTS `dormitory`.`contract_type` ;
 
 CREATE  TABLE IF NOT EXISTS `dormitory`.`contract_type` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` INT NOT NULL ,
+  `name` VARCHAR(200) NOT NULL ,
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_time` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) )
@@ -491,7 +491,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`room_info` (
   `equipment` INT NULL ,
   `service` INT NULL ,
   `description` VARCHAR(1000) NULL ,
-  `checkin_date` TIMESTAMP NOT NULL ,
+  `checkin_date` VARCHAR(200) NOT NULL ,
   `orientations` VARCHAR(200) NULL ,
   `floors` VARCHAR(200) NULL ,
   `bed_type` VARCHAR(200) NULL ,
@@ -593,20 +593,6 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`browsing_history` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `user_id` INT NOT NULL ,
   `dormitory_id` INT NOT NULL ,
-  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
-  `update_time` TIMESTAMP NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `dormitory`.`dormitory_contract`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `dormitory`.`dormitory_contract` ;
-
-CREATE  TABLE IF NOT EXISTS `dormitory`.`dormitory_contract` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `room_number` VARCHAR(100) NULL ,
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
   `update_time` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) )

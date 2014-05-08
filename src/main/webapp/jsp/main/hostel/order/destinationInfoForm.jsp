@@ -7,7 +7,7 @@
 	<input type="hidden" name="pageStep" value="2" />
 	<input type="hidden" name="orderType" value="${orderType}"/>
 	<input type="hidden" name="command" id="command"/>
-	<a href="<c:url value="/order/dormitory-place-order.html?orderType=pickup"/>" class="addOne">&nbsp;</a>
+	<!-- <a href="<c:url value="/order/dormitory-place-order.html?orderType=pickup"/>" class="addOne">&nbsp;</a>-->
 	<div class="btnBox">
 		<input class="save btn-place-order-save" value="保存" type="button">
 	</div>

@@ -8,7 +8,7 @@
 			<input type="hidden" name="contractId" value="${price.contractId}" /> 
 			<input type="hidden" name="roomInfoId" value="${roomInfo.id}" />
 			<input name="infoId" type="hidden" value="${order.orderContact.contactPersonInfo.id}"/>
-			<a href="<c:url value="/order/dormitory-place-order.html?dormitoryId=${dormitory.id}&contractId=${price.contractId}&roomInfoId=${roomInfo.id}"/>" class="addOne">&nbsp;</a>
+			<!-- <a href="<c:url value="/order/dormitory-place-order.html?dormitoryId=${dormitory.id}&contractId=${price.contractId}&roomInfoId=${roomInfo.id}"/>" class="addOne">&nbsp;</a>-->
 			<div class="btnBox">
 				<input class="save btn-place-order-save" type="button" value="保存" />
 				<input type="button" style="background-color: #808080;" value="提交" />

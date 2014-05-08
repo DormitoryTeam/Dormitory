@@ -7,23 +7,23 @@
 		</dl>
 		<dl>
 			<dt>租期</dt>
-			<dd><fmt:parseNumber value="${order.lineItems[0].contractType.name div 7}" integerOnly="true"/>周${order.lineItems[0].contractType.name % 7}天</dd>
+			<dd>${order.lineItems[0].contractType.name}</dd>
 		</dl>
 		<dl>
 			<dt>周价</dt>
-			<dd>£${order.lineItems[0].listPrice}</dd>
+			<dd><c:if test="${order.lineItems[0].listPrice >= 0}">£${order.lineItems[0].listPrice}</c:if><c:if test="${order.lineItems[0].listPrice < 0}">暂未定价</c:if></dd>
 		</dl>
 		<dl>
 			<dt>附加费用</dt>
-			<dd>£${order.lineItems[0].dormitory.additionalPrice}</dd>
+			<dd><c:if test="${order.lineItems[0].dormitory.additionalPrice >= 0}">£${order.lineItems[0].dormitory.additionalPrice}</c:if><c:if test="${order.lineItems[0].dormitory.additionalPrice < 0}">暂未定价</c:if></dd>
 		</dl>
 		<dl>
 			<dt>总价</dt>
-			<dd>£${order.amount}</dd>
+			<dd><c:if test="${order.amount >= 0}">£${order.amount}</c:if><c:if test="${order.amount < 0}">暂未定价</c:if></dd>
 		</dl>
 		<dl>
 			<dt>入住时间</dt>
-			<dd><fmt:formatDate value='${order.lineItems[0].roomInfo.checkinDate}' pattern='yyyy-MM-dd'/></dd>
+			<dd>${order.lineItems[0].roomInfo.checkinDate}</dd>
 		</dl>
 	</fieldset>
 </div>

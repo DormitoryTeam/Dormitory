@@ -722,8 +722,14 @@ public class OrderController {
             RoomPrice price = dormitoryService.findRoomPrice(dormitoryItem.getRoomInfo().getId(), dormitoryItem
                     .getContractType().getId());
             DormitoryBean dormitory = dormitoryItem.getDormitory();
-            BigDecimal amount = new BigDecimal(price.getSalePrice());
-            amount = amount.add(new BigDecimal(dormitory.getAdditionalPrice()));
+            BigDecimal amount = null;
+            if (-1 == price.getSalePrice() || -1 == dormitory.getAdditionalPrice()) {
+                amount = new BigDecimal("-1");
+            } else {
+                amount = new BigDecimal(price.getSalePrice());
+                amount = amount.add(new BigDecimal(dormitory.getAdditionalPrice()));
+            }
+            
             dormitoryItem.setAmount(amount);
             // week price
             dormitoryItem.setListPrice(new BigDecimal(price.getWeekPrice()));

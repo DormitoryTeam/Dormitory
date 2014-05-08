@@ -14,7 +14,7 @@
 					<jsp:include page="display/displayOrderHeader.jsp"/>
 					<div class="reservation-personal reservation-tab ui-tabs ui-widget ui-widget-content ui-corner-all ui-tabs-vertical ui-helper-clearfix">
 						<form">
-							<a class="addOne" href="<c:url value="/order/dormitory-place-order.html?dormitoryId=1&amp;contractId=1&amp;roomInfoId=1"/>">&nbsp;</a>
+							<!-- <a class="addOne" href="<c:url value="/order/dormitory-place-order.html?dormitoryId=1&amp;contractId=1&amp;roomInfoId=1"/>">&nbsp;</a>-->
 							<div class="btnBox">
 							</div>
 							<ul role="tablist" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">

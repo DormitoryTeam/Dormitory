@@ -62,7 +62,7 @@
 					<li class="name">${order.lineItems[0].flightNum}</li>
 					</c:otherwise>
 					</c:choose>
-					<li class="order-price">&#163;${order.amount}</li>
+					<li class="order-price"><c:if test="${order.amount >= 0}">&#163;${order.amount}</c:if><c:if test="${order.amount < 0}">暂未定价</c:if></li>
 					<c:choose>
 					<c:when test='${"D" eq type}'>
 					<li class="order-active"><a href="<c:url value="/order/view-order.html?orderId=${order.id}"/>">查看</a><c:if test="${order.orderStatus.value < 2}">|<a href="<c:url value="/order/dormitory-place-order.html?orderId=${order.id}"/>">修改</a><!--|<a href="#">取消</a>--></c:if></li>

@@ -11,7 +11,8 @@
 		<input type="hidden" name="contractId" value="${price.contractId}" /> 
 		<input type="hidden" name="roomInfoId" value="${roomInfo.id}" />
 		<input name="infoId" type="hidden" value="${order.orderContact.belongsToInfo.id}"/>
-		<a class="addOne" href="<c:url value="/order/dormitory-place-order.html?orderType=pickup"/>">&nbsp;</a>
+		<input name="pre_orderId" value="${param.orderId}" id="orderId" type="hidden"/>
+		<!-- <a class="addOne" href="<c:url value="/order/dormitory-place-order.html?orderType=pickup"/>">&nbsp;</a>-->
 		<div class="btnBox">
 			<input type="button" value="保存" class="save btn-place-order-save">
 		</div>
@@ -86,9 +87,9 @@
 					<dd>
 						<c:set var="email" value="${order.orderContact.belongsToInfo.email}" />
 						<c:if test="${null == email}">
-						<c:set var="email" value="${user.info.email}" />
+						<c:set var="email" value="${user.login}" />
 						</c:if>
-						<input id="login" name="email" type="text" class="long validate" errorFieldName="电子邮件" value="${email}"/> 
+						<input id="login" name="email" type="text" class="long validate" errorFieldName="电子邮件" value="${email}" <c:if test="${ not empty email}">readonly</c:if>/> 
 					</dd>
 				</dl>
 				<dl>

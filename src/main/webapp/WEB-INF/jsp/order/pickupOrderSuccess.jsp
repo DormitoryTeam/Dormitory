@@ -37,7 +37,7 @@
 						<input name="contractId" value="" type="hidden"> 
 						<input name="roomInfoId" value="" type="hidden">
 						<input name="infoId" value="" type="hidden">
-						<a class="addOne" href="<c:url value="/order/dormitory-place-order.html?orderType=pickup"/>">&nbsp;</a>
+						<!-- <a class="addOne" href="<c:url value="/order/dormitory-place-order.html?orderType=pickup"/>">&nbsp;</a>-->
 						<div class="btnBox">
 						</div>
 						<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist">

@@ -26,7 +26,7 @@
 	</div>
 	<div class="reservation-personal reservation-tab">
 		<form>
-			<a href="#" class="addOne">&nbsp;</a>
+			<!-- <a href="#" class="addOne">&nbsp;</a>-->
 			<div class="btnBox">
 				<input class="save" type="button" value="保存" />
 				<input type="submit" value="提交" />

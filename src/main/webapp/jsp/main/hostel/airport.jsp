@@ -17,7 +17,7 @@
 			2014年接机名额还剩1000个
 		</div>
 		<form>
-			<a href="#" class="addOne">&nbsp;</a>
+			<!-- <a href="#" class="addOne">&nbsp;</a>-->
 			<div class="btnBox">
 				<input class="save" type="button" value="保存">
 			</div>

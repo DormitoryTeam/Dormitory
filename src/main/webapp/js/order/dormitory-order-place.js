@@ -14,7 +14,7 @@ $(function() {
 	});
 	
 	$("#sameas").click(function() {
-		if(!$(this).parent().hasClass("fchecked")) {
+		if($(this).parent().hasClass("fchecked")) {
 			$(".same-as").each(function(i, e) {
 				var id = $(e).attr("id");
 				var value = $("#" + id + "_val").val();
@@ -44,6 +44,9 @@ $(function() {
 	});
 	$("#placeOrderForm").submit(function() {
 		if (0 == $("#pageStep").val()) {
+			if($("#orderId").val()) {
+				return true;
+			}
 			var hasOrder = false;
 			$.ajax({
 				url: ctx + "/order/hasOrder.html",
