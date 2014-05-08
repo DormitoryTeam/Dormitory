@@ -49,20 +49,17 @@ public class RoomPrice {
 
     private int    mContractId;
 
-    private int    mContract;
+    private String mContract;
 
     private int    mStatus;
 
 
 
-    public int getContract() {
+    /**
+     * @return the contract
+     */
+    public String getContract() {
         return mContract;
-    }
-
-
-
-    public void setContract(int pContract) {
-        mContract = pContract;
     }
 
 
@@ -126,6 +123,16 @@ public class RoomPrice {
      */
     public Double getWeekPrice() {
         return mWeekPrice;
+    }
+
+
+
+    /**
+     * @param pContract
+     *            the contract to set
+     */
+    public void setContract(final String pContract) {
+        mContract = pContract;
     }
 
 

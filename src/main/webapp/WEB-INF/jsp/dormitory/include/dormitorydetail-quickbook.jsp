@@ -24,12 +24,7 @@
 				<dt>
 					<select id="selectQuickContract">
 						<c:forEach var="contractPrice" items="${dormitory['rooms'][0]['contractPrice']}">
-							<fmt:parseNumber value="${contractPrice['contract'] div 7}" integerOnly="true" var="week"/>
-							<c:set var="day" value="${contractPrice['contract'] % 7}" />
-							<option value="${contractPrice['contractId']}">
-								<c:if test="${week > 0}">${week}周</c:if>
-								<c:if test="${day > 0}">${day}天</c:if>
-							</option>
+							<option value="${contractPrice['contractId']}">${contractPrice['contract']}</option>
 						</c:forEach>
 					</select>
 				</dt>
@@ -42,6 +37,6 @@
 			</dl>
 		</fieldset>
 		<p id="quickRoomNamePreview">${dormitory['rooms'][0]['roomType']}</p>
-		<input type="button" class="btn-quick" value="快速预定" ${empty dormitory['rooms'] ? 'disabled' : ''} />
+		<input type="button" class="btn-quick" value="快速预定" ${empty dormitory['rooms'] ? 'disabled' : ''} userId="${userId}" hasOrder="${hasOrder}" id="expressBooking"/>
 	</form>
 </div>

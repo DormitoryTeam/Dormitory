@@ -54,7 +54,7 @@
 									<tr>
 										<td class="td-larger" style="text-align: left;">${room['name']}</td>
 										<td class="td-long">${room['bedType']}</td>
-										<td class="td-long">${room['checkinDateString']}</td>
+										<td class="td-long">${room['checkinDate']}</td>
 										<td class="td-min">
 											<c:if test="${not empty room['contractPrice'][0]}">
 												<em>&#163;</em>${room['contractPrice'][0]['salePrice']}

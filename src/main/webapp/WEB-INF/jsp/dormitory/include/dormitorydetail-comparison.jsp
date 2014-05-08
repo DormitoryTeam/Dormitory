@@ -17,9 +17,7 @@
 				<li>
 					<h3>${room['name']}</h3> 
 					<c:forEach var="contractPrice" items="${room['contractPrice']}">
-						<fmt:parseNumber value="${contractPrice['contract'] div 7}" integerOnly="true" var="week"/>
-						<c:set var="day" value="${contractPrice['contract'] % 7}" />
-						<p><span>周期：</span><c:if test="${week > 0}">${week}周</c:if><c:if test="${day > 0}">${day}天</c:if></p>
+						<p><span>周期：</span>${contractPrice['contract']}</p>
 						<p><span>周价：</span>&#163;${contractPrice['weekPrice']}</p>
 						<p><span>总价：</span>&#163;${contractPrice['salePrice']}</p>
 					</c:forEach>
@@ -38,7 +36,7 @@
 					<c:if test="${room['status'] eq 'HAS_VACANCY'}">尚有空房</c:if>
 					<c:if test="${room['status'] eq 'NO_VACANCY'}">已注满</c:if>
 				</li>
-				<li>&nbsp;${room['checkinDateString']}</li>
+				<li>&nbsp;${room['checkinDate']}</li>
 				<li>&nbsp;${room['houseArea']}${empty room['houseArea'] ? '' : '平米'}</li>
 				<li>&nbsp;${room['bedType']}</li>
 				<li>&nbsp;${room['ensuitBathroom'] ? '有' : '没有'}</li>

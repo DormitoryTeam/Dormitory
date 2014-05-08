@@ -28,13 +28,8 @@
  */
 package com.noeasy.money.model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
 
 import com.noeasy.money.enumeration.DormitoryStatus;
 import com.noeasy.money.enumeration.Orientation;
@@ -60,9 +55,7 @@ public class RoomInfoBean extends BaseBean {
 
     private String          mDescription;
 
-    private Date            mCheckinDate;
-
-    private String          mCheckinDateString;
+    private String          mCheckinDate;
 
     private List<RoomPrice> mContractPrice = new ArrayList<RoomPrice>();
 
@@ -123,17 +116,8 @@ public class RoomInfoBean extends BaseBean {
     /**
      * @return the checkinDate
      */
-    public Date getCheckinDate() {
+    public String getCheckinDate() {
         return mCheckinDate;
-    }
-
-
-
-    /**
-     * @return the checkinDateString
-     */
-    public String getCheckinDateString() {
-        return mCheckinDateString;
     }
 
 
@@ -333,28 +317,8 @@ public class RoomInfoBean extends BaseBean {
      * @param pCheckinDate
      *            the checkinDate to set
      */
-    public void setCheckinDate(final Date pCheckinDate) {
+    public void setCheckinDate(final String pCheckinDate) {
         mCheckinDate = pCheckinDate;
-        if (mCheckinDate != null) {
-            mCheckinDateString = (new SimpleDateFormat("yyyy-MM-dd")).format(mCheckinDate);
-        }
-    }
-
-
-
-    /**
-     * @param pCheckinDateString
-     *            the checkinDateString to set
-     */
-    public void setCheckinDateString(final String pCheckinDateString) {
-        mCheckinDateString = pCheckinDateString;
-        if (StringUtils.isNoneBlank(mCheckinDateString)) {
-            try {
-                mCheckinDate = (new SimpleDateFormat("yyyy-MM-dd")).parse(mCheckinDateString);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
 

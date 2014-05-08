@@ -21,15 +21,7 @@ $(function() {
 		var contracts = room_contracts[$(this).val()];
 		var contractOptions = "";
 		$.each(contracts, function(i, e) {
-			var days = parseInt(e.name);
-			var weekday = "";
-			if (days / 7 != 0) {
-				weekday = days / 7 + "周";
-			}
-			if (days % 7 != 0) {
-				weekday = days % 7 + "天";
-			}
-			contractOptions += "<option value='" + e.id + "'>" + weekday + "</option>";
+			contractOptions += "<option value='" + e.id + "'>" + e.name + "</option>";
 		});
 		$("#selectQuickContract").empty().append(contractOptions).simSelect();
 		$("#quickPricePreview").html(contracts[0].currency + " " + contracts[0].salePrice);
@@ -93,15 +85,7 @@ $(function() {
 			callBack : function() {
 				var contracts = room_contracts[roomId];
 				for (var i in contracts) {
-					var days = parseInt(contracts[i].name);
-					var weekday = "";
-					if (days / 7 != 0) {
-						weekday = days / 7 + "周";
-					}
-					if (days % 7 != 0) {
-						weekday = days % 7 + "天";
-					}
-					var bookHTML = '<option value="' + contracts[i].id + '">' + weekday + '</option>';
+					var bookHTML = '<option value="' + contracts[i].id + '">' + contracts[i].name + '</option>';
 					var bookDIV = $(bookHTML);
 					$("#selectContract").append(bookDIV);
 				}
@@ -114,6 +98,22 @@ $(function() {
 				});
 			}
 		});
+	});
+	
+	$("#quickPlaceOrderForm").submit(function() {
+		var hasOrder = $("#expressBooking").attr("hasOrder");
+		var userId = $("#expressBooking").attr("userId");
+		var disabled = $("#expressBooking").attr("disabled");
+		if (disabled) {
+		return false;
+		}
+		if (userId) {
+			if ('true' == hasOrder) {
+				alert("你只能拥有一个订单，请到个人中心查看。");
+				return false;
+			}
+		}
+		return true;
 	});
 
 	initialize();
