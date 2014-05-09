@@ -91,6 +91,12 @@ public class DormitoryBean extends BaseBean {
 
     private String             mEquipment;
 
+    private String             mRefund;
+
+    private String             mQuestion;
+
+    private String             mFeature;
+
 
 
     /**
@@ -184,6 +190,15 @@ public class DormitoryBean extends BaseBean {
 
 
     /**
+     * @return the feature
+     */
+    public String getFeature() {
+        return mFeature;
+    }
+
+
+
+    /**
      * @return the id
      */
     public int getId() {
@@ -247,6 +262,15 @@ public class DormitoryBean extends BaseBean {
 
 
     /**
+     * @return the question
+     */
+    public String getQuestion() {
+        return mQuestion;
+    }
+
+
+
+    /**
      * @return the rate
      */
     public DormitoryRateBean getRate() {
@@ -260,6 +284,15 @@ public class DormitoryBean extends BaseBean {
      */
     public Double getRating() {
         return mRating;
+    }
+
+
+
+    /**
+     * @return the refund
+     */
+    public String getRefund() {
+        return mRefund;
     }
 
 
@@ -419,6 +452,16 @@ public class DormitoryBean extends BaseBean {
 
 
     /**
+     * @param pFeature
+     *            the feature to set
+     */
+    public void setFeature(final String pFeature) {
+        mFeature = pFeature;
+    }
+
+
+
+    /**
      * @param pId
      *            the id to set
      */
@@ -489,6 +532,16 @@ public class DormitoryBean extends BaseBean {
 
 
     /**
+     * @param pQuestion
+     *            the question to set
+     */
+    public void setQuestion(final String pQuestion) {
+        mQuestion = pQuestion;
+    }
+
+
+
+    /**
      * @param pRate
      *            the rate to set
      */
@@ -504,6 +557,16 @@ public class DormitoryBean extends BaseBean {
      */
     public void setRating(final Double pRating) {
         mRating = pRating;
+    }
+
+
+
+    /**
+     * @param pRefund
+     *            the refund to set
+     */
+    public void setRefund(final String pRefund) {
+        mRefund = pRefund;
     }
 
 

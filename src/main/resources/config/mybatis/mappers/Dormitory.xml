@@ -70,6 +70,9 @@
 		t1.latitude dor_latitude,
 		t1.longitude dor_longitude,
 		t1.description dor_description,
+		t1.refund dor_refund,
+		t1.question dor_question,
+		t1.feature dor_feature,
 		t1.city_id dor_cityId,
 		t1.status dor_status,
 		t2.name dor_city,
@@ -141,6 +144,9 @@
 		t1.latitude dor_latitude,
 		t1.longitude dor_longitude,
 		t1.description dor_description,
+		t1.refund dor_refund,
+		t1.question dor_question,
+		t1.feature dor_feature,
 		t1.city_id dor_cityId,
 		t1.status dor_status,
 		t2.name dor_city,
@@ -287,6 +293,9 @@
 		t1.latitude dor_latitude,
 		t1.longitude dor_longitude,
 		t1.description dor_description,
+		t1.refund dor_refund,
+		t1.question dor_question,
+		t1.feature dor_feature,
 		t1.city_id dor_cityId,
 		t1.status dor_status,
 		t2.name dor_city,
@@ -314,13 +323,16 @@
 			longitude = #{longitude},
 			currency = #{currency},
 			description = #{description},
+			refund = #{refund},
+			question = #{question},
+			feature = #{feature},
 			city_id = #{cityId},
 			status = #{status}
 		where id = #{id}
 	</update>
 
 	<insert id="saveDormitory" keyProperty="id" useGeneratedKeys='true' parameterType="com.noeasy.money.model.DormitoryBean">
-		insert into dormitory (city_id, name, address, postcode, weekPrice, salePrice, currency, latitude, longitude, equipment, service, description, status) values (
+		insert into dormitory (city_id, name, address, postcode, weekPrice, salePrice, currency, latitude, longitude, equipment, service, description, refund, question, feature, status) values (
 			#{cityId,javaType=int,jdbcType=INTEGER},
 			#{name,javaType=String,jdbcType=VARCHAR},
 			#{address,javaType=String,jdbcType=VARCHAR},
@@ -333,6 +345,9 @@
 			#{equipment,javaType=int,jdbcType=INTEGER},
 			#{service,javaType=int,jdbcType=INTEGER},
 			#{description,javaType=String,jdbcType=VARCHAR},
+			#{refund,javaType=String,jdbcType=VARCHAR},
+			#{question,javaType=String,jdbcType=VARCHAR},
+			#{feature,javaType=String,jdbcType=VARCHAR},
 			#{status}
 		)
 	</insert>
@@ -770,6 +785,9 @@
 		<result property="latitude" column="dor_latitude" />
 		<result property="longitude" column="dor_longitude" />
 		<result property="description" column="dor_description" />
+		<result property="refund" column="dor_refund" />
+		<result property="question" column="dor_question" />
+		<result property="feature" column="dor_feature" />
 		<result property="cityId" column="dor_cityId" />
 		<result property="city" column="dor_city" />
 		<result property="distance" column="distance" />

@@ -19,27 +19,27 @@
 	<br />
 	<form id="formDormitory" action="<c:url value='/admin/dormitory/dormitory-save.html'/>" method="POST">
 		<input type="hidden" name="id" id="hidDormitoryId" value="${empty dormitory['id'] ? 0 : dormitory['id']}" />
-		<table class="table table-hover table-bordered table-striped" style="width:1000px">
+		<table class="table table-hover table-bordered table-striped" style="width:1250px">
 			<tbody>
 				<tr>
-					<td>Dormitory Status*</td>
+					<td>宿舍状态:*</td>
 					<td><select name="status">
 							<c:forEach var="status" items="${allDormitoryStatus}">
 								<option value="${status['name']}" ${status eq dormitory['status'] ? 'selected' : ''}>${status['name']}</option>
 							</c:forEach>
 						</select>
 					</td>
-					<td>Name*:</td>
+					<td>宿舍名称*:</td>
 					<td><input type="text" name="name" value="${dormitory['name']}" /></td>
 				</tr>
 				<tr>
-					<td>Country:</td>
+					<td>所属国家:</td>
 					<td><select id="sltCountry" name="countryId">
 						<c:forEach items="${countries}" var="country">
 							<option value="${country['id']}" <c:if test="${country['id'] eq currentCountry['id']}"></c:if>>${country['name']}</option>
 						</c:forEach>
 					</select></td>
-					<td>City*:</td>
+					<td>所属城市*:</td>
 					<td><select id="sltCity" name="cityId">
 						<c:forEach var="city" items="${cities}">
 							<option value="${city['id']}" <c:if test="${city['id'] eq dormitory['cityId']}">selected="selected"</c:if>>${city['name']}</option>
@@ -47,66 +47,84 @@
 					</select></td>
 				</tr>
 				<tr>
-					<td>College*:</td>
+					<td>所属大学*:</td>
 					<td><select id="sltCollege" name="collegeId">
 						<c:forEach var="college" items="${colleges}">
 							<option value="${college['id']}" <c:if test="${college['id'] eq dormitory['collegeId']}">selected="selected"</c:if>>${college['name']}</option>
 						</c:forEach>
 					</select></td>
-					<td>Post Code:</td>
+					<td>邮编:</td>
 					<td><input type="text" name="postcode" value="${dormitory['postcode']}" /></td>
 				</tr>
 				<tr>
-					<td>Latitude*:</td>
+					<td>经度*:</td>
 					<td><input type="text" name="latitude" value="${dormitory['latitude']}" /></td>
-					<td>Longitude*:</td>
+					<td>纬度*:</td>
 					<td><input type="text" name="longitude" value="${dormitory['longitude']}" /></td>
 				</tr>
 				<tr>
-					<td>Address*:</td>
+					<td>公寓地址*:</td>
 					<td><input type="text" name="address" value="${dormitory['address']}" style="width: 300px;" /></td>
-					<td>Currency:</td>
+					<td>货币:</td>
 					<td><input type="text" name="currency" value="${dormitory['currency']}" /></td>
 				</tr>
 				<tr>
-					<td>Week Price*:</td>
+					<td>周价*:</td>
 					<td><input type="text" name="weekPrice" value="${dormitory['weekPrice']}" /></td>
-					<td>Sale Price*:</td>
+					<td>总价*:</td>
 					<td><input type="text" name="salePrice" value="${dormitory['salePrice']}" /></td>
 				</tr>
 				<tr>
-					<td>Equipment:</td>
-					<td><input type="text" name="equipment" value="${dormitory['equipment']}" /></td>
+					<td>设备:</td>
+					<td colspan="3"><textarea name="equipment" class="span12" cols="600" rows="5">${dormitory['equipment']}</textarea></td>
 				</tr>
 				<tr>
-					<td>Service:</td>
-					<td><input type="text" name="service" value="${dormitory['service']}" /></td>
+					<td>服务:</td>
+					<td colspan="3"><textarea name="service" class="span12" cols="600" rows="5">${dormitory['service']}</textarea></td>
 				</tr>
-				<%--
 				<tr>
-					<td>Service:</td>
-					<td colspan="3">
-						<c:forEach var="service" items="${services}" varStatus="i">
-							<input type="checkbox" name="inputService" value="${i['index']}"
-								${dormitory['binaryServiceArray'][i['index']] eq '1'.charAt(0) ? 'checked=\"true\"' : ''}" /> ${service} &nbsp;
-						</c:forEach>
-					</td>
-				</tr><tr>
-					<td>Equipment:</td>
-					<td colspan="3">
-						<c:forEach var="equipment" items="${equipments}" varStatus="i">
-							<input type="checkbox" name="inputEquipment" value="${i['index']}"
-								${dormitory['binaryEquipmentArray'][i['index']] eq '1'.charAt(0) ? 'checked=\"true\"' : ''}" /> ${equipment} &nbsp;
-						</c:forEach>
-					</td>
+					<td>公寓描述:</td>
+					<td colspan="3"><textarea name="description" class="span12" cols="600" rows="5">${dormitory['description']}</textarea></td>
 				</tr>
- 				--%>
 				<tr>
-					<td>Description:</td>
-					<td colspan="3"><textarea name="description" cols="600" rows="5">${dormitory['description']}</textarea></td>
+					<td>退款政策:</td>
+					<td colspan="3"><textarea name="refund" class="span12" cols="600" rows="5">${dormitory['refund']}</textarea></td>
+				</tr>
+				<tr>
+					<td>常见问题:</td>
+					<td colspan="3"><textarea name="question" class="span12" cols="600" rows="5">${dormitory['question']}</textarea></td>
+				</tr>
+				<tr>
+					<td>特色服务:</td>
+					<td colspan="3"><textarea name="feature" class="span12" cols="600" rows="5">${dormitory['feature']}</textarea></td>
 				</tr>
 			</tbody>
 		</table>
+		
+		<c:if test="${not empty dormitory['id']}">
+			<hr />
+			<div style="width: 500px; padding: 20px;">
+				<input id="fileupload" type="file" name="files[]" data-url="<c:url value='/admin/dormitory/dormitory-image-upload.html?dormitoryId=${dormitory.id}'/>" multiple="multiple">
+				<div id="dropzone" class="fade well">Drop files here</div>
+				<div id="progress" class="progress">
+					<div class="bar" style="width: 0%;"></div>
+				</div>
+			</div>
+			<table id="uploaded-files" class="table table-hover table-bordered" style="width: 500px; padding: 20px;">
+				<tr>
+					<th>图片名称</th>
+					<th>图片预览</th>
+					<th>操作</th>
+				</tr>
+				<c:forEach var="path" items="${dormitory['picPath']}" varStatus="index">
+					<tr>
+						<td><input type="text" name="imageNames" class="fileNames" value="${path}" /></td>
+						<td><a href="<c:url value='/upload/images/dormitory/${dormitory.id}/${path}'/>"> <img src="<c:url value='/upload/images/dormitory/${dormitory.id}/${path}'/>" /></a></td>
+						<td><input type="button" value="Remove" class="btnRemove" fileName="${path}" /></td>
+					</tr>
+				</c:forEach>
+			</table>
+		</c:if>
 
 		<table class="table table-hover table-bordered" style="width:1000px">
 			<tbody>
@@ -120,17 +138,15 @@
 					</c:forEach>
 					
 					<tr class="success">
-						<td>RoomType</td>
-						<td>Status*</td>
-						<td>RoomName*</td>
-						<td>CheckinDate*</td>
-						<td>HouseArea</td>
-						<td>BedType</td>
-						<td>EnsuitBathroom</td>
-						<td>OrientationArrange</td>
-						<td>RoomLanguageArrange</td>
-						<td>BathroomEquipment</td>
-						<td>KitchenEquipment</td>
+						<td>房间类型</td>
+						<td>房间状态*</td>
+						<td>房间名称*</td>
+						<td>入住时间*</td>
+						<td>房屋面积</td>
+						<td>床型</td>
+						<td>独立卫浴</td>
+						<td>可否安排朝向</td>
+						<td>可提供语言宿舍</td>
 					</tr>
 					<tr>
 						<th rowspan="${contractCount+2}">${roomType['name']}</th>
@@ -159,15 +175,13 @@
 							<option value="false" ${!curRoom['roomLanguageArrange'] ? 'selected' : ''}>No</option>
 							<option value="true"  ${ curRoom['roomLanguageArrange'] ? 'selected' : ''}>Yes</option>
 						</select></td>
-						<td><input type="text" name="rooms[${i['index']}].bathroomEquipment" value="${curRoom['bathroomEquipment']}" /></td>
-						<td><input type="text" name="rooms[${i['index']}].kitchenEquipment" value="${curRoom['kitchenEquipment']}" /></td>
 					</tr>
 					<tr class="warning">
-						<td>Contract</td>
-						<td>Active*</td>
-						<td>Currency*</td>
-						<td>Week Price*</td>
-						<td>Sale Price*</td>
+						<td>入住周期</td>
+						<td>房间状态*</td>
+						<td>货币类型*</td>
+						<td>周价*</td>
+						<td>总价*</td>
 					</tr>
 					<c:forEach var="contract" items="${contractTypes}" varStatus="j">
 						<c:set var="curPrice" value="${emptyPrice}" />
@@ -191,33 +205,9 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<c:if test="${not empty dormitory['id']}">
-			<hr />
-			<div style="width: 500px; padding: 20px;">
-				<input id="fileupload" type="file" name="files[]" data-url="<c:url value='/admin/dormitory/dormitory-image-upload.html?dormitoryId=${dormitory.id}'/>" multiple="multiple">
-				<div id="dropzone" class="fade well">Drop files here</div>
-				<div id="progress" class="progress">
-					<div class="bar" style="width: 0%;"></div>
-				</div>
-			</div>
-			<table id="uploaded-files" class="table table-hover table-bordered" style="width: 500px; padding: 20px;">
-				<tr>
-					<th>File Name</th>
-					<th>Preview</th>
-					<th>Action</th>
-				</tr>
-				<c:forEach var="path" items="${dormitory['picPath']}" varStatus="index">
-					<tr>
-						<td><input type="text" name="imageNames" class="fileNames" value="${path}" /></td>
-						<td><a href="<c:url value='/upload/images/dormitory/${dormitory.id}/${path}'/>"> <img src="<c:url value='/upload/images/dormitory/${dormitory.id}/${path}'/>" /></a></td>
-						<td><input type="button" value="Remove" class="btnRemove" fileName="${path}" /></td>
-					</tr>
-				</c:forEach>
-			</table>
-		</c:if>
 
 		<hr />
-		<input type="submit" value="Update" /> <a href="${backURL}">Back to list</a>
+		<input type="submit" value="提交" /> <a href="${backURL}">Back to list</a>
 	</form>
 </body>
 </html>

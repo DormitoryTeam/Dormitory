@@ -39,8 +39,8 @@
 			<input type="hidden" id="collegeOriginalName" value="${college['originalName']}" />
 		</div>
 		<div id="tabs-air">接机</div>
-		<div id="tabs-pay">付款取消政策</div>
-		<div id="tabs-qa">常见问题</div>
-		<div id="tabs-server">特色服务</div>
+		<div id="tabs-pay">${dormitory['refund']}</div>
+		<div id="tabs-qa">${dormitory['question']}</div>
+		<div id="tabs-server">${dormitory['feature']}</div>
 	</div>
 </div>
