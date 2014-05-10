@@ -2251,6 +2251,7 @@ body .ui-tooltip {
 }
 
 .select-el select{
+	margin-top: 1px;
 	margin-left: 20px;
 	width: 10px;
 	height: 5px;

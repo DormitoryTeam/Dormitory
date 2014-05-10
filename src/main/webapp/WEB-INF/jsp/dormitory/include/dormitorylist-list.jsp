@@ -21,7 +21,7 @@
 			<div class="hostel-info">
 				<input type="hidden" class="hidLocation" value="${dormitory['name']},${dormitory['latitude']},${dormitory['longitude']},${dormitory['id']}"/>
 				<div class="price">
-					价格<span><em>&#163;</em><fmt:formatNumber value="${not empty dormitory['rooms'] && not empty dormitory['rooms'][0]['contractPrice'][0] ? dormitory['rooms'][0]['contractPrice'][0]['salePrice'] : dormitory['salePrice']}" pattern="#0.00"/></span>起
+					价格<c:if test="${(not empty dormitory['rooms'] && not empty dormitory['rooms'][0]['contractPrice'][0] ? dormitory['rooms'][0]['contractPrice'][0]['salePrice'] : dormitory['salePrice']) >= 0}"><span><em>&#163;</em>&nbsp;<fmt:formatNumber value="${not empty dormitory['rooms'] && not empty dormitory['rooms'][0]['contractPrice'][0] ? dormitory['rooms'][0]['contractPrice'][0]['salePrice'] : dormitory['salePrice']}" pattern="#0.00"/></span>起</c:if><c:if test="${(not empty dormitory['rooms'] && not empty dormitory['rooms'][0]['contractPrice'][0] ? dormitory['rooms'][0]['contractPrice'][0]['salePrice'] : dormitory['salePrice']) <0}"><span>暂无定价</span></c:if>
 					<div class="starBox" data-score="${dormitory['rating']}"></div>
 				</div>
 				<div class="title">
@@ -33,10 +33,9 @@
 					</span>
 				</div>
 				<div class="address">${dormitory['address']}<br /><em>${dormitory['postcode']}</em></div>
-				<p>设施：${dormitory['equipment']}</p>
-				<p>服务：${dormitory['service']}</p>
-				<p>附加费用：<span><c:if test="${dormitory['additionalPrice']>=0}"><em>&#163;</em><fmt:formatNumber value="${dormitory['additionalPrice']}" pattern="#0.00"/></c:if><c:if test="${dormitory['additionalPrice']<0}">暂未定价</c:if></span></p>
-				<p>优惠：${dormitory['promotion']}</p>
+				<p><span style="font-weight: bolder;">服务：</span>${dormitory['service']}</p>
+				<p><span style="font-weight: bolder;">附加费用：</span><span><c:if test="${dormitory['additionalPrice']>=0}"><em>&#163;</em>&nbsp;<fmt:formatNumber value="${dormitory['additionalPrice']}" pattern="#0.00"/></c:if><c:if test="${dormitory['additionalPrice']<0}">暂未定价</c:if></p>
+				<p><span style="font-weight: bolder;">优惠：</span>${dormitory['promotion']}</p>
 				<table>
 					<thead>
 						<tr>
@@ -52,17 +51,29 @@
 							<c:forEach var="room" items="${dormitory['rooms']}" varStatus="j" begin="0" end="1">
 								<c:if test="${not empty room}">
 									<tr>
-										<td class="td-larger" style="text-align: left;">${room['name']}</td>
-										<td class="td-long">${room['bedType']}</td>
-										<td class="td-long">${room['checkinDate']}</td>
-										<td class="td-min">
+										<td style="font-size: 10px;" class="td-larger" style="text-align: left;">${room['name']}</td>
+										<td style="font-size: 10px;" class="td-long">${room['bedType']}</td>
+										<td style="font-size: 10px;" class="td-long">${room['checkinDate']}</td>
+										<td style="font-size: 10px;" class="td-min">
 											<c:if test="${not empty room['contractPrice'][0]}">
-												<c:if test="${room['contractPrice'][0]['salePrice'] >= 0}"><em>&#163;</em><fmt:formatNumber value="${room['contractPrice'][0]['salePrice']}" pattern="#0.00"/></c:if><c:if test="${room['contractPrice'][0]['salePrice'] < 0 }">暂未定价</c:if>
+												<c:if test="${room['contractPrice'][0]['salePrice'] >= 0}"><em>&#163;</em>&nbsp;<fmt:formatNumber value="${room['contractPrice'][0]['salePrice']}" pattern="#0.00"/></c:if><c:if test="${room['contractPrice'][0]['salePrice'] < 0 }">暂未定价</c:if>
 											</c:if>
 										</td>
-										<td class="td-min">
-											<c:if test="${room['status'] eq 'HAS_VACANCY'}">尚有空房</c:if>
-											<c:if test="${room['status'] eq 'NO_VACANCY'}">已注满</c:if>
+										<td style="font-size: 10px;" class="td-min">
+											<c:if test="${room['status'] eq '0'}">已注满</c:if>
+											<c:if test="${room['status'] eq '1'}">尚有空房</c:if>
+											<c:if test="${room['status'] eq '2'}">剩余不多</c:if>
+											<c:if test="${room['status'] eq '3'}">仅剩几间</c:if>
+											<c:if test="${room['status'] eq '4'}">仅剩9间</c:if>
+											<c:if test="${room['status'] eq '5'}">仅剩8间</c:if>
+											<c:if test="${room['status'] eq '6'}">仅剩7间</c:if>
+											<c:if test="${room['status'] eq '7'}">仅剩6间</c:if>
+											<c:if test="${room['status'] eq '8'}">仅剩5间</c:if>
+											<c:if test="${room['status'] eq '9'}">仅剩4间</c:if>
+											<c:if test="${room['status'] eq '10'}">仅剩3间</c:if>
+											<c:if test="${room['status'] eq '11'}">仅剩2间</c:if>
+											<c:if test="${room['status'] eq '12'}">仅剩1间</c:if>
+											<c:if test="${room['status'] eq '13'}">请先咨询</c:if>
 										</td>
 									</tr>
 								</c:if>
@@ -70,7 +81,7 @@
 						</c:if>
 						<c:if test="${empty dormitory['rooms']}">
 							<tr>
-								<td colspan="4">No valid room data.</td>
+								<td colspan="4">暂无房间信息</td>
 							</tr>
 						</c:if>
 					</tbody>
