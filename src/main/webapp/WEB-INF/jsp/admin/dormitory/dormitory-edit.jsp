@@ -155,9 +155,20 @@
 							<input type="hidden" name="rooms[${i['index']}].id" value="${curRoom['id']}" />
 							<input type="hidden" name="rooms[${i['index']}].roomTypeId" value="${roomType['id']}" />
 							<select name="rooms[${i['index']}].status">
-							<c:forEach var="status" items="${allDormitoryStatus}">
-								<option value="${status['name']}" ${status eq curRoom['status'] ? 'selected' : ''}>${status['name']}</option>
-							</c:forEach>
+								<option value="0" ${'0' eq curRoom['status'] ? 'selected' : ''}>已注满</option>
+								<option value="1" ${'1' eq curRoom['status'] ? 'selected' : ''}>尚有空房</option>
+								<option value="2" ${'2' eq curRoom['status'] ? 'selected' : ''}>剩余不多</option>
+								<option value="3" ${'3' eq curRoom['status'] ? 'selected' : ''}>仅剩几间</option>
+								<option value="4" ${'4' eq curRoom['status'] ? 'selected' : ''}>仅剩9间</option>
+								<option value="5" ${'5' eq curRoom['status'] ? 'selected' : ''}>仅剩8间</option>
+								<option value="6" ${'6' eq curRoom['status'] ? 'selected' : ''}>仅剩7间</option>
+								<option value="7" ${'7' eq curRoom['status'] ? 'selected' : ''}>仅剩6间</option>
+								<option value="8" ${'8' eq curRoom['status'] ? 'selected' : ''}>仅剩5间</option>
+								<option value="9" ${'9' eq curRoom['status'] ? 'selected' : ''}>仅剩4间</option>
+								<option value="10" ${'10' eq curRoom['status'] ? 'selected' : ''}>仅剩3间</option>
+								<option value="11" ${'11' eq curRoom['status'] ? 'selected' : ''}>仅剩2间</option>
+								<option value="12" ${'12' eq curRoom['status'] ? 'selected' : ''}>仅剩0间</option>
+								<option value="13" ${'13' eq curRoom['status'] ? 'selected' : ''}>请先咨询</option>
 						</select></td>
 						<td><input type="text" name="rooms[${i['index']}].name" value="${curRoom['name']}" /></td>
 						<td><input type="text" name="rooms[${i['index']}].checkinDate" value="${curRoom['checkinDate']}" /></td>
