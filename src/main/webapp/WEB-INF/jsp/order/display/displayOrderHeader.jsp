@@ -11,15 +11,15 @@
 		</dl>
 		<dl>
 			<dt>周价</dt>
-			<dd><c:if test="${order.lineItems[0].listPrice >= 0}">£${order.lineItems[0].listPrice}</c:if><c:if test="${order.lineItems[0].listPrice < 0}">暂未定价</c:if></dd>
+			<dd><c:if test="${order.lineItems[0].listPrice >= 0}">£<fmt:formatNumber value="${order.lineItems[0].listPrice}" pattern="#0.00"/></c:if><c:if test="${order.lineItems[0].listPrice < 0}">暂未定价</c:if></dd>
 		</dl>
 		<dl>
 			<dt>附加费用</dt>
-			<dd><c:if test="${order.lineItems[0].dormitory.additionalPrice >= 0}">£${order.lineItems[0].dormitory.additionalPrice}</c:if><c:if test="${order.lineItems[0].dormitory.additionalPrice < 0}">暂未定价</c:if></dd>
+			<dd><c:if test="${order.lineItems[0].dormitory.additionalPrice >= 0}">£<fmt:formatNumber value="${order.lineItems[0].dormitory.additionalPrice}" pattern="#0.00"/></c:if><c:if test="${order.lineItems[0].dormitory.additionalPrice < 0}">暂未定价</c:if></dd>
 		</dl>
 		<dl>
 			<dt>总价</dt>
-			<dd><c:if test="${order.amount >= 0}">£${order.amount}</c:if><c:if test="${order.amount < 0}">暂未定价</c:if></dd>
+			<dd><c:if test="${order.amount >= 0}">£<fmt:formatNumber value="${order.amount}" pattern="#0.00"/></c:if><c:if test="${order.amount < 0}">暂未定价</c:if></dd>
 		</dl>
 		<dl>
 			<dt>入住时间</dt>

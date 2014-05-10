@@ -231,7 +231,7 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
         }
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("dormitoryIds", dormitoryIds);
-        parameters.put("status", 1);
+        parameters.put("status", DormitoryStatus.HAS_VACANCY);
         List<RoomInfoBean> rooms = getSqlSession().selectList("com.noeasy.money.model.Dormitory.queryRoomInfos",
                 parameters);
         for (RoomInfoBean room : rooms) {

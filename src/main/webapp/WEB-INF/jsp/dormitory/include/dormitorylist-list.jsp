@@ -21,7 +21,7 @@
 			<div class="hostel-info">
 				<input type="hidden" class="hidLocation" value="${dormitory['name']},${dormitory['latitude']},${dormitory['longitude']},${dormitory['id']}"/>
 				<div class="price">
-					价格<span><em>&#163;</em>${not empty dormitory['rooms'] && not empty dormitory['rooms'][0]['contractPrice'][0] ? dormitory['rooms'][0]['contractPrice'][0]['salePrice'] : dormitory['salePrice']}</span>起
+					价格<span><em>&#163;</em><fmt:formatNumber value="${not empty dormitory['rooms'] && not empty dormitory['rooms'][0]['contractPrice'][0] ? dormitory['rooms'][0]['contractPrice'][0]['salePrice'] : dormitory['salePrice']}" pattern="#0.00"/></span>起
 					<div class="starBox" data-score="${dormitory['rating']}"></div>
 				</div>
 				<div class="title">
@@ -35,7 +35,7 @@
 				<div class="address">${dormitory['address']}<br /><em>${dormitory['postcode']}</em></div>
 				<p>设施：${dormitory['equipment']}</p>
 				<p>服务：${dormitory['service']}</p>
-				<p>附加费用：<span><c:if test="${dormitory['additionalPrice']>=0}"><em>&#163;</em>${dormitory['additionalPrice']}</c:if><c:if test="${dormitory['additionalPrice']<0}">暂未定价</c:if></span></p>
+				<p>附加费用：<span><c:if test="${dormitory['additionalPrice']>=0}"><em>&#163;</em><fmt:formatNumber value="${dormitory['additionalPrice']}" pattern="#0.00"/></c:if><c:if test="${dormitory['additionalPrice']<0}">暂未定价</c:if></span></p>
 				<p>优惠：${dormitory['promotion']}</p>
 				<table>
 					<thead>
@@ -57,7 +57,7 @@
 										<td class="td-long">${room['checkinDate']}</td>
 										<td class="td-min">
 											<c:if test="${not empty room['contractPrice'][0]}">
-												<em>&#163;</em>${room['contractPrice'][0]['salePrice']}
+												<c:if test="${room['contractPrice'][0]['salePrice'] >= 0}"><em>&#163;</em><fmt:formatNumber value="${room['contractPrice'][0]['salePrice']}" pattern="#0.00"/></c:if><c:if test="${room['contractPrice'][0]['salePrice'] < 0 }">暂未定价</c:if>
 											</c:if>
 										</td>
 										<td class="td-min">

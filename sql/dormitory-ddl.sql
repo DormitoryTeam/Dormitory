@@ -76,8 +76,8 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`dormitory` (
   `name` VARCHAR(200) NOT NULL ,
   `address` VARCHAR(500) NULL ,
   `postcode` VARCHAR(200) NULL ,
-  `equipment` VARCHAR(500) NULL ,
-  `service` VARCHAR(500) NULL ,
+  `equipment` VARCHAR(2000) NULL ,
+  `service` VARCHAR(2000) NULL ,
   `weekPrice` DECIMAL(5,2) NULL ,
   `salePrice` DECIMAL(5,2) NULL ,
   `currency` VARCHAR(3) NULL ,
@@ -89,6 +89,10 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`dormitory` (
   `status` VARCHAR(45) NULL DEFAULT 'INVISIBILITY' ,
   `additionalPrice` DECIMAL(5,2) NULL ,
   `promotion` VARCHAR(1000) NULL ,
+  `refund` VARCHAR(2000) NULL ,
+  `question` VARCHAR(2000) NULL ,
+  `feature` VARCHAR(2000) NULL ,
+  `company_id` INT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `index_dormitory` (`city_id` ASC) )
 ENGINE = InnoDB;
@@ -497,7 +501,7 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`room_info` (
   `bed_type` VARCHAR(200) NULL ,
   `house_area` VARCHAR(200) NULL ,
   `ensuite_bathroom` VARCHAR(45) NULL ,
-  `kitchen_people_number` INT NULL ,
+  `kitchen_people_number` VARCHAR(200) NULL ,
   `floor_arrangement` VARCHAR(45) NULL ,
   `orientation_arrangement` VARCHAR(45) NULL ,
   `room_language_arrangement` VARCHAR(45) NULL ,
@@ -646,6 +650,18 @@ CREATE  TABLE IF NOT EXISTS `dormitory`.`article` (
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 PACK_KEYS = DEFAULT;
+
+
+-- -----------------------------------------------------
+-- Table `dormitory`.`company`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dormitory`.`company` ;
+
+CREATE  TABLE IF NOT EXISTS `dormitory`.`company` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(200) NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------

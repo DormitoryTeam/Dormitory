@@ -37,7 +37,7 @@
 	<tr>
 		<td><a href="<c:url value='/user/orderDetails.html?orderId=${order.id}&orderType=${type}'/>">${order.id}</a></td>
 		<td>${order.lineItems[0].dormitory.name}</td>
-		<td>${order.amount}</td>
+		<td><fmt:formatNumber value="${order.amount}" pattern="#0.00"/></td>
 		<td>${order.user.login}</td>
 		<td>${order.belongsTo.login}</td>
 		<td>${order.createTime}</td>
@@ -59,7 +59,7 @@
 	<tr>
 		<td><a href="<c:url value='/user/orderDetails.html?orderId=${order.id}&orderType=${type}'/>">${order.id}</a></td>
 		<td>${order.lineItems[0].flightNum}</td>
-		<td>${order.amount}</td>
+		<td><fmt:formatNumber value="${order.amount}" pattern="#0.00"/></td>
 		<td>${order.user.login}</td>
 		<td>${order.belongsTo.login}</td>
 		<td>${order.createTime}</td>

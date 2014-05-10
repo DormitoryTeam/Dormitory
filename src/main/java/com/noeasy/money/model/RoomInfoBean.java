@@ -69,7 +69,7 @@ public class RoomInfoBean extends BaseBean {
 
     private boolean         mEnsuitBathroom;
 
-    private int             mKitchenPeople;
+    private String          mKitchenPeople;
 
     private boolean         mFloorArrange;
 
@@ -81,7 +81,7 @@ public class RoomInfoBean extends BaseBean {
 
     private String          mBathroomEquipment;
 
-    private DormitoryStatus mStatus;
+    private String          mStatus;
 
     private String          mService;
 
@@ -195,15 +195,6 @@ public class RoomInfoBean extends BaseBean {
 
 
     /**
-     * @return the kitchenPeople
-     */
-    public int getKitchenPeople() {
-        return mKitchenPeople;
-    }
-
-
-
-    /**
      * @return the name
      */
     public String getName() {
@@ -244,15 +235,6 @@ public class RoomInfoBean extends BaseBean {
      */
     public String getService() {
         return mService;
-    }
-
-
-
-    /**
-     * @return the status
-     */
-    public DormitoryStatus getStatus() {
-        return mStatus;
     }
 
 
@@ -423,11 +405,13 @@ public class RoomInfoBean extends BaseBean {
 
 
 
-    /**
-     * @param pKitchenPeople
-     *            the kitchenPeople to set
-     */
-    public void setKitchenPeople(final int pKitchenPeople) {
+    public String getKitchenPeople() {
+        return mKitchenPeople;
+    }
+
+
+
+    public void setKitchenPeople(String pKitchenPeople) {
         mKitchenPeople = pKitchenPeople;
     }
 
@@ -503,11 +487,13 @@ public class RoomInfoBean extends BaseBean {
 
 
 
-    /**
-     * @param pStatus
-     *            the status to set
-     */
-    public void setStatus(final DormitoryStatus pStatus) {
+    public String getStatus() {
+        return mStatus;
+    }
+
+
+
+    public void setStatus(String pStatus) {
         mStatus = pStatus;
     }
 
