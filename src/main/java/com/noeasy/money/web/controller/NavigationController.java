@@ -29,6 +29,8 @@
 package com.noeasy.money.web.controller;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -232,6 +234,7 @@ public class NavigationController {
         } else {
             cityColleges = navigationService.queryCityCollegeByCityId(cityId);
         }
+//        cityColleges = sortByCityName(cityColleges);
         model.addAttribute("cityColleges", cityColleges);
         model.addAttribute("countryId", countryId);
         model.addAttribute("cityId", cityId);
@@ -239,6 +242,23 @@ public class NavigationController {
         return "navigation/citynavigation";
     }
 
+//    private List<Map<String, Object>> sortByCityName (List<Map<String, Object>> cityColleges) {
+//        if (CollectionUtils.isEmpty(cityColleges)) {
+//            return cityColleges;
+//        }
+//        List<CityCollegeWrapper> temp = new ArrayList<CityCollegeWrapper>();
+//        for (Map<String, Object> cityCollege: cityColleges) {
+//            temp.add(new CityCollegeWrapper(cityCollege));
+//        }
+//        
+//        Collections.sort(temp);
+//        List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
+//        for (CityCollegeWrapper wrapper: temp) {
+//            result.add(wrapper.getCityCollege());
+//        }
+//        
+//        return result;
+//    }
 
 
     @RequestMapping("/hot-colleges" + Constants.URL_SUFFIX)
@@ -250,4 +270,29 @@ public class NavigationController {
 
         return "navigation/collegenavigation";
     }
+    
+//    class CityCollegeWrapper implements Comparable<CityCollegeWrapper>{
+//        private Map<String, Object> mCityCollege;
+//        CityCollegeWrapper (Map<String, Object> pCityCollege) {
+//            mCityCollege = pCityCollege;
+//        }
+//        public String getCityName() {
+//            return (String)mCityCollege.get("cityName");
+//        }
+//        
+//        @Override
+//        public int compareTo(CityCollegeWrapper target) {
+//            if (!(target instanceof CityCollegeWrapper)) {
+//                return 1;
+//            }
+//            if (null == this.getCityName() || null == target) {
+//                return 1;
+//            }
+//            return this.getCityName().compareTo(target.getCityName());
+//        }
+//        public Map<String, Object> getCityCollege() {
+//            return mCityCollege;
+//        }
+//        
+//    }
 }

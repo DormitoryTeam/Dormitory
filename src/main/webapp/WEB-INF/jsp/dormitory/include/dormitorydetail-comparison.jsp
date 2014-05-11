@@ -18,8 +18,8 @@
 					<h3>${room['name']}</h3> 
 					<c:forEach var="contractPrice" items="${room['contractPrice']}">
 						<p><span>周期：</span>${contractPrice['contract']}</p>
-						<p><span>周价：</span>&#163;<c:if test="${contractPrice['weekPrice'] >= 0}"><fmt:formatNumber value="${contractPrice['weekPrice']}" pattern="#0.00"/></c:if><c:if test="${contractPrice['weekPrice'] < 0}">暂未定价</c:if></p>
-						<p><span>总价：</span>&#163;<c:if test="${contractPrice['salePrice'] >= 0}"><fmt:formatNumber value="${contractPrice['salePrice']}" pattern="#0.00"/></c:if><c:if test="${contractPrice['salePrice'] < 0}">暂未定价</c:if></p>
+						<p><span>周价：</span><c:if test="${contractPrice['weekPrice'] >= 0}">&#163;&nbsp;<fmt:formatNumber value="${contractPrice['weekPrice']}" pattern="#0.00"/></c:if><c:if test="${contractPrice['weekPrice'] < 0}">暂未定价</c:if></p>
+						<p><span>总价：</span><c:if test="${contractPrice['salePrice'] >= 0}">&#163;&nbsp;<fmt:formatNumber value="${contractPrice['salePrice']}" pattern="#0.00"/></c:if><c:if test="${contractPrice['salePrice'] < 0}">暂未定价</c:if></p>
 					</c:forEach>
 				</li>
 			</ul>
@@ -32,8 +32,8 @@
 	<div class="scroll-content">
 		<c:forEach var="room" items="${dormitory['rooms']}">
 			<ul class="scroll-content-item item-body" style="height:634px;">
-				<li>&nbsp;
-					<c:if test="${room['status'] eq '0'}">已注满</c:if>
+				<li style="height:18px">
+					<c:if test="${room['status'] eq '0'}">已订满</c:if>
 					<c:if test="${room['status'] eq '1'}">尚有空房</c:if>
 					<c:if test="${room['status'] eq '2'}">剩余不多</c:if>
 					<c:if test="${room['status'] eq '3'}">仅剩几间</c:if>
@@ -48,13 +48,13 @@
 					<c:if test="${room['status'] eq '12'}">仅剩1间</c:if>
 					<c:if test="${room['status'] eq '13'}">请先咨询</c:if>
 				</li>
-				<li>&nbsp;<c:if test="${ '-1' eq room['checkinDate']}">未知</c:if><c:if test="${not( '-1' eq room['checkinDate'])}">${room['checkinDate']}</c:if></li>
-				<li>&nbsp;<c:if test="${ '-1' eq room['houseArea']}">未知</c:if><c:if test="${not( '-1' eq room['houseArea'])}">${room['checkinDate']}${room['houseArea']}${empty room['houseArea'] ? '' : '平米'}</c:if></li>
-				<li>&nbsp;<c:if test="${ '-1' eq room['bedType']}">未知</c:if><c:if test="${not( '-1' eq room['bedType'])}">${room['bedType']}</c:if></li>
-				<li>&nbsp;${room['ensuitBathroom'] ? '有' : '没有'}</li>
-				<li>&nbsp;<c:if test="${ '-1' eq room['kitchenPeople']}">未知</c:if><c:if test="${not( '-1' eq room['kitchenPeople'])}">${room['kitchenPeople']}</c:if></li>
-				<li>&nbsp;${room['orientationArrange'] ? '可以' : '不可以'}</li>
-				<li>&nbsp;${room['roomLanguageArrange'] ? '可以' : '不可以'}</li>
+				<li style="height:18px"><c:if test="${ '-1' eq room['checkinDate']}">未知</c:if><c:if test="${not( '-1' eq room['checkinDate'])}">${room['checkinDate']}</c:if></li>
+				<li style="height:18px"><c:if test="${ '-1' eq room['houseArea']}">未知</c:if><c:if test="${not( '-1' eq room['houseArea'])}">${room['houseArea']}${empty room['houseArea'] ? '' : '平米'}</c:if></li>
+				<li style="height:18px"><c:if test="${ '-1' eq room['bedType']}">未知</c:if><c:if test="${not( '-1' eq room['bedType'])}">${room['bedType']}</c:if></li>
+				<li style="height:18px">${room['ensuitBathroom'] ? '有' : '没有'}</li>
+				<li style="height:18px"><c:if test="${ '-1' eq room['kitchenPeople']}">未知</c:if><c:if test="${not( '-1' eq room['kitchenPeople'])}">${room['kitchenPeople']}</c:if></li>
+				<li style="height:18px">${room['orientationArrange'] ? '可以' : '不可以'}</li>
+				<li style="height:18px">${room['roomLanguageArrange'] ? '可以' : '不可以'}</li>
 				<li class="title-hight last">
 					<c:if test="${not (room['status'] eq '0')}">
 						<a href="javascript:void(0)" class="btn-style jQ-quick" roomId="${room['id']}" data-popupSrc="<c:url value='/dormitory/dormitory-quik-book.html'/>">立即预定</a>

@@ -62,7 +62,7 @@
 		from city
 		where status = 1 and country_id = (
 		select country_id from city where id = #{id} and status = 1
-		)
+		) order by name
 	</select>
 
 	<select id="queryCountryByCityId" resultType="hashmap" parameterType="int">
@@ -95,6 +95,7 @@
 		left join college t2 on t1.id = t2.city_id
 		where t1.status = 1 and t2.status = 1 and t1.country_id = #{countryId}
 		group by t2.id
+		order by t1.name
 	</select>
 	
 	<select id="queryCityCollegeByCityId" resultMap="cityCollege" parameterType="int">
@@ -106,6 +107,7 @@
 			select country_id from city where id = #{cityId}
 		)
 		group by t2.id
+		order by t1.name
 	</select>
 	
 	<resultMap id="cityCollege" type="java.util.HashMap">

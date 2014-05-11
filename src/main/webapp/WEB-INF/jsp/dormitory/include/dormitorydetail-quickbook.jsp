@@ -32,7 +32,7 @@
 			<dl class="clearfix">
 				<dd style="line-height: 20px;">价格</dd>
 				<dt id="quickPricePreview">
-					<c:if test="${dormitory['rooms'][0]['contractPrice'][0]['salePrice'] >= 0}">£<fmt:formatNumber value="${dormitory['rooms'][0]['contractPrice'][0]['salePrice']}" pattern="#0.00"/></c:if><c:if test="${dormitory['rooms'][0]['contractPrice'][0]['salePrice'] < 0}">暂未定价</c:if>
+					<c:if test="${dormitory['rooms'][0]['contractPrice'][0]['salePrice'] >= 0}">£&nbsp;<fmt:formatNumber value="${dormitory['rooms'][0]['contractPrice'][0]['salePrice']}" pattern="#0.00"/></c:if><c:if test="${dormitory['rooms'][0]['contractPrice'][0]['salePrice'] < 0}">暂未定价</c:if>
 				</dt>
 			</dl>
 		</fieldset>

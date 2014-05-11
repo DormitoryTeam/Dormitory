@@ -60,7 +60,7 @@
 											</c:if>
 										</td>
 										<td style="font-size: 10px;" class="td-min">
-											<c:if test="${room['status'] eq '0'}">已注满</c:if>
+											<c:if test="${room['status'] eq '0'}">已订满</c:if>
 											<c:if test="${room['status'] eq '1'}">尚有空房</c:if>
 											<c:if test="${room['status'] eq '2'}">剩余不多</c:if>
 											<c:if test="${room['status'] eq '3'}">仅剩几间</c:if>

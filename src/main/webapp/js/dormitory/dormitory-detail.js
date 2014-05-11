@@ -115,6 +115,10 @@ $(function() {
 		}
 		return true;
 	});
+	
+	$(".auto-height-textarea").each(function(i, e) {
+		$(e).css("height", this.scrollHeight);
+	});
 
 	initialize();
 });

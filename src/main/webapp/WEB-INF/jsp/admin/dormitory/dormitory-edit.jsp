@@ -155,7 +155,7 @@
 							<input type="hidden" name="rooms[${i['index']}].id" value="${curRoom['id']}" />
 							<input type="hidden" name="rooms[${i['index']}].roomTypeId" value="${roomType['id']}" />
 							<select name="rooms[${i['index']}].status">
-								<option value="0" ${'0' eq curRoom['status'] ? 'selected' : ''}>已注满</option>
+								<option value="0" ${'0' eq curRoom['status'] ? 'selected' : ''}>已订满</option>
 								<option value="1" ${'1' eq curRoom['status'] ? 'selected' : ''}>尚有空房</option>
 								<option value="2" ${'2' eq curRoom['status'] ? 'selected' : ''}>剩余不多</option>
 								<option value="3" ${'3' eq curRoom['status'] ? 'selected' : ''}>仅剩几间</option>
