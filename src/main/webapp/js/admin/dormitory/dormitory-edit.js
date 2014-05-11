@@ -84,7 +84,7 @@ function appendLastestImagePreview(data) {
         var row = $('<tr>');
         row.append($('<td>').html("<input type=\"text\" name=\"imageNames\" class=\"fileNames\" value=\"" + e.name + "\" />"));
         row.append($('<td>').html("<a href='" + imageURL + "'><img src='" + imageURL + "' /></a>"));
-        row.append($('<td>').html("<input type=\"button\" value=\"Remove\" class=\"btnRemove\" fileName=\"" + e.name + "\" />"));
+        row.append($('<td>').html("<input type=\"button\" value=\"删除\" class=\"btnRemove\" fileName=\"" + e.name + "\" />"));
         $("#uploaded-files").append(row)
     });
 }

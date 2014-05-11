@@ -10,7 +10,7 @@
 <title></title>
 </head>
 <body>
-	<input type="button" id="btnAdd" value="Create Dormitory">
+	<input type="button" id="btnAdd" value="新建宿舍">
 	<hr />
 
 	<table style="width:1100px;">
@@ -18,18 +18,28 @@
 			<c:if test="${not empty dormitories}">
 				<c:forEach var="dormitory" items="${dormitories}" varStatus="i">
 					<tr>
-						<td><img style="float: left;margin-right:30px;" src="<c:url value='/img/dormitory_sample.jpg'/>" />
+						<td>
 							<ul>
-								<li>Name: ${dormitory['name']} ${dormitory['status']} &nbsp; 
-									<input type="button" class="btnEdit" dormitoryId="${dormitory['id']}" value="Edit" /></li>
-								<li>Addr: ${dormitory['address']}</li>
-								<li>Equipment:${dormitory['equipment']}</li>
-								<li>Service: ${dormitory['service']}</li>
-								<li>Price: ${dormitory['salePrice']}</li>
-								<li>Rating: ${dormitory['rating']}</li>
-								<li>Room Count: ${fn:length(dormitory['rooms'])}</li>
+								<li>宿舍名称: ${dormitory['name']} &nbsp; 
+									<input type="button" class="btnEdit" dormitoryId="${dormitory['id']}" value="编辑宿舍" /></li>
+								<li>状态: 
+									<c:choose>
+										<c:when test="${dormitory['status'] eq 'HAS_VACANCY'}">可预订</c:when>
+										<c:when test="${dormitory['status'] eq 'NO_VACANCY'}">不可预订</c:when>
+										<c:when test="${dormitory['status'] eq 'INVISIBILITY'}">隐藏</c:when>
+									</c:choose>
+								</li>
+								<li>所在城市: ${dormitory['city']}</li>
+								<li>所在公司: ${dormitory['address']}</li>
+								<li>地址邮编: ${dormitory['address']}, ${dormitory['postcode']}</li>
+								<li>设施:${dormitory['equipment']}</li>
+								<li>服务: ${dormitory['service']}</li>
+								<li>优惠: ${dormitory['promotion']}</li>
+								<li>附加费用: ${dormitory['additionalPrice']}</li>
+								<li>拥有房型个数: ${fn:length(dormitory['rooms'])}</li>
 							</ul>
-							<hr /></td>
+							<hr />
+						</td>
 					</tr>
 				</c:forEach>
 			</c:if>

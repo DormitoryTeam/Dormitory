@@ -17,27 +17,27 @@
 	<form action="<c:url value='/admin/slide-save.html'/>" method="POST">
 		<table>
 			<tr>
-				<td>Images:</td>
+				<td valign="center">&nbsp;幻灯片:&nbsp;</td>
 				<td>
-					<table id="uploaded-files" class="table" style="width: 500px; padding: 20px;">
+					<table id="uploaded-files" class="table" style="width: 980px; padding: 20px;">
 						<tr>
-							<th>File Name</th>
-							<th>Preview</th>
-							<th>Up</th>
-							<th>Down</th>
-							<th>Remove</th>
-							<th>Show</th>
+							<th>图片名称</th>
+							<th>预览</th>
+							<th>向前移</th>
+							<th>向后移</th>
+							<th>删除</th>
+							<th>是否展示</th>
 						</tr>
 						<c:forEach var="slide" items="${slides}" varStatus="index">
 							<tr class="fileRow">
-								<td>${slide}<input type="text" readonly="readonly" name="imageNames" class="fileNames" value="${slide['path']}" /> <input type="hidden" name="imageIndexes" class="fileIndex" value="${slide['index']}" /></td>
+								<td><input type="text" readonly="readonly" name="imageNames" class="fileNames" value="${slide['path']}" /> <input type="hidden" name="imageIndexes" class="fileIndex" value="${slide['index']}" /></td>
 								<td><a href="<c:url value='/upload/images/slide/${slide.path}'/>"> <img src="<c:url value='/upload/images/slide/${slide.path}'/>" /></a></td>
-								<td><input type="button" value="Up ↑" class="btnUp" /></td>
-								<td><input type="button" value="Down ↓" class="btnDown" /></td>
-								<td><input type="button" value="Remove" class="btnRemove" /></td>
+								<td><input type="button" value="向前移 ↑" class="btnUp" /></td>
+								<td><input type="button" value="向后移 ↓" class="btnDown" /></td>
+								<td><input type="button" value="删除" class="btnRemove" /></td>
 								<td><select name="imageShow">
-									<option value="1" <c:if test="${slide['status'] eq '1'}">selected="selected"</c:if>>Show</option>
-									<option value="0" <c:if test="${slide['status'] eq '0'}">selected="selected"</c:if>>Hide</option>
+									<option value="1" <c:if test="${slide['status'] eq '1'}">selected="selected"</c:if>>展示</option>
+									<option value="0" <c:if test="${slide['status'] eq '0'}">selected="selected"</c:if>>不展示</option>
 								</select></td>
 							</tr>
 						</c:forEach>
@@ -48,7 +48,7 @@
 				<td colspan="4">
 					<div style="width: 500px; padding: 20px;">
 						<input id="fileupload" type="file" name="files[]" data-url="<c:url value='/admin/slide-image-upload.html?dormitoryId=${dormitory.id}'/>" multiple="multiple">
-						<div id="dropzone" class="fade well">Drop files here</div>
+						<div id="dropzone" class="fade well">移动图片到这里</div>
 						<div id="progress" class="progress">
 							<div class="bar" style="width: 0%;"></div>
 						</div>
@@ -56,7 +56,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><input type="submit" value="save" /></td>
+				<td><input type="submit" value="提交" /></td>
 			</tr>
 		</table>
 	</form>
