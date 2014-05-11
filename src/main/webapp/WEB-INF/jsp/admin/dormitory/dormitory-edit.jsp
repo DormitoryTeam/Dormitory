@@ -105,7 +105,7 @@
 			<hr />
 			<div style="width: 500px; padding: 20px;">
 				<input id="fileupload" type="file" name="files[]" data-url="<c:url value='/admin/dormitory/dormitory-image-upload.html?dormitoryId=${dormitory.id}'/>" multiple="multiple">
-				<div id="dropzone" class="fade well">Drop files here</div>
+				<div id="dropzone" class="fade well">移动图片到这里</div>
 				<div id="progress" class="progress">
 					<div class="bar" style="width: 0%;"></div>
 				</div>
