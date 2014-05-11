@@ -49,6 +49,8 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -112,6 +114,13 @@ public class AdminDormitoryController {
                 dormitory.getPicPath());
 
         return "admin/dormitory/dormitory-edit-result";
+    }
+
+
+
+    @InitBinder
+    public void initBinder(final WebDataBinder binder) {
+        binder.setAutoGrowCollectionLimit(1024);
     }
 
 
