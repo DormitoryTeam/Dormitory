@@ -79,7 +79,8 @@ var room_contracts = {};
 <c:forEach var="room" items="${dormitory['rooms']}">
 	var contracts = [];
 	<c:forEach var="contractPrice" items="${room['contractPrice']}">
-		var contract = {"id": ${contractPrice['contractId']}, "name": "${contractPrice['contract']}", "salePrice": ${contractPrice['salePrice']}, "currency": "${contractPrice['currency']}", "roomName": "${room['name']}", "roomType": "${room['roomType']}"};
+		//var contract = {"id": ${contractPrice['contractId']}, "name": "${contractPrice['contract']}", "salePrice": ${contractPrice['salePrice']}, "currency": "${contractPrice['currency']}", "roomName": "${room['name']}", "roomType": "${room['roomType']}"};
+		var contract = {"id": ${contractPrice['contractId']}, "name": "${contractPrice['contract']}", "salePrice": ${contractPrice['salePrice']}, "currency": "${contractPrice['currency']}", "roomName": "${room['name']}"};
 		contracts.push(contract);
 	</c:forEach>
 	room_contracts["${room['id']}"] = contracts;

@@ -14,7 +14,7 @@
 				<dt>
 					<select id="selectQuickRoom">
 						<c:forEach var="room" items="${dormitory['rooms']}">
-							<option value="${room['id']}">${room['name']}</option>
+							<option value="${room['id']}">${room['roomType']}</option>
 						</c:forEach>
 					</select>
 				</dt>
@@ -36,7 +36,7 @@
 				</dt>
 			</dl>
 		</fieldset>
-		<p id="quickRoomNamePreview">${dormitory['rooms'][0]['roomType']}</p>
+		<p id="quickRoomNamePreview">${dormitory['rooms'][0]['name']}</p>
 		<input type="button" class="btn-quick" value="快速预定" ${empty dormitory['rooms'] ? 'disabled' : ''} userId="${userId}" hasOrder="${hasOrder}" id="expressBooking"/>
 	</form>
 </div>
