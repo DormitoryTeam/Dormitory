@@ -18,6 +18,8 @@ $(function() {
     bindRemoveUploadImageButton();
     $("#sltCountry").bind("change", loadCitiesByCountry);
     $("#sltCity").bind("change", loadCollegesByCity);
+    
+    $(".folding").bind("click", foldingDormitoryDetails);
 });
 
 function loadCitiesByCountry() {
@@ -87,4 +89,17 @@ function appendLastestImagePreview(data) {
         row.append($('<td>').html("<input type=\"button\" value=\"删除\" class=\"btnRemove\" fileName=\"" + e.name + "\" />"));
         $("#uploaded-files").append(row)
     });
+}
+
+function foldingDormitoryDetails(e) {
+	var target = $(e.target);
+	var rows = target.closest("tbody").find("tr.need_folding");
+	var parentRow = target.parent();
+	if(parentRow.attr("status") == "expand") {
+		parentRow.attr("status", "collapse");
+		rows.hide();
+	} else if(parentRow.attr("status") == "collapse") {
+		parentRow.attr("status", "expand");
+		rows.show();
+	}
 }

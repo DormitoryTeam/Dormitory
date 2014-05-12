@@ -11,9 +11,13 @@
 <script type="text/javascript" src="<c:url value='/js/jquery/jquery.fileupload.js' />"></script>
 <script type="text/javascript" src="<c:url value='/bootstrap/js/bootstrap.min.js' />"></script>
 <link type="text/css" rel="stylesheet" href="<c:url value='/bootstrap/css/bootstrap.css' />" />
+<style type="text/css">
+	input[type="text"] { height: 30px; width: 180px;}
+	select {width: 150px;}
+</style>
 <link type="text/css" rel="stylesheet" href="<c:url value='/style/dropzone.css' />" />
 <link href="css/dropzone.css" type="text/css" rel="stylesheet" />
-<title></title>
+<title>公寓编辑</title>
 </head>
 <body>
 	<br />
@@ -126,10 +130,11 @@
 			</table>
 		</c:if>
 
-		<table class="table table-hover table-bordered" style="width:1000px">
-			<tbody>
-				<c:set var="contractCount" value="${fn:length(contractTypes)}" />
-				<c:forEach var="roomType" items="${roomTypes}" varStatus="i">
+		<c:set var="contractCount" value="${fn:length(contractTypes)}" />
+		<input type="hidden" id="contractCount" value="${contractCount}" />
+		<c:forEach var="roomType" items="${roomTypes}" varStatus="i">
+			<table class="table table-hover table-bordered">
+				<tbody>
 					<c:set var="curRoom" value="${emptyRoom}" />
 					<c:forEach var="room" items="${dormitory['rooms']}">
 						<c:if test="${roomType['id'] eq room['roomTypeId']}">
@@ -138,7 +143,7 @@
 					</c:forEach>
 					
 					<tr class="success">
-						<td>房间类型</td>
+						<td>${roomType['name']}</td>
 						<td>房间状态*</td>
 						<td>房间名称*</td>
 						<td>入住时间*</td>
@@ -149,7 +154,7 @@
 						<td>可提供语言宿舍</td>
 					</tr>
 					<tr>
-						<th rowspan="${contractCount+2}">${roomType['name']}</th>
+						<th rowspan="${contractCount+2}"></th>
 						<td>
 							<input type="hidden" name="rooms[${i['index']}].dormitoryId" value="${empty dormitory['id'] ? 0 : dormitory['id']}" />
 							<input type="hidden" name="rooms[${i['index']}].id" value="${curRoom['id']}" />
@@ -187,7 +192,7 @@
 							<option value="true"  ${ curRoom['roomLanguageArrange'] ? 'selected' : ''}>Yes</option>
 						</select></td>
 					</tr>
-					<tr class="warning">
+					<tr class="warning folding" status="collapse">
 						<td>入住周期</td>
 						<td>房间状态*</td>
 						<td>货币类型*</td>
@@ -201,7 +206,7 @@
 								<c:set var="curPrice" value="${price}" />
 							</c:if>
 						</c:forEach>
-						<tr>
+						<tr class="need_folding" style="display: none;">
 							<td>${contract['name']}
 								<input type="hidden" name="prices[${contractCount*i['index']+j['index']}].id" value="${curPrice['id']}" />
 								<input type="hidden" name="prices[${contractCount*i['index']+j['index']}].roomInfoId" value="${curRoom['id']}" />
@@ -213,9 +218,9 @@
 							<td><input type="text" name="prices[${contractCount*i['index']+j['index']}].salePrice" value="${empty curPrice['salePrice'] ? 0.0 : curPrice['salePrice']}" /></td>
 						</tr>
 					</c:forEach>
-				</c:forEach>
-			</tbody>
-		</table>
+				</tbody>
+			</table>
+		</c:forEach>
 
 		<hr />
 		<input type="submit" value="提交" /> <a href="${backURL}">Back to list</a>
