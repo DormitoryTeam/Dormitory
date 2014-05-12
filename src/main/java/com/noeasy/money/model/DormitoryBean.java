@@ -97,6 +97,10 @@ public class DormitoryBean extends BaseBean {
 
     private String             mFeature;
 
+    private String             mCompanyId;
+
+    private String             mCompany;
+
 
 
     /**
@@ -149,6 +153,24 @@ public class DormitoryBean extends BaseBean {
      */
     public int getCollegeId() {
         return mCollegeId;
+    }
+
+
+
+    /**
+     * @return the company
+     */
+    public String getCompany() {
+        return mCompany;
+    }
+
+
+
+    /**
+     * @return the companyId
+     */
+    public String getCompanyId() {
+        return mCompanyId;
     }
 
 
@@ -407,6 +429,26 @@ public class DormitoryBean extends BaseBean {
      */
     public void setCollegeId(final int pCollegeId) {
         mCollegeId = pCollegeId;
+    }
+
+
+
+    /**
+     * @param pCompany
+     *            the company to set
+     */
+    public void setCompany(final String pCompany) {
+        mCompany = pCompany;
+    }
+
+
+
+    /**
+     * @param pCompanyId
+     *            the companyId to set
+     */
+    public void setCompanyId(final String pCompanyId) {
+        mCompanyId = pCompanyId;
     }
 
 

@@ -77,13 +77,16 @@
 		t1.status dor_status,
 		t2.name dor_city,
 		ifnull(order_count.dormitory_order_count, 0),
-		coalesce(avg(t3.score), 0) rating
+		coalesce(avg(t3.score), 0) rating,
 		<if test="collegeId != null">
-			,ifnull(t8.distance, 0) as distance
+			ifnull(t8.distance, 0) as distance,
 		</if>
+		t9.id dor_companyId,
+		t9.name dor_company
 		from
 		dormitory t1
-		left join view_dormitory_order_count as order_count on order_count.dormitory_id = t1.id
+		left join 
+		view_dormitory_order_count as order_count on order_count.dormitory_id = t1.id
 		left join
 		city t2 on t2.id = t1.city_id
 		left outer join
@@ -92,6 +95,8 @@
 			left join
 			distance_result t8 on t8.dormitory_id = t1.id and t8.college_id = #{collegeId}
 		</if>
+		left join 
+		company t9 on t1.company_id = t9.id
 		<include refid="where" />
 		<if test="id != null">
 			<include refid="where-with-id" />
@@ -179,10 +184,12 @@
 		t5.salePrice rp_salePrice,
 		t5.status rp_status,
 		t6.name ri_roomType,
-		t7.name rp_contract
+		t7.name rp_contract,
 		<if test="collegeId != null">
-			,ifnull(t8.distance, 0) as distance
+			ifnull(t8.distance, 0) as distance,
 		</if>
+		t9.id dor_companyId,
+		t9.name dor_company
 		from
 		dormitory t1
 		left join
@@ -203,6 +210,8 @@
 			left join
 			distance_result t8 on t8.dormitory_id = t1.id and t8.college_id = #{collegeId}
 		</if>
+		left join
+		company t9 on t1.company_id = t9.id
 		<include refid="where" />
 		<if test="id != null">
 			<include refid="where-with-id" />
@@ -299,13 +308,17 @@
 		t1.city_id dor_cityId,
 		t1.status dor_status,
 		t2.name dor_city,
-		coalesce(avg(t3.score), 0) rating
+		coalesce(avg(t3.score), 0) rating,
+		t9.id dor_companyId,
+		t9.name dor_company
 		from
 		dormitory t1
 		left join
 		city t2 on t2.id = t1.city_id
 		left outer join
 		dormitory_rating t3 on t3.dormitory_id = t1.id
+		left join
+		company t9 on t1.company_id = t9.id
 		<include refid="where" />
 		and t1.id = #{id}
 	</select>
@@ -790,6 +803,8 @@
 		<result property="feature" column="dor_feature" />
 		<result property="cityId" column="dor_cityId" />
 		<result property="city" column="dor_city" />
+		<result property="companyId" column="dor_companyId" />
+		<result property="company" column="dor_company" />
 		<result property="distance" column="distance" />
 		<result property="rating" column="rating" />
 		<result property="status" column="dor_status" />

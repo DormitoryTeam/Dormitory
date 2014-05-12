@@ -10,9 +10,14 @@
 <title></title>
 </head>
 <body>
-	<input type="button" id="btnAdd" value="新建宿舍">
+	<form action="<c:url value="/admin/dormitory/dormitory-management.html"/>" method="get">
+		按名字:<input type="text" name="dormitoryName" value="${dormitoryName}" />
+		<input type="submit" id="btnSearchAndSortBy" value="搜索">&nbsp;
+		按城市<input type="radio" class="ckbSortField" name="sortField" value="city_id" <c:if test="${sortField eq 'city_id'}">checked="checked"</c:if> />
+		按公司<input type="radio" class="ckbSortField" name="sortField" value="company_id" <c:if test="${sortField eq 'company_id'}">checked="checked"</c:if> />
+		<input type="button" id="btnAdd" value="新建宿舍">&nbsp;
+	</form>
 	<hr />
-
 	<table style="width:1100px;">
 		<tbody>
 			<c:if test="${not empty dormitories}">
@@ -30,7 +35,7 @@
 									</c:choose>
 								</li>
 								<li>所在城市: ${dormitory['city']}</li>
-								<li>所在公司: ${dormitory['address']}</li>
+								<li>所在公司: ${dormitory['company']}</li>
 								<li>地址邮编: ${dormitory['address']}, ${dormitory['postcode']}</li>
 								<li>设施:${dormitory['equipment']}</li>
 								<li>服务: ${dormitory['service']}</li>
