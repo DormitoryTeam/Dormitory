@@ -1,9 +1,9 @@
 <div class="img-larger-content">
 	<c:if test="${not empty dormitory['picPath']}">
-		<img src="<c:url value='/upload/images/dormitory/${dormitory.id}/${dormitory.picPath[0]}'/>" />
+		<img src="<c:url value='/upload/images/dormitory/${dormitory.id}/${dormitory.picPath[0]}'/>" class="popup-preview" />
 	</c:if>
 	<c:if test="${empty dormitory['picPath']}">
-		<img src="<c:url value='/img/house/house-larger.jpg'/>" />
+		<img src="<c:url value='/img/house/house-larger.jpg'/>" class="popup-preview" />
 	</c:if>
 </div>
 

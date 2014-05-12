@@ -119,7 +119,14 @@ $(function() {
 	$(".auto-height-textarea").each(function(i, e) {
 		$(e).css("height", this.scrollHeight);
 	});
-
+	$("#review-popup-close").click(function() {
+		$("#mask").hide();
+		$("#preview-popup").hide();
+	});
+	$(".popup-preview").click(function() {
+		var src = $(this).attr("src");
+		showImgPopup(src);
+	}); 
 	initialize();
 });
 
@@ -131,7 +138,7 @@ function initialize() {
 	
 	var mapOptions = {
 		center : dormitoryLatlng,
-		zoom : 13,
+		zoom : 12,
 		mapTypeId : google.maps.MapTypeId.ROADMAP,
 		scaleControl : true,
 		scaleControlOptions : {
@@ -167,4 +174,10 @@ function checkCustomHasLogin() {
 		$("#arcPopLogin").click();
 	}
 	return !(userId == "");
+}
+
+function showImgPopup(src) {
+	$("#preview-img").attr("src", src);
+	$("#mask").show();
+	$("#preview-popup").show();
 }

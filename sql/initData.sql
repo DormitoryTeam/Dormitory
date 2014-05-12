@@ -3096,6 +3096,13 @@ insert into contract_type (id, name) values(31,'51周零1天');
 insert into contract_type (id, name) values(32,'51周零2天');
 insert into contract_type (id, name) values(33,'52周');
 
+-- airport --
+insert into airport(id, country_id, name) values(1, 1, 'Heathrow Airport');
+insert into airport(id, country_id, name) values(2, 1, 'Gatwick Airport');
+insert into airport(id, country_id, name) values(3, 1, 'Edinburgh Airport');
+insert into airport(id, country_id, name) values(4, 1, 'Manchester Airport');
+insert into airport(id, country_id, name) values(5, 1, 'Leeds Bradford International Airport');
+insert into airport(id, country_id, name) values(6, 1, 'Birmingham International Airport');
 
 update college set status = '1';
 update dormitory set create_time = now(), update_time = now();
@@ -3109,4 +3116,5 @@ update dormitory set status='NO_VACANCY' where status = '0';
 update dormitory set status='INVISIBILITY' where status = '-1';
 update room_info set status = '0' where status='13';
 update room_info set status = '13' where status='14';
+update airport set status = '1';
 commit;
