@@ -93,7 +93,7 @@ function appendLastestImagePreview(data) {
 
 function foldingDormitoryDetails(e) {
 	var target = $(e.target);
-	var rows = target.closest("tbody").find("tr.need_folding");
+	var rows = target.closest("tbody").find("tr:not(.folding)");
 	var parentRow = target.parent();
 	if(parentRow.attr("status") == "expand") {
 		parentRow.attr("status", "collapse");

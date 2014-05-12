@@ -142,7 +142,7 @@
 						</c:if>
 					</c:forEach>
 					
-					<tr class="success">
+					<tr class="success folding" status="collapse">
 						<td>${roomType['name']}</td>
 						<td>房间状态*</td>
 						<td>房间名称*</td>
@@ -153,7 +153,7 @@
 						<td>可否安排朝向</td>
 						<td>可提供语言宿舍</td>
 					</tr>
-					<tr>
+					<tr style="display: none;">
 						<th rowspan="${contractCount+2}"></th>
 						<td>
 							<input type="hidden" name="rooms[${i['index']}].dormitoryId" value="${empty dormitory['id'] ? 0 : dormitory['id']}" />
@@ -192,7 +192,7 @@
 							<option value="true"  ${ curRoom['roomLanguageArrange'] ? 'selected' : ''}>Yes</option>
 						</select></td>
 					</tr>
-					<tr class="warning folding" status="collapse">
+					<tr style="display: none;" class="warning">
 						<td>入住周期</td>
 						<td>房间状态*</td>
 						<td>货币类型*</td>
@@ -206,7 +206,7 @@
 								<c:set var="curPrice" value="${price}" />
 							</c:if>
 						</c:forEach>
-						<tr class="need_folding" style="display: none;">
+						<tr style="display: none;">
 							<td>${contract['name']}
 								<input type="hidden" name="prices[${contractCount*i['index']+j['index']}].id" value="${curPrice['id']}" />
 								<input type="hidden" name="prices[${contractCount*i['index']+j['index']}].roomInfoId" value="${curRoom['id']}" />
