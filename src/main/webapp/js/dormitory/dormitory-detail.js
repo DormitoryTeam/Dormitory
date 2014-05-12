@@ -25,20 +25,20 @@ $(function() {
 		});
 		$("#selectQuickContract").empty().append(contractOptions).simSelect();
 		$("#quickPricePreview").html(contracts[0].currency + " " + contracts[0].salePrice);
-		$("#quickRoomNamePreview").html(contracts[0].roomType);
+		$("#quickRoomNamePreview").html(contracts[0].roomName);
 	});
-
+	
 	$("#selectQuickContract").change(function(e) {
 		var contracts = room_contracts[$("#selectQuickRoom").val()];
 		$.each(contracts, function(i, e) {
-			if (e.id == $("#selectQuickContract").val()) {
+			if(e.id == $("#selectQuickContract").val()) {
 				$("#quickPricePreview").html(e.currency + " " + e.salePrice);
-				$("#quickRoomNamePreview").html(e.roomType);
+				$("#quickRoomNamePreview").html(e.roomName);
 				return false;
 			}
 		});
 	});
-
+	
 	$(".btn-quick").on('click', function(e) {
 		$("#quickRoomInfoId").val($("#selectQuickRoom").val());
 		$("#quickContractId").val($("#selectQuickContract").val());
