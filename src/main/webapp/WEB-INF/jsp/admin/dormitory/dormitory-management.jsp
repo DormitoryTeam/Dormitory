@@ -25,23 +25,23 @@
 					<tr>
 						<td>
 							<ul>
-								<li>宿舍名称: ${dormitory['name']} &nbsp; 
+								<li><span style="font-weight: bolder">宿舍名称:</span> ${dormitory['name']} &nbsp; 
 									<input type="button" class="btnEdit" dormitoryId="${dormitory['id']}" value="编辑宿舍" /></li>
-								<li>状态: 
+								<li><span style="font-weight: bolder">状态:</span> 
 									<c:choose>
 										<c:when test="${dormitory['status'] eq 'HAS_VACANCY'}">可预订</c:when>
 										<c:when test="${dormitory['status'] eq 'NO_VACANCY'}">不可预订</c:when>
 										<c:when test="${dormitory['status'] eq 'INVISIBILITY'}">隐藏</c:when>
 									</c:choose>
 								</li>
-								<li>所在城市: ${dormitory['city']}</li>
-								<li>所在公司: ${dormitory['company']}</li>
-								<li>地址邮编: ${dormitory['address']}, ${dormitory['postcode']}</li>
-								<li>设施:${dormitory['equipment']}</li>
-								<li>服务: ${dormitory['service']}</li>
-								<li>优惠: ${dormitory['promotion']}</li>
-								<li>附加费用: ${dormitory['additionalPrice']}</li>
-								<li>拥有房型个数: ${fn:length(dormitory['rooms'])}</li>
+								<li><span style="font-weight: bolder">所在城市:</span> ${dormitory['city']}</li>
+								<li><span style="font-weight: bolder">所属公司:</span> ${dormitory['company']}</li>
+								<li><span style="font-weight: bolder">地址邮编:</span> ${dormitory['address']}, ${dormitory['postcode']}</li>
+								<li><span style="font-weight: bolder">设施:</span> ${dormitory['equipment']}</li>
+								<li><span style="font-weight: bolder">服务:</span> ${dormitory['service']}</li>
+								<li><span style="font-weight: bolder">优惠:</span> ${dormitory['promotion']}</li>
+								<li><span style="font-weight: bolder">附加费用:</span> ${dormitory['additionalPrice']}</li>
+								<li><span style="font-weight: bolder">拥有房型个数:</span> ${fn:length(dormitory['rooms'])}</li>
 							</ul>
 							<hr />
 						</td>

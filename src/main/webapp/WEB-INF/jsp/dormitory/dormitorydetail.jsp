@@ -41,7 +41,7 @@
 					</div>
 				</div>
 			</div>
-			<span class="xubox_setwin"><a style="background-attachment: scroll; background-clip: border-box; background-color: rgba(0, 0, 0, 0); background-image: url(/img/xubox_ico0.png); background-origin: padding-box; background-position: -60px -195px; background-size: auto; color: rgb(54, 54, 54); cursor: pointer; display: block; font-family: 微软雅黑; font-size: 0px; font-style: normal; font-variant: normal; font-weight: normal; height: 30px; line-height: 0px; margin-left: 0px; overflow-x: hidden; overflow-y: hidden; position: absolute; right: -28px; text-decoration: none solid rgb(54, 54, 54); top: -28px; vertical-align: top; width: 30px;" href="javascript:;" style=""></a></span>
+			<span class="xubox_setwin"><a id="review-popup-close" style="background-attachment: scroll; background-clip: border-box; background-color: rgba(0, 0, 0, 0); background-image: url(/img/xubox_ico0.png); background-origin: padding-box; background-position: -60px -195px; background-size: auto; color: rgb(54, 54, 54); cursor: pointer; display: block; font-size: 0px; font-style: normal; font-variant: normal; font-weight: normal; height: 30px; line-height: 0px; margin-left: 0px; overflow-x: hidden; overflow-y: hidden; position: absolute; right: -28px; text-decoration: none solid rgb(54, 54, 54); top: -28px; vertical-align: top; width: 30px;" href="javascript:;" style=""></a></span>
 			<span class="xubox_botton"></span>
 		</div>
 	</div>

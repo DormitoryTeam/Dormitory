@@ -25,7 +25,7 @@ $(function() {
 function loadCitiesByCountry() {
     $.ajax({
         type : "POST",
-        url : ctx + "/navigation/getCity.html",
+        url : "/navigation/getCity.html",
         data : {
             countryId : this.value
         },
@@ -39,7 +39,7 @@ function loadCitiesByCountry() {
 function loadCollegesByCity() {
     $.ajax({
         type : "POST",
-        url : ctx + "/navigation/getCollege.html",
+        url : "/navigation/getCollege.html",
         data : {
             cityId : this.value
         },
@@ -82,7 +82,7 @@ function removeFileFromSubmitForm() {
 
 function appendLastestImagePreview(data) {
     $.each(data.result, function(i, e) {
-        var imageURL = ctx + "/upload/images/dormitory/" + $("#hidDormitoryId").val() + "/" + e.name;
+        var imageURL = "/upload/images/dormitory/" + $("#hidDormitoryId").val() + "/" + e.name;
         var row = $('<tr>');
         row.append($('<td>').html("<input type=\"text\" name=\"imageNames\" class=\"fileNames\" value=\"" + e.name + "\" />"));
         row.append($('<td>').html("<a href='" + imageURL + "'><img src='" + imageURL + "' /></a>"));

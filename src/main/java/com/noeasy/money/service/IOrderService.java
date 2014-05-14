@@ -91,7 +91,7 @@ public interface IOrderService {
 
     OrderBean findPickupOrderById(Integer pId);
     
-    boolean hasOrder(UserBean user, OrderType type);
+//    boolean hasOrder(UserBean user, OrderType type);
 
 
 

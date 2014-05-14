@@ -528,15 +528,15 @@ public class OrderController {
                 Integer userId = ServletUtils.getUserId(pRequest);
                 UserBean user = new UserBean();
                 user.setId(userId);
-                boolean hasOrder = false;
-                if (isDormitoryOrder(pRequest)) {
-                    hasOrder = orderService.hasOrder(user, OrderType.DORMITORY);
-                } else {
-                    hasOrder = orderService.hasOrder(user, OrderType.PICKUP);
-                }
-                if (hasOrder) {
-                    throw new RuntimeException("One user One order.");
-                }
+//                boolean hasOrder = false;
+//                if (isDormitoryOrder(pRequest)) {
+//                    hasOrder = orderService.hasOrder(user, OrderType.DORMITORY);
+//                } else {
+//                    hasOrder = orderService.hasOrder(user, OrderType.PICKUP);
+//                }
+//                if (hasOrder) {
+//                    throw new RuntimeException("One user One order.");
+//                }
             }
             
             order = new OrderBean();
@@ -611,11 +611,11 @@ public class OrderController {
             }
             belongsTo = user;
             placer = user;
-            if (orderService.hasOrder(user, orderType)) {
-                if (!orderService.belongsTo(user, order)) {
-                    throw new RuntimeException("One user One orde");
-                }
-            }
+//            if (orderService.hasOrder(user, orderType)) {
+//                if (!orderService.belongsTo(user, order)) {
+//                    throw new RuntimeException("One user One orde");
+//                }
+//            }
             ServletUtils.setUser2Session(pRequest, user);
             // TODO: rollback
         }
@@ -753,17 +753,17 @@ public class OrderController {
     @ResponseBody
     public String hasOrder(final HttpServletRequest request, final HttpServletResponse response, final String login) {
         UserBean user = userService.findUserByLogin(login);
-        if (null != user) {
-            if (isDormitoryOrder(request)) {
-                if (orderService.hasOrder(user, OrderType.DORMITORY)) {
-                    return "{\"result\": true}";
-                }
-            } else {
-                if (orderService.hasOrder(user, OrderType.PICKUP)) {
-                    return "{\"result\": true}";
-                }
-            }
-        }
+//        if (null != user) {
+//            if (isDormitoryOrder(request)) {
+//                if (orderService.hasOrder(user, OrderType.DORMITORY)) {
+//                    return "{\"result\": true}";
+//                }
+//            } else {
+//                if (orderService.hasOrder(user, OrderType.PICKUP)) {
+//                    return "{\"result\": true}";
+//                }
+//            }
+//        }
         return "{\"result\": false}";
     }
 

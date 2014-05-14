@@ -188,9 +188,9 @@ public class NavigationController {
         }
         if (userId > 0) {
             UserBean user = userService.findUserById(userId);
-            boolean hasPickupOrder = orderService.hasOrder(user, OrderType.PICKUP);
+//            boolean hasPickupOrder = orderService.hasOrder(user, OrderType.PICKUP);
             model.addAttribute("user", user);
-            model.addAttribute("hasPickupOrder", hasPickupOrder);
+//            model.addAttribute("hasPickupOrder", hasPickupOrder);
         }
 
         List<Map<String, Object>> countries = navigationService.queryCountries();

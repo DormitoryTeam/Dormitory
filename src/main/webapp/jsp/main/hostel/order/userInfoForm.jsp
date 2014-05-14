@@ -83,7 +83,7 @@
 							<c:if test="${null == email}">
 							<c:set var="email" value="${user.login}" />
 							</c:if>
-							<input id="login" name="email" type="text" class="long validate" errorFieldName="电子邮件" value="${email}" <c:if test="${ not empty email}">readonly</c:if> /> 
+							<input id="login" name="email" type="text" class="long validate" errorFieldName="电子邮件" value="${email}" /> 
 						</dd>
 					</dl>
 					<dl>

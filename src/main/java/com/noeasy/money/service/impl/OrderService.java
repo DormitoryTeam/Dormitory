@@ -230,11 +230,11 @@ public class OrderService implements IOrderService {
         return orderRepository.findPickupOrderById(pId);
     }
     
-    @Override
-    public boolean hasOrder(UserBean user, OrderType type) {
-        Integer amount = orderRepository.queryUserOrderCount(user, type);
-        return amount >= 1;
-    }
+//    @Override
+//    public boolean hasOrder(UserBean user, OrderType type) {
+//        Integer amount = orderRepository.queryUserOrderCount(user, type);
+//        return amount >= 1;
+//    }
 
 
 

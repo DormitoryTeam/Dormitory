@@ -101,18 +101,18 @@ $(function() {
 	});
 	
 	$("#quickPlaceOrderForm").submit(function() {
-		var hasOrder = $("#expressBooking").attr("hasOrder");
-		var userId = $("#expressBooking").attr("userId");
+		//var hasOrder = $("#expressBooking").attr("hasOrder");
+		//var userId = $("#expressBooking").attr("userId");
 		var disabled = $("#expressBooking").attr("disabled");
 		if (disabled) {
 		return false;
 		}
-		if (userId) {
-			if ('true' == hasOrder) {
-				alert("你只能拥有一个订单，请到个人中心查看。");
-				return false;
-			}
-		}
+		//if (userId) {
+		//	if ('true' == hasOrder) {
+		//		alert("你只能拥有一个订单，请到个人中心查看。");
+		//		return false;
+		//	}
+		//}
 		return true;
 	});
 	

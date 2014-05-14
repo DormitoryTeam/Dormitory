@@ -126,14 +126,14 @@ public class DormitoryController {
                     Map<String, Object> college = navigationService.queryCollegeById(NumberUtils.toInt(collegeId), null);
                     model.addAttribute("college", college);
                 }
-                boolean hasOrder = false;
-                if (null != userId) {
-                    UserBean user = new UserBean();
-                    user.setId(userId);
-                    hasOrder = orderService.hasOrder(user, OrderType.DORMITORY);
-                    
-                }
-                model.addAttribute("hasOrder", hasOrder);
+//                boolean hasOrder = false;
+//                if (null != userId) {
+//                    UserBean user = new UserBean();
+//                    user.setId(userId);
+//                    hasOrder = orderService.hasOrder(user, OrderType.DORMITORY);
+//                    
+//                }
+//                model.addAttribute("hasOrder", hasOrder);
                 model.addAttribute("colleges", colleges);
                 model.addAttribute("relatedDormitories", relatedDormitories);
                 model.addAttribute("dormitory", dormitory);

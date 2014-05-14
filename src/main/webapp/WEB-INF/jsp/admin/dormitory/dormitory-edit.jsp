@@ -29,7 +29,11 @@
 					<td>宿舍状态:*</td>
 					<td><select name="status">
 							<c:forEach var="status" items="${allDormitoryStatus}">
-								<option value="${status['name']}" ${status eq dormitory['status'] ? 'selected' : ''}>${status['name']}</option>
+								<option value="${status['name']}" ${status eq dormitory['status'] ? 'selected' : ''}>
+								<c:if test="${'NO_VACANCY' eq status['name']}">已订满</c:if>
+								<c:if test="${'HAS_VACANCY' eq status['name']}">可预订</c:if>
+								<c:if test="${'INVISIBILITY' eq status['name']}">不可见</c:if>
+								</option>
 							</c:forEach>
 						</select>
 					</td>
