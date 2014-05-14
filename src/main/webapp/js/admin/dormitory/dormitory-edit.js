@@ -30,7 +30,7 @@ function loadCitiesByCountry() {
             countryId : this.value
         },
         success : function(data) {
-            renderOption("sltCity", data);
+            renderOption("sltCity", data, 'name');
         }
     });
 
@@ -44,17 +44,17 @@ function loadCollegesByCity() {
             cityId : this.value
         },
         success : function(data) {
-            renderOption("sltCollege", data);
+            renderOption("sltCollege", data, 'originalName');
         }
     });
 }
 
-function renderOption(selectId, data) {
+function renderOption(selectId, data, textName) {
     var select = $("#" + selectId).empty();
     var jsonObject = $.parseJSON(data);
     if (jsonObject != null) {
         $.each(jsonObject, function(i, e) {
-            select.append("<option value='" + e.id + "'>" + e.name + "</option>");
+            select.append("<option value='" + e.id + "'>" + e[textName] + "</option>");
         })
         if (select.find("option").length <= 0) {
             select.append("<option value='0'>no valid result</option>");
