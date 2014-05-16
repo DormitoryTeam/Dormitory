@@ -27,12 +27,12 @@
 		
 		<div class="container">
 			<div class="hero-unit">
-				文章标题:<input type="text" name="title" value="${article['title']}" />&nbsp;
-				<select name="type">
+				文章标题&nbsp;<input type="text" name="title" value="${article['title']}" /><br />
+				文章类型&nbsp;<select name="type">
 					<option value="1" ${article['type'] eq 1 ? 'selected' : ''}>新闻</option>
 					<option value="2" ${article['type'] eq 2 ? 'selected' : ''}>去旅行</option>
-				</select>
-				<select name="status">
+				</select><br />
+				文章状态&nbsp;<select name="status">
 					<option value="0" ${0 eq article['status'] ? 'selected' : ''}>不展示</option>
 					<option value="1" ${1 eq article['status'] ? 'selected' : ''}>展示</option>
 				</select> 
