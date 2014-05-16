@@ -45,7 +45,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -87,7 +86,8 @@ public class AdminDormitoryController {
 
     @RequestMapping("dormitory-save" + Constants.URL_SUFFIX)
     public String dormitoryUpdate(final HttpServletRequest request, final HttpServletResponse response,
-            final Model model, final DormitoryBean dormitory, final AdminDormitoryParamVector paramVector) {
+            final Model model, final DormitoryBean dormitory, final AdminDormitoryParamVector paramVector,
+            final String backURL) {
 
         int roomTypeCount = ((List) request.getSession().getServletContext().getAttribute("roomTypes")).size();
         int contractCount = ((List) request.getSession().getServletContext().getAttribute("contractTypes")).size();
@@ -113,7 +113,21 @@ public class AdminDormitoryController {
         fileUtils.removeInvalidFiles(fileUtils.createUploadDormitoryImageFolder(dormitory.getId()),
                 dormitory.getPicPath());
 
-        return "admin/dormitory/dormitory-edit-result";
+        List<Map<String, Object>> countries = navigationService.queryCountries();
+        Map<String, Object> currentCountry = navigationService.queryCountryByCityId(dormitory.getCityId());
+        List<Map<String, Object>> cities = navigationService.queryCitiesInSameCountry(dormitory.getCityId());
+        List<Map<String, Object>> companies = navigationService.queryCompanies();
+
+        model.addAttribute("dormitory", dormitory);
+        model.addAttribute("backURL", backURL);
+        model.addAttribute("countries", countries);
+        model.addAttribute("currentCountry", currentCountry);
+        model.addAttribute("cities", cities);
+        model.addAttribute("companies", companies);
+        model.addAttribute("emptyRoom", new RoomInfoBean());
+        model.addAttribute("emptyPrice", new RoomPrice());
+        model.addAttribute("emptyDormitory", new DormitoryBean());
+        return "admin/dormitory/dormitory-edit";
     }
 
 
@@ -150,15 +164,14 @@ public class AdminDormitoryController {
         if (CollectionUtils.isNotEmpty(countries)) {
             Integer firstCountryId = (Integer) countries.get(0).get("id");
             List<Map<String, Object>> cities = navigationService.queryCities(firstCountryId);
-            Integer firstCityId = NumberUtils.toInt(cities.get(0).get("id").toString());
-            List<Map<String, Object>> colleges = navigationService.queryColleges(firstCityId);
             List<Map<String, Object>> contractTypes = dormitoryService.queryContractTypes();
             List<Map<String, Object>> dormitoryTypes = dormitoryService.queryRoomTypes();
+            List<Map<String, Object>> companies = navigationService.queryCompanies();
 
             model.addAttribute("backURL", backURL);
             model.addAttribute("countries", countries);
             model.addAttribute("cities", cities);
-            model.addAttribute("colleges", colleges);
+            model.addAttribute("companies", companies);
             model.addAttribute("contractTypes", contractTypes);
             model.addAttribute("dormitoryTypes", dormitoryTypes);
             model.addAttribute("emptyRoom", new RoomInfoBean());
@@ -181,14 +194,14 @@ public class AdminDormitoryController {
             List<Map<String, Object>> countries = navigationService.queryCountries();
             Map<String, Object> currentCountry = navigationService.queryCountryByCityId(dormitory.getCityId());
             List<Map<String, Object>> cities = navigationService.queryCitiesInSameCountry(dormitory.getCityId());
-            List<Map<String, Object>> colleges = navigationService.queryColleges(dormitory.getCityId());
+            List<Map<String, Object>> companies = navigationService.queryCompanies();
 
             model.addAttribute("dormitory", dormitory);
             model.addAttribute("backURL", backURL);
             model.addAttribute("countries", countries);
             model.addAttribute("currentCountry", currentCountry);
             model.addAttribute("cities", cities);
-            model.addAttribute("colleges", colleges);
+            model.addAttribute("companies", companies);
             model.addAttribute("emptyRoom", new RoomInfoBean());
             model.addAttribute("emptyPrice", new RoomPrice());
             model.addAttribute("emptyDormitory", new DormitoryBean());

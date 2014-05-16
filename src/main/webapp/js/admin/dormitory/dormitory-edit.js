@@ -25,7 +25,7 @@ $(function() {
 function loadCitiesByCountry() {
     $.ajax({
         type : "POST",
-        url : "/navigation/getCity.html",
+        url : "/dormitory/navigation/getCity.html",
         data : {
             countryId : this.value
         },
@@ -39,12 +39,11 @@ function loadCitiesByCountry() {
 function loadCollegesByCity() {
     $.ajax({
         type : "POST",
-        url : "/navigation/getCollege.html",
+        url : "/dormitory/navigation/getCollege.html",
         data : {
             cityId : this.value
         },
         success : function(data) {
-            renderOption("sltCollege", data, 'originalName');
         }
     });
 }

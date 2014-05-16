@@ -330,33 +330,39 @@
 			postcode = #{postcode},
 			equipment = #{equipment},
 			service = #{service},
+			additionalPrice = #{additionalPrice},
 			weekPrice = #{weekPrice},
 			salePrice = #{salePrice},
 			latitude = #{latitude},
 			longitude = #{longitude},
 			currency = #{currency},
 			description = #{description},
+			promotion = #{promotion},
 			refund = #{refund},
 			question = #{question},
 			feature = #{feature},
 			city_id = #{cityId},
+			company_id = #{companyId},
 			status = #{status}
 		where id = #{id}
 	</update>
 
 	<insert id="saveDormitory" keyProperty="id" useGeneratedKeys='true' parameterType="com.noeasy.money.model.DormitoryBean">
-		insert into dormitory (city_id, name, address, postcode, weekPrice, salePrice, currency, latitude, longitude, equipment, service, description, refund, question, feature, status) values (
+		insert into dormitory (city_id, company_id, name, address, postcode, additionalPrice, weekPrice, salePrice, currency, latitude, longitude, equipment, service, description, promotion, refund, question, feature, status) values (
 			#{cityId,javaType=int,jdbcType=INTEGER},
+			#{companyId,javaType=int,jdbcType=INTEGER},
 			#{name,javaType=String,jdbcType=VARCHAR},
 			#{address,javaType=String,jdbcType=VARCHAR},
 			#{postcode,javaType=String,jdbcType=VARCHAR},
+			#{additionalPrice,javaType=Double,jdbcType=DECIMAL},
 			#{weekPrice,javaType=Double,jdbcType=DECIMAL},
 			#{salePrice,javaType=Double,jdbcType=DECIMAL},
 			#{currency,javaType=String,jdbcType=VARCHAR},
 			#{latitude,javaType=Double,jdbcType=INTEGER},
 			#{longitude,javaType=Double,jdbcType=INTEGER},
-			#{equipment,javaType=int,jdbcType=INTEGER},
-			#{service,javaType=int,jdbcType=INTEGER},
+			#{equipment,javaType=int,jdbcType=VARCHAR},
+			#{service,javaType=int,jdbcType=VARCHAR},
+			#{promotion,javaType=int,jdbcType=INTEGER},
 			#{description,javaType=String,jdbcType=VARCHAR},
 			#{refund,javaType=String,jdbcType=VARCHAR},
 			#{question,javaType=String,jdbcType=VARCHAR},

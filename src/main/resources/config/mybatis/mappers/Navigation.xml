@@ -13,6 +13,10 @@
 		</if>
 		order by id;
 	</select>
+	
+	<select id="queryCompanies" resultType="hashmap" parameterType="java.util.Map">
+		select id, name from company
+	</select>
 
 	<select id="queryCity" resultType="hashmap" parameterType="java.util.Map">
 		select id, country_id as countryId, name, name_ch, topCity, status
@@ -36,13 +40,12 @@
 		</if>
 		order by country_id
 	</select>
+	
 	<select id="queryAirprotById" resultType="hashmap" parameterType="java.util.Map">
 		select id, country_id as countryId, name, status
 		from airport
 		where id = #{id}
 	</select>
-	
-	
 
 	<select id="queryCollege" resultType="hashmap" parameterType="java.util.Map">
 		select college.id, college.city_id as cityId, college.name, college.original_name originalName, college.status, college.latitude, college.longitude, college.topCollege

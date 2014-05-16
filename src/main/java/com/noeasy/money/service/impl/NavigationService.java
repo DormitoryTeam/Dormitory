@@ -61,6 +61,20 @@ public class NavigationService implements INavigationService {
 
 
 
+    @Override
+    public List<Map<String, Object>> queryAirports(final int pCountryId) {
+        return navigationRepository.queryAirports(pCountryId);
+    }
+
+
+
+    @Override
+    public Map<String, Object> queryAirprotById(final Integer pCountryId) {
+        return navigationRepository.queryAirprotById(pCountryId);
+    }
+
+
+
     /**
      * @see com.noeasy.money.service.INavigationService#queryCities()
      */
@@ -154,6 +168,16 @@ public class NavigationService implements INavigationService {
 
 
     /**
+     * @see com.noeasy.money.service.INavigationService#queryCompanies()
+     */
+    @Override
+    public List<Map<String, Object>> queryCompanies() {
+        return navigationRepository.queryCompanies();
+    }
+
+
+
+    /**
      * @see com.noeasy.money.service.INavigationService#queryCountries()
      */
     @Override
@@ -181,11 +205,7 @@ public class NavigationService implements INavigationService {
         return navigationRepository.queryCountryById(pCountryId);
     }
 
-    @Override
-    public Map<String, Object> queryAirprotById(final Integer pCountryId) {
-        return navigationRepository.queryAirprotById(pCountryId);
-    }
-    
+
 
     /**
      * @see com.noeasy.money.service.INavigationService#queryFlightByConditions(java.lang.Integer,
@@ -205,13 +225,6 @@ public class NavigationService implements INavigationService {
      */
     public void setNavigationRepository(final INavigationRepository pNavigationRepository) {
         navigationRepository = pNavigationRepository;
-    }
-
-
-
-    @Override
-    public List<Map<String, Object>> queryAirports(int pCountryId) {
-        return navigationRepository.queryAirports(pCountryId);
     }
 
 }
