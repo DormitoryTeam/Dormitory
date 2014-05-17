@@ -8,7 +8,7 @@ $(function() {
 	});
 	
 	$("#sameas").click(function() {
-		if(!$(this).parent().hasClass("fchecked")) {
+		if($("#sameas:checked").length > 0) {
 			$(".same-as").each(function(i, e) {
 				var id = $(e).attr("id");
 				var value = $("#" + id + "_val").val();

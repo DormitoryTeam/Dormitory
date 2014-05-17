@@ -423,6 +423,7 @@
 		<if test="status != null">
 			and t5.status = #{status}
 		</if>
+		order by ri_status desc
 	</select>
 
 	<select id="queryRoomInfoByDormitory" resultMap="roomInfo" parameterType="map">

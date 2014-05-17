@@ -55,8 +55,8 @@
 							<c:if test="${null == readClause}">
 							<c:set var="readClause" value="${user.prefer.readClause}" />
 							</c:if>
-							<input name="readClause" type="radio" value="Y" <c:if test="${readClause}">checked</c:if> /><label>是</label> 
-							<input name="readClause" type="radio" value="N" <c:if test="${not readClause}">checked</c:if> /><label>否</label>
+							<input class="isChoose" name="readClause" type="radio" value="Y" <c:if test="${readClause}">checked</c:if> /><label>是</label> 
+							<input class="isChoose" name="readClause" type="radio" value="N" <c:if test="${not readClause}">checked</c:if> /><label>否</label>
 						</dd>
 					</dl>
 					<dl>

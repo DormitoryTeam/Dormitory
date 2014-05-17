@@ -14,7 +14,7 @@ $(function() {
 	});
 	
 	$("#sameas").click(function() {
-		if($(this).parent().hasClass("fchecked")) {
+		if($("#sameas:checked").length>0) {
 			$(".same-as").each(function(i, e) {
 				var id = $(e).attr("id");
 				var value = $("#" + id + "_val").val();
@@ -43,35 +43,52 @@ $(function() {
 		
 	});
 	$("#placeOrderForm").submit(function() {
-		if (0 == $("#pageStep").val()) {
-			if($("#orderId").val()) {
-				return true;
-			}
-			var hasOrder = false;
-			$.ajax({
-				url: ctx + "/order/hasOrder.html",
-				data: {
-					login: $("#login").val(),
-					orderType: $("#orderType").val()
-				},
-				async: false,
-				dataType: "json",
-				success: function(data) {
-					hasOrder = data.result;
-				},
-				error:function(data) {
-					alert(data);
-				}
-			});
-			if (hasOrder) {
-				alert("您使用的邮箱：" + $("#login").val() + "已拥有一个订单。请登录查看");
-			}
-			return !hasOrder;
+		//if (0 == $("#pageStep").val()) {
+		//	if($("#orderId").val()) {
+		//		return true;
+		//	}
+		//	var hasOrder = false;
+		//	$.ajax({
+		//		url: ctx + "/order/hasOrder.html",
+		//		data: {
+		//			login: $("#login").val(),
+		//			orderType: $("#orderType").val()
+		//		},
+		//		async: false,
+		//		dataType: "json",
+		//		success: function(data) {
+		//			hasOrder = data.result;
+		//		},
+		//		error:function(data) {
+		//			alert(data);
+		//		}
+		//	});
+		//	if (hasOrder) {
+		//		alert("您使用的邮箱：" + $("#login").val() + "已拥有一个订单。请登录查看");
+		//	}
+		//	return !hasOrder;
+		//}
+		if (!isChoosed("isChoose")) {
+			alert("请选择已阅读条款条例");
+			return false;
 		}
 		return true;
 	});
 	
 });
+
+var isChoosed= function (className) {
+	if ($("."+ className).length > 0) {
+		var choosedValue = $("."+ className + ":checked").val();
+		if ("Y" == choosedValue) {
+			return true;
+		} else{
+			return false;
+		}
+	}
+	return true;
+}
+
 
 var validate = function() {
 	var fieldName = "";

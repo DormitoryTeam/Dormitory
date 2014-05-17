@@ -91,9 +91,9 @@
 				</tr>
 				<tr>
 					<td>周价*:</td>
-					<td><input type="text" name="weekPrice" value="${dormitory['weekPrice']}" /></td>
+					<td><input type="text" name="weekPrice" value="${dormitory['weekPrice']}" readonly/></td>
 					<td>总价*:</td>
-					<td><input type="text" name="salePrice" value="${dormitory['salePrice']}" /></td>
+					<td><input type="text" name="salePrice" value="${dormitory['salePrice']}" readonly/></td>
 				</tr>
 				<tr>
 					<td>公寓描述:</td>

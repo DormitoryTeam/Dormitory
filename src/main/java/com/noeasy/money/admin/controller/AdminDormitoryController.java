@@ -112,6 +112,22 @@ public class AdminDormitoryController {
             dormitory.setSalePrice(minPrice);
         }
 
+        double minWeekPrice = Double.MAX_VALUE;
+        for (int i = 0; i < roomTypeCount; i++) {
+            RoomInfoBean room = dormitory.getRooms().get(i);
+            for (int j = 0; j < contractCount; j++) {
+                RoomPrice price = paramVector.getPrices().get(i * contractCount + j);
+                room.getContractPrice().add(price);
+
+                if (price.getWeekPrice() > 0d && price.getWeekPrice().compareTo(minWeekPrice) < 0) {
+                    minWeekPrice = price.getWeekPrice();
+                }
+            }
+        }
+        if (minWeekPrice < Double.MAX_VALUE) {
+            dormitory.setWeekPrice(minWeekPrice);
+        }
+        
         boolean result = dormitoryService.saveOrUpdateDormitory(dormitory);
         if (result) {
             dormitoryService.calculateDistance4Dormitory(dormitory.getId());

@@ -21,7 +21,7 @@
 			<div class="hostel-info">
 				<input type="hidden" class="hidLocation" value="${dormitory['name']},${dormitory['latitude']},${dormitory['longitude']},${dormitory['id']}"/>
 				<div class="price">
-					价格<c:if test="${(not empty dormitory['rooms'] && not empty dormitory['rooms'][0]['contractPrice'][0] ? dormitory['rooms'][0]['contractPrice'][0]['salePrice'] : dormitory['salePrice']) >= 0}"><span><em>&#163;</em>&nbsp;<fmt:formatNumber value="${not empty dormitory['rooms'] && not empty dormitory['rooms'][0]['contractPrice'][0] ? dormitory['rooms'][0]['contractPrice'][0]['weekPrice'] : dormitory['weekPrice']}" pattern="#0.00"/></span>起</c:if><c:if test="${(not empty dormitory['rooms'] && not empty dormitory['rooms'][0]['contractPrice'][0] ? dormitory['rooms'][0]['contractPrice'][0]['weekPrice'] : dormitory['weekPrice']) <0}"><span>暂无定价</span></c:if>
+					价格<c:if test="${not empty dormitory['weekPrice'] and dormitory['weekPrice'] >= 0}"><span><em>&#163;</em>&nbsp;<fmt:formatNumber value="${dormitory['weekPrice']}" pattern="#0.00"/></span>起</c:if><c:if test="${empty dormitory['weekPrice'] or dormitory['weekPrice'] <0}"><span>暂无定价</span></c:if>
 					<div class="starBox" data-score="${dormitory['rating']}"></div>
 				</div>
 				<div class="title">

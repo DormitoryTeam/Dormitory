@@ -15,7 +15,7 @@
 					<input name="pageStep" type="hidden" value="3"/>
 					<fieldset>
 						<dl>
-							<dt><input id="sameas" type="checkbox"/><label>同担保人信息</label></dt>
+							<dt><input style="height:20px;" id="sameas" type="checkbox"/><label>同担保人信息</label></dt>
 						</dl>
 						<dl>
 							<dd>称呼：</dd>
