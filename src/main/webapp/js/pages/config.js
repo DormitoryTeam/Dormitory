@@ -20,6 +20,7 @@ require.config({
 		utils: 'lib/utils',
 		raty: 'lib/jquery.raty.min',
 		jQueryUI: 'lib/jquery-ui',
+		timepicker: 'lib/timepicker',
 		jqueryTools: 'lib/jquery.tools.min',
 
 		common: 'lib/common',

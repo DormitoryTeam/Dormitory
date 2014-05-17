@@ -339,7 +339,7 @@ public class OrderController {
         item.setTakeOffCity(pRequest.getParameter("takeOffCity"));
         String pickupDateStr = pRequest.getParameter("pickupDate");
         if (StringUtils.isNotBlank(pickupDateStr)) {
-            item.setPickupDate(DateUtils.stringToDate(pickupDateStr));
+            item.setPickupDate(DateUtils.stringToDate(pickupDateStr, "yyyy-MM-dd HH:mm"));
         }
         item.setArrivalCity(pRequest.getParameter("arrivalCity"));
         item.setArrivalCountry(pRequest.getParameter("arrivalCountry"));

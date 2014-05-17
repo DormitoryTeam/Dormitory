@@ -22,8 +22,10 @@
 			<li><a href="#tabs-map">地图</a></li>
 			<li><a href="#tabs-air">接机</a></li>
 			<li class="min little"><a href="#tabs-pay">付款取消政策</a></li>
-			<li class="min"><a href="#tabs-qa" style="width: 30;">常见问题</a></li>
+			<li><a href="#tabs-qa" style="width: 30;">常见问题</a></li>
+			<%--	
 			<li class="min"><a href="#tabs-server" style="width: 30;">特色服务</a></li>
+			--%>
 		</ul>
 		<div id="tabs-video">
 			<jsp:include page="dormitorydetail-slide.jsp" />

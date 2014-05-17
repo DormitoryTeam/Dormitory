@@ -25,7 +25,6 @@ public class UserBean extends BaseBean {
     private String         code;
 
 
-
     public String getCode() {
         return code;
     }
@@ -156,4 +155,19 @@ public class UserBean extends BaseBean {
         prefer = pPrefer;
     }
 
+//    public void setNewCode() {
+//        
+//    }
+    
+    public String getNewCode() {
+        String idStr = getId().toString();
+        String result = getCode().substring(0,10 - idStr.length()) + idStr;
+        result = result.replace("0", "x");
+        result = result.replace("o", "x");
+        result = result.replace("O", "x");
+        result = result.replace("1", "X");
+        result = result.replace("l", "X");
+        result = result.replace("L", "X");
+        return result;
+    }
 }

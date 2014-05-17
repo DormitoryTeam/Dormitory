@@ -60,6 +60,7 @@
 											</c:if>
 										</td>
 										<td style="font-size: 10px;" class="td-min">
+											<a href="<c:url value='/dormitory/dormitory-detail.html?id=${dormitory.id}&collegeId=${collegeId}'/>">
 											<c:if test="${room['status'] eq '0'}">已订满</c:if>
 											<c:if test="${room['status'] eq '1'}">尚有空房</c:if>
 											<c:if test="${room['status'] eq '2'}">剩余不多</c:if>
@@ -74,6 +75,7 @@
 											<c:if test="${room['status'] eq '11'}">仅剩2间</c:if>
 											<c:if test="${room['status'] eq '12'}">仅剩1间</c:if>
 											<c:if test="${room['status'] eq '13'}">请先咨询</c:if>
+											</a>
 										</td>
 									</tr>
 								</c:if>

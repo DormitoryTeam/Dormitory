@@ -14,6 +14,7 @@
 		</c:otherwise>
 		</c:choose>
 		<div id="tabs-house" aria-labelledby="ui-id-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" style="display: block;" aria-expanded="true" aria-hidden="false">
+			<div style="margin-bottom: 5px;"><span style="color:red;font-weight:bolder;">提示：</span>鼠标移到订单号上显示订单进度</div>
 			<div class="order-list">
 				<ul class="list-header">
 					<li class="order-id">订单号</li>

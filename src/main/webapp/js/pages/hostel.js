@@ -1,5 +1,5 @@
 require(['config'], function(config) {
-    require(['jquery', 'utils', 'raty', 'jQueryUI', 'jqueryTools', 'acsPopup'], function($, utils, raty, jQueryUI, jqueryTools, acsPopup) {
+    require(['jquery', 'utils', 'raty', 'jQueryUI', 'timepicker', 'jqueryTools', 'acsPopup'], function($, utils, raty, jQueryUI, timepicker, jqueryTools, acsPopup) {
         $(function() {
             //init header
             utils.init();
@@ -175,10 +175,22 @@ require(['config'], function(config) {
             // bind datepicker
             $(".datepicker").datepicker({ 
                 dateFormat: "yy-mm-dd",
+                showMonthAfterYear:true,
                 changeMonth: true,
                 changeYear: true
             });
             $(".datepicker").attr("readonly",true);
+            $(".timepicker").datepicker({ 
+                dateFormat: "yy-mm-dd",
+                showMonthAfterYear:true,
+                changeMonth: true,
+                changeYear: true,
+                duration: '',
+	            showTime: true,
+	            constrainInput: false,
+	            time24h: true
+            });
+            $(".timepicker").attr("readonly",true);
         });
     });
 });

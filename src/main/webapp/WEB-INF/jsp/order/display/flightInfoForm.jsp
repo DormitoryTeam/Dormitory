@@ -54,9 +54,9 @@
 								</dd>
 							</dl>
 							<dl>
-								<dt>接机时间</dt>
+								<dt>抵达时间</dt>
 								<dd>
-									<fmt:formatDate value='${item.pickupDate}' pattern='yyyy-MM-dd'/>
+									<fmt:formatDate value='${item.pickupDate}' pattern='yyyy-MM-dd HH:mm'/>
 								</dd>
 							</dl>
 							<dl>

@@ -3,8 +3,8 @@
 		<div class="serviceBox">
 			<div class="itembar">
 				<ul>
-					<li id="dormitory-tab">宿舍</li>
-					<li id="pickup-tab">接机</li>
+					<li id="dormitory-tab" style="cursor: pointer;">宿舍</li>
+					<li id="pickup-tab" style="cursor: pointer;">接机</li>
 				</ul>
 			</div>
 			<div class="selectContent" id="dormitory-form">
