@@ -83,7 +83,7 @@
 					<td><input type="text" name="salePrice" value="${dormitory['salePrice']}" /></td>
 				</tr>
 				<tr>
-					<td>设备:</td>
+					<td>设施:</td>
 					<td colspan="3"><textarea name="equipment" class="span12" cols="600" rows="5">${dormitory['equipment']}</textarea></td>
 				</tr>
 				<tr>
@@ -218,8 +218,8 @@
 							</td>
 							<td><input type="checkbox" name="prices[${contractCount*i['index']+j['index']}].status" value="1" ${curPrice['status'] == 1 ? 'checked' : ''} /></td>
 							<td><input type="text" name="prices[${contractCount*i['index']+j['index']}].currency" value="${empty curPrice['currency'] ? '' : curPrice['currency']}" /></td>
-							<td><input type="text" name="prices[${contractCount*i['index']+j['index']}].weekPrice" value="${empty curPrice['weekPrice'] ? 0.0 : curPrice['weekPrice']}" /></td>
-							<td><input type="text" name="prices[${contractCount*i['index']+j['index']}].salePrice" value="${empty curPrice['salePrice'] ? 0.0 : curPrice['salePrice']}" /></td>
+							<td><input type="text" name="prices[${contractCount*i['index']+j['index']}].weekPrice" value="<fmt:formatNumber value="${empty curPrice['weekPrice'] ? 0 : curPrice['weekPrice']}" pattern="#0.00"/>" /></td>
+							<td><input type="text" name="prices[${contractCount*i['index']+j['index']}].salePrice" value="<fmt:formatNumber value="${empty curPrice['salePrice'] ? 0 : curPrice['salePrice']}" pattern="#0.00"/>" /></td>
 						</tr>
 					</c:forEach>
 				</tbody>
