@@ -1,5 +1,10 @@
 package com.noeasy.money.model;
 
+import java.io.UnsupportedEncodingException;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * <class description>
  * 
@@ -26,6 +31,8 @@ public class RichTextBean extends BaseBean {
     private String             mTitle;
 
     private String             mTextBody;
+
+    private byte[]             mTextBodyByte;
 
     private String             mCoverPath;
 
@@ -66,7 +73,28 @@ public class RichTextBean extends BaseBean {
      * @return the textBody
      */
     public String getTextBody() {
+        if (StringUtils.isEmpty(mTextBody)) {
+            if (ArrayUtils.isEmpty(getTextBodyByte())) {
+                mTextBody = "";
+            } else {
+                try {
+                    mTextBody = new String(getTextBodyByte(), "utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                    return "暂时无法获取内容，请稍后再试";
+                }
+            }
+        }
         return mTextBody;
+    }
+
+
+
+    /**
+     * @return the textBodyByte
+     */
+    public byte[] getTextBodyByte() {
+        return mTextBodyByte;
     }
 
 
@@ -134,6 +162,16 @@ public class RichTextBean extends BaseBean {
      */
     public void setTextBody(final String pTextBody) {
         mTextBody = pTextBody;
+    }
+
+
+
+    /**
+     * @param pTextBodyByte
+     *            the textBodyByte to set
+     */
+    public void setTextBodyByte(final byte[] pTextBodyByte) {
+        mTextBodyByte = pTextBodyByte;
     }
 
 

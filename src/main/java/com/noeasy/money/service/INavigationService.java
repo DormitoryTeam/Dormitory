@@ -40,6 +40,14 @@ import java.util.Map;
 
 public interface INavigationService {
 
+    List<Map<String, Object>> queryAirports(int pInt);
+
+
+
+    Map<String, Object> queryAirprotById(Integer pValueOf);
+
+
+
     List<Map<String, Object>> queryCities();
 
 
@@ -76,6 +84,10 @@ public interface INavigationService {
 
 
 
+    List<Map<String, Object>> queryCompanies();
+
+
+
     List<Map<String, Object>> queryCountries();
 
 
@@ -89,12 +101,4 @@ public interface INavigationService {
 
 
     List<Map<String, Object>> queryFlightByConditions(Integer pCountryId, Integer pCityId, String pFlightNum);
-
-
-
-    List<Map<String, Object>> queryAirports(int pInt);
-
-
-
-    Map<String, Object> queryAirprotById(Integer pValueOf);
 }

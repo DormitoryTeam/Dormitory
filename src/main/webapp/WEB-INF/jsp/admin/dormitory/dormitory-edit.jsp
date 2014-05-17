@@ -21,11 +21,22 @@
 </head>
 <body>
 	<br />
+	<c:if test="${not empty result}">
+		${result ? '保存成功!' : '保存失败!'}
+	</c:if>
+	<br />
+	<br />
+	
 	<form id="formDormitory" action="<c:url value='/admin/dormitory/dormitory-save.html'/>" method="POST">
 		<input type="hidden" name="id" id="hidDormitoryId" value="${empty dormitory['id'] ? 0 : dormitory['id']}" />
-		<table class="table table-hover table-bordered table-striped" style="width:1250px">
+		<input type="hidden" name="backURL" value="${backURL}" />
+		
+		
+		<table class="table table-hover table-bordered table-striped">
 			<tbody>
 				<tr>
+					<td>宿舍名称*:</td>
+					<td><input type="text" name="name" value="${dormitory['name']}" /></td>
 					<td>宿舍状态:*</td>
 					<td><select name="status">
 							<c:forEach var="status" items="${allDormitoryStatus}">
@@ -37,8 +48,6 @@
 							</c:forEach>
 						</select>
 					</td>
-					<td>宿舍名称*:</td>
-					<td><input type="text" name="name" value="${dormitory['name']}" /></td>
 				</tr>
 				<tr>
 					<td>所属国家:</td>
@@ -55,10 +64,10 @@
 					</select></td>
 				</tr>
 				<tr>
-					<td>所属大学*:</td>
-					<td><select id="sltCollege" name="collegeId">
-						<c:forEach var="college" items="${colleges}">
-							<option value="${college['id']}" <c:if test="${college['id'] eq dormitory['collegeId']}">selected="selected"</c:if>>${college['name']}</option>
+					<td>所属公司*:</td>
+					<td><select name="companyId">
+						<c:forEach var="company" items="${companies}">
+							<option value="${company['id']}" <c:if test="${company['id'] eq dormitory['companyId']}">selected="selected"</c:if>>${company['name']}</option>
 						</c:forEach>
 					</select></td>
 					<td>邮编:</td>
@@ -72,9 +81,13 @@
 				</tr>
 				<tr>
 					<td>公寓地址*:</td>
-					<td><input type="text" name="address" value="${dormitory['address']}" style="width: 300px;" /></td>
+					<td colspan="3"><input type="text" name="address" value="${dormitory['address']}" style="width: 500px;" /></td>
+				</tr>
+				<tr>
 					<td>货币:</td>
 					<td><input type="text" name="currency" value="${dormitory['currency']}" /></td>
+					<td>附加费用*:</td>
+					<td><input type="text" name="additionalPrice" value="${dormitory['additionalPrice']}" /></td>
 				</tr>
 				<tr>
 					<td>周价*:</td>
@@ -83,16 +96,20 @@
 					<td><input type="text" name="salePrice" value="${dormitory['salePrice']}" /></td>
 				</tr>
 				<tr>
+					<td>公寓描述:</td>
+					<td colspan="3"><textarea name="description" class="span12" cols="600" rows="5">${dormitory['description']}</textarea></td>
+				</tr>
+				<tr>
+					<td>优惠信息:</td>
+					<td colspan="3"><textarea name="promotion" class="span12" cols="600" rows="5">${dormitory['promotion']}</textarea></td>
+				</tr>
+				<tr>
 					<td>设施:</td>
 					<td colspan="3"><textarea name="equipment" class="span12" cols="600" rows="5">${dormitory['equipment']}</textarea></td>
 				</tr>
 				<tr>
 					<td>服务:</td>
 					<td colspan="3"><textarea name="service" class="span12" cols="600" rows="5">${dormitory['service']}</textarea></td>
-				</tr>
-				<tr>
-					<td>公寓描述:</td>
-					<td colspan="3"><textarea name="description" class="span12" cols="600" rows="5">${dormitory['description']}</textarea></td>
 				</tr>
 				<tr>
 					<td>退款政策:</td>
@@ -153,6 +170,7 @@
 						<td>入住时间*</td>
 						<td>房屋面积</td>
 						<td>床型</td>
+						<td>共享厨房人数</td>
 						<td>独立卫浴</td>
 						<td>可否安排朝向</td>
 						<td>可提供语言宿舍</td>
@@ -183,22 +201,23 @@
 						<td><input type="text" name="rooms[${i['index']}].checkinDate" value="${curRoom['checkinDate']}" /></td>
 						<td><input type="text" name="rooms[${i['index']}].houseArea" value="${curRoom['houseArea']}" /></td>
 						<td><input type="text" name="rooms[${i['index']}].bedType" value="${curRoom['bedType']}" /></td>
+						<td><input type="text" name="rooms[${i['index']}].kitchenPeople" value="${curRoom['kitchenPeople']}" /></td>
 						<td><select name="rooms[${i['index']}].ensuitBathroom">
-							<option value="false" ${!curRoom['ensuitBathroom'] ? 'selected' : ''}>No</option>
-							<option value="true"  ${ curRoom['ensuitBathroom'] ? 'selected' : ''}>Yes</option>
+							<option value="false" ${!curRoom['ensuitBathroom'] ? 'selected' : ''}>没有</option>
+							<option value="true"  ${ curRoom['ensuitBathroom'] ? 'selected' : ''}>有</option>
 						</select></td>
 						<td><select name="rooms[${i['index']}].orientationArrange">
-							<option value="false" ${!curRoom['orientationArrange'] ? 'selected' : ''}>No</option>
-							<option value="true"  ${ curRoom['orientationArrange'] ? 'selected' : ''}>Yes</option>
+							<option value="false" ${!curRoom['orientationArrange'] ? 'selected' : ''}>不可以</option>
+							<option value="true"  ${ curRoom['orientationArrange'] ? 'selected' : ''}>可以</option>
 						</select></td>
 						<td><select name="rooms[${i['index']}].roomLanguageArrange">
-							<option value="false" ${!curRoom['roomLanguageArrange'] ? 'selected' : ''}>No</option>
-							<option value="true"  ${ curRoom['roomLanguageArrange'] ? 'selected' : ''}>Yes</option>
+							<option value="false" ${!curRoom['roomLanguageArrange'] ? 'selected' : ''}>不可以</option>
+							<option value="true"  ${ curRoom['roomLanguageArrange'] ? 'selected' : ''}>可以</option>
 						</select></td>
 					</tr>
 					<tr class="warning folding" status="collapse">
 						<td>入住周期</td>
-						<td>房间状态*</td>
+						<td>是否启用*</td>
 						<td>货币类型*</td>
 						<td>周价*</td>
 						<td>总价*</td>
