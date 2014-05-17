@@ -21,7 +21,7 @@
 			<div class="hostel-info">
 				<input type="hidden" class="hidLocation" value="${dormitory['name']},${dormitory['latitude']},${dormitory['longitude']},${dormitory['id']}"/>
 				<div class="price">
-					价格<c:if test="${(not empty dormitory['rooms'] && not empty dormitory['rooms'][0]['contractPrice'][0] ? dormitory['rooms'][0]['contractPrice'][0]['salePrice'] : dormitory['salePrice']) >= 0}"><span><em>&#163;</em>&nbsp;<fmt:formatNumber value="${not empty dormitory['rooms'] && not empty dormitory['rooms'][0]['contractPrice'][0] ? dormitory['rooms'][0]['contractPrice'][0]['salePrice'] : dormitory['salePrice']}" pattern="#0.00"/></span>起</c:if><c:if test="${(not empty dormitory['rooms'] && not empty dormitory['rooms'][0]['contractPrice'][0] ? dormitory['rooms'][0]['contractPrice'][0]['salePrice'] : dormitory['salePrice']) <0}"><span>暂无定价</span></c:if>
+					价格<c:if test="${(not empty dormitory['rooms'] && not empty dormitory['rooms'][0]['contractPrice'][0] ? dormitory['rooms'][0]['contractPrice'][0]['salePrice'] : dormitory['salePrice']) >= 0}"><span><em>&#163;</em>&nbsp;<fmt:formatNumber value="${not empty dormitory['rooms'] && not empty dormitory['rooms'][0]['contractPrice'][0] ? dormitory['rooms'][0]['contractPrice'][0]['weekPrice'] : dormitory['weekPrice']}" pattern="#0.00"/></span>起</c:if><c:if test="${(not empty dormitory['rooms'] && not empty dormitory['rooms'][0]['contractPrice'][0] ? dormitory['rooms'][0]['contractPrice'][0]['weekPrice'] : dormitory['weekPrice']) <0}"><span>暂无定价</span></c:if>
 					<div class="starBox" data-score="${dormitory['rating']}"></div>
 				</div>
 				<div class="title">
@@ -56,7 +56,7 @@
 										<td style="font-size: 10px;" class="td-long">${room['checkinDate']}</td>
 										<td style="font-size: 10px;" class="td-min">
 											<c:if test="${not empty room['contractPrice'][0]}">
-												<c:if test="${room['contractPrice'][0]['salePrice'] >= 0}"><em>&#163;</em>&nbsp;<fmt:formatNumber value="${room['contractPrice'][0]['salePrice']}" pattern="#0.00"/></c:if><c:if test="${room['contractPrice'][0]['salePrice'] < 0 }">暂未定价</c:if>
+												<c:if test="${room['contractPrice'][0]['weekPrice'] >= 0}"><em>&#163;</em>&nbsp;<fmt:formatNumber value="${room['contractPrice'][0]['weekPrice']}" pattern="#0.00"/></c:if><c:if test="${room['contractPrice'][0]['weekPrice'] < 0 }">暂未定价</c:if>
 											</c:if>
 										</td>
 										<td style="font-size: 10px;" class="td-min">

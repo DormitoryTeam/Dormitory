@@ -9,7 +9,11 @@ $(function() {
 
   //$( ".personal-info-tab" ).tabs();
 	// bind datepicker
-    $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+    $(".datepicker").datepicker({
+        dateFormat: "yy-mm-dd",
+        changeMonth: true,
+        changeYear: true
+    });
     $(".datepicker").attr("readonly",true);
 });
 });
