@@ -126,30 +126,45 @@
 			</tbody>
 		</table>
 		
-		<c:if test="${not empty dormitory['id']}">
-			<hr />
-			<div style="width: 500px; padding: 20px;">
-				<input id="fileupload" type="file" name="files[]" data-url="<c:url value='/admin/dormitory/dormitory-image-upload.html?dormitoryId=${dormitory.id}'/>" multiple="multiple">
-				<div id="dropzone" class="fade well">移动图片到这里</div>
-				<div id="progress" class="progress">
-					<div class="bar" style="width: 0%;"></div>
+		<div>
+			<c:if test="${not empty dormitory['id']}">
+				<hr />
+				<div style="width: 500px; padding: 20px;">
+					<input id="fileupload" type="file" name="files[]" data-url="<c:url value='/admin/dormitory/dormitory-image-upload.html?dormitoryId=${dormitory.id}'/>" multiple="multiple">
+					<div id="dropzone" class="fade well">移动图片到这里</div>
+					<div id="progress" class="progress">
+						<div class="bar" style="width: 0%;"></div>
+					</div>
 				</div>
-			</div>
-			<table id="uploaded-files" class="table table-hover table-bordered" style="width: 500px; padding: 20px;">
-				<tr>
-					<th>图片名称</th>
-					<th>图片预览</th>
-					<th>操作</th>
-				</tr>
-				<c:forEach var="path" items="${dormitory['picPath']}" varStatus="index">
+				
+				<table style="float: right;">
 					<tr>
-						<td><input type="text" name="imageNames" class="fileNames" value="${path}" /></td>
-						<td><a href="<c:url value='/upload/images/dormitory/${dormitory.id}/${path}'/>"> <img src="<c:url value='/upload/images/dormitory/${dormitory.id}/${path}'/>" /></a></td>
-						<td><input type="button" value="Remove" class="btnRemove" fileName="${path}" /></td>
+						<td><input type="submit" value="提交" /></td>
 					</tr>
-				</c:forEach>
-			</table>
-		</c:if>
+					<tr>
+						<td><input type="button" value="取消" onclick="location.reload(true); return false;" /></td>
+					<tr>
+					</tr>
+						<td><input type="button" value="返回" onclick="location.href = '${backURL}';" /></td>
+					</tr>
+				</table>
+				
+				<table id="uploaded-files" class="table table-hover table-bordered" style="width: 500px; padding: 20px;">
+					<tr>
+						<th>图片名称</th>
+						<th>图片预览</th>
+						<th>操作</th>
+					</tr>
+					<c:forEach var="path" items="${dormitory['picPath']}" varStatus="index">
+						<tr>
+							<td><input type="text" name="imageNames" class="fileNames" value="${path}" /></td>
+							<td><a href="<c:url value='/upload/images/dormitory/${dormitory.id}/${path}'/>"> <img src="<c:url value='/upload/images/dormitory/${dormitory.id}/${path}'/>" /></a></td>
+							<td><input type="button" value="Remove" class="btnRemove" fileName="${path}" /></td>
+						</tr>
+					</c:forEach>
+				</table>
+			</c:if>
+		</div>
 
 		<c:set var="contractCount" value="${fn:length(contractTypes)}" />
 		<input type="hidden" id="contractCount" value="${contractCount}" />
@@ -246,7 +261,11 @@
 		</c:forEach>
 
 		<hr />
-		<input type="submit" value="提交" /> <a href="${backURL}">Back to list</a>
-	</form>
+		&nbsp;&nbsp;&nbsp;
+		<input type="submit" value="提交" />
+		&nbsp;&nbsp;&nbsp;
+		<input type="button" value="取消" onclick="location.reload(true); return false;" />
+		&nbsp;&nbsp;&nbsp;
+		<input type="button" value="返回" onclick="location.href = '${backURL}';" />
 </body>
 </html>

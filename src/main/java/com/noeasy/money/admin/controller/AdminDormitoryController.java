@@ -96,12 +96,20 @@ public class AdminDormitoryController {
             dormitory.setPicPath(Arrays.asList(paramVector.getImageNames()));
         }
 
+        double minPrice = Double.MAX_VALUE;
         for (int i = 0; i < roomTypeCount; i++) {
             RoomInfoBean room = dormitory.getRooms().get(i);
             for (int j = 0; j < contractCount; j++) {
                 RoomPrice price = paramVector.getPrices().get(i * contractCount + j);
                 room.getContractPrice().add(price);
+
+                if (price.getSalePrice() > 0d && price.getSalePrice().compareTo(minPrice) < 0) {
+                    minPrice = price.getSalePrice();
+                }
             }
+        }
+        if (minPrice < Double.MAX_VALUE) {
+            dormitory.setSalePrice(minPrice);
         }
 
         boolean result = dormitoryService.saveOrUpdateDormitory(dormitory);
