@@ -152,7 +152,8 @@ public class DormitoryController {
     @RequestMapping("/dormitory-list" + Constants.URL_SUFFIX)
     public String toDormitoryList(final HttpServletRequest request, final HttpServletResponse response,
             final Model model, final String collegeId, final String cityId, final String keyword,
-            final String sortField, final String sortType, final String currentPage, final String pageSize) {
+            String sortField, final String sortType, final String currentPage, final String pageSize) {
+        
         if (StringUtils.isNotBlank(cityId)) {
 
             Map<String, Object> city = navigationService.queryCityById(NumberUtils.toInt(cityId), null);
@@ -179,7 +180,9 @@ public class DormitoryController {
                     searchBean.setSortType("DESC");
                 }
             } else {
-                searchBean.setSortField("distance");
+                sortField = "dor_displayOrder";
+                searchBean.setSortField(sortField);
+                searchBean.setSortType("DESC");
             }
             searchBean.setExcludeStatus(DormitoryStatus.INVISIBILITY);
             searchBean.setExcludeRoomStatus(DormitoryStatus.INVISIBILITY);

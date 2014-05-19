@@ -12,10 +12,18 @@
 <body>
 	<form action="<c:url value="/admin/dormitory/dormitory-management.html"/>" method="get">
 		按名字:<input type="text" name="dormitoryName" value="${dormitoryName}" />
+		城市：
+		<select id="sltCity" name="cityId">
+			<option value="0">所有城市</option>
+			<c:forEach var="city" items="${cities}" varStatus="i">
+			<option value="${city['id']}" <c:if test="${cityId eq city['id']}">selected</c:if> >${city['name']}</option>
+			</c:forEach>
+		</select>
 		<input type="submit" id="btnSearchAndSortBy" value="搜索">&nbsp;
-		<input type="radio" class="ckbSortField" name="sortField" value="city_id" <c:if test="${sortField eq 'city_id'}">checked="checked"</c:if> />按城市
+		<input type="radio" class="ckbSortField" name="sortField" value="dor_displayOrder" <c:if test="${sortField eq 'dor_displayOrder'}">checked="checked"</c:if> />按显示优先级
 		<input type="radio" class="ckbSortField" name="sortField" value="company_id" <c:if test="${sortField eq 'company_id'}">checked="checked"</c:if> />按公司
 		<input type="button" id="btnAdd" value="新建宿舍">&nbsp;
+		
 	</form>
 	<hr />
 	<table style="width:1100px;">
@@ -27,6 +35,9 @@
 							<ul>
 								<li><span style="font-weight: bolder">宿舍名称:</span> ${dormitory['name']} &nbsp; 
 									<input type="button" class="btnEdit" dormitoryId="${dormitory['id']}" value="编辑宿舍" /></li>
+								<li><span style="font-weight: bolder">显示优先级:</span> 
+									${dormitory['displayOrder']}
+								</li>
 								<li><span style="font-weight: bolder">状态:</span> 
 									<c:choose>
 										<c:when test="${dormitory['status'] eq 'HAS_VACANCY'}">可预订</c:when>

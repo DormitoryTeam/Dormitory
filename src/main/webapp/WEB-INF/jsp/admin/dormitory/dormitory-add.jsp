@@ -33,6 +33,21 @@
 					</select></td>
 				</tr>
 				<tr>
+					<td>Name*:</td>
+					<td><input type="text" name="name" value="" /></td>
+
+				</tr>
+				<tr>
+					<td>Country:</td>
+					<td><select id="sltCountry" name="countryId">
+							<c:forEach items="${countries}" var="country">
+								<option value="${country['id']}">${country['name']}</option>
+							</c:forEach>
+					</select></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
 					<td>College*:</td>
 					<td><select id="sltCollege" name="collegeId">
 							<c:forEach var="college" items="${colleges}">

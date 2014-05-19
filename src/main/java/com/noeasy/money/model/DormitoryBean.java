@@ -101,6 +101,8 @@ public class DormitoryBean extends BaseBean {
 
     private String             mCompany;
 
+    private Integer            mDisplayOrder;
+
 
 
     /**
@@ -669,6 +671,18 @@ public class DormitoryBean extends BaseBean {
      */
     public void setWeekPrice(final Double pWeekPrice) {
         mWeekPrice = pWeekPrice;
+    }
+
+
+
+    public Integer getDisplayOrder() {
+        return mDisplayOrder;
+    }
+
+
+
+    public void setDisplayOrder(Integer pDisplayOrder) {
+        mDisplayOrder = pDisplayOrder;
     }
 
 }

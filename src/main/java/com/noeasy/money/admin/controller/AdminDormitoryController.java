@@ -238,7 +238,9 @@ public class AdminDormitoryController {
     @RequestMapping("dormitory-management" + Constants.URL_SUFFIX)
     public String toDormitoryList(final HttpServletRequest request, final HttpServletResponse response,
             final Model model, final String dormitoryName, final String cityName, final String sortField,
-            final String sortType, final String currentPage, final String pageSize) {
+            final String sortType, final String currentPage, final String pageSize, final String cityId) {
+        Integer countryId = 1;
+        List<Map<String, Object>> cities = navigationService.queryCities(countryId);
         DormitorySearchBean searchBean = new DormitorySearchBean();
         searchBean.setCollegeId(null);
 
@@ -254,6 +256,13 @@ public class AdminDormitoryController {
                 searchBean.setSortType(sortType);
             }
         }
+        if (StringUtils.isNotBlank(cityId)) {
+            Integer cityIdVal = Integer.valueOf(cityId);
+            if (cityIdVal > 0) {
+                searchBean.setCityId(cityIdVal);
+            }
+        }
+        searchBean.setSortType("DESC");
         int rowTotal = dormitoryService.queryDormitoryCount(searchBean);
 
         PageBean page = new PageBean(rowTotal);
@@ -272,7 +281,10 @@ public class AdminDormitoryController {
         model.addAttribute("page", page);
         model.addAttribute("cityName", searchBean.getCityName());
         model.addAttribute("dormitoryName", searchBean.getDormitoryName());
-
+        model.addAttribute("cities", cities);
+        if (StringUtils.isNotBlank(cityId)) {
+            model.addAttribute("cityId", Integer.valueOf(cityId));
+        }
         return "admin/dormitory/dormitory-management";
     }
 

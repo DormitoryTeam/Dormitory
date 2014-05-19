@@ -50,6 +50,12 @@
 					</td>
 				</tr>
 				<tr>
+					<td>显示优先级:</td>
+					<td><input type="text" name="displayOrder" value="${dormitory['displayOrder']}" /></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
 					<td>所属国家:</td>
 					<td><select id="sltCountry" name="countryId">
 						<c:forEach items="${countries}" var="country">
@@ -145,7 +151,7 @@
 						<td><input type="button" value="取消" onclick="location.reload(true); return false;" /></td>
 					<tr>
 					</tr>
-						<td><input type="button" value="返回" onclick="location.href = '${backURL}';" /></td>
+						<td><input type="button" value="返回" onclick="location.href = '<c:url value="/admin/dormitory/dormitory-management.html"/>';" /></td>
 					</tr>
 				</table>
 				
@@ -266,6 +272,6 @@
 		&nbsp;&nbsp;&nbsp;
 		<input type="button" value="取消" onclick="location.reload(true); return false;" />
 		&nbsp;&nbsp;&nbsp;
-		<input type="button" value="返回" onclick="location.href = '${backURL}';" />
+		<input type="button" value="返回" onclick="location.href = '<c:url value="/admin/dormitory/dormitory-management.html"/>';" />
 </body>
 </html>

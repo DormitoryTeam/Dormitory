@@ -26,6 +26,14 @@
 		<fieldset>
 			<dl>
 				<dt>
+					<input type="radio" class="ckbSortField" name="sortField" value="dor_displayOrder-" <c:if test="${fn:startsWith(sortField, 'dor_displayOrder')}">checked</c:if> />
+				</dt>
+				<dd>
+					<label for="score">按推荐<c:if test="${fn:startsWith (sortField, 'rating')}">${arr}</c:if></label>
+				</dd>
+			</dl>
+			<dl>
+				<dt>
 					<input type="radio" class="ckbSortField" name="sortField" value="<c:choose><c:when test="${fn:startsWith (sortField, 'salePrice') and fn:endsWith (sortField, '+')}">salePrice-</c:when><c:otherwise>salePrice+</c:otherwise></c:choose>" <c:if test="${fn:startsWith (sortField, 'salePrice')}">checked</c:if> />
 				<dd>
 					<label for="price">按价格<c:if test="${fn:startsWith (sortField, 'salePrice')}">${arr}</c:if></label>

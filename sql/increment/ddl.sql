@@ -1,0 +1,1 @@
+alter table dormitory add display_order int default 0;
