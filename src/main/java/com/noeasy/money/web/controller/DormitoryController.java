@@ -1,5 +1,6 @@
 package com.noeasy.money.web.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Controller;
@@ -17,12 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.noeasy.money.constant.Constants;
 import com.noeasy.money.constant.SessionConstants;
 import com.noeasy.money.enumeration.DormitoryStatus;
-import com.noeasy.money.enumeration.OrderType;
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitoryRateBean;
 import com.noeasy.money.model.DormitorySearchBean;
 import com.noeasy.money.model.PageBean;
-import com.noeasy.money.model.UserBean;
+import com.noeasy.money.model.RoomInfoBean;
+import com.noeasy.money.model.RoomPrice;
 import com.noeasy.money.service.IDormitoryService;
 import com.noeasy.money.service.INavigationService;
 import com.noeasy.money.service.IOrderService;
@@ -37,8 +39,7 @@ public class DormitoryController {
 
     @Resource(name = "navigationService")
     INavigationService navigationService;
-    
-    
+
     @Resource(name = "orderService")
     IOrderService      orderService;
 
@@ -91,7 +92,7 @@ public class DormitoryController {
             if (dormitory.getId() > 0) {
                 int dormitoryId = dormitory.getId();
 
-                Integer userId= ServletUtils.getUserId(request);
+                Integer userId = ServletUtils.getUserId(request);
                 Object userNameObj = request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_LOGIN);
                 String userName = "Guest";
                 if (userNameObj != null) {
@@ -99,15 +100,12 @@ public class DormitoryController {
                 }
                 List<Map<String, String>> browsingHistory = null;
                 if (null == userId) {
-                    browsingHistory = dormitoryService.queryDormitoryBrowseHistory(0,
-                            dormitoryId);
+                    browsingHistory = dormitoryService.queryDormitoryBrowseHistory(0, dormitoryId);
                     dormitoryService.saveDormitoryBrowseHistory(0, dormitory.getId());
                 } else {
-                    browsingHistory = dormitoryService.queryDormitoryBrowseHistory(userId,
-                            dormitoryId);
-                    dormitoryService.saveDormitoryBrowseHistory(userId, dormitory.getId());    
+                    browsingHistory = dormitoryService.queryDormitoryBrowseHistory(userId, dormitoryId);
+                    dormitoryService.saveDormitoryBrowseHistory(userId, dormitory.getId());
                 }
-                
 
                 model.addAttribute("curRate", new DormitoryRateBean());
                 List<DormitoryRateBean> rates = dormitoryService.queryDormitoryRates(dormitoryId);
@@ -123,17 +121,38 @@ public class DormitoryController {
                 List<DormitoryBean> relatedDormitories = dormitoryService.queryDormitoryPage(searchBean);
                 List<Map<String, Object>> colleges = navigationService.queryColleges(dormitory.getCityId());
                 if (StringUtils.isNotBlank(collegeId)) {
-                    Map<String, Object> college = navigationService.queryCollegeById(NumberUtils.toInt(collegeId), null);
+                    Map<String, Object> college = navigationService
+                            .queryCollegeById(NumberUtils.toInt(collegeId), null);
                     model.addAttribute("college", college);
                 }
-//                boolean hasOrder = false;
-//                if (null != userId) {
-//                    UserBean user = new UserBean();
-//                    user.setId(userId);
-//                    hasOrder = orderService.hasOrder(user, OrderType.DORMITORY);
-//                    
-//                }
-//                model.addAttribute("hasOrder", hasOrder);
+                // boolean hasOrder = false;
+                // if (null != userId) {
+                // UserBean user = new UserBean();
+                // user.setId(userId);
+                // hasOrder = orderService.hasOrder(user, OrderType.DORMITORY);
+                //
+                // }
+                // model.addAttribute("hasOrder", hasOrder);
+                List<Map<String, Object>> contractTypes = dormitoryService.queryContractTypes();
+                Map<Integer, String> contracts = new HashMap<Integer, String>();
+                Map<Integer, String> containsContract = new HashMap<Integer, String>();
+                for (Map<String, Object> contractType : contractTypes) {
+                    contracts.put((Integer) contractType.get("id"), (String) contractType.get("name"));
+                }
+                List<RoomInfoBean> rooms = dormitory.getRooms();
+                if (!CollectionUtils.isEmpty(rooms)) {
+                    for (RoomInfoBean room : rooms) {
+                        List<RoomPrice> prices = room.getContractPrice();
+                        if (CollectionUtils.isEmpty(prices)) {
+                            continue;
+                        }
+                        for (RoomPrice price : prices) {
+                            if (contracts.containsKey(Integer.valueOf(price.getContractId()))) {
+                                containsContract.put(Integer.valueOf(price.getContractId()), price.getContract());
+                            }
+                        }
+                    }
+                }
                 model.addAttribute("colleges", colleges);
                 model.addAttribute("relatedDormitories", relatedDormitories);
                 model.addAttribute("dormitory", dormitory);
@@ -142,6 +161,7 @@ public class DormitoryController {
                 model.addAttribute("cityId", dormitory.getCityId());
                 model.addAttribute("userId", userId);
                 model.addAttribute("userName", userName);
+                model.addAttribute("contractTypes", containsContract);
             }
         }
         return "dormitory/dormitorydetail";
@@ -151,9 +171,9 @@ public class DormitoryController {
 
     @RequestMapping("/dormitory-list" + Constants.URL_SUFFIX)
     public String toDormitoryList(final HttpServletRequest request, final HttpServletResponse response,
-            final Model model, final String collegeId, final String cityId, final String keyword,
-            String sortField, final String sortType, final String currentPage, final String pageSize) {
-        
+            final Model model, final String collegeId, final String cityId, final String keyword, String sortField,
+            final String sortType, final String currentPage, final String pageSize) {
+
         if (StringUtils.isNotBlank(cityId)) {
 
             Map<String, Object> city = navigationService.queryCityById(NumberUtils.toInt(cityId), null);

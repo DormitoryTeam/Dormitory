@@ -20,7 +20,6 @@ require.config({
 		utils: 'lib/utils',
 		raty: 'lib/jquery.raty.min',
 		jQueryUI: 'lib/jquery-ui',
-		timepicker: 'lib/timepicker',
 		jqueryTools: 'lib/jquery.tools.min',
 
 		common: 'lib/common',
@@ -29,7 +28,8 @@ require.config({
 		sliderMethod: 'lib/sliderMethod',
 		acsCarousel: 'lib/acsCarousel',
 		acsSlider: 'lib/acsSlider',
-		acsPopup: 'lib/acsPopup'
+		acsPopup: 'lib/acsPopup',
+		timepicker: 'lib/timepicker'
 	},
 	shim: {
 		Handlebars: {

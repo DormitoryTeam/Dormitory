@@ -46,6 +46,8 @@
 		<div id="tabs-air">接机</div>
 		<div id="tabs-pay"><textarea style="height: 500px; width: 644px; resize: none; border: 0px;" readonly>${dormitory['refund']}</textarea></div>
 		<div id="tabs-qa"><textarea style="height: 500px; width: 644px; resize: none; border: 0px;" readonly>${dormitory['question']}</textarea></div>
+		<%--
 		<div id="tabs-server"><textarea style="height: 500px; width: 644px; resize: none; border: 0px; " readonly>${dormitory['feature']}</textarea></div>
+		--%>
 	</div>
 </div>

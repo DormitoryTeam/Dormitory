@@ -1,5 +1,5 @@
 require(['config'], function(config) {
-    require(['jquery', 'utils', 'raty', 'jQueryUI', 'timepicker', 'jqueryTools', 'acsPopup'], function($, utils, raty, jQueryUI, timepicker, jqueryTools, acsPopup) {
+    require(['jquery', 'utils', 'raty', 'jQueryUI', 'jqueryTools', 'acsPopup', 'timepicker'], function($, utils, raty, jQueryUI, jqueryTools, acsPopup, timepicker) {
         $(function() {
             //init header
             utils.init();
@@ -12,15 +12,15 @@ require(['config'], function(config) {
 			
 			
 			// build slider
-			console.log($(".scroll-pane").width());
-			console.log($(".scroll-content").width());
+			//console.log($(".scroll-pane").width());
+			//console.log($(".scroll-content").width());
 			var perPage = 140;
 			var paneWidth = $(".scroll-pane").width()
 			var contentWidth = $(".scroll-content").width();
-			console.log((contentWidth - paneWidth)/perPage);
+			//console.log((contentWidth - paneWidth)/perPage);
 			var totalPage = Math.ceil((contentWidth - paneWidth)/perPage);
 			
-			console.log(totalPage);
+			//console.log(totalPage);
 			//var pageSize = (contentWidth - paneWidth) % perPage == 0 ?
 			$( ".scroll-bar" ).slider({
 			  range: "max",

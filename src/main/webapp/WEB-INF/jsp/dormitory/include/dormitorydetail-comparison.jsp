@@ -1,13 +1,21 @@
 <ul class="compare-title">
-	<li class="title-hight">&nbsp;</li>
-	<li>房间状态</li>
-	<li>入住时间</li>
-	<li>房间面积</li>
-	<li>床型</li>
-	<li>独立卫浴</li>
-	<li>共用厨房人数</li>
-	<li>可否安排朝向</li>
-	<li>可否提供语言宿舍</li>
+	<li class="title-hight">
+		<select id="choosePeriod">
+			<option>选择周期</option>
+			<c:forEach var="contractType" items="${contractTypes}">
+			<option value="${contractType.key}">${contractType.value}</option>
+			</c:forEach>
+		</select>
+		<p style="margin-top: 5px; color: red; margin-left: 5px; margin-right: 5px;">（*如选择后右边周期不变的，为该房间无此类周期合同）</p>
+	</li>
+	<li style="font-weight:bolder">房间状态</li>
+	<li style="font-weight:bolder">入住时间</li>
+	<li style="font-weight:bolder">房间面积</li>
+	<li style="font-weight:bolder">床型</li>
+	<li style="font-weight:bolder">独立卫浴</li>
+	<li style="font-weight:bolder">共用厨房人数</li>
+	<li style="font-weight:bolder">可否安排朝向</li>
+	<li style="font-weight:bolder">可否提供语言宿舍</li>
 	<li class="title-hight last">&nbsp;</li>
 </ul>
 <div class="scroll-pane">
@@ -16,19 +24,24 @@
 			<ul class="scroll-content-item itme-header">
 				<li>
 					<h3>${room['name']}</h3> 
-					<c:forEach var="contractPrice" items="${room['contractPrice']}">
-						<p><span>周期：</span>${contractPrice['contract']}</p>
-						<p><span>周价：</span><c:if test="${contractPrice['weekPrice'] >= 0}">&#163;&nbsp;<fmt:formatNumber value="${contractPrice['weekPrice']}" pattern="#0.00"/></c:if><c:if test="${contractPrice['weekPrice'] < 0}">暂未定价</c:if></p>
-						<p><span>总价：</span><c:if test="${contractPrice['salePrice'] >= 0}">&#163;&nbsp;<fmt:formatNumber value="${contractPrice['salePrice']}" pattern="#0.00"/></c:if><c:if test="${contractPrice['salePrice'] < 0}">暂未定价</c:if></p>
-					</c:forEach>
+					<p><span>周期：</span><span id="period_${room['id']}" style="color: black">${room['contractPrice'][0]['contract']}</span></p>
+					<p><span>周价：</span><span id="weekPrice_${room['id']}" style="color: black"><c:if test="${room['contractPrice'][0]['weekPrice'] >= 0}">&#163;&nbsp;<fmt:formatNumber value="${room['contractPrice'][0]['weekPrice']}" pattern="#0.00"/></c:if><c:if test="${room['contractPrice'][0]['weekPrice'] < 0}">暂未定价</c:if></span></p>
+					<p><span>总价：</span><span id="price_${room['id']}" style="color: black"><c:if test="${room['contractPrice'][0]['salePrice'] >= 0}">&#163;&nbsp;<fmt:formatNumber value="${room['contractPrice'][0]['salePrice']}" pattern="#0.00"/></c:if><c:if test="${room['contractPrice'][0]['salePrice'] < 0}">暂未定价</c:if></span></p>
 				</li>
 			</ul>
 		</c:forEach>
+		<c:if test="${fn:length(dormitory['rooms']) > 0 and fn:length(dormitory['rooms']) < 4}">
+			<ul class="scroll-content-item itme-header">
+				<li></li>
+			</ul>
+		</c:if>
 	</div>
+	<c:if test="${fn:length(dormitory['rooms']) > 0}">
 	<div class="scroll-bar-wrap">
 		<div class="scroll-bar"></div>
 		<div class="srcoll-bar-bg"></div>
 	</div>
+	</c:if>
 	<div class="scroll-content">
 		<c:forEach var="room" items="${dormitory['rooms']}">
 			<ul class="scroll-content-item item-body" style="height:634px;">
@@ -62,6 +75,19 @@
 				</li>
 			</ul>
 		</c:forEach>
+		<c:if test="${fn:length(dormitory['rooms']) > 0 and fn:length(dormitory['rooms']) < 4}">
+			<ul class="scroll-content-item item-body" style="height:634px;">
+				<li style="height:18px"></li>
+				<li style="height:18px"></li>
+				<li style="height:18px"></li>
+				<li style="height:18px"></li>
+				<li style="height:18px"></li>
+				<li style="height:18px"></li>
+				<li style="height:18px"></li>
+				<li style="height:18px"></li>
+				<li style="height:18px"></li>
+			</ul>
+		</c:if>
 	</div>
 </div>
 
@@ -85,4 +111,21 @@ var room_contracts = {};
 	</c:forEach>
 	room_contracts["${room['id']}"] = contracts;
 </c:forEach>
+
+var contract_room_price ={};
+var room_ids = [];
+<c:forEach var="contractType" items="${contractTypes}">
+contract_room_price['${contractType.key}'] = {};
+</c:forEach>
+<c:forEach var="room" items="${dormitory['rooms']}">
+	room_ids.push('${room['id']}');
+	<c:forEach var="contractPrice" items="${room['contractPrice']}">
+		var tempData = {"period": "${contractPrice['contract']}", 
+			"weekPrice" : "<c:if test="${contractPrice['weekPrice'] >= 0}">£ <fmt:formatNumber value="${contractPrice['weekPrice']}" pattern="#0.00"/></c:if><c:if test="${contractPrice['weekPrice'] < 0}">暂未定价</c:if>",
+			"price": "<c:if test="${contractPrice['salePrice'] >= 0}">£ <fmt:formatNumber value="${contractPrice['salePrice']}" pattern="#0.00"/></c:if><c:if test="${contractPrice['salePrice'] < 0}">暂未定价</c:if>"
+			}
+		contract_room_price['${contractPrice["contractId"]}']['${room["id"]}'] = tempData;
+	</c:forEach>
+</c:forEach>
+
 </script>

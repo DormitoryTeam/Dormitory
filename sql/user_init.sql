@@ -1,4 +1,0 @@
-INSERT INTO `dormitory`.`users` (`id`,`login`,`password`,`email`,`name`,`gender`,`passport`,`age`,`birthday`,`address`,`phone`,`qq`) VALUES (1,'billlllyove@hotmail.com','723d505516e0c197e42a6be3c0af910e','billlllyove@hotmail.com','Yove',1,'unknow',23,'1991-04-05 00:00:00','Chengdu, Sichuan, China','15982223080','394750752');
-INSERT INTO `dormitory`.`users` (`id`,`login`,`password`,`email`,`name`,`gender`,`passport`,`age`,`birthday`,`address`,`phone`,`qq`) VALUES (2,'princehaku@163.com','723d505516e0c197e42a6be3c0af910e','princehaku@163.com','PrinceHaku',1,'unknow',24,'1990-12-21 00:00:00','Hangzhou, Zhejiang, China','13881056880','349674806');
-INSERT INTO `dormitory`.`users` (`id`,`login`,`password`,`email`,`name`,`gender`,`passport`,`age`,`birthday`,`address`,`phone`,`qq`) VALUES (3,'Reui@loving.com','723d505516e0c197e42a6be3c0af910e','Reui@loving.com','Rui',1,'unknow',24,'1990-06-28 00:00:00','Chengdu, Sichuan, China','13880504030','12345');
-COMMIT;

@@ -1,4 +1,21 @@
 $(function() {
+
+	$('#choosePeriod').change(function() {
+		var contractTypeId = $(this).val();
+		var specificContract = contract_room_price['' + contractTypeId];
+		if (specificContract) {
+			for (var i in room_ids) {
+				var roomId = '' + room_ids[i];
+				var roomContract = specificContract[roomId];
+				if (roomContract) {
+					$("#period_" + roomId).text(roomContract['period']);
+					$("#weekPrice_" + roomId).text(roomContract['weekPrice']);
+					$("#price_" + roomId).text(roomContract['price']);
+				}
+			}
+		}
+	});
+	
 	$('#rate').raty({
 		score : function() {
 			return $(this).attr('data-score');

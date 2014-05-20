@@ -3,7 +3,7 @@ define(['jquery', 'fCheck', 'placeholder', 'simSelect'], function($, fCheck, pla
 		init: function() {
 			$('input[type!="checkbox"]').fCheck();
 			$('[placeholder]').placeholder();
-			$('select').simSelect();
+			$('select[id!="choosePeriod"]').simSelect();
 		}
 	}
 });
