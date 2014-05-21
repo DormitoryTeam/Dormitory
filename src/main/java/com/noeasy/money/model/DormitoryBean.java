@@ -97,7 +97,7 @@ public class DormitoryBean extends BaseBean {
 
     private String             mFeature;
 
-    private String             mCompanyId;
+    private Integer            mCompanyId;
 
     private String             mCompany;
 
@@ -164,15 +164,6 @@ public class DormitoryBean extends BaseBean {
      */
     public String getCompany() {
         return mCompany;
-    }
-
-
-
-    /**
-     * @return the companyId
-     */
-    public String getCompanyId() {
-        return mCompanyId;
     }
 
 
@@ -446,16 +437,6 @@ public class DormitoryBean extends BaseBean {
 
 
     /**
-     * @param pCompanyId
-     *            the companyId to set
-     */
-    public void setCompanyId(final String pCompanyId) {
-        mCompanyId = pCompanyId;
-    }
-
-
-
-    /**
      * @param pCurrency
      *            the currency to set
      */
@@ -683,6 +664,18 @@ public class DormitoryBean extends BaseBean {
 
     public void setDisplayOrder(Integer pDisplayOrder) {
         mDisplayOrder = pDisplayOrder;
+    }
+
+
+
+    public Integer getCompanyId() {
+        return mCompanyId;
+    }
+
+
+
+    public void setCompanyId(Integer pCompanyId) {
+        mCompanyId = pCompanyId;
     }
 
 }

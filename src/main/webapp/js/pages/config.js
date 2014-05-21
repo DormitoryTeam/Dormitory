@@ -62,6 +62,9 @@ require.config({
         jqzoom: {
         	deps: ['jquery'],
         	exports: 'jQuery.fn.jqzoom'
+        },
+        timepicker:{
+        	deps: ['jquery','jQueryUI']
         }
 	}
 });

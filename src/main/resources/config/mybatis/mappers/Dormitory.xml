@@ -364,15 +364,15 @@
 			#{currency,javaType=String,jdbcType=VARCHAR},
 			#{latitude,javaType=Double,jdbcType=INTEGER},
 			#{longitude,javaType=Double,jdbcType=INTEGER},
-			#{equipment,javaType=int,jdbcType=VARCHAR},
-			#{service,javaType=int,jdbcType=VARCHAR},
-			#{promotion,javaType=int,jdbcType=INTEGER},
+			#{equipment,javaType=String,jdbcType=VARCHAR},
+			#{service,javaType=String,jdbcType=VARCHAR},
+			#{promotion,javaType=String,jdbcType=VARCHAR},
 			#{description,javaType=String,jdbcType=VARCHAR},
 			#{refund,javaType=String,jdbcType=VARCHAR},
 			#{question,javaType=String,jdbcType=VARCHAR},
 			#{feature,javaType=String,jdbcType=VARCHAR},
 			#{status},
-			display_order = #{displayOrder}
+			#{displayOrder}
 		)
 	</insert>
 
