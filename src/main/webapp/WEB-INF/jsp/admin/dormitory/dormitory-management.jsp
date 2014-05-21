@@ -19,6 +19,10 @@
 			<option value="${city['id']}" <c:if test="${cityId eq city['id']}">selected</c:if> >${city['name']}</option>
 			</c:forEach>
 		</select>
+		<select name="status">
+			<option value="" ${param.status eq '' ? 'selected' : ''}>有效的宿舍</option>
+			<option value="INVISIBILITY" ${param.status eq 'INVISIBILITY' ? 'selected' : ''}>无效的宿舍</option>
+		</select>
 		<input type="submit" id="btnSearchAndSortBy" value="搜索">&nbsp;
 		<input type="radio" class="ckbSortField" name="sortField" value="dor_displayOrder" <c:if test="${sortField eq 'dor_displayOrder'}">checked="checked"</c:if> />按显示优先级
 		<input type="radio" class="ckbSortField" name="sortField" value="company_id" <c:if test="${sortField eq 'company_id'}">checked="checked"</c:if> />按公司
@@ -31,10 +35,16 @@
 			<c:if test="${not empty dormitories}">
 				<c:forEach var="dormitory" items="${dormitories}" varStatus="i">
 					<tr>
+						<form action="<c:url value="/admin/dormitory/update-dormitory-status.html" />" method="POST">
+							<input type="hidden" name="id" value="${dormitory['id']}" />
+							<input type="hidden" name="status" value="${dormitory['status'] eq 'INVISIBILITY' ? 'HAS_VACANCY' : 'INVISIBILITY'}" />
+							<input type="hidden" name="queryString" value="${pageContext.request.queryString}"/>
 						<td>
 							<ul>
 								<li><span style="font-weight: bolder">宿舍名称:</span> ${dormitory['name']} &nbsp; 
-									<input type="button" class="btnEdit" dormitoryId="${dormitory['id']}" value="编辑宿舍" /></li>
+									<input type="button" class="btnEdit" dormitoryId="${dormitory['id']}" value="编辑宿舍" />&nbsp;&nbsp;
+									<input type="submit" value="${dormitory['status'] eq 'INVISIBILITY' ? '取消删除' : '删除宿舍'}" />
+									</li>
 								<li><span style="font-weight: bolder">显示优先级:</span> 
 									${dormitory['displayOrder']}
 								</li>
@@ -56,6 +66,7 @@
 							</ul>
 							<hr />
 						</td>
+						</form>
 					</tr>
 				</c:forEach>
 			</c:if>

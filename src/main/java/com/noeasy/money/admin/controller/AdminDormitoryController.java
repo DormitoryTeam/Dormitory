@@ -57,6 +57,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.noeasy.money.constant.Constants;
+import com.noeasy.money.enumeration.DormitoryStatus;
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitorySearchBean;
 import com.noeasy.money.model.PageBean;
@@ -127,15 +128,15 @@ public class AdminDormitoryController {
         if (minWeekPrice < Double.MAX_VALUE) {
             dormitory.setWeekPrice(minWeekPrice);
         }
-        
+
         boolean result = dormitoryService.saveOrUpdateDormitory(dormitory);
         if (result) {
             dormitoryService.calculateDistance4Dormitory(dormitory.getId());
         }
         model.addAttribute("result", result);
-        FileUtils fileUtils = FileUtils.getInstance();
-        fileUtils.removeInvalidFiles(fileUtils.createUploadDormitoryImageFolder(dormitory.getId()),
-                dormitory.getPicPath());
+        // FileUtils fileUtils = FileUtils.getInstance();
+        // fileUtils.removeInvalidFiles(fileUtils.createUploadDormitoryImageFolder(dormitory.getId()),
+        // dormitory.getPicPath());
 
         List<Map<String, Object>> countries = navigationService.queryCountries();
         Map<String, Object> currentCountry = navigationService.queryCountryByCityId(dormitory.getCityId());
@@ -238,7 +239,8 @@ public class AdminDormitoryController {
     @RequestMapping("dormitory-management" + Constants.URL_SUFFIX)
     public String toDormitoryList(final HttpServletRequest request, final HttpServletResponse response,
             final Model model, final String dormitoryName, final String cityName, final String sortField,
-            final String sortType, final String currentPage, final String pageSize, final String cityId) {
+            final String sortType, final String currentPage, final String pageSize, final String cityId,
+            final String status) {
         Integer countryId = 1;
         List<Map<String, Object>> cities = navigationService.queryCities(countryId);
         DormitorySearchBean searchBean = new DormitorySearchBean();
@@ -263,6 +265,11 @@ public class AdminDormitoryController {
             }
         }
         searchBean.setSortType("DESC");
+        if (DormitoryStatus.INVISIBILITY.toString().equals(status)) {
+            searchBean.setStatus(DormitoryStatus.INVISIBILITY);
+        } else {
+            searchBean.setExcludeStatus(DormitoryStatus.INVISIBILITY);
+        }
         int rowTotal = dormitoryService.queryDormitoryCount(searchBean);
 
         PageBean page = new PageBean(rowTotal);
@@ -286,6 +293,15 @@ public class AdminDormitoryController {
             model.addAttribute("cityId", Integer.valueOf(cityId));
         }
         return "admin/dormitory/dormitory-management";
+    }
+
+
+
+    @RequestMapping("update-dormitory-status" + Constants.URL_SUFFIX)
+    public String updateDormitoryStatus(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final String id, final DormitoryStatus status, final String queryString) {
+        dormitoryService.updateDormitoryStatus(id, status);
+        return "redirect:/admin/dormitory/dormitory-management.html?" + queryString;
     }
 
 
