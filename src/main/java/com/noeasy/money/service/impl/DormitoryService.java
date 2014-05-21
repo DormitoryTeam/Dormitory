@@ -38,6 +38,7 @@ import javax.annotation.Resource;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
+import com.noeasy.money.enumeration.DormitoryStatus;
 import com.noeasy.money.model.ContractType;
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitoryRateBean;
@@ -295,6 +296,17 @@ public class DormitoryService implements IDormitoryService {
             }
         }
         return false;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.IDormitoryService#updateDormitoryStatus(java.lang.String,
+     *      com.noeasy.money.enumeration.DormitoryStatus)
+     */
+    @Override
+    public boolean updateDormitoryStatus(final String pId, final DormitoryStatus pStatus) {
+        return dormitoryRepository.updateDormitoryStatus(pId, pStatus);
     }
 
 }

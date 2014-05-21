@@ -231,7 +231,7 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
         }
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("dormitoryIds", dormitoryIds);
-//        parameters.put("status", DormitoryStatus.HAS_VACANCY);
+        // parameters.put("status", DormitoryStatus.HAS_VACANCY);
         List<RoomInfoBean> rooms = getSqlSession().selectList("com.noeasy.money.model.Dormitory.queryRoomInfos",
                 parameters);
         for (RoomInfoBean room : rooms) {
@@ -463,6 +463,20 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
             }
         }
         return result;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#updateDormitoryStatus(java.lang.String,
+     *      com.noeasy.money.enumeration.DormitoryStatus)
+     */
+    @Override
+    public boolean updateDormitoryStatus(final String pId, final DormitoryStatus pStatus) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("id", pId);
+        params.put("status", pStatus);
+        return getSqlSession().update("com.noeasy.money.model.Dormitory.updateDormitoryStatus", params) > 0;
     }
 
 

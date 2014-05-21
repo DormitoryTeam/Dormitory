@@ -32,6 +32,7 @@ package com.noeasy.money.service;
 import java.util.List;
 import java.util.Map;
 
+import com.noeasy.money.enumeration.DormitoryStatus;
 import com.noeasy.money.model.ContractType;
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitoryRateBean;
@@ -84,10 +85,6 @@ public interface IDormitoryService {
 
 
 
-    List<String> queryDormitoryImages(int pId);
-
-
-
     DormitoryBean queryDormitory(DormitorySearchBean pSearchBean);
 
 
@@ -97,6 +94,10 @@ public interface IDormitoryService {
 
 
     Integer queryDormitoryCount(DormitorySearchBean pSearchBean);
+
+
+
+    List<String> queryDormitoryImages(int pId);
 
 
 
@@ -129,4 +130,8 @@ public interface IDormitoryService {
 
 
     Boolean saveOrUpdateDormitory(DormitoryBean pDormitory);
+
+
+
+    boolean updateDormitoryStatus(String pId, DormitoryStatus pStatus);
 }
