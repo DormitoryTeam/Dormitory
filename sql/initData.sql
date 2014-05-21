@@ -3328,4 +3328,20 @@ update dormitory set weekPrice =  140.5 , salePrice =  6041.5  where id =  97 ;
 update dormitory set weekPrice =  99 , salePrice =  4257  where id =  98 ;
 update dormitory set weekPrice =  96.5 , salePrice =  4732  where id =  99 ;
 
+
+alter table dormitory add display_order int default 0;
+update dormitory set display_order = 0;
+update city set name = 'Kingston-upon-Thames' where name = 'Kinston';
+
+insert into contract_type (id, name, create_time, update_time) values (1, '详询客服', now(), now());
+insert into contract_type (id, name, create_time, update_time) values (2, '39周零6天', now(), now());
+insert into contract_type (id, name, create_time, update_time) values (3, '40周', now(), now());
+insert into contract_type (id, name, create_time, update_time) values (4, '40周零1天', now(), now());
+insert into contract_type (id, name, create_time, update_time) values (5, '40周零2天', now(), now());
+insert into contract_type (id, name, create_time, update_time) values (6, '41周', now(), now());
+insert into contract_type (id, name, create_time, update_time) values (7, '41周零2天', now(), now());
+insert into contract_type (id, name, create_time, update_time) values (8, '42周', now(), now());
+insert into contract_type (id, name, create_time, update_time) values (9, '42周以上', now(), now());
+
+
 commit;

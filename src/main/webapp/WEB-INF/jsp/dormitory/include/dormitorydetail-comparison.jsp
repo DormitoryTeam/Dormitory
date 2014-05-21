@@ -6,7 +6,7 @@
 			<option value="${contractType.key}">${contractType.value}</option>
 			</c:forEach>
 		</select>
-		<p style="margin-top: 5px; color: red; margin-left: 5px; margin-right: 5px;">（*如选择后右边周期不变的，为该房间无此类周期合同）</p>
+		<p style="margin-top: 20px; color: red; margin-left: 5px; margin-right: 5px; font-size: 12px;">（*如选择后右边周期不变的，为该房间无此类周期合同）</p>
 	</li>
 	<li style="font-weight:bolder">房间状态</li>
 	<li style="font-weight:bolder">入住时间</li>
