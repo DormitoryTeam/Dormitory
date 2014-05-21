@@ -1,0 +1,1 @@
+alter table company add column status varchar(45);
