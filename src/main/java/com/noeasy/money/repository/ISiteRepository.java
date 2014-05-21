@@ -62,6 +62,10 @@ public interface ISiteRepository {
 
 
 
+    List<Map<String, Object>> queryCompanies();
+
+
+
     List<Map<String, Object>> querySlides();
 
 
@@ -70,11 +74,19 @@ public interface ISiteRepository {
 
 
 
+    boolean saveCompnay(String pCompanyName);
+
+
+
     boolean saveSlide(String pDescription, String pPath, Integer pIndex, Integer pStatus, String pType);
 
 
 
     boolean updateArticle(RichTextBean pRichTextBean);
+
+
+
+    boolean updateCompanyStatus(String pCompanyId, String pStatus);
 
 
 

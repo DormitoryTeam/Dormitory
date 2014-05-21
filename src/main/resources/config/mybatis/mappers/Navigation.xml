@@ -15,7 +15,7 @@
 	</select>
 	
 	<select id="queryCompanies" resultType="hashmap" parameterType="java.util.Map">
-		select id, name from company
+		select id, name, status from company where status = 1
 	</select>
 
 	<select id="queryCity" resultType="hashmap" parameterType="java.util.Map">

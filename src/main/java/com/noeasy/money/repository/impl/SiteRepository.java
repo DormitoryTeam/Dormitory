@@ -101,6 +101,16 @@ public class SiteRepository extends BaseRepository implements ISiteRepository {
 
 
     /**
+     * @see com.noeasy.money.repository.ISiteRepository#queryCompanies()
+     */
+    @Override
+    public List<Map<String, Object>> queryCompanies() {
+        return getSqlSession().selectList("com.noeasy.money.model.Site.queryCompanies");
+    }
+
+
+
+    /**
      * @see com.noeasy.money.repository.ISiteRepository#querySlides()
      */
     @Override
@@ -116,6 +126,18 @@ public class SiteRepository extends BaseRepository implements ISiteRepository {
     @Override
     public boolean saveArticle(final RichTextBean pRichTextBean) {
         return getSqlSession().insert("com.noeasy.money.model.Site.saveArticle", pRichTextBean) > 0;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.ISiteRepository#saveCompnay(java.lang.String)
+     */
+    @Override
+    public boolean saveCompnay(final String pCompanyName) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("name", pCompanyName);
+        return getSqlSession().insert("com.noeasy.money.model.Site.saveCompany", params) > 0;
     }
 
 
@@ -144,6 +166,20 @@ public class SiteRepository extends BaseRepository implements ISiteRepository {
     @Override
     public boolean updateArticle(final RichTextBean pRichTextBean) {
         return getSqlSession().update("com.noeasy.money.model.Site.updateArticle", pRichTextBean) > 0;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.ISiteRepository#updateCompanyStatus(String,
+     *      String)
+     */
+    @Override
+    public boolean updateCompanyStatus(final String pCompanyId, final String pStatus) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("id", pCompanyId);
+        params.put("status", pStatus);
+        return getSqlSession().update("com.noeasy.money.model.Site.updateCompanyStatus", params) > 0;
     }
 
 

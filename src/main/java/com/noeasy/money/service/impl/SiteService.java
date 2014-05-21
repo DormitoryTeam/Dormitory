@@ -114,11 +114,31 @@ public class SiteService implements ISiteService {
 
 
     /**
+     * @see com.noeasy.money.service.ISiteService#queryCompanies()
+     */
+    @Override
+    public List<Map<String, Object>> queryCompanies() {
+        return siteRepository.queryCompanies();
+    }
+
+
+
+    /**
      * @see com.noeasy.money.service.ISiteService#querySlides()
      */
     @Override
     public List<Map<String, Object>> querySlides() {
         return siteRepository.querySlides();
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.ISiteService#saveCompnay(java.lang.String)
+     */
+    @Override
+    public boolean saveCompnay(final String pCompanyName) {
+        return siteRepository.saveCompnay(pCompanyName);
     }
 
 
@@ -144,6 +164,17 @@ public class SiteService implements ISiteService {
     @Override
     public boolean saveSlide(final String pDescription, final String pPath, final Integer pIndex, final Integer pStatus) {
         return siteRepository.saveSlide(pDescription, pPath, pIndex, pStatus, null);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.ISiteService#updateCompanyStatus(String,
+     *      String)
+     */
+    @Override
+    public boolean updateCompanyStatus(final String pCompanyId, final String pStatus) {
+        return siteRepository.updateCompanyStatus(pCompanyId, pStatus);
     }
 
 }

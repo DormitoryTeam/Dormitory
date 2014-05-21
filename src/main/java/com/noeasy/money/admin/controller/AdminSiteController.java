@@ -77,6 +77,15 @@ public class AdminSiteController {
 
 
 
+    @RequestMapping("/save-company" + Constants.URL_SUFFIX)
+    public String saveCompnay(final HttpServletRequest request, final HttpServletResponse response, final Model model,
+            final String name) {
+        siteService.saveCompnay(name);
+        return "redirect:/admin/site/company-management.html";
+    }
+
+
+
     @RequestMapping("/admin-navigation" + Constants.URL_SUFFIX)
     public String siteNavigation(final HttpServletRequest request, final HttpServletResponse response, final Model model) {
         return "admin/site/admin-navigation";
@@ -119,5 +128,24 @@ public class AdminSiteController {
         List<Map<String, Object>> articleTitles = siteService.queryArticleTitles(null);
         model.addAttribute("articleTitles", articleTitles);
         return "admin/site/article-list";
+    }
+
+
+
+    @RequestMapping("/company-management" + Constants.URL_SUFFIX)
+    public String toCompanyManagement(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model) {
+        List<Map<String, Object>> companies = siteService.queryCompanies();
+        model.addAttribute("companies", companies);
+        return "admin/site/company-management";
+    }
+
+
+
+    @RequestMapping("/update-company" + Constants.URL_SUFFIX)
+    public String updateCompnay(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final String id, final String status) {
+        siteService.updateCompanyStatus(id, status);
+        return "redirect:/admin/site/company-management.html";
     }
 }

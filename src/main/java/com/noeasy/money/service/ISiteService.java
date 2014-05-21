@@ -66,7 +66,15 @@ public interface ISiteService {
 
 
 
+    List<Map<String, Object>> queryCompanies();
+
+
+
     List<Map<String, Object>> querySlides();
+
+
+
+    boolean saveCompnay(String pCompanyName);
 
 
 
@@ -75,4 +83,8 @@ public interface ISiteService {
 
 
     boolean saveSlide(String pDescription, String pPath, Integer pIndex, Integer pStatus);
+
+
+
+    boolean updateCompanyStatus(String pCompanyId, String pStatus);
 }

@@ -81,4 +81,16 @@
 		</if>
 		order by create_time desc
 	</select>
+	
+	<select id="queryCompanies" resultType="hashmap">
+		select id, name, status from company;
+	</select>
+	
+	<insert id="saveCompany" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.Map">
+		insert into company (name, status) values (#{name}, 1)
+	</insert>
+
+	<update id="updateCompanyStatus" parameterType="java.util.Map">
+		update company set status = #{status} where id = #{id}
+	</update>
 </mapper>
