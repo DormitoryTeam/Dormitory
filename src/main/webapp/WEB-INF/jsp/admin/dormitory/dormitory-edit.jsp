@@ -36,7 +36,7 @@
 			<tbody>
 				<tr>
 					<td>宿舍名称*:</td>
-					<td><input type="text" name="name" value="${dormitory['name']}" /></td>
+					<td><input type="text" name="name" value="${dormitory['name']}" class="validate" errorFieldName="宿舍名称"/></td>
 					<td>宿舍状态:*</td>
 					<td><select name="status">
 							<c:forEach var="status" items="${allDormitoryStatus}">
@@ -81,9 +81,9 @@
 				</tr>
 				<tr>
 					<td>经度*:</td>
-					<td><input type="text" name="latitude" value="${dormitory['latitude']}" /></td>
+					<td><input type="text" name="latitude" value="${dormitory['latitude']}" class="validate" errorFieldName="经度" /></td>
 					<td>纬度*:</td>
-					<td><input type="text" name="longitude" value="${dormitory['longitude']}" /></td>
+					<td><input type="text" name="longitude" value="${dormitory['longitude']}" class="validate" errorFieldName="纬度" /></td>
 				</tr>
 				<tr>
 					<td>公寓地址*:</td>

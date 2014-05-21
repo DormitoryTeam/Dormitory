@@ -20,6 +20,11 @@ $(function() {
     $("#sltCity").bind("change", loadCollegesByCity);
     
     $(".folding").bind("click", foldingDormitoryDetails);
+    
+    $("#formDormitory").submit(function() {
+    	return validate();
+    	
+    });
 });
 
 function loadCitiesByCountry() {
@@ -102,3 +107,19 @@ function foldingDormitoryDetails(e) {
 		rows.show();
 	}
 }
+
+var validate = function() {
+	var fieldName = "";
+	var pass = true;
+	$(".validate").each(function(i, e) {
+		if ("" == $(e).val() || NaN == $(e).val()) {
+			fieldName = $(e).attr("errorFieldName");
+			pass = false;
+		}
+		
+	}); 
+	if (!pass) {
+		alert(fieldName + " 不能为空");
+	}
+	return pass;
+};
