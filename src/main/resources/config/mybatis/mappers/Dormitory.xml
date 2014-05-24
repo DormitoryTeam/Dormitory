@@ -417,20 +417,19 @@
 
 	<select id="queryRoomInfos" resultMap="roomInfo">
 		<include refid="select-room-info" />
-		from
-		room_info t4
-		left join
-		room_price t5 on t5.room_info_id = t4.id
-		left join
-		room_type t6 on t6.id = t4.room_type_id
-		left join
-		contract_type t7 on t7.id = t5.contract_type_id
-		where t4.dormitory_id in
+		from (select * from room_info where dormitory_id in 
 		<foreach item="item" index="index" collection="dormitoryIds" open="(" separator="," close=")">
 			#{item}
-		</foreach>
+		</foreach>) as t4 
+		 left join (select * from room_price where room_info_id in( select info.id  from room_info as info where dormitory_id in 
+			 <foreach item="item" index="index" collection="dormitoryIds" open="(" separator="," close=")">
+			#{item}
+		</foreach>)) t5 on t5.room_info_id = t4.id 
+		 left join room_type t6 on t6.id = t4.room_type_id 
+		 left join contract_type t7 on t7.id = t5.contract_type_id 
+		
 		<if test="status != null">
-			and t5.status = #{status}
+			where t5.status = #{status}
 		</if>
 		order by ri_status desc
 	</select>
