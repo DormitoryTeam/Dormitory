@@ -129,6 +129,10 @@ public interface IDormitoryRepository {
 
 
 
+    RoomInfoBean queryRoomInfoById(int pRoomId, int pDormitoryId);
+
+
+
     List<Map<String, Object>> queryRoomTypes();
 
 
@@ -146,6 +150,14 @@ public interface IDormitoryRepository {
 
 
     Boolean rateDormitory(DormitoryRateBean pDormitoryRateBean);
+
+
+
+    Integer removeRoomInfos(List<Integer> roomInfoIds);
+
+
+
+    Integer removeRoomPrices(List<Integer> roomPriceIds);
 
 
 

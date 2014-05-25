@@ -87,46 +87,10 @@ public class AdminDormitoryController {
 
     @RequestMapping("dormitory-save" + Constants.URL_SUFFIX)
     public String dormitoryUpdate(final HttpServletRequest request, final HttpServletResponse response,
-            final Model model, final DormitoryBean dormitory, final AdminDormitoryParamVector paramVector,
-            final String backURL) {
-
-        int roomTypeCount = ((List) request.getSession().getServletContext().getAttribute("roomTypes")).size();
-        int contractCount = ((List) request.getSession().getServletContext().getAttribute("contractTypes")).size();
+            final Model model, final DormitoryBean dormitory, final AdminDormitoryParamVector paramVector) {
 
         if (ArrayUtils.isNotEmpty(paramVector.getImageNames())) {
             dormitory.setPicPath(Arrays.asList(paramVector.getImageNames()));
-        }
-
-        double minPrice = Double.MAX_VALUE;
-        for (int i = 0; i < roomTypeCount; i++) {
-            RoomInfoBean room = dormitory.getRooms().get(i);
-            for (int j = 0; j < contractCount; j++) {
-                RoomPrice price = paramVector.getPrices().get(i * contractCount + j);
-                room.getContractPrice().add(price);
-
-                if (price.getSalePrice() > 0d && price.getSalePrice().compareTo(minPrice) < 0) {
-                    minPrice = price.getSalePrice();
-                }
-            }
-        }
-        if (minPrice < Double.MAX_VALUE) {
-            dormitory.setSalePrice(minPrice);
-        }
-
-        double minWeekPrice = Double.MAX_VALUE;
-        for (int i = 0; i < roomTypeCount; i++) {
-            RoomInfoBean room = dormitory.getRooms().get(i);
-            for (int j = 0; j < contractCount; j++) {
-                RoomPrice price = paramVector.getPrices().get(i * contractCount + j);
-                room.getContractPrice().add(price);
-
-                if (price.getWeekPrice() > 0d && price.getWeekPrice().compareTo(minWeekPrice) < 0) {
-                    minWeekPrice = price.getWeekPrice();
-                }
-            }
-        }
-        if (minWeekPrice < Double.MAX_VALUE) {
-            dormitory.setWeekPrice(minWeekPrice);
         }
 
         boolean result = dormitoryService.saveOrUpdateDormitory(dormitory);
@@ -134,24 +98,22 @@ public class AdminDormitoryController {
             dormitoryService.calculateDistance4Dormitory(dormitory.getId());
         }
         model.addAttribute("result", result);
-        // FileUtils fileUtils = FileUtils.getInstance();
-        // fileUtils.removeInvalidFiles(fileUtils.createUploadDormitoryImageFolder(dormitory.getId()),
-        // dormitory.getPicPath());
+        try {
+            FileUtils fileUtils = FileUtils.getInstance();
+            fileUtils.removeInvalidFiles(fileUtils.createUploadDormitoryImageFolder(dormitory.getId()),
+                    dormitory.getPicPath());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         List<Map<String, Object>> countries = navigationService.queryCountries();
         Map<String, Object> currentCountry = navigationService.queryCountryByCityId(dormitory.getCityId());
         List<Map<String, Object>> cities = navigationService.queryCitiesInSameCountry(dormitory.getCityId());
-        List<Map<String, Object>> companies = navigationService.queryCompanies();
 
         model.addAttribute("dormitory", dormitory);
-        model.addAttribute("backURL", backURL);
         model.addAttribute("countries", countries);
         model.addAttribute("currentCountry", currentCountry);
         model.addAttribute("cities", cities);
-        model.addAttribute("companies", companies);
-        model.addAttribute("emptyRoom", new RoomInfoBean());
-        model.addAttribute("emptyPrice", new RoomPrice());
-        model.addAttribute("emptyDormitory", new DormitoryBean());
         return "admin/dormitory/dormitory-edit";
     }
 
@@ -182,25 +144,31 @@ public class AdminDormitoryController {
 
 
 
+    @RequestMapping("room-save" + Constants.URL_SUFFIX)
+    public String saveRoomInfo(final HttpServletRequest request, final HttpServletResponse response, final Model model,
+            final String dormitoryId, final RoomInfoBean room) {
+        boolean result = dormitoryService.saveOrUpdateRoombInfo(room);
+        model.addAttribute("result", result);
+        model.addAttribute("roomId", room.getId());
+        model.addAttribute("dormitoryId", dormitoryId);
+        return "forward:room-edit.html";
+    }
+
+
+
     @RequestMapping("dormitory-add" + Constants.URL_SUFFIX)
-    public String toDormitoryAdd(final HttpServletRequest request, final HttpServletResponse response,
-            final Model model, final String backURL) {
+    public String toDormitoryAdd(final HttpServletRequest request, final HttpServletResponse response, final Model model) {
         List<Map<String, Object>> countries = navigationService.queryCountries();
         if (CollectionUtils.isNotEmpty(countries)) {
             Integer firstCountryId = (Integer) countries.get(0).get("id");
             List<Map<String, Object>> cities = navigationService.queryCities(firstCountryId);
             List<Map<String, Object>> contractTypes = dormitoryService.queryContractTypes();
             List<Map<String, Object>> dormitoryTypes = dormitoryService.queryRoomTypes();
-            List<Map<String, Object>> companies = navigationService.queryCompanies();
 
-            model.addAttribute("backURL", backURL);
             model.addAttribute("countries", countries);
             model.addAttribute("cities", cities);
-            model.addAttribute("companies", companies);
             model.addAttribute("contractTypes", contractTypes);
             model.addAttribute("dormitoryTypes", dormitoryTypes);
-            model.addAttribute("emptyRoom", new RoomInfoBean());
-            model.addAttribute("emptyPrice", new RoomPrice());
         }
         return "admin/dormitory/dormitory-edit";
     }
@@ -209,7 +177,7 @@ public class AdminDormitoryController {
 
     @RequestMapping("dormitory-edit" + Constants.URL_SUFFIX)
     public String toDormitoryEdit(final HttpServletRequest request, final HttpServletResponse response,
-            final Model model, final Integer dormitoryId, final String backURL) {
+            final Model model, final Integer dormitoryId) {
         if (dormitoryId != null) {
             DormitorySearchBean searchBean = new DormitorySearchBean();
             searchBean.setId(dormitoryId);
@@ -219,14 +187,11 @@ public class AdminDormitoryController {
             List<Map<String, Object>> countries = navigationService.queryCountries();
             Map<String, Object> currentCountry = navigationService.queryCountryByCityId(dormitory.getCityId());
             List<Map<String, Object>> cities = navigationService.queryCitiesInSameCountry(dormitory.getCityId());
-            List<Map<String, Object>> companies = navigationService.queryCompanies();
 
             model.addAttribute("dormitory", dormitory);
-            model.addAttribute("backURL", backURL);
             model.addAttribute("countries", countries);
             model.addAttribute("currentCountry", currentCountry);
             model.addAttribute("cities", cities);
-            model.addAttribute("companies", companies);
             model.addAttribute("emptyRoom", new RoomInfoBean());
             model.addAttribute("emptyPrice", new RoomPrice());
             model.addAttribute("emptyDormitory", new DormitoryBean());
@@ -293,6 +258,25 @@ public class AdminDormitoryController {
             model.addAttribute("cityId", Integer.valueOf(cityId));
         }
         return "admin/dormitory/dormitory-management";
+    }
+
+
+
+    @RequestMapping("room-edit" + Constants.URL_SUFFIX)
+    public String toRoomInfoEdit(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final String dormitoryId, final String roomId) {
+        RoomInfoBean room = null;
+        if (StringUtils.isNoneBlank(roomId)) {
+            room = dormitoryService.queryRoomInfoById(Integer.parseInt(roomId), Integer.parseInt(dormitoryId));
+        }
+
+        if (room == null) {
+            room = new RoomInfoBean();
+        }
+        model.addAttribute("room", room);
+        model.addAttribute("roomId", roomId);
+        model.addAttribute("dormitoryId", dormitoryId);
+        return "admin/dormitory/dormitory-room-edit";
     }
 
 

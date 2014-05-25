@@ -22,15 +22,13 @@
 <body>
 	<br />
 	<c:if test="${not empty result}">
-		${result ? '保存成功!' : '保存失败!'}
+		&nbsp;&nbsp;&nbsp;${result ? '保存成功!' : '保存失败!'}
 	</c:if>
 	<br />
 	<br />
 	
 	<form id="formDormitory" action="<c:url value='/admin/dormitory/dormitory-save.html'/>" method="POST">
 		<input type="hidden" name="id" id="hidDormitoryId" value="${empty dormitory['id'] ? 0 : dormitory['id']}" />
-		<input type="hidden" name="backURL" value="${backURL}" />
-		
 		
 		<table class="table table-hover table-bordered table-striped">
 			<tbody>
@@ -132,8 +130,8 @@
 			</tbody>
 		</table>
 		
-		<div>
-			<c:if test="${not empty dormitory['id']}">
+		<c:if test="${not empty dormitory['id']}">
+			<div>
 				<hr />
 				<div style="width: 500px; padding: 20px;">
 					<input id="fileupload" type="file" name="files[]" data-url="<c:url value='/admin/dormitory/dormitory-image-upload.html?dormitoryId=${dormitory.id}'/>" multiple="multiple">
@@ -142,19 +140,6 @@
 						<div class="bar" style="width: 0%;"></div>
 					</div>
 				</div>
-				
-				<table style="float: right;">
-					<tr>
-						<td><input type="submit" value="提交" /></td>
-					</tr>
-					<tr>
-						<td><input type="button" value="取消" onclick="location.reload(true); return false;" /></td>
-					<tr>
-					</tr>
-						<td><input type="button" value="返回" onclick="location.href = '<c:url value="/admin/dormitory/dormitory-management.html"/>';" /></td>
-					</tr>
-				</table>
-				
 				<table id="uploaded-files" class="table table-hover table-bordered" style="width: 500px; padding: 20px;">
 					<tr>
 						<th>图片名称</th>
@@ -169,23 +154,30 @@
 						</tr>
 					</c:forEach>
 				</table>
-			</c:if>
-		</div>
+			</div>
 
-		<c:set var="contractCount" value="${fn:length(contractTypes)}" />
-		<input type="hidden" id="contractCount" value="${contractCount}" />
-		<c:forEach var="roomType" items="${roomTypes}" varStatus="i">
+			<hr />
+			<c:if test="${not empty dormitory['id']}">
+				&nbsp;&nbsp;&nbsp;
+				<input type="button" value="新建房型" onclick="location.href = '<c:url value="/admin/dormitory/room-edit.html?dormitoryId=${dormitory.id}&roomId="/>';" />
+			</c:if>
+			&nbsp;&nbsp;&nbsp;
+			<input type="submit" value="提交" />
+			&nbsp;&nbsp;&nbsp;
+			<input type="button" value="取消" onclick="location.reload(true); return false;" />
+			&nbsp;&nbsp;&nbsp;
+			<input type="button" value="返回" onclick="location.href = '<c:url value="/admin/dormitory/dormitory-management.html?dormitoryName=&cityId=0&status="/>';" />
+		</c:if>
+		
+		<hr />
+
+		<c:forEach var="room" items="${dormitory['rooms']}">
 			<table class="table table-hover table-bordered">
 				<tbody>
-					<c:set var="curRoom" value="${emptyRoom}" />
-					<c:forEach var="room" items="${dormitory['rooms']}">
-						<c:if test="${roomType['id'] eq room['roomTypeId']}">
-							<c:set var="curRoom" value="${room}" />
-						</c:if>
-					</c:forEach>
-					
 					<tr class="success">
-						<td>${roomType['name']}</td>
+						<td>${room.roomType}
+							<input type="button" value="编辑" onclick="location.href = '<c:url value="/admin/dormitory/room-edit.html?dormitoryId=${dormitory.id}&roomId=${room.id}"/>';" />
+						</td>
 						<td>房间状态*</td>
 						<td>房间名称*</td>
 						<td>入住时间*</td>
@@ -197,69 +189,47 @@
 						<td>可提供语言宿舍</td>
 					</tr>
 					<tr>
-						<th rowspan="${contractCount+2}"></th>
+						<td rowspan="${fn:length(room['contractPrice']) + 2}"></td>
 						<td>
-							<input type="hidden" name="rooms[${i['index']}].dormitoryId" value="${empty dormitory['id'] ? 0 : dormitory['id']}" />
-							<input type="hidden" name="rooms[${i['index']}].id" value="${curRoom['id']}" />
-							<input type="hidden" name="rooms[${i['index']}].roomTypeId" value="${roomType['id']}" />
-							<select name="rooms[${i['index']}].status">
-								<option value="0" ${'0' eq curRoom['status'] ? 'selected' : ''}>已订满</option>
-								<option value="1" ${'1' eq curRoom['status'] ? 'selected' : ''}>尚有空房</option>
-								<option value="2" ${'2' eq curRoom['status'] ? 'selected' : ''}>剩余不多</option>
-								<option value="3" ${'3' eq curRoom['status'] ? 'selected' : ''}>仅剩几间</option>
-								<option value="4" ${'4' eq curRoom['status'] ? 'selected' : ''}>仅剩9间</option>
-								<option value="5" ${'5' eq curRoom['status'] ? 'selected' : ''}>仅剩8间</option>
-								<option value="6" ${'6' eq curRoom['status'] ? 'selected' : ''}>仅剩7间</option>
-								<option value="7" ${'7' eq curRoom['status'] ? 'selected' : ''}>仅剩6间</option>
-								<option value="8" ${'8' eq curRoom['status'] ? 'selected' : ''}>仅剩5间</option>
-								<option value="9" ${'9' eq curRoom['status'] ? 'selected' : ''}>仅剩4间</option>
-								<option value="10" ${'10' eq curRoom['status'] ? 'selected' : ''}>仅剩3间</option>
-								<option value="11" ${'11' eq curRoom['status'] ? 'selected' : ''}>仅剩2间</option>
-								<option value="12" ${'12' eq curRoom['status'] ? 'selected' : ''}>仅剩0间</option>
-								<option value="13" ${'13' eq curRoom['status'] ? 'selected' : ''}>请先咨询</option>
+							<select disabled="disabled" name="rooms[${i['index']}].status">
+								<option value="0" ${'0' eq room['status'] ? 'selected' : ''}>已订满</option>
+								<option value="1" ${'1' eq room['status'] ? 'selected' : ''}>尚有空房</option>
+								<option value="2" ${'2' eq room['status'] ? 'selected' : ''}>剩余不多</option>
+								<option value="3" ${'3' eq room['status'] ? 'selected' : ''}>仅剩几间</option>
+								<option value="4" ${'4' eq room['status'] ? 'selected' : ''}>仅剩9间</option>
+								<option value="5" ${'5' eq room['status'] ? 'selected' : ''}>仅剩8间</option>
+								<option value="6" ${'6' eq room['status'] ? 'selected' : ''}>仅剩7间</option>
+								<option value="7" ${'7' eq room['status'] ? 'selected' : ''}>仅剩6间</option>
+								<option value="8" ${'8' eq room['status'] ? 'selected' : ''}>仅剩5间</option>
+								<option value="9" ${'9' eq room['status'] ? 'selected' : ''}>仅剩4间</option>
+								<option value="10" ${'10' eq room['status'] ? 'selected' : ''}>仅剩3间</option>
+								<option value="11" ${'11' eq room['status'] ? 'selected' : ''}>仅剩2间</option>
+								<option value="12" ${'12' eq room['status'] ? 'selected' : ''}>仅剩0间</option>
+								<option value="13" ${'13' eq room['status'] ? 'selected' : ''}>请先咨询</option>
 						</select></td>
-						<td><input type="text" name="rooms[${i['index']}].name" value="${curRoom['name']}" /></td>
-						<td><input type="text" name="rooms[${i['index']}].checkinDate" value="${curRoom['checkinDate']}" /></td>
-						<td><input type="text" name="rooms[${i['index']}].houseArea" value="${curRoom['houseArea']}" /></td>
-						<td><input type="text" name="rooms[${i['index']}].bedType" value="${curRoom['bedType']}" /></td>
-						<td><input type="text" name="rooms[${i['index']}].kitchenPeople" value="${curRoom['kitchenPeople']}" /></td>
-						<td><select name="rooms[${i['index']}].ensuitBathroom">
-							<option value="false" ${!curRoom['ensuitBathroom'] ? 'selected' : ''}>没有</option>
-							<option value="true"  ${ curRoom['ensuitBathroom'] ? 'selected' : ''}>有</option>
-						</select></td>
-						<td><select name="rooms[${i['index']}].orientationArrange">
-							<option value="false" ${!curRoom['orientationArrange'] ? 'selected' : ''}>不可以</option>
-							<option value="true"  ${ curRoom['orientationArrange'] ? 'selected' : ''}>可以</option>
-						</select></td>
-						<td><select name="rooms[${i['index']}].roomLanguageArrange">
-							<option value="false" ${!curRoom['roomLanguageArrange'] ? 'selected' : ''}>不可以</option>
-							<option value="true"  ${ curRoom['roomLanguageArrange'] ? 'selected' : ''}>可以</option>
-						</select></td>
+						<td>${room['name']}</td>
+						<td>${room['checkinDate']}</td>
+						<td>${room['houseArea']}</td>
+						<td>${room['bedType']}</td>
+						<td>${room['kitchenPeople']}</td>
+						<td>${room['ensuitBathroom'] ? '有' : '没有'}</td>
+						<td>${room['orientationArrange'] ? '可以' : '不可以'}</td>
+						<td>${room['roomLanguageArrange'] ? '可以' : '不可以'}</td>
 					</tr>
 					<tr class="warning folding" status="collapse">
 						<td>入住周期</td>
 						<td>是否启用*</td>
 						<td>货币类型*</td>
 						<td>周价*</td>
-						<td>总价*</td>
+						<td colspan="5">总价*</td>
 					</tr>
-					<c:forEach var="contract" items="${contractTypes}" varStatus="j">
-						<c:set var="curPrice" value="${emptyPrice}" />
-						<c:forEach var="price" items="${curRoom['contractPrice']}">
-							<c:if test="${contract['id'] eq price['contractId']}">
-								<c:set var="curPrice" value="${price}" />
-							</c:if>
-						</c:forEach>
+					<c:forEach var="price" items="${room['contractPrice']}">
 						<tr style="display: none;" class="need_folding">
-							<td>${contract['name']}
-								<input type="hidden" name="prices[${contractCount*i['index']+j['index']}].id" value="${curPrice['id']}" />
-								<input type="hidden" name="prices[${contractCount*i['index']+j['index']}].roomInfoId" value="${curRoom['id']}" />
-								<input type="hidden" name="prices[${contractCount*i['index']+j['index']}].contractId" value="${contract['id']}" />
-							</td>
-							<td><input type="checkbox" name="prices[${contractCount*i['index']+j['index']}].status" value="1" ${curPrice['status'] == 1 ? 'checked' : ''} /></td>
-							<td><input type="text" name="prices[${contractCount*i['index']+j['index']}].currency" value="${empty curPrice['currency'] ? '' : curPrice['currency']}" /></td>
-							<td><input type="text" name="prices[${contractCount*i['index']+j['index']}].weekPrice" value="<fmt:formatNumber value="${empty curPrice['weekPrice'] ? 0 : curPrice['weekPrice']}" pattern="#0.00"/>" /></td>
-							<td><input type="text" name="prices[${contractCount*i['index']+j['index']}].salePrice" value="<fmt:formatNumber value="${empty curPrice['salePrice'] ? 0 : curPrice['salePrice']}" pattern="#0.00"/>" /></td>
+							<td>${price['contract']}</td>
+							<td>${price['status'] == 1 ? '启用' : '未启用'}</td>
+							<td>${price['currency']}</td>
+							<td><fmt:formatNumber value="${empty price['weekPrice'] ? '' : price['weekPrice']}" pattern="#0.00"/></td>
+							<td colspan="5"><fmt:formatNumber value="${empty price['salePrice'] ? '' : price['salePrice']}" pattern="#0.00"/></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -267,11 +237,16 @@
 		</c:forEach>
 
 		<hr />
+		<c:if test="${not empty dormitory['id']}">
+			&nbsp;&nbsp;&nbsp;
+			<input type="button" value="新建房型" onclick="location.href = '<c:url value="/admin/dormitory/room-edit.html?dormitoryId=${dormitory.id}&roomId="/>';" />
+		</c:if>
 		&nbsp;&nbsp;&nbsp;
 		<input type="submit" value="提交" />
 		&nbsp;&nbsp;&nbsp;
 		<input type="button" value="取消" onclick="location.reload(true); return false;" />
 		&nbsp;&nbsp;&nbsp;
-		<input type="button" value="返回" onclick="location.href = '<c:url value="/admin/dormitory/dormitory-management.html"/>';" />
+		<input type="button" value="返回" onclick="location.href = '<c:url value="/admin/dormitory/dormitory-management.html?dormitoryName=&cityId=0&status="/>';" />
+	</form>
 </body>
 </html>

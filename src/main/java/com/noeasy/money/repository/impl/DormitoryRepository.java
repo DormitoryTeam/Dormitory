@@ -33,7 +33,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
 import com.noeasy.money.enumeration.DormitoryStatus;
@@ -288,6 +287,20 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
 
 
     /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#queryRoomInfoById(int,
+     *      int)
+     */
+    @Override
+    public RoomInfoBean queryRoomInfoById(final int pRoomId, final int pDormitoryId) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("dormitoryId", pDormitoryId);
+        params.put("id", pRoomId);
+        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.queryRoomInfoById", params);
+    }
+
+
+
+    /**
      * @see com.noeasy.money.repository.IDormitoryRepository#queryRoomTypes()
      */
     @Override
@@ -347,24 +360,31 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
 
 
     /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#removeRoomInfos(java.util.List)
+     */
+    @Override
+    public Integer removeRoomInfos(final List<Integer> pRoomInfoIds) {
+        return getSqlSession().update("com.noeasy.money.model.Dormitory.removeRoomPrices", pRoomInfoIds);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#removeRoomPrices(java.util.List)
+     */
+    @Override
+    public Integer removeRoomPrices(final List<Integer> pRoomPriceIds) {
+        return getSqlSession().update("com.noeasy.money.model.Dormitory.removeRoomInfos", pRoomPriceIds);
+    }
+
+
+
+    /**
      * @see com.noeasy.money.repository.IDormitoryRepository#saveDormitory(com.noeasy.money.model.DormitoryBean)
      */
     @Override
     public Integer saveDormitory(final DormitoryBean pDormitory) {
         int result = getSqlSession().insert("com.noeasy.money.model.Dormitory.saveDormitory", pDormitory);
-        if (result > 0) {
-            for (RoomInfoBean room : pDormitory.getRooms()) {
-                room.setDormitoryId(pDormitory.getId());
-                saveRoomInfo(room);
-            }
-            deleteDormitoryMediaPath(pDormitory.getId());
-            if (CollectionUtils.isNotEmpty(pDormitory.getPicPath())) {
-                saveDormitoryMediaPath(pDormitory.getPicPath(), pDormitory.getId(), false);
-            }
-            if (CollectionUtils.isNotEmpty(pDormitory.getVideoPath())) {
-                saveDormitoryMediaPath(pDormitory.getVideoPath(), pDormitory.getId(), true);
-            }
-        }
         return result;
     }
 
@@ -420,6 +440,9 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
         int result = getSqlSession().insert("com.noeasy.money.model.Dormitory.saveRoomInfo", pRoom);
         if (result > 0) {
             for (RoomPrice roomPrice : pRoom.getContractPrice()) {
+                if (roomPrice.isShouldDelete()) {
+                    roomPrice.setStatus(-1);
+                }
                 roomPrice.setRoomInfoId(pRoom.getId());
                 saveRoomPrice(roomPrice);
             }
@@ -445,23 +468,6 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
     @Override
     public Integer updateDormitory(final DormitoryBean pDormitory) {
         int result = getSqlSession().update("com.noeasy.money.model.Dormitory.updateDormitory", pDormitory);
-        if (result > 0) {
-            for (RoomInfoBean room : pDormitory.getRooms()) {
-                if (room.getId() > 0) {
-                    updateRoomInfo(room);
-                } else {
-                    saveRoomInfo(room);
-                }
-            }
-            // update the media path
-            deleteDormitoryMediaPath(pDormitory.getId());
-            if (CollectionUtils.isNotEmpty(pDormitory.getPicPath())) {
-                saveDormitoryMediaPath(pDormitory.getPicPath(), pDormitory.getId(), false);
-            }
-            if (CollectionUtils.isNotEmpty(pDormitory.getVideoPath())) {
-                saveDormitoryMediaPath(pDormitory.getVideoPath(), pDormitory.getId(), true);
-            }
-        }
         return result;
     }
 
@@ -490,6 +496,9 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
         if (result > 0) {
             for (RoomPrice roomPrice : pRoom.getContractPrice()) {
                 if (roomPrice.getId() > 0) {
+                    if (roomPrice.isShouldDelete()) {
+                        roomPrice.setStatus(-1);
+                    }
                     updateRoomPrice(roomPrice);
                 } else {
                     saveRoomPrice(roomPrice);
