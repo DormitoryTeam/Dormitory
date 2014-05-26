@@ -2,6 +2,7 @@ package com.noeasy.money.web.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -149,6 +150,16 @@ public class UserController {
         JSONObject json = null;
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         resultMap.put("result", false);
+
+        Map<String, String> paramMap = EmailUtils.getParamMap();
+        paramMap.put("login", login);
+        paramMap.put("password", password);
+
+        String from = EmailUtils.getServiceEmail();
+        String fromAlias = EmailUtils.getServiceAlias();
+        String subject = EmailUtils.getSubject();
+        String template = EmailUtils.generateTemplateEmail("template1.html", paramMap);
+        boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, login, login, subject, template);
 
         if (StringUtils.isBlank(login)) {
             resultMap.put("message", "邮箱不能为空。");

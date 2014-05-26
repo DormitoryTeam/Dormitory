@@ -1,13 +1,19 @@
 package com.noeasy.money.util;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+
+import com.noeasy.money.constant.Constants;
 
 public class EmailUtils {
 
@@ -24,12 +30,12 @@ public class EmailUtils {
 
 
 
-    public static final String generateTemplateEmail(final String pTemplateName, final List<Object> pParams) {
+    public static final String generateTemplateEmail(final String pTemplateName, final Map<String, String> pParamMap) {
         String emailTemplate = getTemplate(pTemplateName);
         String placeHolder = null;
-        for (int i = 0; i < pParams.size(); i++) {
-            placeHolder = "{" + i + "}";
-            emailTemplate.replaceFirst(placeHolder, String.valueOf(pParams.get(i)));
+        for (Entry<String, String> entry : pParamMap.entrySet()) {
+            placeHolder = "{" + entry.getKey() + "}";
+            emailTemplate = emailTemplate.replace(placeHolder, entry.getValue());
         }
         return emailTemplate;
     }
@@ -38,6 +44,17 @@ public class EmailUtils {
 
     public static String getConfigurableProperty(final String pKey) {
         return PropertiesUtils.getConfigurableProperty(CONFIG_PATH, pKey);
+    }
+
+
+
+    public static final Map<String, String> getParamMap() {
+        Map<String, String> paramMap = new HashMap<String, String>();
+        paramMap.put("now", DateUtils.getCurrentDate());
+        String ip = PropertiesUtils.getConfigurableProperty(Constants.CONFIG_PATH, Constants.CONFIG_IP);
+        String context = PropertiesUtils.getConfigurableProperty(Constants.CONFIG_PATH, Constants.CONFIG_CONTEXT);
+        paramMap.put("ctx", ip + Constants.SLASH + context);
+        return paramMap;
     }
 
 
@@ -64,8 +81,18 @@ public class EmailUtils {
         InputStream input = null;
         try {
 
-            input = PropertiesUtils.class.getResourceAsStream(pTemplateName);
-            return input.toString();
+            input = PropertiesUtils.class.getResourceAsStream("/config/email/" + pTemplateName);
+            StringBuilder sb = new StringBuilder();
+            if (input != null) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(input, "UTF-8"));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
+            }
+            return sb.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
         } finally {
             try {
                 input.close();
@@ -73,6 +100,7 @@ public class EmailUtils {
                 logger.error(e.getMessage());
             }
         }
+        return "";
     }
 
 

@@ -21,6 +21,8 @@ public interface Constants {
 
     String CONFIG_CONTEXT           = "context";
 
+    String CONFIG_IP                = "ip";
+
     String SLASH                    = "/";
 
     String CONFIG_DEFAULT_PAGE_SIZE = "defaultPageSize";

@@ -11,11 +11,41 @@ import com.noeasy.money.exception.BaseException;
 
 public class DateUtils {
 
+    public static final String EMAIL_DATE_FORMAT_RULE   = "yyyy年MM月dd日";
+
     public static final String DEFAULT_DATE_FORMAT_RULE = "yyyy-MM-dd";
 
     public static final String DATE_TIME_FORAMT_RULE    = "yyyy-MM-dd HH:mm:ss";
-    
-    public static final String SIMPLE_DATE_FROMAT_RULE = "yyyyMMdd";
+
+    public static final String SIMPLE_DATE_FROMAT_RULE  = "yyyyMMdd";
+
+
+
+    public static String dateToString(final Date date) {
+        return dateToString(date, DEFAULT_DATE_FORMAT_RULE);
+    }
+
+
+
+    public static String dateToString(final Date date, final String formatRule) {
+        if (StringUtils.isBlank(formatRule)) {
+            throw new IllegalArgumentException("formatRule is blank.");
+        }
+        if (null == date) {
+            throw new IllegalArgumentException("date is null.");
+        }
+        String result = null;
+        DateFormat formatter = new SimpleDateFormat(formatRule);
+        result = formatter.format(date);
+        return result;
+    }
+
+
+
+    public static String getCurrentDate() {
+        Date now = new Date();
+        return dateToString(now, EMAIL_DATE_FORMAT_RULE);
+    }
 
 
 
@@ -41,26 +71,4 @@ public class DateUtils {
             throw new BaseException("Parse Date from search bean error.", e);
         }
     }
-
-
-
-    public static String dateToString(final Date date, final String formatRule) {
-        if (StringUtils.isBlank(formatRule)) {
-            throw new IllegalArgumentException("formatRule is blank.");
-        }
-        if (null == date) {
-            throw new IllegalArgumentException("date is null.");
-        }
-        String result = null;
-        DateFormat formatter = new SimpleDateFormat(formatRule);
-        result = formatter.format(date);
-        return result;
-    }
-
-
-
-    public static String dateToString(final Date date) {
-        return dateToString(date, DEFAULT_DATE_FORMAT_RULE);
-    }
-
 }
