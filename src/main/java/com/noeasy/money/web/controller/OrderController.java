@@ -132,6 +132,9 @@ public class OrderController {
         if (CollectionUtils.isNotEmpty( order.getLineItems())) {
             item =  order.getLineItems().get(0);
         }
+        if (item instanceof PickupLineItem) {
+            ((PickupLineItem)item).analyzeLuggage();
+        }
         model.addAttribute("item", item);
         model.addAttribute("order", order);
         return forwrdURLs[step];
@@ -354,14 +357,90 @@ public class OrderController {
 
     private void maintainLuggage(HttpServletRequest pRequest) {
         PickupLineItem item = getPickupItemFromSesssion(pRequest);
-        String luggageAmount = pRequest.getParameter("luggageAmount");
-        if (StringUtils.isNotBlank(luggageAmount)) {
-            item.setLuggageAmount(Integer.valueOf(luggageAmount));
+        
+        String luggageSizeStr = "";
+        String luggageAmountStr = "";
+        String luggageSize1 = pRequest.getParameter("luggageSize1");
+        String luggageAmount1 = pRequest.getParameter("luggageAmount1");
+        if (StringUtils.isNotBlank(luggageSize1) && StringUtils.isNotBlank(luggageAmount1)) {
+            Double size = Double.valueOf(luggageSize1);
+            Integer amount = Integer.valueOf(luggageAmount1);
+            if (size > 0 && amount > 0) {
+                luggageSizeStr += size.toString();
+                luggageAmountStr += amount.toString();
+            }
         }
-        String luggageSize = pRequest.getParameter("luggageSize");
-        if (StringUtils.isNotBlank(luggageSize)) {
-            item.setLuggageSize(Double.valueOf(luggageSize));
+        
+        String luggageSize2 = pRequest.getParameter("luggageSize2");
+        String luggageAmount2 = pRequest.getParameter("luggageAmount2");
+        if (StringUtils.isNotBlank(luggageSize2) && StringUtils.isNotBlank(luggageAmount2)) {
+            Double size = Double.valueOf(luggageSize2);
+            Integer amount = Integer.valueOf(luggageAmount2);
+            if (size > 0 && amount > 0) {
+                if (StringUtils.isNotBlank(luggageSizeStr)) {
+                    luggageSizeStr += ":";
+                }
+                luggageSizeStr += size.toString();
+                if (StringUtils.isNotBlank(luggageAmountStr)) {
+                    luggageAmountStr += ":";
+                }
+                luggageAmountStr += amount.toString();
+            }
         }
+        
+        String luggageSize3 = pRequest.getParameter("luggageSize3");
+        String luggageAmount3 = pRequest.getParameter("luggageAmount3");
+        if (StringUtils.isNotBlank(luggageSize3) && StringUtils.isNotBlank(luggageAmount3)) {
+            Double size = Double.valueOf(luggageSize3);
+            Integer amount = Integer.valueOf(luggageAmount3);
+            if (size > 0 && amount > 0) {
+                if (StringUtils.isNotBlank(luggageSizeStr)) {
+                    luggageSizeStr += ":";
+                }
+                luggageSizeStr += size.toString();
+                if (StringUtils.isNotBlank(luggageAmountStr)) {
+                    luggageAmountStr += ":";
+                }
+                luggageAmountStr += amount.toString();
+            }
+        }
+        
+        String luggageSize4 = pRequest.getParameter("luggageSize4");
+        String luggageAmount4 = pRequest.getParameter("luggageAmount4");
+        if (StringUtils.isNotBlank(luggageSize4) && StringUtils.isNotBlank(luggageAmount4)) {
+            Double size = Double.valueOf(luggageSize4);
+            Integer amount = Integer.valueOf(luggageAmount4);
+            if (size > 0 && amount > 0) {
+                if (StringUtils.isNotBlank(luggageSizeStr)) {
+                    luggageSizeStr += ":";
+                }
+                luggageSizeStr += size.toString();
+                if (StringUtils.isNotBlank(luggageAmountStr)) {
+                    luggageAmountStr += ":";
+                }
+                luggageAmountStr += amount.toString();
+            }
+        }
+        
+        String luggageSize5 = pRequest.getParameter("luggageSize5");
+        String luggageAmount5 = pRequest.getParameter("luggageAmount5");
+        if (StringUtils.isNotBlank(luggageSize5) && StringUtils.isNotBlank(luggageAmount5)) {
+            Double size = Double.valueOf(luggageSize5);
+            Integer amount = Integer.valueOf(luggageAmount5);
+            if (size > 0 && amount > 0) {
+                if (StringUtils.isNotBlank(luggageSizeStr)) {
+                    luggageSizeStr += ":";
+                }
+                luggageSizeStr += size.toString();
+                if (StringUtils.isNotBlank(luggageAmountStr)) {
+                    luggageAmountStr += ":";
+                }
+                luggageAmountStr += amount.toString();
+            }
+        }
+        item.setLuggageSize(luggageSizeStr);
+        item.setLuggageAmount(luggageAmountStr);
+        item.analyzeLuggage();
         orderService.updateLineItem(ServletUtils.getOrderFromSession(pRequest));
     }
 
@@ -417,7 +496,7 @@ public class OrderController {
         if (null == order) {
             throw new RuntimeException("order is null in orderBean");
         }
-        orderService.updateOrderStatus(order.getId(), OrderStatus.COMMIT);
+        orderService.updateOrderStatus(order.getId(), "COMMIT");
     }
 
 
@@ -519,6 +598,7 @@ public class OrderController {
             } else {
                 order = orderService.findPickupOrderById(id);
                 PickupLineItem item = getPickupItemFromOrder(order);
+                item.analyzeLuggage();
                 model.addAttribute("item", item);
             }
             model.addAttribute("order", order);
@@ -541,7 +621,7 @@ public class OrderController {
             
             order = new OrderBean();
             order.setOrderContact(new OrderContactInfo());
-            order.setOrderStatus(OrderStatus.INITIAL);
+            order.setOrderStatus("INITIAL");
             maintainsOrderType(pRequest, order);
             
             maintainsOrderLineItem(pRequest, order, order.getOrderType());

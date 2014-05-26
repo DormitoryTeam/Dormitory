@@ -103,7 +103,9 @@ public class AdminDormitoryController {
             for (int j = 0; j < contractCount; j++) {
                 RoomPrice price = paramVector.getPrices().get(i * contractCount + j);
                 room.getContractPrice().add(price);
-
+                if (null == price) {
+                    continue;
+                }
                 if (price.getSalePrice() > 0d && price.getSalePrice().compareTo(minPrice) < 0) {
                     minPrice = price.getSalePrice();
                 }
@@ -119,7 +121,9 @@ public class AdminDormitoryController {
             for (int j = 0; j < contractCount; j++) {
                 RoomPrice price = paramVector.getPrices().get(i * contractCount + j);
                 room.getContractPrice().add(price);
-
+                if (null == price) {
+                    continue;
+                }
                 if (price.getWeekPrice() > 0d && price.getWeekPrice().compareTo(minWeekPrice) < 0) {
                     minWeekPrice = price.getWeekPrice();
                 }

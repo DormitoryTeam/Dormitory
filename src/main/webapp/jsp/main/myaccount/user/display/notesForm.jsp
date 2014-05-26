@@ -23,15 +23,15 @@
 						<dl>
 							<dd style="width: 350px;">是否需要推送你的入读城市信息</dd>
 							<dt>
-							<c:if test="${user.prefer.needPush}"><label>是</label></c:if>
-							<c:if test="${not user.prefer.needPush}"><label>否</label></c:if>
+							<c:if test="${empty user.prefer.needPush or user.prefer.needPush}"><label>是</label></c:if>
+							<c:if test="${not empty user.prefer.needPush and not user.prefer.needPush}"><label>否</label></c:if>
 							</dt>
 						</dl>
 						<dl>
-							<dd style="width: 350px;">我已阅读并同意留学生活网的《条款条例》</dd>
+							<dd style="width: 350px;">我已阅读并同意留学生活网的<a class="showClause" data-popupSrc="<c:url value="/jsp/main/hostel/order/clause.jsp"/>" target="_blank">《条款条例》</a></dd>
 							<dt>
-							<c:if test="${user.prefer.readClause}"><label>是</label></c:if>
-							<c:if test="${not user.prefer.readClause}"><label>否</label></c:if>
+							<c:if test="${empty user.prefer.readClause or user.prefer.readClause}"><label>是</label></c:if>
+							<c:if test="${not empty user.prefer.readClause and not user.prefer.readClause}"><label>否</label></c:if>
 							</dt>
 						</dl>
 					</fieldset>
@@ -78,15 +78,15 @@
 						<dl>
 							<dd>是否需要推送你的入读城市信息?</dd>
 							<dt>
-							<c:if test="${user.prefer.needPush}"><label>是</label></c:if>
-							<c:if test="${not user.prefer.needPush}"><label>否</label></c:if>
+							<c:if test="${empty user.prefer.needPush or user.prefer.needPush}"><label>是</label></c:if>
+							<c:if test="${not empty user.prefer.needPush and not user.prefer.needPush}"><label>否</label></c:if>
 							</dt>
 						</dl>
 						<dl>
 							<dd>我已阅读并同意留学生活网的《条款条例》</dd>
 							<dt>
-							<c:if test="${user.prefer.readClause}"><label>是</label></c:if>
-							<c:if test="${not user.prefer.readClause}"><label>否</label></c:if>
+							<c:if test="${empty user.prefer.readClause or user.prefer.readClause}"><label>是</label></c:if>
+							<c:if test="${not empty user.prefer.readClause and not user.prefer.readClause}"><label>否</label></c:if>
 							</dt>
 						</dl>
 					</fieldset>

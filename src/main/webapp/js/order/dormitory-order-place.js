@@ -75,6 +75,15 @@ $(function() {
 		return true;
 	});
 	
+	
+	$('.showClause').on('click', function() {
+		$(this).acsPopup({
+			popupSrc : $(this).attr("data-popupSrc"),
+			callBack : function() {
+				$(".popupCov").css("height", "auto");
+			}
+		});
+	});
 });
 
 var isChoosed= function (className) {

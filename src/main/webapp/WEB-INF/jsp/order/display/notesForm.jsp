@@ -37,16 +37,16 @@
 										<dd>是否需要推送你的入读城市信息?</dd>
 										<dd>
 											<c:set var="needPush" value="${order.orderContact.prefer.needPush}" />
-											<c:if test="${needPush}"><label>是</label></c:if>
-											<c:if test="${not needPush}"><label>否</label></c:if>
+											<c:if test="${empty needPush or needPush}"><label>是</label></c:if>
+											<c:if test="${not empty needPush and not needPush}"><label>否</label></c:if>
 										</dd>
 									</dl>
 									<dl>
-										<dd>我已阅读并同意留学生活网的《条款条例》</dd>
+										<dd>我已阅读并同意留学生活网的<a class="showClause" data-popupSrc="<c:url value="/jsp/main/hostel/order/clause.jsp"/>" target="_blank">《条款条例》</a></dd>
 										<dd>
 											<c:set var="readClause" value="${order.orderContact.prefer.readClause}" />
-											<c:if test="${readClause}"><label>是</label></c:if>
-											<c:if test="${not readClause}"><label>否</label></c:if>
+											<c:if test="${empty readClause or readClause}"><label>是</label></c:if>
+											<c:if test="${not empty readClause and not readClause}"><label>否</label></c:if>
 										</dd>
 									</dl>
 								</fieldset>

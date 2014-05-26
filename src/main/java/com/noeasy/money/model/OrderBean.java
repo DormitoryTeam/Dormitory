@@ -54,7 +54,7 @@ public class OrderBean extends BaseBean {
 
     private UserBean         mBelongsTo;
 
-    private OrderStatus      mOrderStatus;
+    private String           mOrderStatus;
 
     private OrderContactInfo mOrderContact;
 
@@ -115,15 +115,6 @@ public class OrderBean extends BaseBean {
      */
     public OrderContactInfo getOrderContact() {
         return mOrderContact;
-    }
-
-
-
-    /**
-     * @return the orderStatus
-     */
-    public OrderStatus getOrderStatus() {
-        return mOrderStatus;
     }
 
 
@@ -208,16 +199,6 @@ public class OrderBean extends BaseBean {
 
 
 
-    /**
-     * @param pOrderStatus
-     *            the orderStatus to set
-     */
-    public void setOrderStatus(final OrderStatus pOrderStatus) {
-        mOrderStatus = pOrderStatus;
-    }
-
-
-
     public void setOrderType(final OrderType pOrderType) {
         mOrderType = pOrderType;
     }
@@ -240,6 +221,18 @@ public class OrderBean extends BaseBean {
      */
     public void setUser(final UserBean pUser) {
         mUser = pUser;
+    }
+
+
+
+    public String getOrderStatus() {
+        return mOrderStatus;
+    }
+
+
+
+    public void setOrderStatus(String pOrderStatus) {
+        mOrderStatus = pOrderStatus;
     }
 
 }

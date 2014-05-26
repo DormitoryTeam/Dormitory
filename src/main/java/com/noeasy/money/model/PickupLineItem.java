@@ -30,6 +30,8 @@ package com.noeasy.money.model;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.noeasy.money.enumeration.PickupType;
 
 /**
@@ -51,9 +53,9 @@ public class PickupLineItem extends LineItem {
 
     private PickupType pickupType;
 
-    private int        luggageAmount;
+    private String     luggageAmount;
 
-    private double     luggageSize;
+    private String     luggageSize;
 
     private Date       takeOffDate;
 
@@ -74,9 +76,81 @@ public class PickupLineItem extends LineItem {
     private String     pickup2Dormitory;
 
     private String     pickup2Postalcode;
+    
+    private String     luggageAmount1;
+
+    private String     luggageSize1;
+    
+    private String     luggageAmount2;
+
+    private String     luggageSize2;
+    
+    private String     luggageAmount3;
+
+    private String     luggageSize3;
+    
+    private String     luggageAmount4;
+
+    private String     luggageSize4;
+    
+    private String     luggageAmount5;
+
+    private String     luggageSize5;
 
 
 
+    public void analyzeLuggage() {
+        if (StringUtils.isNotBlank(luggageAmount)) {
+            String[] tempAmounts = luggageAmount.split(":");
+            int i = 0;
+            while(i < tempAmounts.length) {
+                switch (i) {
+                case 0:
+                    this.setLuggageAmount1(tempAmounts[i]);
+                    break;
+                case 1:
+                    this.setLuggageAmount2(tempAmounts[i]);
+                    break;
+                case 2:
+                    this.setLuggageAmount3(tempAmounts[i]);
+                    break;
+                case 3:
+                    this.setLuggageAmount4(tempAmounts[i]);
+                    break;
+                case 4:
+                    this.setLuggageAmount5(tempAmounts[i]);
+                    break;
+                }
+                i++;
+            }
+        }
+        
+        if (StringUtils.isNotBlank(luggageSize)) {
+            String[] tempSizes = luggageSize.split(":");
+            int i = 0;
+            while(i < tempSizes.length) {
+                switch (i) {
+                case 0:
+                    this.setLuggageSize1(tempSizes[i]);
+                    break;
+                case 1:
+                    this.setLuggageSize2(tempSizes[i]);
+                    break;
+                case 2:
+                    this.setLuggageSize3(tempSizes[i]);
+                    break;
+                case 3:
+                    this.setLuggageSize4(tempSizes[i]);
+                    break;
+                case 4:
+                    this.setLuggageSize5(tempSizes[i]);
+                    break;
+                }
+                i++;
+            }
+        }
+    }
+    
     public String getFlightNum() {
         return flightNum;
     }
@@ -137,25 +211,25 @@ public class PickupLineItem extends LineItem {
 
 
 
-    public int getLuggageAmount() {
+    public String getLuggageAmount() {
         return luggageAmount;
     }
 
 
 
-    public void setLuggageAmount(int pLuggageAmount) {
+    public void setLuggageAmount(String pLuggageAmount) {
         luggageAmount = pLuggageAmount;
     }
 
 
 
-    public double getLuggageSize() {
+    public String getLuggageSize() {
         return luggageSize;
     }
 
 
 
-    public void setLuggageSize(double pLuggageSize) {
+    public void setLuggageSize(String pLuggageSize) {
         luggageSize = pLuggageSize;
     }
 
@@ -277,6 +351,126 @@ public class PickupLineItem extends LineItem {
 
     public void setPickup2Postalcode(String pPickup2Postalcode) {
         pickup2Postalcode = pPickup2Postalcode;
+    }
+
+
+
+    public String getLuggageAmount1() {
+        return luggageAmount1;
+    }
+
+
+
+    public void setLuggageAmount1(String pLuggageAmount1) {
+        luggageAmount1 = pLuggageAmount1;
+    }
+
+
+
+    public String getLuggageSize1() {
+        return luggageSize1;
+    }
+
+
+
+    public void setLuggageSize1(String pLuggageSize1) {
+        luggageSize1 = pLuggageSize1;
+    }
+
+
+
+    public String getLuggageAmount2() {
+        return luggageAmount2;
+    }
+
+
+
+    public void setLuggageAmount2(String pLuggageAmount2) {
+        luggageAmount2 = pLuggageAmount2;
+    }
+
+
+
+    public String getLuggageSize2() {
+        return luggageSize2;
+    }
+
+
+
+    public void setLuggageSize2(String pLuggageSize2) {
+        luggageSize2 = pLuggageSize2;
+    }
+
+
+
+    public String getLuggageAmount3() {
+        return luggageAmount3;
+    }
+
+
+
+    public void setLuggageAmount3(String pLuggageAmount3) {
+        luggageAmount3 = pLuggageAmount3;
+    }
+
+
+
+    public String getLuggageSize3() {
+        return luggageSize3;
+    }
+
+
+
+    public void setLuggageSize3(String pLuggageSize3) {
+        luggageSize3 = pLuggageSize3;
+    }
+
+
+
+    public String getLuggageAmount4() {
+        return luggageAmount4;
+    }
+
+
+
+    public void setLuggageAmount4(String pLuggageAmount4) {
+        luggageAmount4 = pLuggageAmount4;
+    }
+
+
+
+    public String getLuggageSize4() {
+        return luggageSize4;
+    }
+
+
+
+    public void setLuggageSize4(String pLuggageSize4) {
+        luggageSize4 = pLuggageSize4;
+    }
+
+
+
+    public String getLuggageAmount5() {
+        return luggageAmount5;
+    }
+
+
+
+    public void setLuggageAmount5(String pLuggageAmount5) {
+        luggageAmount5 = pLuggageAmount5;
+    }
+
+
+
+    public String getLuggageSize5() {
+        return luggageSize5;
+    }
+
+
+
+    public void setLuggageSize5(String pLuggageSize5) {
+        luggageSize5 = pLuggageSize5;
     }
 
 }

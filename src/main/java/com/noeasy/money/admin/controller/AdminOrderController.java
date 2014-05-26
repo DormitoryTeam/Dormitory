@@ -138,18 +138,19 @@ public class AdminOrderController {
             return "error";
         }
         
-        if (null == order.getOrderStatus().getNextStatus()) {
-            message = "Order status is null";
-            model.addAttribute("message", message);
-            return "error";
-        }
-        if (Integer.valueOf(nextStatusValue) != order.getOrderStatus().getNextStatus().getValue()) {
-            message = "Invalid order status";
-            model.addAttribute("message", message);
-            return "error";
-        }
+//        if (null == order.getOrderStatus().getNextStatus()) {
+//            message = "Order status is null";
+//            model.addAttribute("message", message);
+//            return "error";
+//        }
+//        if (Integer.valueOf(nextStatusValue) != order.getOrderStatus().getNextStatus().getValue()) {
+//            message = "Invalid order status";
+//            model.addAttribute("message", message);
+//            return "error";
+//        }
         // TODO SENDING CONTRACT EMAIL
-        orderService.updateOrderStatus(Integer.valueOf(orderId), OrderStatus.valueOf(Integer.valueOf(nextStatusValue)));
+        // FIXME
+//        orderService.updateOrderStatus(Integer.valueOf(orderId), OrderStatus.valueOf(Integer.valueOf(nextStatusValue)));
         model.addAttribute("message", message);
         return "redirect:/admin/order/orderDetails.html?orderId="+ orderId +"&orderType=" + orderType;
     }

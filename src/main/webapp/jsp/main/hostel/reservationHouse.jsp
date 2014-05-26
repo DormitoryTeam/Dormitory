@@ -399,7 +399,7 @@
 						</dd>
 					</dl>
 					<dl>
-						<dd><input type="checkbox" />我已阅读并同意留学生活网的《条款条例》</dd>
+						<dd><input type="checkbox" />我已阅读并同意留学生活网的<a class="showClause" data-popupSrc="<c:url value="/jsp/main/hostel/order/clause.jsp"/>" target="_blank">《条款条例》</a></dd>
 					</dl>
 					<dl>
 						<dt>&nbsp;</dt>

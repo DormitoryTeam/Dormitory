@@ -179,7 +179,8 @@ public class AlipayService implements IAlipayService {
             paymentRepository.updatePayment(payment);
             paymentRepository.updatePaymentStatus(paymentId, paymentStatus);
             // 4. update order status.
-            OrderStatus orderStatus = getOrderStatus(paymentStatus);
+//            OrderStatus orderStatus = getOrderStatus(paymentStatus);
+            String orderStatus = "PAYMENT";
             orderRepository.updateOrderStatus(orderId, orderStatus);
         }
         return true;

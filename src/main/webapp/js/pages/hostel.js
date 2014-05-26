@@ -173,11 +173,13 @@ require(['config'], function(config) {
             }).filter(":first").click();
 
             // bind datepicker
+            var currentYear = new Date().getFullYear();
             $(".datepicker").datepicker({ 
                 dateFormat: "yy-mm-dd",
                 showMonthAfterYear:true,
                 changeMonth: true,
-                changeYear: true
+                changeYear: true,
+                yearRange: (currentYear-34) + ":" + currentYear
             });
             $(".datepicker").attr("readonly",true);
             $(".timepicker").datepicker({ 

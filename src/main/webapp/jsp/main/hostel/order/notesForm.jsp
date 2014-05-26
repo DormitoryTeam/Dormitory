@@ -44,19 +44,19 @@
 							<c:if test="${null == needPush}">
 							<c:set var="needPush" value="${user.prefer.needPush}" />
 							</c:if>
-							<input name="needPush" type="radio" value="Y" <c:if test="${needPush}">checked</c:if> /><label>是</label>
-							<input name="needPush" type="radio" value="N" <c:if test="${not needPush}">checked</c:if> /><label>否</label>
+							<input name="needPush" type="radio" value="Y" <c:if test="${empty needPush or needPush}">checked</c:if> /><label>是</label>
+							<input name="needPush" type="radio" value="N" <c:if test="${not empty needPush and not needPush}">checked</c:if> /><label>否</label>
 						</dd>
 					</dl>
 					<dl>
-						<dd>我已阅读并同意留学生活网的《条款条例》</dd>
+						<dd>我已阅读并同意留学生活网的<a class="showClause" data-popupSrc="<c:url value="/jsp/main/hostel/order/clause.jsp"/>" target="_blank">《条款条例》</a></dd>
 						<dd>
 							<c:set var="readClause" value="${order.orderContact.prefer.readClause}" />
 							<c:if test="${null == readClause}">
 							<c:set var="readClause" value="${user.prefer.readClause}" />
 							</c:if>
-							<input class="isChoose" name="readClause" type="radio" value="Y" <c:if test="${readClause}">checked</c:if> /><label>是</label> 
-							<input class="isChoose" name="readClause" type="radio" value="N" <c:if test="${not readClause}">checked</c:if> /><label>否</label>
+							<input class="isChoose" name="readClause" type="radio" value="Y" <c:if test="${empty readClause or readClause}">checked</c:if> /><label>是</label> 
+							<input class="isChoose" name="readClause" type="radio" value="N" <c:if test="${not empty readClause and not readClause}">checked</c:if> /><label>否</label>
 						</dd>
 					</dl>
 					<dl>

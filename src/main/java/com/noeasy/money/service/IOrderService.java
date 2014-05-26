@@ -61,7 +61,7 @@ public interface IOrderService {
 
 
 
-    int updateOrderStatus(Integer pOrderId, OrderStatus pStatus);
+    int updateOrderStatus(Integer pOrderId, String pStatus);
 
 
 

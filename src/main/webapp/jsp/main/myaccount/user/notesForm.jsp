@@ -23,15 +23,15 @@
 						<dl>
 							<dd style="width: 350px;">是否需要推送你的入读城市信息</dd>
 							<dt>
-							<input name="needPush" type="radio" value="Y" <c:if test="${user.prefer.needPush}">checked</c:if> /><label>&nbsp;是&nbsp;</label>
-							<input name="needPush" type="radio" value="N" <c:if test="${not user.prefer.needPush}">checked</c:if> /><label>&nbsp;否&nbsp;</label>
+							<input name="needPush" type="radio" value="Y" <c:if test="${empty user.prefer.needPush or user.prefer.needPush}">checked</c:if> /><label>&nbsp;是&nbsp;</label>
+							<input name="needPush" type="radio" value="N" <c:if test="${not empty user.prefer.needPush and not user.prefer.needPush}">checked</c:if> /><label>&nbsp;否&nbsp;</label>
 							</dt>
 						</dl>
 						<dl>
-							<dd style="width: 350px;">我已阅读并同意留学生活网的《条款条例》</dd>
+							<dd style="width: 350px;">我已阅读并同意留学生活网的<a class="showClause" data-popupSrc="<c:url value="/jsp/main/hostel/order/clause.jsp"/>" target="_blank">《条款条例》</a></dd>
 							<dt>
-							<input name="readClause" type="radio" value="Y" <c:if test="${user.prefer.readClause}">checked</c:if> /><label>&nbsp;是&nbsp;</label> 
-							<input name="readClause" type="radio" value="N" <c:if test="${not user.prefer.readClause}">checked</c:if> /><label>&nbsp;否&nbsp;</label>
+							<input name="readClause" type="radio" value="Y" <c:if test="${empty user.prefer.readClause or  user.prefer.readClause}">checked</c:if> /><label>&nbsp;是&nbsp;</label> 
+							<input name="readClause" type="radio" value="N" <c:if test="${not empty user.prefer.readClause and not user.prefer.readClause}">checked</c:if> /><label>&nbsp;否&nbsp;</label>
 							</dt>
 						</dl>
 					</fieldset>

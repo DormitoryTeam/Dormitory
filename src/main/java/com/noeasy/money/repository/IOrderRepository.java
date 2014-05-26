@@ -90,7 +90,7 @@ public interface IOrderRepository {
 
 
 
-    int updateOrderStatus(Integer pOrderId, OrderStatus pStatus);
+    int updateOrderStatus(Integer pOrderId, String pStatus);
 
 
 

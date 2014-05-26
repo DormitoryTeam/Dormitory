@@ -1,6 +1,6 @@
 <ul class="compare-title">
 	<li class="title-hight">
-		<select id="choosePeriod">
+		<select id="choosePeriod" class="noSimSelect">
 			<option>选择周期</option>
 			<c:forEach var="contractType" items="${contractTypes}">
 			<option value="${contractType.key}">${contractType.value}</option>

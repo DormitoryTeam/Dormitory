@@ -8,8 +8,8 @@
 			<input type="hidden" name="contractId" value="${price.contractId}" /> 
 			<input type="hidden" name="roomInfoId" value="${roomInfo.id}" />
 			<input type="hidden" name="preferId" value="${order.orderContact.prefer.id}"/>
-			<input type="hidden" name="needPush" value="${order.orderContact.prefer.needPush ? "Y" : "N"}" />
-			<input type="hidden" name="readClause" value="${order.orderContact.prefer.readClause ? "Y" : "N"}" />
+			<input type="hidden" name="needPush" value="${(null ==  order.orderContact.prefer.needPush or order.orderContact.prefer.needPush) ? "Y" : "N"}" />
+			<input type="hidden" name="readClause" value="${(null ==  order.orderContact.prefer.readClause or order.orderContact.prefer.readClause) ? "Y" : "N"}" />
 			<input type="hidden" name="graduateSchool" value="${order.orderContact.prefer.graduateSchool}" />
 			<!-- <a href="<c:url value="/order/dormitory-place-order.html?dormitoryId=${dormitory.id}&contractId=${price.contractId}&roomInfoId=${roomInfo.id}"/>" class="addOne">&nbsp;</a>-->
 			<div class="btnBox">

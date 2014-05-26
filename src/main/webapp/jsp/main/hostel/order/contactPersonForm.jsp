@@ -27,7 +27,7 @@
 				<fieldset>
 					<dl>
 						<dd>
-							<input style="height:20px;" id="sameas" type="checkbox"/><label>同担保人信息</label>
+							<input style="height:20px;width:90px;" id="sameas" type="checkbox"/><label>同担保人信息</label>
 						</dd>
 					</dl>
 					<dl>

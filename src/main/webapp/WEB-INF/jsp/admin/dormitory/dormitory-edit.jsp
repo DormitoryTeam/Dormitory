@@ -225,7 +225,7 @@
 						<td><input type="text" name="rooms[${i['index']}].kitchenPeople" value="${curRoom['kitchenPeople']}" /></td>
 						<td><select name="rooms[${i['index']}].ensuitBathroom">
 							<option value="false" ${!curRoom['ensuitBathroom'] ? 'selected' : ''}>没有</option>
-							<option value="true"  ${ curRoom['ensuitBathroom'] ? 'selected' : ''}>有</option>
+							<option value="true"  ${ curRoom['id'] eq 0 or curRoom['ensuitBathroom'] ? 'selected' : ''}>有</option>
 						</select></td>
 						<td><select name="rooms[${i['index']}].orientationArrange">
 							<option value="false" ${!curRoom['orientationArrange'] ? 'selected' : ''}>不可以</option>

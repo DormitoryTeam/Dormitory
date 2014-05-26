@@ -111,17 +111,17 @@ public class OrderService implements IOrderService {
 
     @Override
     public OrderStatus getNextStatus(Integer pOrderId, OrderType pType) {
-        OrderBean order = queryOrder(pOrderId, pType);
-        if (null != order && null != order.getOrderStatus()) {
-            return order.getOrderStatus().getNextStatus();
-        }
+//        OrderBean order = queryOrder(pOrderId, pType);
+//        if (null != order && null != order.getOrderStatus()) {
+//            return order.getOrderStatus().getNextStatus();
+//        }
         return null;
     }
 
 
 
     @Override
-    public int updateOrderStatus(Integer pOrderId, OrderStatus pStatus) {
+    public int updateOrderStatus(Integer pOrderId, String pStatus) {
         return orderRepository.updateOrderStatus(pOrderId, pStatus);
 
     }

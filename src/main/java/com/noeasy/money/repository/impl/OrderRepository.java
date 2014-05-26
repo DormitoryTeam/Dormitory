@@ -162,7 +162,7 @@ public class OrderRepository extends BaseRepository implements IOrderRepository 
 
 
     @Override
-    public int updateOrderStatus(Integer pOrderId, OrderStatus pStatus) {
+    public int updateOrderStatus(Integer pOrderId, String pStatus) {
         OrderBean order = new OrderBean();
         order.setId(pOrderId);
         order.setOrderStatus(pStatus);

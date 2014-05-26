@@ -25,11 +25,51 @@
 			<dl>
 				<dt>尺寸</dt>
 				<dd>
-					<input type="text" name="luggageSize" value="${item.luggageSize}"/>
+					<input type="text" name="luggageSize1" value="${item.luggageSize1}"/>
 				</dd>
 				<dt class="min">个数</dt>
 				<dd>
-					<input type="text" name="luggageAmount" value="${item.luggageAmount}"/>
+					<input type="text" name="luggageAmount1" value="${item.luggageAmount1}"/>
+				</dd>
+			</dl>
+			<dl>
+				<dt>尺寸</dt>
+				<dd>
+					<input type="text" name="luggageSize2" value="${item.luggageSize2}"/>
+				</dd>
+				<dt class="min">个数</dt>
+				<dd>
+					<input type="text" name="luggageAmount2" value="${item.luggageAmount2}"/>
+				</dd>
+			</dl>
+			<dl>
+				<dt>尺寸</dt>
+				<dd>
+					<input type="text" name="luggageSize3" value="${item.luggageSize3}"/>
+				</dd>
+				<dt class="min">个数</dt>
+				<dd>
+					<input type="text" name="luggageAmount3" value="${item.luggageAmount3}"/>
+				</dd>
+			</dl>
+			<dl>
+				<dt>尺寸</dt>
+				<dd>
+					<input type="text" name="luggageSize4" value="${item.luggageSize4}"/>
+				</dd>
+				<dt class="min">个数</dt>
+				<dd>
+					<input type="text" name="luggageAmount4" value="${item.luggageAmount4}"/>
+				</dd>
+			</dl>
+			<dl>
+				<dt>尺寸</dt>
+				<dd>
+					<input type="text" name="luggageSize5" value="${item.luggageSize5}"/>
+				</dd>
+				<dt class="min">个数</dt>
+				<dd>
+					<input type="text" name="luggageAmount5" value="${item.luggageAmount5}"/>
 				</dd>
 			</dl>
 			<dl>
