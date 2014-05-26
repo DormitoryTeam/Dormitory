@@ -37,21 +37,23 @@ package com.noeasy.money.model;
 
 public class RoomPrice {
 
-    private int    mId;
+    private int     mId;
 
-    private int    mRoomInfoId;
+    private int     mRoomInfoId;
 
-    private String mCurrency;
+    private String  mCurrency;
 
-    private Double mWeekPrice;
+    private Double  mWeekPrice;
 
-    private Double mSalePrice;
+    private Double  mSalePrice;
 
-    private int    mContractId;
+    private int     mContractId;
 
-    private String mContract;
+    private String  mContract;
 
-    private int    mStatus;
+    private int     mStatus;
+
+    private boolean mShouldDelete;
 
 
 
@@ -128,6 +130,15 @@ public class RoomPrice {
 
 
     /**
+     * @return the shouldDelete
+     */
+    public boolean isShouldDelete() {
+        return mShouldDelete;
+    }
+
+
+
+    /**
      * @param pContract
      *            the contract to set
      */
@@ -183,6 +194,16 @@ public class RoomPrice {
      */
     public void setSalePrice(final Double pSalePrice) {
         mSalePrice = pSalePrice;
+    }
+
+
+
+    /**
+     * @param pShouldDelete
+     *            the shouldDelete to set
+     */
+    public void setShouldDelete(final boolean pShouldDelete) {
+        mShouldDelete = pShouldDelete;
     }
 
 

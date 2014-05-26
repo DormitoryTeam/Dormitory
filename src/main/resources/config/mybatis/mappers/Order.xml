@@ -129,7 +129,7 @@
 		#{user.id,javaType=int,jdbcType=INTEGER},
 		#{belongsTo.id,javaType=int,jdbcType=INTEGER},
 		#{orderType.name,javaType=String,jdbcType=VARCHAR},
-		#{orderStatus.name,javaType=String,jdbcType=VARCHAR},
+		#{orderStatus,javaType=String,jdbcType=VARCHAR},
 		#{amount,javaType=java.math.BigDecimal,jdbcType=DECIMAL},
 		#{currency,javaType=String,jdbcType=VARCHAR}
 		)
@@ -221,7 +221,7 @@
 	
 	<update id="updateOrderStatus" parameterType="com.noeasy.money.model.OrderBean">
 		UPDATE `order` SET
-		status = #{orderStatus.name,javaType=String,jdbcType=VARCHAR},
+		status = #{orderStatus,javaType=String,jdbcType=VARCHAR},
 		update_time = now()
 		WHERE id = #{id}
 	</update>

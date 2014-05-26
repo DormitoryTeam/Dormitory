@@ -41,6 +41,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.noeasy.money.enumeration.DormitoryStatus;
 import com.noeasy.money.service.IDormitoryService;
+import com.noeasy.money.service.INavigationService;
 
 /**
  * <class description>
@@ -52,7 +53,10 @@ import com.noeasy.money.service.IDormitoryService;
 public class InstantiationTracingBeanPostProcessor implements ApplicationListener<ContextRefreshedEvent> {
 
     @Resource(name = "dormitoryService")
-    IDormitoryService dormitoryService;
+    IDormitoryService  dormitoryService;
+
+    @Resource(name = "navigationService")
+    INavigationService navigationService;
 
 
 
@@ -67,11 +71,12 @@ public class InstantiationTracingBeanPostProcessor implements ApplicationListene
 
         List<Map<String, Object>> contractTypes = dormitoryService.queryContractTypes();
         List<Map<String, Object>> roomTypes = dormitoryService.queryRoomTypes();
+        List<Map<String, Object>> companies = navigationService.queryCompanies();
         Object[] allDormitoryStatus = DormitoryStatus.getAllStatus();
 
         servletContext.setAttribute("contractTypes", contractTypes);
         servletContext.setAttribute("roomTypes", roomTypes);
+        servletContext.setAttribute("companies", companies);
         servletContext.setAttribute("allDormitoryStatus", allDormitoryStatus);
-
     }
 }

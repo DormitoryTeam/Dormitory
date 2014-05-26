@@ -15,7 +15,7 @@ $(function() {
 			}
 		}
 	});
-	
+
 	$('#rate').raty({
 		score : function() {
 			return $(this).attr('data-score');
@@ -44,7 +44,7 @@ $(function() {
 		$("#quickPricePreview").html(contracts[0].currency + " " + contracts[0].salePrice);
 		$("#quickRoomNamePreview").html(contracts[0].roomName);
 	});
-	
+
 	$("#selectQuickContract").change(function(e) {
 		var contracts = room_contracts[$("#selectQuickRoom").val()];
 		$.each(contracts, function(i, e) {
@@ -55,7 +55,7 @@ $(function() {
 			}
 		});
 	});
-	
+
 	$(".btn-quick").on('click', function(e) {
 		$("#quickRoomInfoId").val($("#selectQuickRoom").val());
 		$("#quickContractId").val($("#selectQuickContract").val());
@@ -116,7 +116,7 @@ $(function() {
 			}
 		});
 	});
-	
+
 	$("#quickPlaceOrderForm").submit(function() {
 		//var hasOrder = $("#expressBooking").attr("hasOrder");
 		//var userId = $("#expressBooking").attr("userId");
@@ -132,7 +132,7 @@ $(function() {
 		//}
 		return true;
 	});
-	
+
 	$(".auto-height-textarea").each(function(i, e) {
 		$(e).css("height", this.scrollHeight);
 	});
@@ -143,7 +143,7 @@ $(function() {
 	$(".popup-preview").click(function() {
 		var src = $(this).attr("src");
 		showImgPopup(src);
-	}); 
+	});
 	initialize();
 });
 
@@ -152,7 +152,7 @@ function initialize() {
 	var latitude = $("#dormitoryLatitude").val();
 	var longitdue = $("#dormitoryLongitude").val();
 	var dormitoryLatlng = new google.maps.LatLng(latitude, longitdue);
-	
+
 	var mapOptions = {
 		center : dormitoryLatlng,
 		zoom : 12,
@@ -170,12 +170,12 @@ function initialize() {
 		title : $("#dormitoryName").val()
 	});
 	marker.setMap(map);
-	
+
 	var collegeLatitude = $("#collegeLatitude").val();
 	var collegeLongitdue = $("#collegeLongitude").val();
 	var collegeOriginalName = $("#collegeOriginalName").val();
 	var collegeLatlng = new google.maps.LatLng(collegeLatitude, collegeLongitdue);
-	
+
 	marker = new google.maps.Marker({
 		position : collegeLatlng,
 		map : map,

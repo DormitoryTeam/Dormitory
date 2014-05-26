@@ -113,6 +113,10 @@ public interface IDormitoryService {
 
 
 
+    RoomInfoBean queryRoomInfoById(int pRoomId, int pDormitoryId);
+
+
+
     List<Map<String, Object>> queryRoomTypes();
 
 
@@ -125,11 +129,23 @@ public interface IDormitoryService {
 
 
 
+    Integer removeRoomInfos(List<Integer> roomInfoIds);
+
+
+
+    Integer removeRoomPrices(List<Integer> roomPriceIds);
+
+
+
     Integer saveDormitoryBrowseHistory(int pUserId, int pDormitoryId);
 
 
 
     Boolean saveOrUpdateDormitory(DormitoryBean pDormitory);
+
+
+
+    Boolean saveOrUpdateRoombInfo(RoomInfoBean pRoom);
 
 
 

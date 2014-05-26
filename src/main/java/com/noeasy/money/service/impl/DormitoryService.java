@@ -236,6 +236,17 @@ public class DormitoryService implements IDormitoryService {
 
 
     /**
+     * @see com.noeasy.money.service.IDormitoryService#queryRoomInfoById(int,
+     *      int)
+     */
+    @Override
+    public RoomInfoBean queryRoomInfoById(final int pRoomId, final int pDormitoryId) {
+        return dormitoryRepository.queryRoomInfoById(pRoomId, pDormitoryId);
+    }
+
+
+
+    /**
      * @see com.noeasy.money.service.IDormitoryService#queryRoomTypes()
      */
     @Override
@@ -301,12 +312,51 @@ public class DormitoryService implements IDormitoryService {
 
 
     /**
+     * @see com.noeasy.money.service.IDormitoryService#saveOrUpdateRoombInfo(com.noeasy.money.model.RoomInfoBean)
+     */
+    @Override
+    public Boolean saveOrUpdateRoombInfo(final RoomInfoBean pRoom) {
+        if (pRoom != null) {
+            if (pRoom.getId() > 0) {
+                int updatedResult = dormitoryRepository.updateRoomInfo(pRoom);
+                return updatedResult == 1;
+            } else {
+                int saveResult = dormitoryRepository.saveRoomInfo(pRoom);
+                return saveResult == 1;
+            }
+        }
+        return false;
+    }
+
+
+
+    /**
      * @see com.noeasy.money.service.IDormitoryService#updateDormitoryStatus(java.lang.String,
      *      com.noeasy.money.enumeration.DormitoryStatus)
      */
     @Override
     public boolean updateDormitoryStatus(final String pId, final DormitoryStatus pStatus) {
         return dormitoryRepository.updateDormitoryStatus(pId, pStatus);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.IDormitoryService#removeRoomInfos(java.util.List)
+     */
+    @Override
+    public Integer removeRoomInfos(List<Integer> pRoomInfoIds) {
+        return dormitoryRepository.removeRoomInfos(pRoomInfoIds);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.IDormitoryService#removeRoomPrices(java.util.List)
+     */
+    @Override
+    public Integer removeRoomPrices(List<Integer> pRoomPriceIds) {
+        return dormitoryRepository.removeRoomInfos(pRoomPriceIds);
     }
 
 }

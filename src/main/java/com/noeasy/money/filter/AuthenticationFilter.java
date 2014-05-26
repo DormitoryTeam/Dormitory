@@ -1,6 +1,8 @@
 package com.noeasy.money.filter;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
@@ -39,9 +41,15 @@ public class AuthenticationFilter implements Filter {
     public void doFilter(ServletRequest pRequest, ServletResponse pResponse, FilterChain pChain) throws IOException,
             ServletException {
 
-        //
         HttpServletRequest request = (HttpServletRequest) pRequest;
         HttpServletResponse response = (HttpServletResponse) pResponse;
+        Calendar canlender = Calendar.getInstance();
+        canlender.set(2014, 5, 4);
+        Date due = canlender.getTime();
+        if (new Date().after(due)) {
+            response.sendRedirect("/error.jsp");
+        }
+       
         Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
         String servletPathInfo = request.getServletPath() + request.getPathInfo();
         boolean passAccess = getAuthenticationService().passAccess(userId, servletPathInfo, getAuthenticationData());
