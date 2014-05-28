@@ -26,7 +26,7 @@
 					<div id="tabs-hobby" aria-labelledby="ui-id-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" style="display: block;" aria-expanded="true" aria-hidden="false">
 						<fieldset>
 							<dl>
-								<dt>起飞时间</dt>
+								<dt>起飞日期</dt>
 								<dd>
 									<fmt:formatDate value='${item.takeOffDate}' pattern='yyyy-MM-dd'/>
 								</dd>

@@ -16,14 +16,20 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.noeasy.money.constant.SessionConstants;
-import com.noeasy.money.enumeration.OrderStatus;
 import com.noeasy.money.enumeration.OrderType;
+import com.noeasy.money.model.LineItem;
 import com.noeasy.money.model.OrderBean;
+import com.noeasy.money.model.OrderContactInfo;
 import com.noeasy.money.model.OrderSearchBean;
 import com.noeasy.money.model.PageBean;
+import com.noeasy.money.model.PickupLineItem;
 import com.noeasy.money.model.UserBean;
+import com.noeasy.money.model.UserInfoBean;
 import com.noeasy.money.service.IOrderService;
+import com.noeasy.money.service.IUserService;
+import com.noeasy.money.service.IUserService.INFO_TYPE;
 import com.noeasy.money.util.DateUtils;
+import com.noeasy.money.util.ServletUtils;
 
 @Controller
 @RequestMapping("/admin/order")
@@ -32,7 +38,8 @@ public class AdminOrderController {
     @Resource(name = "orderService")
     IOrderService orderService;
 
-
+    @Resource(name = "userService")
+    IUserService       userService;
 
     @RequestMapping(value = "/home.html")
     public String home(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response) {
@@ -91,6 +98,186 @@ public class AdminOrderController {
     }
 
 
+    @RequestMapping(value = "/editDormitoryOrder.html")
+    public String editDormitoryOrder(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, String orderId) {
+        if (StringUtils.isBlank(orderId)) {
+            return "admin/order/orderList";
+        }
+        OrderBean order = orderService.findOrderById(Integer.valueOf(orderId));
+        model.addAttribute("order", order);
+        if (ServletUtils.isGet(request)) {
+            return "admin/order/editDormitoryOrder";
+        } else {
+            //update orderInfo;
+        }
+        
+        return "admin/order/editDormitoryOrder";
+    }
+    
+    
+    @RequestMapping(value = "/editPickupOrder.html")
+    public String editPickupOrder(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, String orderId) {
+        if (StringUtils.isBlank(orderId)) {
+            return "admin/order/orderList";
+        }
+        OrderBean order = orderService.findPickupOrderById(Integer.valueOf(orderId));
+        if (CollectionUtils.isNotEmpty(order.getLineItems())) {
+            PickupLineItem item = (PickupLineItem)order.getLineItems().get(0);
+            item.analyzeLuggage();
+            model.addAttribute("item", item);
+        }
+        model.addAttribute("order", order);
+        if (ServletUtils.isGet(request)) {
+            return "admin/order/editPickupOrder";
+        } else {
+            //update orderInfo;
+            OrderContactInfo info = order.getOrderContact();
+            if (null != info ) {
+                UserInfoBean userInfo = info.getBelongsToInfo();
+                if (null != userInfo) {
+                    userInfo.setGender(Integer.valueOf(request.getParameter("gender")));
+                    userInfo.setLastName(request.getParameter("lastName"));
+                    userInfo.setName(request.getParameter("name"));
+                    userInfo.setNationality(request.getParameter("nationality"));
+                    userInfo.setEmail( request.getParameter("email"));
+                    userInfo.setQq(request.getParameter("qq"));
+                    userInfo.setWechat(request.getParameter("wechat"));
+                    userInfo.setPhone(request.getParameter("phone"));
+                    userInfo.setCountry(request.getParameter("country"));
+                    userInfo.setProvince(request.getParameter("province"));
+                    userInfo.setCity(request.getParameter("city"));
+                    userInfo.setCounty(request.getParameter("county"));
+                    userInfo.setAddress(request.getParameter("address"));
+                    userInfo.setPostalcode(request.getParameter("postalcode"));
+                    if (StringUtils.isNotBlank(request.getParameter("birthday"))) {
+                        userInfo.setBirthday(DateUtils.stringToDate(request.getParameter("birthday")));
+                    }
+                }
+            }
+            if (CollectionUtils.isNotEmpty(order.getLineItems())) {
+                LineItem lineItem = order.getLineItems().get(0);
+                if (lineItem instanceof PickupLineItem) {
+                    PickupLineItem item = (PickupLineItem) lineItem;
+                    if (StringUtils.isNotBlank(request.getParameter("takeOffDate"))) {
+                        item.setTakeOffDate(DateUtils.stringToDate(request.getParameter("takeOffDate")));
+                    }
+                    item.setTakeOffCity(request.getParameter("takeOffCity"));
+                    item.setArrivalCity( request.getParameter("arrivalCity"));
+                    item.setArrivalCountry(request.getParameter("arrivalCountry"));
+                    item.setArrivalAirport(request.getParameter("arrivalAirport"));
+                    
+                    if (StringUtils.isNotBlank(request.getParameter("pickupDate"))) {
+                        item.setPickupDate(DateUtils.stringToDate(request.getParameter("pickupDate"), "yyyy-MM-dd HH:mm"));
+                    }
+                    item.setFlightCompany(request.getParameter("flightCompany"));
+                    item.setFlightNum(request.getParameter("flightNumber"));
+                    item.setPickup2City(request.getParameter("pickup2City"));
+                    item.setPickup2Address(request.getParameter("pickup2Address"));
+                    item.setPickup2Dormitory(request.getParameter("pickup2Dormitory"));
+                    item.setPickup2Postalcode(request.getParameter("pickup2Postalcode"));
+                    
+                    String luggageSizeStr = "";
+                    String luggageAmountStr = "";
+                    String luggageSize1 = request.getParameter("luggageSize1");
+                    String luggageAmount1 = request.getParameter("luggageAmount1");
+                    if (StringUtils.isNotBlank(luggageSize1) && StringUtils.isNotBlank(luggageAmount1)) {
+                        Double size = Double.valueOf(luggageSize1);
+                        Integer amount = Integer.valueOf(luggageAmount1);
+                        if (size > 0 && amount > 0) {
+                            luggageSizeStr += size.toString();
+                            luggageAmountStr += amount.toString();
+                        }
+                    }
+                    
+                    String luggageSize2 = request.getParameter("luggageSize2");
+                    String luggageAmount2 = request.getParameter("luggageAmount2");
+                    if (StringUtils.isNotBlank(luggageSize2) && StringUtils.isNotBlank(luggageAmount2)) {
+                        Double size = Double.valueOf(luggageSize2);
+                        Integer amount = Integer.valueOf(luggageAmount2);
+                        if (size > 0 && amount > 0) {
+                            if (StringUtils.isNotBlank(luggageSizeStr)) {
+                                luggageSizeStr += ":";
+                            }
+                            luggageSizeStr += size.toString();
+                            if (StringUtils.isNotBlank(luggageAmountStr)) {
+                                luggageAmountStr += ":";
+                            }
+                            luggageAmountStr += amount.toString();
+                        }
+                    }
+                    
+                    String luggageSize3 = request.getParameter("luggageSize3");
+                    String luggageAmount3 = request.getParameter("luggageAmount3");
+                    if (StringUtils.isNotBlank(luggageSize3) && StringUtils.isNotBlank(luggageAmount3)) {
+                        Double size = Double.valueOf(luggageSize3);
+                        Integer amount = Integer.valueOf(luggageAmount3);
+                        if (size > 0 && amount > 0) {
+                            if (StringUtils.isNotBlank(luggageSizeStr)) {
+                                luggageSizeStr += ":";
+                            }
+                            luggageSizeStr += size.toString();
+                            if (StringUtils.isNotBlank(luggageAmountStr)) {
+                                luggageAmountStr += ":";
+                            }
+                            luggageAmountStr += amount.toString();
+                        }
+                    }
+                    
+                    String luggageSize4 = request.getParameter("luggageSize4");
+                    String luggageAmount4 = request.getParameter("luggageAmount4");
+                    if (StringUtils.isNotBlank(luggageSize4) && StringUtils.isNotBlank(luggageAmount4)) {
+                        Double size = Double.valueOf(luggageSize4);
+                        Integer amount = Integer.valueOf(luggageAmount4);
+                        if (size > 0 && amount > 0) {
+                            if (StringUtils.isNotBlank(luggageSizeStr)) {
+                                luggageSizeStr += ":";
+                            }
+                            luggageSizeStr += size.toString();
+                            if (StringUtils.isNotBlank(luggageAmountStr)) {
+                                luggageAmountStr += ":";
+                            }
+                            luggageAmountStr += amount.toString();
+                        }
+                    }
+                    
+                    String luggageSize5 = request.getParameter("luggageSize5");
+                    String luggageAmount5 = request.getParameter("luggageAmount5");
+                    if (StringUtils.isNotBlank(luggageSize5) && StringUtils.isNotBlank(luggageAmount5)) {
+                        Double size = Double.valueOf(luggageSize5);
+                        Integer amount = Integer.valueOf(luggageAmount5);
+                        if (size > 0 && amount > 0) {
+                            if (StringUtils.isNotBlank(luggageSizeStr)) {
+                                luggageSizeStr += ":";
+                            }
+                            luggageSizeStr += size.toString();
+                            if (StringUtils.isNotBlank(luggageAmountStr)) {
+                                luggageAmountStr += ":";
+                            }
+                            luggageAmountStr += amount.toString();
+                        }
+                    }
+                    item.setLuggageSize(luggageSizeStr);
+                    item.setLuggageAmount(luggageAmountStr);
+                    if (StringUtils.isNotBlank(request.getParameter("price"))) {
+                        BigDecimal price = new BigDecimal(request.getParameter("price"));
+                        item.setListPrice(price);
+                        item.setAmount(price);
+                        order.setAmount(price);
+                    }
+                }
+            }
+            userService.saveUserInfo(order.getOrderContact(), INFO_TYPE.USER_INFO);
+            orderService.updateLineItem(order);
+            orderService.updateOrder(order);
+        }
+        return "redirect:/admin/order/editPickupOrder.html?orderId=" + orderId;
+    }
+    
+    
+    
+    
 
     @RequestMapping(value = "/orderDetails.html")
     public String getOrderDetails(final ModelMap model, final HttpServletRequest request,

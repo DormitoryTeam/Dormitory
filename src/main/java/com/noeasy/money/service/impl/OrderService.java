@@ -215,8 +215,12 @@ public class OrderService implements IOrderService {
             } else {
                 PickupLineItem pickupItem = (PickupLineItem)item;
              // TODO Use pick up default price.
-                pickupItem.setAmount(BigDecimal.valueOf(0));
-                pickupItem.setListPrice(BigDecimal.valueOf(0));
+                if (null == pickupItem.getAmount()) {
+                    pickupItem.setAmount(BigDecimal.valueOf(0));
+                }
+                if (null == pickupItem.getListPrice()) {
+                    pickupItem.setListPrice(BigDecimal.valueOf(0));                    
+                }
                 orderRepository.updatePickupLineItem(pickupItem);
             }
         }

@@ -29,11 +29,11 @@
 		<td>${order.orderStatus}</td>
 		<td>
 			<c:choose>
-				<c:when test="${0 eq order.orderStatus.value}"><a href="<c:url value='/admin/order/orderDetails.html?orderId=${order.id}&orderType=${type}'/>">审核中</a></c:when>
-				<c:when test="${1 eq order.orderStatus.value}">等待付款</c:when>
-				<c:when test="${2 eq order.orderStatus.value}">等待付款</c:when>
-				<c:when test="${3 eq order.orderStatus.value}"><a href="<c:url value='/admin/order/orderDetails.html?orderId=${order.id}&orderType=${type}'/>">确认制服</a></c:when>
-				<c:when test="${4 eq order.orderStatus.value}"><a href="<c:url value='/admin/order/orderDetails.html?orderId=${order.id}&orderType=${type}'/>">发送合同</a></c:when>
+				<c:when test="${'INITIAL' eq order.orderStatus}">等待用户完成订单</c:when>
+				<c:when test="${'COMMIT' eq order.orderStatus}">已提交,等待审核</c:when>
+				<c:when test="${'REVIEWDE' eq order.orderStatus}">审核完成，等待发送合同</c:when>
+				<c:when test="${'SENDING_CONTACT' eq order.orderStatus}">合同发送中</c:when>
+				<c:when test="${'DONE' eq order.orderStatus}">完成</c:when>
 				<c:otherwise>完成</c:otherwise>
 			</c:choose>
 		</td>
@@ -48,24 +48,21 @@
 		<td>用户</td>
 		<td>预定时间</td>
 		<td>当前状态</td>
-		<td>操作</td>
 	</tr>
 	<c:forEach var="order" items="${orders}" varStatus="i">
 	<tr>
-		<td><a href="<c:url value='/admin/order/orderDetails.html?orderId=${order.id}&orderType=${type}'/>">${order.id}</a></td>
+		<td><a href="<c:url value='/admin/order/editPickupOrder.html?orderId=${order.id}&orderType=${type}'/>">${order.id}</a></td>
 		<td>${order.lineItems[0].flightNum}</td>
 		<td>${order.amount}</td>
 		<td>${order.user.login}</td>
 		<td>${order.createTime}</td>
-		<td>${order.orderStatus}</td>
 		<td>
 			<c:choose>
-				<c:when test="${0 eq order.orderStatus.value}"><a href="<c:url value='/admin/order/orderDetails.html?orderId=${order.id}&orderType=${type}'/>">审核中</a></c:when>
-				<c:when test="${1 eq order.orderStatus.value}">等待付款</c:when>
-				<c:when test="${2 eq order.orderStatus.value}">等待付款</c:when>
-				<c:when test="${3 eq order.orderStatus.value}"><a href="<c:url value='/admin/order/orderDetails.html?orderId=${order.id}&orderType=${type}'/>">确认制服</a></c:when>
-				<c:when test="${4 eq order.orderStatus.value}"><a href="<c:url value='/admin/order/orderDetails.html?orderId=${order.id}&orderType=${type}'/>">发送合同</a></c:when>
-				<c:otherwise>FINISH</c:otherwise>
+				<c:when test="${'INITIAL' eq order.orderStatus}">等待用户完成订单</c:when>
+				<c:when test="${'COMMIT' eq order.orderStatus}">已提交,等待审核</c:when>
+				<c:when test="${'REVIEWDE' eq order.orderStatus}">审核完成，已发送付款邮件</c:when>
+				<c:when test="${'PAYMENT_DONE' eq order.orderStatus}">已支付，已发送车票邮件</c:when>
+				<c:otherwise>已支付，已发送车票邮件</c:otherwise>
 			</c:choose>
 		</td>
 	<tr>
