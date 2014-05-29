@@ -177,6 +177,7 @@ public class AdminOrderController {
                     item.setPickup2Address(request.getParameter("pickup2Address"));
                     item.setPickup2Dormitory(request.getParameter("pickup2Dormitory"));
                     item.setPickup2Postalcode(request.getParameter("pickup2Postalcode"));
+                    item.setPaymentUrl(request.getParameter("paymentUrl"));
                     
                     String luggageSizeStr = "";
                     String luggageAmountStr = "";

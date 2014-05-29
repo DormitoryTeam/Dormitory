@@ -45,7 +45,7 @@
 		belong_to.id as bt_id, belong_to.login as bt_login, belong_to.email as bt_email, belong_to.alias as bt_alias,
 		order_contact.id as contact_id, order_contact.order_id as contact_order_id,
 		user_info.id as bti_id, user_info.name as bti_name, user_info.last_name as bti_last_name, user_info.nationality as bti_nationality, user_info.gender as bti_gender, user_info.birthday as bti_birthday, user_info.email as bti_email, user_info.qq as bti_qq, user_info.wechat as bti_wechat, user_info.phone as bti_phone, user_info.country as bti_country, user_info.province as bti_province, user_info.city as bti_city, user_info.county as bti_county, user_info.address as bti_address, user_info.postalcode as bti_postalcode, user_info.relationship as bti_relationship,
-		item.id as lid, item.amount as li_amount, item.currency as li_currency, item.city_id as li_city_id, item.pickup_date as li_pickup_date, item.pickup_type as li_pickup_type, item.luggage_amount as li_luggage_amount, item.luggage_size as li_luggage_size, item.takeoff_date as li_takeoff_date, item.takeoff_city as li_takeoff_city, item.arrival_city as li_arrival_city, item.arrival_country as li_arrival_country, item.arrival_airport as li_arrival_airport, item.flight_company as li_flight_company, item.flight_number as li_flight_number, item.pickup_to_city as li_pickup_to_city, item.pickup_to_address as li_pickup_to_address, item.pickup_to_dormitory as li_pickup_to_dormitory, item.pickup_to_postalcode as li_pickup_to_postalcode
+		item.id as lid, item.amount as li_amount, item.currency as li_currency, item.city_id as li_city_id, item.pickup_date as li_pickup_date, item.pickup_type as li_pickup_type, item.luggage_amount as li_luggage_amount, item.luggage_size as li_luggage_size, item.takeoff_date as li_takeoff_date, item.takeoff_city as li_takeoff_city, item.arrival_city as li_arrival_city, item.arrival_country as li_arrival_country, item.arrival_airport as li_arrival_airport, item.flight_company as li_flight_company, item.flight_number as li_flight_number, item.pickup_to_city as li_pickup_to_city, item.pickup_to_address as li_pickup_to_address, item.pickup_to_dormitory as li_pickup_to_dormitory, item.pickup_to_postalcode as li_pickup_to_postalcode, item.payment_url as li_payment_url
 	</sql>
 
 	<sql id="select-pickup-order-table-join">
@@ -301,6 +301,7 @@
 		<if test="pickup2Address != null">pickup_to_address = #{pickup2Address},</if>
 		<if test="pickup2Dormitory != null">pickup_to_dormitory = #{pickup2Dormitory},</if>
 		<if test="pickup2Postalcode != null">pickup_to_postalcode= #{pickup2Postalcode},</if>
+		<if test="paymentUrl != null">payment_url= #{paymentUrl},</if>
 		order_id = #{orderId}
 		WHERE id = #{id}
 	</update>
@@ -515,6 +516,7 @@
 			<result property="pickup2Address" column="li_pickup_to_address" />
 			<result property="pickup2Dormitory" column="li_pickup_to_dormitory" />
 			<result property="pickup2Postalcode" column="li_pickup_to_postalcode" />
+			<result property="paymentUrl" column="li_payment_url" />
 			<result property="amount" column="li_amount" />
 			<result property="currency" column="li_currency" />
 		</collection>

@@ -1,0 +1,1 @@
+alter table line_item_pickup add column payment_url varchar(500);

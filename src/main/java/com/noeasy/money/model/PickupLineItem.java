@@ -76,26 +76,28 @@ public class PickupLineItem extends LineItem {
     private String     pickup2Dormitory;
 
     private String     pickup2Postalcode;
-    
+
     private String     luggageAmount1;
 
     private String     luggageSize1;
-    
+
     private String     luggageAmount2;
 
     private String     luggageSize2;
-    
+
     private String     luggageAmount3;
 
     private String     luggageSize3;
-    
+
     private String     luggageAmount4;
 
     private String     luggageSize4;
-    
+
     private String     luggageAmount5;
 
     private String     luggageSize5;
+
+    private String     paymentUrl;
 
 
 
@@ -103,7 +105,7 @@ public class PickupLineItem extends LineItem {
         if (StringUtils.isNotBlank(luggageAmount)) {
             String[] tempAmounts = luggageAmount.split(":");
             int i = 0;
-            while(i < tempAmounts.length) {
+            while (i < tempAmounts.length) {
                 switch (i) {
                 case 0:
                     this.setLuggageAmount1(tempAmounts[i]);
@@ -124,11 +126,11 @@ public class PickupLineItem extends LineItem {
                 i++;
             }
         }
-        
+
         if (StringUtils.isNotBlank(luggageSize)) {
             String[] tempSizes = luggageSize.split(":");
             int i = 0;
-            while(i < tempSizes.length) {
+            while (i < tempSizes.length) {
                 switch (i) {
                 case 0:
                     this.setLuggageSize1(tempSizes[i]);
@@ -150,7 +152,9 @@ public class PickupLineItem extends LineItem {
             }
         }
     }
-    
+
+
+
     public String getFlightNum() {
         return flightNum;
     }
@@ -471,6 +475,18 @@ public class PickupLineItem extends LineItem {
 
     public void setLuggageSize5(String pLuggageSize5) {
         luggageSize5 = pLuggageSize5;
+    }
+
+
+
+    public String getPaymentUrl() {
+        return paymentUrl;
+    }
+
+
+
+    public void setPaymentUrl(String pPaymentUrl) {
+        paymentUrl = pPaymentUrl;
     }
 
 }

@@ -81,7 +81,9 @@ QQ：
 尺寸： <input type="text" name="luggageSize5" value="${item.luggageSize5}"/>&nbsp;&nbsp;个数：<input type="text" name="luggageAmount5" value="${item.luggageAmount5}"/><br>
 <hr>
 价格：<input type="text" name="price" value="${order.amount}"/> <br>
-状态： <br>
+支付链接： <input type="text" name="paymentUrl" value="${item.paymentUrl}"/><br>
+
+操作：<input name="operation" type="radio" value="REVIEWDE" />审核，发送付款邮件&nbsp;&nbsp; | &nbsp;&nbsp;<input name="operation" type="radio" value="PAYMENT_DONE" />确认支付，发送车票邮件<br>
 <input type="submit" value="提交"/>
 </form> 
 </html>
