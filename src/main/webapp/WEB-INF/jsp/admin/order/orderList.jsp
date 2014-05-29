@@ -17,7 +17,6 @@
 		<td>用户</td>
 		<td>预定时间</td>
 		<td>当前状态</td>
-		<td>操作</td>
 	</tr>
 	<c:forEach var="order" items="${orders}" varStatus="i">
 	<tr>
@@ -26,7 +25,6 @@
 		<td>${order.amount}</td>
 		<td>${order.user.login}</td>
 		<td>${order.createTime}</td>
-		<td>${order.orderStatus}</td>
 		<td>
 			<c:choose>
 				<c:when test="${'INITIAL' eq order.orderStatus}">等待用户完成订单</c:when>
