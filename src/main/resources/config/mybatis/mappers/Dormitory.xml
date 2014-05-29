@@ -202,7 +202,7 @@
 		left join room_info t4 ON t4.dormitory_id = t1.id
 		</if>
 		<if test="id != null">
-		left join (select * from  room_price where room_info_id in (select id from room_info where dormitory_id = 15)) t5 on t5.room_info_id = t4.id 
+		left join (select * from  room_price where room_info_id in (select id from room_info where dormitory_id = #{id})) t5 on t5.room_info_id = t4.id 
 		</if>
 		<if test="id == null">
 		left join room_price t5 on t5.room_info_id = t4.id
