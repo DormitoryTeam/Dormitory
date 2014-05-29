@@ -1,3 +1,4 @@
+<%@ taglib uri="/dormitory" prefix="dor"%>
 <div class="row myaccount">
     <jsp:include page="/jsp/main/myaccount/infoheader.jsp" />
     <div class="myaccount-tab ui-tabs ui-widget ui-widget-content ui-corner-all ui-tabs-vertical ui-helper-clearfix">
@@ -34,7 +35,7 @@
 				<c:forEach var="order" items="${orders}" varStatus="i">
 				<ul>
 					<li class="order-id">
-						<a href="#">${order.id}</a>
+						<a href="#"><dor:getOrderToken orderId="${order.id}" /></a>
 						<div class="progress-content">
 							<div class="title">订单进度</div>
 							<ul class="progress">

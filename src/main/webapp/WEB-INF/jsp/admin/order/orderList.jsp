@@ -1,3 +1,6 @@
+<%@ taglib uri="/dormitory" prefix="dor"%>
+${message}
+<br />
 <form action="<c:url value='/admin/order/orderList.html'/>" method="GET">
 订单类型: <input type="text" name="orderType" value="${type}"/><br>
 订单编号: <input type="text" name="orderId" value="${orderId}"/><br>
@@ -20,7 +23,7 @@
 	</tr>
 	<c:forEach var="order" items="${orders}" varStatus="i">
 	<tr>
-		<td><a href="<c:url value='/admin/order/orderDetails.html?orderId=${order.id}&orderType=${type}'/>">${order.id}</a></td>
+		<td><a href="<c:url value='/admin/order/orderDetails.html?orderId=${order.id}&orderType=${type}'/>"><dor:getOrderToken orderId="${order.id}" /></a></td>
 		<td>${order.lineItems[0].dormitory.name}</td>
 		<td>${order.amount}</td>
 		<td>${order.user.login}</td>

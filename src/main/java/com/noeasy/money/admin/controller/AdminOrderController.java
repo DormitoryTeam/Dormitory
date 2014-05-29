@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.noeasy.money.admin.util.OrderTokenUtil;
 import com.noeasy.money.constant.SessionConstants;
 import com.noeasy.money.enumeration.OrderType;
 import com.noeasy.money.model.LineItem;
@@ -39,68 +40,13 @@ public class AdminOrderController {
     IOrderService orderService;
 
     @Resource(name = "userService")
-    IUserService       userService;
+    IUserService  userService;
 
-    @RequestMapping(value = "/home.html")
-    public String home(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response) {
-
-        return "/home.html";
-    }
-
-
-
-    @RequestMapping(value = "/orderList.html")
-    public String getOrderList(final ModelMap model, final HttpServletRequest request,
-            final HttpServletResponse response, String orderType, String orderId, String login, String dateFrom,
-            String dateTo, final String currentPage, final String pageSize) {
-        OrderType type = OrderType.getType(orderType);// "D" means dormitory
-        OrderSearchBean searchBean = new OrderSearchBean();
-        searchBean.setOrderType(type);
-        if (StringUtils.isNotBlank(login)) {
-            UserBean user = new UserBean();
-            user.setLogin(login);
-            ;
-            searchBean.setUser(user);
-        }
-        if (StringUtils.isNoneBlank(orderId)) {
-            searchBean.setOrderNumber(Integer.valueOf(orderId));
-        }
-        if (StringUtils.isNotBlank(dateFrom)) {
-            Date tDateFrom = DateUtils.stringToDate(dateFrom);
-            searchBean.setDateFrom(tDateFrom);
-        }
-        if (StringUtils.isNotBlank(dateTo)) {
-            Date tDateTo = DateUtils.stringToDate(dateTo);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(tDateTo);
-            calendar.add(Calendar.DATE, 1);
-            searchBean.setDateTo(calendar.getTime());
-        }
-        int rowTotal = orderService.queryOrderCount(searchBean);
-        PageBean page = new PageBean(rowTotal);
-        if (StringUtils.isNotBlank(currentPage)) {
-            page.setPageNum(Integer.valueOf(currentPage));
-        }
-        if (StringUtils.isNotBlank(pageSize)) {
-            page.setPageSize(Integer.valueOf(pageSize));
-        }
-        page.setQueryString(request.getQueryString());
-        searchBean.setPageBean(page);
-        List<OrderBean> orders = orderService.queryOrder(searchBean);
-        model.addAttribute("orders", orders);
-        model.addAttribute("type", orderType);
-        model.addAttribute("orderId", orderId);
-        model.addAttribute("login", login);
-        model.addAttribute("dateFrom", dateFrom);
-        model.addAttribute("dateTo", dateTo);
-        model.addAttribute("page", page);
-        return "admin/order/orderList";
-    }
 
 
     @RequestMapping(value = "/editDormitoryOrder.html")
     public String editDormitoryOrder(final ModelMap model, final HttpServletRequest request,
-            final HttpServletResponse response, String orderId) {
+            final HttpServletResponse response, final String orderId) {
         if (StringUtils.isBlank(orderId)) {
             return "admin/order/orderList";
         }
@@ -109,22 +55,23 @@ public class AdminOrderController {
         if (ServletUtils.isGet(request)) {
             return "admin/order/editDormitoryOrder";
         } else {
-            //update orderInfo;
+            // update orderInfo;
         }
-        
+
         return "admin/order/editDormitoryOrder";
     }
-    
-    
+
+
+
     @RequestMapping(value = "/editPickupOrder.html")
     public String editPickupOrder(final ModelMap model, final HttpServletRequest request,
-            final HttpServletResponse response, String orderId) {
+            final HttpServletResponse response, final String orderId) {
         if (StringUtils.isBlank(orderId)) {
             return "admin/order/orderList";
         }
         OrderBean order = orderService.findPickupOrderById(Integer.valueOf(orderId));
         if (CollectionUtils.isNotEmpty(order.getLineItems())) {
-            PickupLineItem item = (PickupLineItem)order.getLineItems().get(0);
+            PickupLineItem item = (PickupLineItem) order.getLineItems().get(0);
             item.analyzeLuggage();
             model.addAttribute("item", item);
         }
@@ -132,16 +79,16 @@ public class AdminOrderController {
         if (ServletUtils.isGet(request)) {
             return "admin/order/editPickupOrder";
         } else {
-            //update orderInfo;
+            // update orderInfo;
             OrderContactInfo info = order.getOrderContact();
-            if (null != info ) {
+            if (null != info) {
                 UserInfoBean userInfo = info.getBelongsToInfo();
                 if (null != userInfo) {
                     userInfo.setGender(Integer.valueOf(request.getParameter("gender")));
                     userInfo.setLastName(request.getParameter("lastName"));
                     userInfo.setName(request.getParameter("name"));
                     userInfo.setNationality(request.getParameter("nationality"));
-                    userInfo.setEmail( request.getParameter("email"));
+                    userInfo.setEmail(request.getParameter("email"));
                     userInfo.setQq(request.getParameter("qq"));
                     userInfo.setWechat(request.getParameter("wechat"));
                     userInfo.setPhone(request.getParameter("phone"));
@@ -164,12 +111,13 @@ public class AdminOrderController {
                         item.setTakeOffDate(DateUtils.stringToDate(request.getParameter("takeOffDate")));
                     }
                     item.setTakeOffCity(request.getParameter("takeOffCity"));
-                    item.setArrivalCity( request.getParameter("arrivalCity"));
+                    item.setArrivalCity(request.getParameter("arrivalCity"));
                     item.setArrivalCountry(request.getParameter("arrivalCountry"));
                     item.setArrivalAirport(request.getParameter("arrivalAirport"));
-                    
+
                     if (StringUtils.isNotBlank(request.getParameter("pickupDate"))) {
-                        item.setPickupDate(DateUtils.stringToDate(request.getParameter("pickupDate"), "yyyy-MM-dd HH:mm"));
+                        item.setPickupDate(DateUtils.stringToDate(request.getParameter("pickupDate"),
+                                "yyyy-MM-dd HH:mm"));
                     }
                     item.setFlightCompany(request.getParameter("flightCompany"));
                     item.setFlightNum(request.getParameter("flightNumber"));
@@ -178,7 +126,7 @@ public class AdminOrderController {
                     item.setPickup2Dormitory(request.getParameter("pickup2Dormitory"));
                     item.setPickup2Postalcode(request.getParameter("pickup2Postalcode"));
                     item.setPaymentUrl(request.getParameter("paymentUrl"));
-                    
+
                     String luggageSizeStr = "";
                     String luggageAmountStr = "";
                     String luggageSize1 = request.getParameter("luggageSize1");
@@ -191,7 +139,7 @@ public class AdminOrderController {
                             luggageAmountStr += amount.toString();
                         }
                     }
-                    
+
                     String luggageSize2 = request.getParameter("luggageSize2");
                     String luggageAmount2 = request.getParameter("luggageAmount2");
                     if (StringUtils.isNotBlank(luggageSize2) && StringUtils.isNotBlank(luggageAmount2)) {
@@ -208,7 +156,7 @@ public class AdminOrderController {
                             luggageAmountStr += amount.toString();
                         }
                     }
-                    
+
                     String luggageSize3 = request.getParameter("luggageSize3");
                     String luggageAmount3 = request.getParameter("luggageAmount3");
                     if (StringUtils.isNotBlank(luggageSize3) && StringUtils.isNotBlank(luggageAmount3)) {
@@ -225,7 +173,7 @@ public class AdminOrderController {
                             luggageAmountStr += amount.toString();
                         }
                     }
-                    
+
                     String luggageSize4 = request.getParameter("luggageSize4");
                     String luggageAmount4 = request.getParameter("luggageAmount4");
                     if (StringUtils.isNotBlank(luggageSize4) && StringUtils.isNotBlank(luggageAmount4)) {
@@ -242,7 +190,7 @@ public class AdminOrderController {
                             luggageAmountStr += amount.toString();
                         }
                     }
-                    
+
                     String luggageSize5 = request.getParameter("luggageSize5");
                     String luggageAmount5 = request.getParameter("luggageAmount5");
                     if (StringUtils.isNotBlank(luggageSize5) && StringUtils.isNotBlank(luggageAmount5)) {
@@ -275,14 +223,12 @@ public class AdminOrderController {
         }
         return "redirect:/admin/order/editPickupOrder.html?orderId=" + orderId;
     }
-    
-    
-    
-    
+
+
 
     @RequestMapping(value = "/orderDetails.html")
     public String getOrderDetails(final ModelMap model, final HttpServletRequest request,
-            final HttpServletResponse response, String orderId, String orderType) {
+            final HttpServletResponse response, final String orderId, final String orderType) {
         Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
         String message = null;
         model.addAttribute("type", orderType);
@@ -309,43 +255,70 @@ public class AdminOrderController {
 
 
 
-    @RequestMapping(value = "/updateOrderStatus.html")
-    public String updateOrderStatus(final ModelMap model, final HttpServletRequest request,
-            final HttpServletResponse response, String orderId, String nextStatusValue, String orderType) {
-        String message = "Sucess";
+    @RequestMapping(value = "/orderList.html")
+    public String getOrderList(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, final String orderType, final String orderId, final String login,
+            final String dateFrom, final String dateTo, final String currentPage, final String pageSize) {
+        OrderType type = OrderType.getType(orderType);// "D" means dormitory
+        OrderSearchBean searchBean = new OrderSearchBean();
+        searchBean.setOrderType(type);
+        if (StringUtils.isNotBlank(login)) {
+            UserBean user = new UserBean();
+            user.setLogin(login);
+            ;
+            searchBean.setUser(user);
+        }
+        if (StringUtils.isNoneBlank(OrderTokenUtil.getOrderId(orderId))) {
+            searchBean.setOrderNumber(Integer.valueOf(OrderTokenUtil.getOrderId(orderId)));
+            if (StringUtils.isNotBlank(dateFrom)) {
+                Date tDateFrom = DateUtils.stringToDate(dateFrom);
+                searchBean.setDateFrom(tDateFrom);
+            }
+            if (StringUtils.isNotBlank(dateTo)) {
+                Date tDateTo = DateUtils.stringToDate(dateTo);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(tDateTo);
+                calendar.add(Calendar.DATE, 1);
+                searchBean.setDateTo(calendar.getTime());
+            }
+            int rowTotal = orderService.queryOrderCount(searchBean);
+            PageBean page = new PageBean(rowTotal);
+            if (StringUtils.isNotBlank(currentPage)) {
+                page.setPageNum(Integer.valueOf(currentPage));
+            }
+            if (StringUtils.isNotBlank(pageSize)) {
+                page.setPageSize(Integer.valueOf(pageSize));
+            }
+            page.setQueryString(request.getQueryString());
+            searchBean.setPageBean(page);
+            List<OrderBean> orders = orderService.queryOrder(searchBean);
+            model.addAttribute("orders", orders);
+            model.addAttribute("page", page);
+        } else {
+            model.addAttribute("message", "请输入正确的订单编号！");
+        }
+
         model.addAttribute("type", orderType);
-        if (StringUtils.isBlank(orderId) || StringUtils.isBlank(nextStatusValue)) {
-            message = "Failed";
-            model.addAttribute("message", message);
-            return "error";
-        }
-        OrderBean order = orderService.queryOrder(Integer.valueOf(orderId), OrderType.getType(orderType));
-        if (null == order) {
-            message = "no such order.";
-            model.addAttribute("message", message);
-            return "error";
-        }
-        
-//        if (null == order.getOrderStatus().getNextStatus()) {
-//            message = "Order status is null";
-//            model.addAttribute("message", message);
-//            return "error";
-//        }
-//        if (Integer.valueOf(nextStatusValue) != order.getOrderStatus().getNextStatus().getValue()) {
-//            message = "Invalid order status";
-//            model.addAttribute("message", message);
-//            return "error";
-//        }
-        // TODO SENDING CONTRACT EMAIL
-        // FIXME
-//        orderService.updateOrderStatus(Integer.valueOf(orderId), OrderStatus.valueOf(Integer.valueOf(nextStatusValue)));
-        model.addAttribute("message", message);
-        return "redirect:/admin/order/orderDetails.html?orderId="+ orderId +"&orderType=" + orderType;
+        model.addAttribute("orderId", orderId);
+        model.addAttribute("login", login);
+        model.addAttribute("dateFrom", dateFrom);
+        model.addAttribute("dateTo", dateTo);
+        return "admin/order/orderList";
     }
-    
+
+
+
+    @RequestMapping(value = "/home.html")
+    public String home(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response) {
+
+        return "/home.html";
+    }
+
+
+
     @RequestMapping(value = "/updateOrderPrice.html")
     public String updateOrderPrice(final ModelMap model, final HttpServletRequest request,
-            final HttpServletResponse response, String orderId, String price, String orderType) {
+            final HttpServletResponse response, final String orderId, final String price, final String orderType) {
         String message = "Sucess";
         model.addAttribute("type", orderType);
         if (StringUtils.isBlank(orderId) || StringUtils.isBlank(price)) {
@@ -363,6 +336,45 @@ public class AdminOrderController {
         order.setAmount(amount);
         orderService.updateOrderPrice(order);
         model.addAttribute("message", message);
-        return "redirect:/admin/order/orderDetails.html?orderId="+ orderId +"&orderType=" + orderType;
+        return "redirect:/admin/order/orderDetails.html?orderId=" + orderId + "&orderType=" + orderType;
+    }
+
+
+
+    @RequestMapping(value = "/updateOrderStatus.html")
+    public String updateOrderStatus(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, final String orderId, final String nextStatusValue,
+            final String orderType) {
+        String message = "Sucess";
+        model.addAttribute("type", orderType);
+        if (StringUtils.isBlank(orderId) || StringUtils.isBlank(nextStatusValue)) {
+            message = "Failed";
+            model.addAttribute("message", message);
+            return "error";
+        }
+        OrderBean order = orderService.queryOrder(Integer.valueOf(orderId), OrderType.getType(orderType));
+        if (null == order) {
+            message = "no such order.";
+            model.addAttribute("message", message);
+            return "error";
+        }
+
+        // if (null == order.getOrderStatus().getNextStatus()) {
+        // message = "Order status is null";
+        // model.addAttribute("message", message);
+        // return "error";
+        // }
+        // if (Integer.valueOf(nextStatusValue) !=
+        // order.getOrderStatus().getNextStatus().getValue()) {
+        // message = "Invalid order status";
+        // model.addAttribute("message", message);
+        // return "error";
+        // }
+        // TODO SENDING CONTRACT EMAIL
+        // FIXME
+        // orderService.updateOrderStatus(Integer.valueOf(orderId),
+        // OrderStatus.valueOf(Integer.valueOf(nextStatusValue)));
+        model.addAttribute("message", message);
+        return "redirect:/admin/order/orderDetails.html?orderId=" + orderId + "&orderType=" + orderType;
     }
 }

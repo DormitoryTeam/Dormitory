@@ -1,6 +1,7 @@
+<%@ taglib uri="/dormitory" prefix="dor"%>
 ${message}
 
-订单编号:&nbsp;&nbsp;${order.id}<br>
+订单编号:&nbsp;&nbsp;<dor:getOrderToken orderId="${order.id}" /><br>
 订单价格:&nbsp;&nbsp;${order.amount}<br>
 当前状态:&nbsp;&nbsp;${order.orderStatus}<br>
 用户:&nbsp;&nbsp;${order.belongsTo.login}<br>
@@ -25,17 +26,17 @@ QQ:&nbsp;&nbsp;${order.orderContact.belongsToInfo.qq}<br>
 </c:choose>
 <c:choose>
 <%--
-<c:when test="${0 eq order.orderStatus.value}"><c:set value="Waiting for user place order." var="buttonValue"/> <c:set value="0" var="showForm"/></c:when>
-<c:when test="${1 eq order.orderStatus.value}"><c:set value="Reviewed" var="buttonValue"/> <c:set value="1" var="showForm"/></c:when>
-<c:when test="${2 eq order.orderStatus.value}"><c:set value="Waiting for user payment." var="buttonValue"/><c:set value="0" var="showForm"/></c:when>
-<c:when test="${3 eq order.orderStatus.value}"><c:set value="Waiting for user payment." var="buttonValue"/><c:set value="0" var="showForm"/></c:when>
-<c:when test="${4 eq order.orderStatus.value}"><c:set value="ComfirmPayment" var="buttonValue"/> <c:set value="1" var="showForm"/></c:when>
-<c:when test="${5 eq order.orderStatus.value}"><c:set value="Send Contract" var="buttonValue"/> <c:set value="1" var="showForm"/></a></c:when>
+<c:when test="${0 eq order.orderStatus}"><c:set value="Waiting for user place order." var="buttonValue"/> <c:set value="0" var="showForm"/></c:when>
+<c:when test="${1 eq order.orderStatus}"><c:set value="Reviewed" var="buttonValue"/> <c:set value="1" var="showForm"/></c:when>
+<c:when test="${2 eq order.orderStatus}"><c:set value="Waiting for user payment." var="buttonValue"/><c:set value="0" var="showForm"/></c:when>
+<c:when test="${3 eq order.orderStatus}"><c:set value="Waiting for user payment." var="buttonValue"/><c:set value="0" var="showForm"/></c:when>
+<c:when test="${4 eq order.orderStatus}"><c:set value="ComfirmPayment" var="buttonValue"/> <c:set value="1" var="showForm"/></c:when>
+<c:when test="${5 eq order.orderStatus}"><c:set value="Send Contract" var="buttonValue"/> <c:set value="1" var="showForm"/></a></c:when>
 --%>
-<c:when test="${0 eq order.orderStatus.value}"><c:set value="等待用户提交订单" var="buttonValue"/> <c:set value="0" var="showForm"/></c:when>
-<c:when test="${1 eq order.orderStatus.value}"><c:set value="通过审核" var="buttonValue"/> <c:set value="1" var="showForm"/></c:when>
-<c:when test="${2 eq order.orderStatus.value}"><c:set value="发送合同" var="buttonValue"/> <c:set value="1" var="showForm"/></c:when>
-<c:when test="${3 eq order.orderStatus.value}"><c:set value="已发送合同" var="buttonValue"/> <c:set value="1" var="showForm"/></a></c:when>
+<c:when test="${'0' eq order.orderStatus}"><c:set value="等待用户提交订单" var="buttonValue"/> <c:set value="0" var="showForm"/></c:when>
+<c:when test="${'1' eq order.orderStatus}"><c:set value="通过审核" var="buttonValue"/> <c:set value="1" var="showForm"/></c:when>
+<c:when test="${'2' eq order.orderStatus}"><c:set value="发送合同" var="buttonValue"/> <c:set value="1" var="showForm"/></c:when>
+<c:when test="${'3' eq order.orderStatus}"><c:set value="已发送合同" var="buttonValue"/> <c:set value="1" var="showForm"/></a></c:when>
 <c:otherwise><c:set value="0" var="showForm"/></c:otherwise>
 </c:choose>
 
@@ -54,7 +55,7 @@ QQ:&nbsp;&nbsp;${order.orderContact.belongsToInfo.qq}<br>
 ${buttonValue}
 </c:if>
 
-<c:if test="${order.orderStatus.value lt 2}">
+<c:if test="${order.orderStatus lt 2}">
 <hr>
 <form action="<c:url value='/admin/order/updateOrderPrice.html'/>" method="POST">
 	<input type="hidden" name="orderId" value="${order.id}"/>

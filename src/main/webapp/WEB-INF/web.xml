@@ -107,6 +107,10 @@
             <taglib-uri>http://java.sun.com/jsp/jstl/fn</taglib-uri>
             <taglib-location>/WEB-INF/tld/fn.tld</taglib-location>
         </taglib>
+        <taglib>
+            <taglib-uri>/dormitory</taglib-uri>
+            <taglib-location>/WEB-INF/tld/dormitory.tld</taglib-location>
+        </taglib>
         <jsp-property-group>
 			<url-pattern>*.jsp</url-pattern>
 			<page-encoding>UTF-8</page-encoding>

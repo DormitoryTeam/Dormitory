@@ -1,10 +1,11 @@
+<%@ taglib uri="/dormitory" prefix="dor"%>
 <html>
 ${message}
 <form method="POST" action="<c:url value='/admin/order/editPickupOrder.html'/>">
 <input type="hidden" name="orderId" value="${order.id}"/>
 <hr>
 <h2>订单基本信息</h2>
-订单编号:&nbsp;&nbsp;${order.id}<br>
+订单编号:&nbsp;&nbsp;<dor:getOrderToken orderId="${order.id}" /><br>
 订单价格:&nbsp;&nbsp;${order.amount}<br>
 当前状态:&nbsp;&nbsp;<c:choose>
 				<c:when test="${'INITIAL' eq order.orderStatus}">等待用户完成订单</c:when>
