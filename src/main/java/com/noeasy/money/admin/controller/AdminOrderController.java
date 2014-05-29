@@ -268,8 +268,11 @@ public class AdminOrderController {
             ;
             searchBean.setUser(user);
         }
-        if (StringUtils.isNoneBlank(OrderTokenUtil.getOrderId(orderId))) {
-            searchBean.setOrderNumber(Integer.valueOf(OrderTokenUtil.getOrderId(orderId)));
+
+        if (StringUtils.isBlank(orderId) || StringUtils.isNotBlank(OrderTokenUtil.getOrderId(orderId))) {
+            if (StringUtils.isNotBlank(orderId)) {
+                searchBean.setOrderNumber(Integer.valueOf(OrderTokenUtil.getOrderId(orderId)));
+            }
             if (StringUtils.isNotBlank(dateFrom)) {
                 Date tDateFrom = DateUtils.stringToDate(dateFrom);
                 searchBean.setDateFrom(tDateFrom);
