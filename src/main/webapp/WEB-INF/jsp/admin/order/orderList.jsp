@@ -23,7 +23,7 @@ ${message}
 	</tr>
 	<c:forEach var="order" items="${orders}" varStatus="i">
 	<tr>
-		<td><a href="<c:url value='/admin/order/orderDetails.html?orderId=${order.id}&orderType=${type}'/>"><dor:getOrderToken orderId="${order.id}" /></a></td>
+		<td><a href="<c:url value='/admin/order/editDormitoryOrder.html?orderId=${order.id}'/>"><dor:getOrderToken orderId="${order.id}" /></a></td>
 		<td>${order.lineItems[0].dormitory.name}</td>
 		<td>${order.amount}</td>
 		<td>${order.user.login}</td>

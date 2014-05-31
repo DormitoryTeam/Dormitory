@@ -26,6 +26,7 @@ import com.noeasy.money.model.PageBean;
 import com.noeasy.money.model.PickupLineItem;
 import com.noeasy.money.model.UserBean;
 import com.noeasy.money.model.UserInfoBean;
+import com.noeasy.money.model.UserPreferBean;
 import com.noeasy.money.service.IOrderService;
 import com.noeasy.money.service.IUserService;
 import com.noeasy.money.service.IUserService.INFO_TYPE;
@@ -46,19 +47,107 @@ public class AdminOrderController {
 
     @RequestMapping(value = "/editDormitoryOrder.html")
     public String editDormitoryOrder(final ModelMap model, final HttpServletRequest request,
-            final HttpServletResponse response, final String orderId) {
+            final HttpServletResponse response, final String orderId, final OrderBean order) {
         if (StringUtils.isBlank(orderId)) {
             return "admin/order/orderList";
         }
-        OrderBean order = orderService.findOrderById(Integer.valueOf(orderId));
-        model.addAttribute("order", order);
+        OrderBean curOrder = orderService.findOrderById(Integer.valueOf(orderId));
+        model.addAttribute("order", curOrder);
         if (ServletUtils.isGet(request)) {
             return "admin/order/editDormitoryOrder";
         } else {
             // update orderInfo;
+            OrderContactInfo info = curOrder.getOrderContact();
+            if (null != info) {
+                UserInfoBean userInfo = info.getBelongsToInfo();
+                if (null != userInfo) {
+                    userInfo.setGender(Integer.valueOf(request.getParameter("order.orderContact.belongsToInfo.gender")));
+                    userInfo.setLastName(request.getParameter("order.orderContact.belongsToInfo.lastName"));
+                    userInfo.setName(request.getParameter("order.orderContact.belongsToInfo.name"));
+                    userInfo.setNationality(request.getParameter("order.orderContact.belongsToInfo.nationality"));
+                    userInfo.setEmail(request.getParameter("order.orderContact.belongsToInfo.email"));
+                    userInfo.setQq(request.getParameter("order.orderContact.belongsToInfo.qq"));
+                    userInfo.setWechat(request.getParameter("order.orderContact.belongsToInfo.wechat"));
+                    userInfo.setPhone(request.getParameter("order.orderContact.belongsToInfo.phone"));
+                    userInfo.setCountry(request.getParameter("order.orderContact.belongsToInfo.country"));
+                    userInfo.setProvince(request.getParameter("order.orderContact.belongsToInfo.province"));
+                    userInfo.setCity(request.getParameter("order.orderContact.belongsToInfo.city"));
+                    userInfo.setCounty(request.getParameter("order.orderContact.belongsToInfo.county"));
+                    userInfo.setAddress(request.getParameter("order.orderContact.belongsToInfo.address"));
+                    userInfo.setPostalcode(request.getParameter("order.orderContact.belongsToInfo.postalcode"));
+                    if (StringUtils.isNotBlank(request.getParameter("order.orderContact.belongsToInfo.birthday"))) {
+                        userInfo.setBirthday(DateUtils.stringToDate(request
+                                .getParameter("order.orderContact.belongsToInfo.birthday")));
+                    }
+                }
+                UserInfoBean guranteeInfo = info.getGuaranteeInfo();
+                if (null != guranteeInfo) {
+                    guranteeInfo.setGender(Integer.valueOf(request
+                            .getParameter("order.orderContact.guaranteeInfo.gender")));
+                    guranteeInfo.setRelationship(request.getParameter("order.orderContact.guaranteeInfo.relationship"));
+                    guranteeInfo.setLastName(request.getParameter("order.orderContact.guaranteeInfo.lastName"));
+                    guranteeInfo.setName(request.getParameter("order.orderContact.guaranteeInfo.name"));
+                    guranteeInfo.setNationality(request.getParameter("order.orderContact.guaranteeInfo.nationality"));
+                    guranteeInfo.setEmail(request.getParameter("order.orderContact.guaranteeInfo.email"));
+                    guranteeInfo.setQq(request.getParameter("order.orderContact.guaranteeInfo.qq"));
+                    guranteeInfo.setWechat(request.getParameter("order.orderContact.guaranteeInfo.wechat"));
+                    guranteeInfo.setPhone(request.getParameter("order.orderContact.guaranteeInfo.phone"));
+                    guranteeInfo.setCountry(request.getParameter("order.orderContact.guaranteeInfo.country"));
+                    guranteeInfo.setProvince(request.getParameter("order.orderContact.guaranteeInfo.province"));
+                    guranteeInfo.setCity(request.getParameter("order.orderContact.guaranteeInfo.city"));
+                    guranteeInfo.setCounty(request.getParameter("order.orderContact.guaranteeInfo.county"));
+                    guranteeInfo.setAddress(request.getParameter("order.orderContact.guaranteeInfo.address"));
+                    guranteeInfo.setPostalcode(request.getParameter("order.orderContact.guaranteeInfo.postalcode"));
+                    if (StringUtils.isNotBlank(request.getParameter("order.orderContact.guaranteeInfo.birthday"))) {
+                        guranteeInfo.setBirthday(DateUtils.stringToDate(request
+                                .getParameter("order.orderContact.guaranteeInfo.birthday")));
+                    }
+                }
+                UserInfoBean contactPersonInfo = info.getContactPersonInfo();
+                if (null != guranteeInfo) {
+                    contactPersonInfo.setGender(Integer.valueOf(request
+                            .getParameter("order.orderContact.contactPersonInfo.gender")));
+                    contactPersonInfo.setRelationship(request
+                            .getParameter("order.orderContact.contactPersonInfo.relationship"));
+                    contactPersonInfo
+                            .setLastName(request.getParameter("order.orderContact.contactPersonInfo.lastName"));
+                    contactPersonInfo.setName(request.getParameter("order.orderContact.contactPersonInfo.name"));
+                    contactPersonInfo.setNationality(request
+                            .getParameter("order.orderContact.contactPersonInfo.nationality"));
+                    contactPersonInfo.setEmail(request.getParameter("order.orderContact.contactPersonInfo.email"));
+                    contactPersonInfo.setQq(request.getParameter("order.orderContact.contactPersonInfo.qq"));
+                    contactPersonInfo.setWechat(request.getParameter("order.orderContact.contactPersonInfo.wechat"));
+                    contactPersonInfo.setPhone(request.getParameter("order.orderContact.contactPersonInfo.phone"));
+                    contactPersonInfo.setCountry(request.getParameter("order.orderContact.contactPersonInfo.country"));
+                    contactPersonInfo
+                            .setProvince(request.getParameter("order.orderContact.contactPersonInfo.province"));
+                    contactPersonInfo.setCity(request.getParameter("order.orderContact.contactPersonInfo.city"));
+                    contactPersonInfo.setCounty(request.getParameter("order.orderContact.contactPersonInfo.county"));
+                    contactPersonInfo.setAddress(request.getParameter("order.orderContact.contactPersonInfo.address"));
+                    contactPersonInfo.setPostalcode(request
+                            .getParameter("order.orderContact.contactPersonInfo.postalcode"));
+                    if (StringUtils.isNotBlank(request.getParameter("order.orderContact.contactPersonInfo.birthday"))) {
+                        contactPersonInfo.setBirthday(DateUtils.stringToDate(request
+                                .getParameter("order.orderContact.contactPersonInfo.birthday")));
+                    }
+                }
+                UserPreferBean userPrefer = ServletUtils.getUserPerferFromRequest(request);
+                curOrder.getOrderContact().setPrefer(userPrefer);
+                userService.saveUserInfo(curOrder.getOrderContact(), INFO_TYPE.CONTACT_PERSON_INFO);
+                userService.saveUserInfo(curOrder.getOrderContact(), INFO_TYPE.GUARANTEE_INFO);
+                userService.saveUserInfo(curOrder.getOrderContact(), INFO_TYPE.USER_INFO);
+                userService.saveUserPrder(curOrder.getOrderContact());
+            }
+            if (StringUtils.isNotBlank(request.getParameter("price"))) {
+                BigDecimal price = new BigDecimal(request.getParameter("price"));
+                curOrder.setAmount(price);
+                curOrder.getLineItems().get(0).setAmount(price);
+                curOrder.getLineItems().get(0).setListPrice(price);
+            }
+            orderService.updateOrder(curOrder);
         }
 
-        return "admin/order/editDormitoryOrder";
+        return "redirect:/admin/order/editDormitoryOrder.html?orderId=" + orderId;
     }
 
 
@@ -219,7 +308,9 @@ public class AdminOrderController {
             }
             userService.saveUserInfo(order.getOrderContact(), INFO_TYPE.USER_INFO);
             orderService.updateLineItem(order);
+            // TODO set order status
             orderService.updateOrder(order);
+            // TODO send email
         }
         return "redirect:/admin/order/editPickupOrder.html?orderId=" + orderId;
     }
