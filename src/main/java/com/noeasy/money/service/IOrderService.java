@@ -96,4 +96,12 @@ public interface IOrderService {
 
 
     boolean belongsTo(UserBean pUser, OrderBean pOrder);
+
+
+
+    void sendSaveEmail(OrderBean pOrder);
+
+
+
+    void sendCommitEmail(OrderBean pOrder);
 }

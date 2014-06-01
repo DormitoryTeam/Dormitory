@@ -248,6 +248,21 @@ public class OrderService implements IOrderService {
         Integer amount = orderRepository.belongsTo(searchBean);
         return amount >= 1;
     }
+
+
+
+    @Override
+    public void sendSaveEmail(OrderBean pOrder) {
+        orderRepository.sendSaveEmail(pOrder);
+        
+    }
+
+
+
+    @Override
+    public void sendCommitEmail(OrderBean pOrder) {
+        orderRepository.sendCommitEmail(pOrder);
+    }
     
     
 }

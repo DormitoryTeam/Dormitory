@@ -260,4 +260,20 @@ public class OrderRepository extends BaseRepository implements IOrderRepository 
         return getSqlSession().selectOne("com.noeasy.money.model.Order.belongsTo", pSearchBean);
     }
 
+
+
+    @Override
+    public void sendSaveEmail(OrderBean pOrder) {
+        getSqlSession().update("com.noeasy.money.model.Order.sendSaveEmail", pOrder);
+        
+    }
+
+
+
+    @Override
+    public void sendCommitEmail(OrderBean pOrder) {
+        getSqlSession().update("com.noeasy.money.model.Order.sendCommitEmail", pOrder);
+        
+    }
+
 }

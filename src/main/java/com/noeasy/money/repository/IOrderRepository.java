@@ -136,4 +136,12 @@ public interface IOrderRepository {
 
     Integer belongsTo(OrderSearchBean pSearchBean);
 
+
+
+    void sendSaveEmail(OrderBean pOrder);
+
+
+
+    void sendCommitEmail(OrderBean pOrder);
+
 }

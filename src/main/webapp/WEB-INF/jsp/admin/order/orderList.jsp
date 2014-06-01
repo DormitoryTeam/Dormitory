@@ -52,7 +52,7 @@ ${message}
 	</tr>
 	<c:forEach var="order" items="${orders}" varStatus="i">
 	<tr>
-		<td><a href="<c:url value='/admin/order/editPickupOrder.html?orderId=${order.id}&orderType=${type}'/>">${order.id}</a></td>
+		<td><a href="<c:url value='/admin/order/editPickupOrder.html?orderId=${order.id}&orderType=${type}'/>"><dor:getOrderToken orderId="${order.id}" /></a></td>
 		<td>${order.lineItems[0].flightNum}</td>
 		<td>${order.amount}</td>
 		<td>${order.user.login}</td>
@@ -63,6 +63,7 @@ ${message}
 				<c:when test="${'COMMIT' eq order.orderStatus}">已提交,等待审核</c:when>
 				<c:when test="${'REVIEWDE' eq order.orderStatus}">审核完成，已发送付款邮件</c:when>
 				<c:when test="${'PAYMENT_DONE' eq order.orderStatus}">已支付，已发送车票邮件</c:when>
+				<c:when test="${'PAYMENT_NOT_DONE' eq order.orderStatus}">未支付，已发送车票邮件</c:when>
 				<c:otherwise>已支付，已发送车票邮件</c:otherwise>
 			</c:choose>
 		</td>

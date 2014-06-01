@@ -21,7 +21,7 @@ public interface Constants {
 
     String CONFIG_CONTEXT           = "context";
 
-    String CONFIG_IP                = "ip";
+    String CONFIG_IP                = "domain";
 
     String SLASH                    = "/";
 

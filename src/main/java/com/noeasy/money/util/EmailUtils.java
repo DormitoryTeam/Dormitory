@@ -57,6 +57,10 @@ public class EmailUtils {
         return paramMap;
     }
 
+    public static String getStringValue(String value) {
+        return null == value ? "" : value;
+    }
+    
 
 
     public static String getServiceAlias() {

@@ -66,6 +66,10 @@ public class OrderBean extends BaseBean {
 
     private Date             mCreateTime;
 
+    private boolean          mSendSaveEmail;
+
+    private boolean          mSendCommitEmail;
+
 
 
     /**
@@ -233,6 +237,30 @@ public class OrderBean extends BaseBean {
 
     public void setOrderStatus(String pOrderStatus) {
         mOrderStatus = pOrderStatus;
+    }
+
+
+
+    public boolean isSendSaveEmail() {
+        return mSendSaveEmail;
+    }
+
+
+
+    public void setSendSaveEmail(boolean pSendSaveEmail) {
+        mSendSaveEmail = pSendSaveEmail;
+    }
+
+
+
+    public boolean isSendCommitEmail() {
+        return mSendCommitEmail;
+    }
+
+
+
+    public void setSendCommitEmail(boolean pSendCommitEmail) {
+        mSendCommitEmail = pSendCommitEmail;
     }
 
 }

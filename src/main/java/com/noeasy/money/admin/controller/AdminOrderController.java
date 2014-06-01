@@ -3,7 +3,9 @@ package com.noeasy.money.admin.controller;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +33,7 @@ import com.noeasy.money.service.IOrderService;
 import com.noeasy.money.service.IUserService;
 import com.noeasy.money.service.IUserService.INFO_TYPE;
 import com.noeasy.money.util.DateUtils;
+import com.noeasy.money.util.EmailUtils;
 import com.noeasy.money.util.ServletUtils;
 
 @Controller
@@ -159,6 +162,7 @@ public class AdminOrderController {
             return "admin/order/orderList";
         }
         OrderBean order = orderService.findPickupOrderById(Integer.valueOf(orderId));
+
         if (CollectionUtils.isNotEmpty(order.getLineItems())) {
             PickupLineItem item = (PickupLineItem) order.getLineItems().get(0);
             item.analyzeLuggage();
@@ -308,14 +312,123 @@ public class AdminOrderController {
             }
             userService.saveUserInfo(order.getOrderContact(), INFO_TYPE.USER_INFO);
             orderService.updateLineItem(order);
-            // TODO set order status
+            String operation = request.getParameter("operation");
+            if (!StringUtils.isBlank(operation)) {
+                order.setOrderStatus(operation);
+            }
             orderService.updateOrder(order);
             // TODO send email
+            if (!StringUtils.isBlank(operation)) {
+                sendPickupOrder(order, operation);
+            }
         }
         return "redirect:/admin/order/editPickupOrder.html?orderId=" + orderId;
     }
 
 
+    private void sendPickupOrder(OrderBean order, String operation) {
+        String from = EmailUtils.getServiceEmail();
+        String fromAlias = EmailUtils.getServiceAlias();
+        String login = "";
+        if (null != order && null != order.getOrderContact()
+                && null != order.getOrderContact().getBelongsToInfo()) {
+            login = order.getOrderContact().getBelongsToInfo().getEmail();
+        }
+        PickupLineItem item = null;
+        if (CollectionUtils.isNotEmpty(order.getLineItems())) {
+            LineItem lineItem = order.getLineItems().get(0);
+            if (lineItem instanceof PickupLineItem) {
+                item = (PickupLineItem) lineItem;
+            }
+        }
+        if ("REVIEWDE".equals(operation)) {
+
+            // send template 4
+            Map<String, String> paramMap = EmailUtils.getParamMap();
+            paramMap.put("totalPrice", order.getAmount().toString());
+            if (null != item) {
+                paramMap.put("payLink", item.getPaymentUrl());
+            } else {
+                paramMap.put("payLink", "");
+            }
+
+            String subject = "接机支付邮件";
+            String template = EmailUtils.generateTemplateEmail("template4.html", paramMap);
+            boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, login, login, subject, template);
+        }
+        if ("PAYMENT_DONE".equals(operation) || "PAYMENT_NOT_DONE".equals(operation)) {
+            // send template 5
+            Map<String, String> paramMap = EmailUtils.getParamMap();
+            paramMap.put("orderId", OrderTokenUtil.getOrderToken(order.getId().toString()));
+            paramMap.put("userName", order.getOrderContact().getBelongsToInfo().getLastName() + " "
+                    + order.getOrderContact().getBelongsToInfo().getName());
+            paramMap.put("userToken", order.getBelongsTo().getNewCode());
+            String gender = "";
+            if (0 == order.getOrderContact().getBelongsToInfo().getGender()) {
+                gender = "Mr.";
+            }
+            if (1 == order.getOrderContact().getBelongsToInfo().getGender()) {
+                gender = "Mrs.";
+            }
+            if (2 == order.getOrderContact().getBelongsToInfo().getGender()) {
+                gender = "Miss";
+            }
+
+            paramMap.put("gender", gender);
+            if (null != item) {
+                if (null != item.getTakeOffDate()) {
+                    paramMap.put("takeoffTime", DateUtils.dateToString(item.getTakeOffDate()));
+                } else {
+                    paramMap.put("takeoffTime", "");
+                }
+                item.analyzeLuggage();
+                String luggage = "";
+                if (null != item.getLuggageSize1()) {
+                    luggage += item.getLuggageSize1() + "寸X" + item.getLuggageAmount1() + "个";
+                }
+                if (null != item.getLuggageSize2()) {
+                    luggage += item.getLuggageSize2() + "寸X" + item.getLuggageAmount2() + "个";
+                }
+                if (null != item.getLuggageSize3()) {
+                    luggage += item.getLuggageSize3() + "寸X" + item.getLuggageAmount3() + "个";
+                }
+
+                if (null != item.getLuggageSize4()) {
+                    luggage += item.getLuggageSize4() + "寸X" + item.getLuggageAmount4() + "个";
+                }
+
+                if (null != item.getLuggageSize5()) {
+                    luggage += item.getLuggageSize5() + "寸X" + item.getLuggageAmount5() + "个";
+                }
+
+                paramMap.put("luggage", luggage);
+
+                paramMap.put("fromCity", EmailUtils.getStringValue( item.getTakeOffCity()));
+                paramMap.put("fromAirport", "");
+                paramMap.put("toCity", EmailUtils.getStringValue( item.getArrivalCity()));
+                paramMap.put("dormitoryAddress", EmailUtils.getStringValue(item.getPickup2Address()));
+                paramMap.put("postcode", EmailUtils.getStringValue(item.getPickup2Postalcode()));
+                paramMap.put("totalPrice", order.getAmount().toString());
+                paramMap.put("orderStatus", "");
+                paramMap.put("flightNum", item.getFlightNum());
+                if (null != item.getPickupDate()) {
+                    paramMap.put("arriveTime", DateUtils.dateToString(item.getPickupDate(), "yyyy-MM-dd HH:mm"));
+                } else {
+                    paramMap.put("arriveTime", "");
+                }
+                paramMap.put("toCity", EmailUtils.getStringValue(item.getPickup2City()));
+                paramMap.put("toAirport", EmailUtils.getStringValue(item.getArrivalAirport()));
+                
+            }
+            String subject = "接机支付邮件";
+            String templateHtml = "template5.html";
+            if ("PAYMENT_NOT_DONE".equals(operation)) {
+                templateHtml = "template5_1.html";
+            }
+            String template = EmailUtils.generateTemplateEmail(templateHtml, paramMap);
+            boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, login, login, subject, template);
+        }
+    }
 
     @RequestMapping(value = "/orderDetails.html")
     public String getOrderDetails(final ModelMap model, final HttpServletRequest request,

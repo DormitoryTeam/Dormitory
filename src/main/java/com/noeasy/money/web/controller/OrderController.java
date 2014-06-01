@@ -45,6 +45,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.noeasy.money.admin.util.OrderTokenUtil;
 import com.noeasy.money.constant.Constants;
 import com.noeasy.money.enumeration.OrderStatus;
 import com.noeasy.money.enumeration.OrderType;
@@ -426,7 +427,15 @@ public class OrderController {
         case 3:
             maintainLuggage(pRequest);
             setOrderCommit(pRequest);
-            sendPickupOrderCommitEmail(pRequest);
+            OrderBean order = ServletUtils.getOrderFromSession(pRequest);
+            if (!order.isSendCommitEmail()) {
+                boolean sucess = sendPickupOrderCommitEmail(pRequest);
+                if(sucess) {
+                    order.setSendCommitEmail(true);
+                    orderService.sendCommitEmail(order);
+                }
+            }
+            
             break;
         }
 
@@ -750,7 +759,24 @@ public class OrderController {
                     return "";
                 }
                 maintainSessionOrder(request, step);
+                if ("INITIAL".equals(order.getOrderStatus()) && !order.isSendSaveEmail()) {
+                    if (null != order && null != order.getOrderContact()
+                            && null != order.getOrderContact().getBelongsToInfo()) {
+                        Map<String, String> paramMap = EmailUtils.getParamMap();
+                        String email = order.getOrderContact().getBelongsToInfo().getEmail();
+                        paramMap.put("login", email);
 
+                        String from = EmailUtils.getServiceEmail();
+                        String fromAlias = EmailUtils.getServiceAlias();
+                        String subject = EmailUtils.getSubject();
+                        String template = EmailUtils.generateTemplateEmail("template1_1.html", paramMap);
+                        boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, email, email, subject, template);
+                        if (sendSuccess) {
+                            order.setSendSaveEmail(true);
+                            orderService.sendSaveEmail(order);
+                        }
+                    }
+                }
                 return forwrdURLs[step];
             } else {
                 maintainSessionOrder(request, step);
@@ -803,34 +829,64 @@ public class OrderController {
 
 
 
-    private void sendPickupOrderCommitEmail(final HttpServletRequest pRequest) {
+    private boolean sendPickupOrderCommitEmail(final HttpServletRequest pRequest) {
         Map<String, String> paramMap = EmailUtils.getParamMap();
         OrderBean order = ServletUtils.getOrderFromSession(pRequest);
         PickupLineItem pickupLineItem = new PickupLineItem();
         if (order.getLineItems().get(0) instanceof PickupLineItem) {
             pickupLineItem = (PickupLineItem) order.getLineItems().get(0);
         }
-        UserInfoBean userInfo = ServletUtils.getUserInfoFromRequest(pRequest);
+        UserInfoBean userInfo = order.getOrderContact().getBelongsToInfo();
         String login = ServletUtils.getLoign(pRequest);
 
-        paramMap.put("orderId", String.valueOf(order.getId()));
-        paramMap.put("userName", userInfo.getName() == null ? "" : userInfo.getName());
-        paramMap.put("userToken", "???");
+        paramMap.put("orderId", OrderTokenUtil.getOrderToken(order.getId().toString()));
+        paramMap.put("userName", EmailUtils.getStringValue(userInfo.getName()));
+        paramMap.put("userToken", EmailUtils.getStringValue(order.getBelongsTo().getNewCode()));
 
-        paramMap.put("address", userInfo.getAddress() == null ? "" : userInfo.getAddress());
+        paramMap.put("address", EmailUtils.getStringValue(userInfo.getAddress()));
         paramMap.put("phone", "???");
-        paramMap.put("telephone", userInfo.getPhone() == null ? "" : userInfo.getPhone());
-        paramMap.put("email", login);
-        paramMap.put("dormitoryName", pickupLineItem.getPickup2Dormitory());
-        paramMap.put("dormitoryAddress", pickupLineItem.getPickup2Address());
-        paramMap.put("postcode", pickupLineItem.getPickup2Postalcode());
-        paramMap.put("flightCompany", pickupLineItem.getFlightCompany());
-        paramMap.put("flightNum", pickupLineItem.getFlightNum());
-        paramMap.put("startTime", DateUtils.dateToString(pickupLineItem.getTakeOffDate()));
+        paramMap.put("telephone", EmailUtils.getStringValue(userInfo.getPhone()));
+        paramMap.put("email", EmailUtils.getStringValue(userInfo.getEmail()));
+        paramMap.put("dormitoryName", EmailUtils.getStringValue(pickupLineItem.getPickup2Dormitory()));
+        paramMap.put("dormitoryAddress", EmailUtils.getStringValue(pickupLineItem.getPickup2Address()));
+        paramMap.put("postcode", EmailUtils.getStringValue(pickupLineItem.getPickup2Postalcode()));
+        paramMap.put("flightCompany", EmailUtils.getStringValue(pickupLineItem.getFlightCompany()));
+        paramMap.put("flightNum", EmailUtils.getStringValue(pickupLineItem.getFlightNum()));
+        if (null != pickupLineItem.getTakeOffDate()) {
+            paramMap.put("startTime", DateUtils.dateToString(pickupLineItem.getTakeOffDate()));
+        } else {
+            paramMap.put("startTime", "");
+        }
+        
         paramMap.put("transferTime", "???");
-        paramMap.put("arriveTime",
-                DateUtils.dateToString(pickupLineItem.getPickupDate(), DateUtils.DATE_TIME_FORAMT_RULE));
-        paramMap.put("comment", "???");
+        if (null != pickupLineItem.getPickupDate()) {
+            paramMap.put("arriveTime",
+                    DateUtils.dateToString(pickupLineItem.getPickupDate(), DateUtils.DATE_TIME_FORAMT_RULE));
+        } else {
+            paramMap.put("arriveTime","");
+        }
+        
+        pickupLineItem.analyzeLuggage();
+        String luggage = "";
+        if (null != pickupLineItem.getLuggageSize1()) {
+            luggage += pickupLineItem.getLuggageSize1() + "寸X" + pickupLineItem.getLuggageAmount1() + "个";
+        }
+        if (null != pickupLineItem.getLuggageSize2()) {
+            luggage += pickupLineItem.getLuggageSize2() + "寸X" + pickupLineItem.getLuggageAmount2() + "个";
+        }
+        if (null != pickupLineItem.getLuggageSize3()) {
+            luggage += pickupLineItem.getLuggageSize3() + "寸X" + pickupLineItem.getLuggageAmount3() + "个";
+        }
+
+        if (null != pickupLineItem.getLuggageSize4()) {
+            luggage += pickupLineItem.getLuggageSize4() + "寸X" + pickupLineItem.getLuggageAmount4() + "个";
+        }
+
+        if (null != pickupLineItem.getLuggageSize5()) {
+            luggage += pickupLineItem.getLuggageSize5() + "寸X" + pickupLineItem.getLuggageAmount5() + "个";
+        }
+
+        paramMap.put("comment", luggage);
         paramMap.put("city", pickupLineItem.getArrivalCity());
 
         String from = EmailUtils.getServiceEmail();
@@ -838,6 +894,8 @@ public class OrderController {
         String subject = EmailUtils.getSubject();
         String template = EmailUtils.generateTemplateEmail("template10.html", paramMap);
         boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, login, login, subject, template);
+        return sendSuccess;
+        
     }
 
 

@@ -39,18 +39,29 @@
 						<div class="progress-content">
 							<div class="title">订单进度</div>
 							<ul class="progress">
-								<li class="first <c:if test="${order.orderStatus == 'INITIAL'}">wait</c:if><c:if test="${order.orderStatus == 'COMMIT'}">complete</c:if><c:if test="${order.orderStatus != 'INITIAL' and order.orderStatus != 'COMMIT'}">complete</c:if>">
+								<li class="first <c:if test="${order.orderStatus == 'INITIAL'}">wait</c:if><c:if test="${order.orderStatus != 'INITIAL'}">complete</c:if>">
 									<div class="num">1</div>
 									<div class="progress-tip">申请已提交</div>
 								</li>
-								<li class="second <c:if test="${order.orderStatus == 'INITIAL' or  order.orderStatus == 'COMMIT'}">wait</c:if><c:if test="${order.orderStatus == 'REVIEWDE'}">complete</c:if><c:if test="${order.orderStatus == 'SENDING_CONTACT' or order.orderStatus == 'DONE'}">complete</c:if>">
+								<li class="second <c:if test="${order.orderStatus == 'INITIAL' or  order.orderStatus == 'COMMIT'}">wait</c:if><c:if test="${order.orderStatus == 'REVIEWDE'}">complete</c:if><c:if test="${order.orderStatus != 'INITIAL' and order.orderStatus != 'COMMIT'}">complete</c:if>">
 									<div class="num">2</div>
 									<div class="progress-tip">审核中</div>
 								</li>
-								<li class="third <c:if test="${order.orderStatus == 'INITIAL' or  order.orderStatus == 'COMMIT' or order.orderStatus == 'REVIEWDE' }">wait</c:if><c:if test="${order.orderStatus == 'SENDING_CONTACT'}">complete</c:if><c:if test="${order.orderStatus == 'DONE'}">complete</c:if>">
+								<c:choose>
+								<c:when test='${"D" eq type}'>
+								<li class="third <c:if test="${order.orderStatus == 'INITIAL' or  order.orderStatus == 'COMMIT' or order.orderStatus == 'REVIEWDE' }">wait</c:if><c:if test="${order.orderStatus == 'SENDING_CONTACT'} or order.orderStatus == 'DONE'}">complete</c:if>">
 									<div class="num">3</div>
 									<div class="progress-tip">合同发送</div>
 								</li>
+								</c:when>
+								<c:otherwise>
+								<li class="third <c:if test="${order.orderStatus == 'INITIAL' or  order.orderStatus == 'COMMIT' or order.orderStatus == 'REVIEWDE' }">wait</c:if><c:if test="${order.orderStatus == 'PAYMENT_DONE' or 'PAYMENT_NOT_DONE' eq order.orderStatus}">complete</c:if>">
+									<div class="num">3</div>
+									<div class="progress-tip" style="margin-left: -85px;"><c:choose><c:when test="${order.orderStatus =='PAYMENT_NOT_DONE'}">未付款，已发车票邮件</c:when><c:otherwise>已付款，已送车票邮件</c:otherwise></c:choose></div>
+								</li>
+								</c:otherwise>
+								</c:choose>
+								
 							</ul>
 						</div>
 					</li>
@@ -70,7 +81,7 @@
 					<li class="order-active"><a href="<c:url value="/order/view-order.html?orderId=${order.id}"/>">查看</a><c:if test="${order.orderStatus == 'INITIAL' or  order.orderStatus == 'COMMIT'}">|<a href="<c:url value="/order/dormitory-place-order.html?orderId=${order.id}"/>">修改</a><!--|<a href="#">取消</a>--></c:if></li>
 					</c:when>
 					<c:otherwise>
-					<li class="order-active"><a href="<c:url value="/order/view-order.html?orderId=${order.id}&orderType=pickup"/>">查看</a><c:if test="$order.orderStatus == 'INITIAL' or  order.orderStatus == 'COMMIT'}">|<a href="<c:url value="/order/dormitory-place-order.html?orderId=${order.id}&orderType=pickup"/>">修改</a><!--|<a href="#">取消</a>--></c:if></li>
+					<li class="order-active"><a href="<c:url value="/order/view-order.html?orderId=${order.id}&orderType=pickup"/>">查看</a><c:if test="${order.orderStatus == 'INITIAL' or  order.orderStatus == 'COMMIT'}">|<a href="<c:url value="/order/dormitory-place-order.html?orderId=${order.id}&orderType=pickup"/>">修改</a><!--|<a href="#">取消</a>--></c:if></li>
 					</c:otherwise>
 					</c:choose>
 					
