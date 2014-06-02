@@ -4,7 +4,7 @@
 			<dl>
 				<dt>账号:</dt>
 				<dd>
-					<input id="iptLogin" name="login" value="${login}" type="text" />
+					<input id="iptLogin" name="login" value="${login}" type="text" placeholder="请使用电子邮件注册"/>
 				</dd>
 
 			</dl>

@@ -525,15 +525,17 @@ public class OrderController {
             if (null == user) {
                 String password = RandomStringUtils.randomAlphanumeric(8);
                 user = userService.register(email, password);
+//                
+                // send email.
+                Map<String, String> paramMap = EmailUtils.getParamMap();
+                paramMap.put("login", email);
+                paramMap.put("password", password);
+
                 String from = EmailUtils.getServiceEmail();
                 String fromAlias = EmailUtils.getServiceAlias();
-                String subject = EmailUtils.getSubject();
-                String domain = PropertiesUtils.getConfigurableProperty(Constants.CONFIG_PATH, Constants.CONFIG_DOMAIN);
-                String context = PropertiesUtils.getConfigurableProperty(Constants.CONFIG_PATH,
-                        Constants.CONFIG_CONTEXT);
-                EmailUtils.sendEmail(from, fromAlias, email, email, subject, "你在留学生活注册了新用户， 用户名：" + email + " / 密码: "
-                        + password + "请访问 www.liuxuelife.com 登录后修改密码。");
-                // send email.
+                String subject = "注册成功-留学生活网-您身边的留学生活专家";
+                String template = EmailUtils.generateTemplateEmail("template1.html", paramMap);
+                boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, email, email, subject, template);
             }
             belongsTo = user;
             placer = user;
@@ -765,10 +767,10 @@ public class OrderController {
                         Map<String, String> paramMap = EmailUtils.getParamMap();
                         String email = order.getOrderContact().getBelongsToInfo().getEmail();
                         paramMap.put("login", email);
-
+                        paramMap.put("password", order.getBelongsTo().getPassword());
                         String from = EmailUtils.getServiceEmail();
                         String fromAlias = EmailUtils.getServiceAlias();
-                        String subject = EmailUtils.getSubject();
+                        String subject = "请完善您的个人信息-留学生活网-您身边的留学生活专家";
                         String template = EmailUtils.generateTemplateEmail("template1_1.html", paramMap);
                         boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, email, email, subject, template);
                         if (sendSuccess) {
@@ -840,7 +842,7 @@ public class OrderController {
         String login = ServletUtils.getLoign(pRequest);
 
         paramMap.put("orderId", OrderTokenUtil.getOrderToken(order.getId().toString()));
-        paramMap.put("userName", EmailUtils.getStringValue(userInfo.getName()));
+        paramMap.put("userName", EmailUtils.getStringValue(userInfo.getLastName()) + " " + EmailUtils.getStringValue(userInfo.getName()));
         paramMap.put("userToken", EmailUtils.getStringValue(order.getBelongsTo().getNewCode()));
 
         paramMap.put("address", EmailUtils.getStringValue(userInfo.getAddress()));
@@ -852,6 +854,7 @@ public class OrderController {
         paramMap.put("postcode", EmailUtils.getStringValue(pickupLineItem.getPickup2Postalcode()));
         paramMap.put("flightCompany", EmailUtils.getStringValue(pickupLineItem.getFlightCompany()));
         paramMap.put("flightNum", EmailUtils.getStringValue(pickupLineItem.getFlightNum()));
+        paramMap.put("arrivalAirport", EmailUtils.getStringValue(pickupLineItem.getArrivalAirport()));
         if (null != pickupLineItem.getTakeOffDate()) {
             paramMap.put("startTime", DateUtils.dateToString(pickupLineItem.getTakeOffDate()));
         } else {
@@ -891,7 +894,7 @@ public class OrderController {
 
         String from = EmailUtils.getServiceEmail();
         String fromAlias = EmailUtils.getServiceAlias();
-        String subject = EmailUtils.getSubject();
+        String subject = "您的接机订单已提交-留学生活网-您身边的留学生活专家";
         String template = EmailUtils.generateTemplateEmail("template10.html", paramMap);
         boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, login, login, subject, template);
         return sendSuccess;

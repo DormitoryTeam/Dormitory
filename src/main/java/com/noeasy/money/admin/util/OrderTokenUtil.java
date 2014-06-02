@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 
 public class OrderTokenUtil {
 
-    private static final int    ORDER_TOKEN_LENGTH = 9;
+    private static final int    ORDER_TOKEN_LENGTH = 8;
 
     private static final String PREFIX_ZERO        = "0";
 
@@ -20,7 +20,7 @@ public class OrderTokenUtil {
         if (StringUtils.isEmpty(orderToken)) {
             return "";
         }
-        if (orderToken.length() != 9) {
+        if (orderToken.length() != ORDER_TOKEN_LENGTH) {
             return "";
         }
 
@@ -48,6 +48,6 @@ public class OrderTokenUtil {
 
 
     public static void main(final String[] args) {
-        System.out.println(getOrderId("001001"));
+        System.out.println(getOrderId("00001001"));
     }
 }

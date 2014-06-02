@@ -352,7 +352,7 @@ public class AdminOrderController {
                 paramMap.put("payLink", "");
             }
 
-            String subject = "接机支付邮件";
+            String subject = "请支付您的接机订单-留学生活网-您身边的留学生活专家";
             String template = EmailUtils.generateTemplateEmail("template4.html", paramMap);
             boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, login, login, subject, template);
         }
@@ -365,13 +365,13 @@ public class AdminOrderController {
             paramMap.put("userToken", order.getBelongsTo().getNewCode());
             String gender = "";
             if (0 == order.getOrderContact().getBelongsToInfo().getGender()) {
-                gender = "Mr.";
+                gender = "先生";
             }
             if (1 == order.getOrderContact().getBelongsToInfo().getGender()) {
-                gender = "Mrs.";
+                gender = "女士";
             }
             if (2 == order.getOrderContact().getBelongsToInfo().getGender()) {
-                gender = "Miss";
+                gender = "女士";
             }
 
             paramMap.put("gender", gender);
@@ -420,7 +420,7 @@ public class AdminOrderController {
                 paramMap.put("toAirport", EmailUtils.getStringValue(item.getArrivalAirport()));
                 
             }
-            String subject = "接机支付邮件";
+            String subject = "您的接机车票（请打印后，在接机现场出示）-留学生活网-您身边的留学生活专家";
             String templateHtml = "template5.html";
             if ("PAYMENT_NOT_DONE".equals(operation)) {
                 templateHtml = "template5_1.html";

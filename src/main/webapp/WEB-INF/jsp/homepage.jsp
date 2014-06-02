@@ -13,6 +13,9 @@
 		
 		<%-- content --%>
 		<div class="container">
+			<div class="qq" style="top: 75%;">
+				<a href="#">&nbsp;</a>
+			</div>
 			<jsp:include page="include/homepage-slidebanner.jsp"/>
 			<jsp:include page="include/homepage-infobanner.jsp"/>
 			<jsp:include page="include/homepage-newslist.jsp"/>

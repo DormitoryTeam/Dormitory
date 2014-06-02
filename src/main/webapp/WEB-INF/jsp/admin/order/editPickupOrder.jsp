@@ -69,6 +69,15 @@ ${message}
 		name="luggageAmount5" value="${item.luggageAmount5}" /><br>
 	<hr>
 	价格：<input type="text" name="price" value="${order.amount}" /> <br> 支付链接： <input type="text" name="paymentUrl" value="${item.paymentUrl}" /><br> 
+	当前状态:&nbsp;&nbsp;
+	<c:choose>
+		<c:when test="${'INITIAL' eq order.orderStatus}">等待用户完成订单</c:when>
+		<c:when test="${'COMMIT' eq order.orderStatus}">已提交,等待审核</c:when>
+		<c:when test="${'REVIEWDE' eq order.orderStatus}">审核完成，已发送付款邮件</c:when>
+		<c:when test="${'PAYMENT_DONE' eq order.orderStatus}">已支付，已发送车票邮件</c:when>
+		<c:when test="${'PAYMENT_NOT_DONE' eq order.orderStatus}">未支付，已发送车票邮件</c:when>
+		<c:otherwise>已支付，已发送车票邮件</c:otherwise>
+	</c:choose><br>
 	操作：<input name="operation" type="radio" value="" checked />更新信息&nbsp;&nbsp;|&nbsp;&nbsp;<input name="operation" type="radio" value="REVIEWDE" />审核，发送付款邮件&nbsp;&nbsp; | &nbsp;&nbsp;<input 	name="operation" type="radio" value="PAYMENT_DONE" />确认已支付，发送车票邮件&nbsp;&nbsp; | &nbsp;&nbsp;<input 	name="operation" type="radio" value="PAYMENT_NOT_DONE" />未支付，发送车票邮件<br> 
 	<input type="submit" value="提交" /> <a href="<c:url value="/admin/order/orderList.html"/>">返回</a>
 </form>

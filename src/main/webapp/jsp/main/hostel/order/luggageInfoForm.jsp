@@ -25,51 +25,51 @@
 			<dl>
 				<dt>尺寸</dt>
 				<dd>
-					<input type="text" name="luggageSize1" value="${item.luggageSize1}"/>
+					<input type="text" name="luggageSize1" value="${item.luggageSize1}" style="width:100px;"/>&nbsp;（寸）
 				</dd>
 				<dt class="min">个数</dt>
 				<dd>
-					<input type="text" name="luggageAmount1" value="${item.luggageAmount1}"/>
+					<input type="text" name="luggageAmount1" value="${item.luggageAmount1}" style="width:100px;"/>&nbsp;（个）
 				</dd>
 			</dl>
 			<dl>
 				<dt>尺寸</dt>
 				<dd>
-					<input type="text" name="luggageSize2" value="${item.luggageSize2}"/>
+					<input type="text" name="luggageSize2" value="${item.luggageSize2}" style="width:100px;"/>&nbsp;（寸）
 				</dd>
 				<dt class="min">个数</dt>
 				<dd>
-					<input type="text" name="luggageAmount2" value="${item.luggageAmount2}"/>
+					<input type="text" name="luggageAmount2" value="${item.luggageAmount2}" style="width:100px;"/>&nbsp;（个）
 				</dd>
 			</dl>
 			<dl>
 				<dt>尺寸</dt>
 				<dd>
-					<input type="text" name="luggageSize3" value="${item.luggageSize3}"/>
+					<input type="text" name="luggageSize3" value="${item.luggageSize3}" style="width:100px;"/>&nbsp;（寸）
 				</dd>
 				<dt class="min">个数</dt>
 				<dd>
-					<input type="text" name="luggageAmount3" value="${item.luggageAmount3}"/>
+					<input type="text" name="luggageAmount3" value="${item.luggageAmount3}" style="width:100px;"/>&nbsp;（个）
 				</dd>
 			</dl>
 			<dl>
 				<dt>尺寸</dt>
 				<dd>
-					<input type="text" name="luggageSize4" value="${item.luggageSize4}"/>
+					<input type="text" name="luggageSize4" value="${item.luggageSize4}" style="width:100px;"/>&nbsp;（寸）
 				</dd>
 				<dt class="min">个数</dt>
 				<dd>
-					<input type="text" name="luggageAmount4" value="${item.luggageAmount4}"/>
+					<input type="text" name="luggageAmount4" value="${item.luggageAmount4}" style="width:100px;"/>&nbsp;（个）
 				</dd>
 			</dl>
 			<dl>
 				<dt>尺寸</dt>
 				<dd>
-					<input type="text" name="luggageSize5" value="${item.luggageSize5}"/>
+					<input type="text" name="luggageSize5" value="${item.luggageSize5}" style="width:100px;"/>&nbsp;（寸）
 				</dd>
 				<dt class="min">个数</dt>
 				<dd>
-					<input type="text" name="luggageAmount5" value="${item.luggageAmount5}"/>
+					<input type="text" name="luggageAmount5" value="${item.luggageAmount5}" style="width:100px;"/>&nbsp;（个）
 				</dd>
 			</dl>
 			<dl>

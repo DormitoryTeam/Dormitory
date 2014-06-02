@@ -7,13 +7,13 @@
 	<insert id="register" parameterType="com.noeasy.money.model.UserBean" keyProperty="id" useGeneratedKeys="true">
 		INSERT INTO USERS(login,
 		password, email, create_date, update_date)
-		VALUES(#{login}, md5(#{password}), #{login}, now(), now());
+		VALUES(#{login}, #{password}, #{login}, now(), now());
 	</insert>
 
 
 	<insert id="saveUser" keyProperty="id" useGeneratedKeys="true" parameterType="com.noeasy.money.model.UserBean">
 		INSERT INTO users (login, password, email, name, gender, passport, age, birthday, address, phone, qq, create_date, update_date)
-		VALUES(#{login}, md5(#{password}), #{login}, #{name}, #{gender}, #{passport}, ${age}, #{birthday}, #{address}, #{phone}, #{qq}, now(), now());
+		VALUES(#{login}, #{password}, #{login}, #{name}, #{gender}, #{passport}, ${age}, #{birthday}, #{address}, #{phone}, #{qq}, now(), now());
 	</insert>
 
 
@@ -34,7 +34,7 @@
 
 	<update id="resetPassword" parameterType="com.noeasy.money.model.UserBean">
 		UPDATE users SET
-			password = md5(#{password}),
+			password = #{password},
 			update_date = now()
 		WHERE login = #{login}
 	</update>
@@ -72,7 +72,7 @@
 			AND (u.login = #{login}  OR u.email = #{login}) 
 		</if>
 		<if test="password != null">
-			AND u.password = md5(#{password})
+			AND u.password = #{password}
 		</if>
 		<if test="groupId != null">
 			AND ugroup.group_id = #{groupId}

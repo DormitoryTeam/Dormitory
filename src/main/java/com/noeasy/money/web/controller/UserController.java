@@ -157,7 +157,7 @@ public class UserController {
 
         String from = EmailUtils.getServiceEmail();
         String fromAlias = EmailUtils.getServiceAlias();
-        String subject = EmailUtils.getSubject();
+        String subject = "注册成功-留学生活网-您身边的留学生活专家";
         String template = EmailUtils.generateTemplateEmail("template1.html", paramMap);
         boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, login, login, subject, template);
 

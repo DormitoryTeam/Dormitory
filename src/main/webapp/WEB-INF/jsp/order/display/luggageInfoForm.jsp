@@ -31,11 +31,11 @@
 							<dl>
 								<dt>尺寸</dt>
 								<dd>
-									${item.luggageSize1}
+									${item.luggageSize1}&nbsp;（寸）
 								</dd>
 								<dt class="min">个数</dt>
 								<dd>
-									${item.luggageAmount1}
+									${item.luggageAmount1}&nbsp;（个）
 								</dd>
 							</dl>
 							</c:if>
@@ -43,11 +43,11 @@
 							<dl>
 								<dt>尺寸</dt>
 								<dd>
-									${item.luggageSize2}
+									${item.luggageSize2}&nbsp;（寸）
 								</dd>
 								<dt class="min">个数</dt>
 								<dd>
-									${item.luggageAmount2}
+									${item.luggageAmount2}&nbsp;（个）
 								</dd>
 							</dl>
 							</c:if>
@@ -55,11 +55,11 @@
 							<dl>
 								<dt>尺寸</dt>
 								<dd>
-									${item.luggageSize3}
+									${item.luggageSize3}&nbsp;（寸）
 								</dd>
 								<dt class="min">个数</dt>
 								<dd>
-									${item.luggageAmount3}
+									${item.luggageAmount3}&nbsp;（个）
 								</dd>
 							</dl>
 							</c:if>
@@ -67,11 +67,11 @@
 							<dl>
 								<dt>尺寸</dt>
 								<dd>
-									${item.luggageSize4}
+									${item.luggageSize4}&nbsp;（寸）
 								</dd>
 								<dt class="min">个数</dt>
 								<dd>
-									${item.luggageAmount4}
+									${item.luggageAmount4}&nbsp;（个）
 								</dd>
 							</dl>
 							</c:if>
@@ -79,11 +79,11 @@
 							<dl>
 								<dt>尺寸</dt>
 								<dd>
-									${item.luggageSize5}
+									${item.luggageSize5}&nbsp;（寸）
 								</dd>
 								<dt class="min">个数</dt>
 								<dd>
-									${item.luggageAmount5}
+									${item.luggageAmount5}&nbsp;（个）
 								</dd>
 							</dl>
 							</c:if>
