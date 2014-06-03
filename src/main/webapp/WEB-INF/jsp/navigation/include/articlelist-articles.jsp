@@ -44,7 +44,7 @@
 		</div>
 		<ul class="news-list">
 			<c:forEach var="article" items="${articleTitles}">
-				<li><a href="<c:url value='/navigation/article-detail.html?id=${article.id}&backURL=${pageContext.request.contextPath}${requestScope[\'javax.servlet.forward.servlet_path\']}'/>">
+				<li><a href="<c:url value='/navigation/article-detail.html?id=${article.id}'/>">
 					${article['title']}</a><span>（${article['createTime']}）</span></li>
 			</c:forEach>
 		</ul>
