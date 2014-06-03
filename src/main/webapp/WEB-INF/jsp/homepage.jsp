@@ -13,8 +13,9 @@
 		
 		<%-- content --%>
 		<div class="container">
-			<div class="qq" style="top: 75%;">
-				<a href="#">&nbsp;</a>
+			<div class="qq" >
+				咨询宿舍客服<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=0fcd0b428cd49421d6a1a8d2a0485cb2900343e3d6c19301"><img border="0" src="<c:url value='/img/banner/qq.gif'/>" alt="咨询宿舍客服" title="咨询宿舍客服"></a>
+				咨询接机客服<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=df28b70a97e2f31eaffed329873cf58385a2c10bfff7e8d9"><img border="0" src="<c:url value='/img/banner/qq.gif'/>" alt="咨询接机客服" title="咨询接机客服"></a>
 			</div>
 			<jsp:include page="include/homepage-slidebanner.jsp"/>
 			<jsp:include page="include/homepage-infobanner.jsp"/>
