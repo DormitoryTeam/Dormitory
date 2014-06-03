@@ -44,8 +44,7 @@
 					</div>
 					<div class="news-info">
 						<h2><a href="<c:url value='/navigation/article-detail.html?id=${article.id}'/>">${article['title']}</a></h2>
-						<p style="height: 150px; overflow: hidden; text-overflow:ellipsis">&nbsp;&nbsp;&nbsp;&nbsp;${article.textBody}</p>
-						<p>...</p>
+						<p style="height: 150px; overflow: hidden; text-overflow:ellipsis">&nbsp;&nbsp;&nbsp;&nbsp;${article.textBody}...</p>
 					</div>
 				</li>
 			</c:forEach>
