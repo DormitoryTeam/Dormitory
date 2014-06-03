@@ -48,7 +48,7 @@
 						</ul>
 						<div id="tabs-personal" aria-labelledby="ui-id-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" aria-expanded="true" aria-hidden="false">
 							<div class="row text-center"> 
-								<br><br><br><br><br><h1 style="color: #FF8A00;">下单成功</h1><br><br><br><br><br>
+								<br><br><br><br><br><h2 style="color: #FF8A00;">下单成功&nbsp;请查收邮件</h2><br><br><br><br><br>
 								<a style="color:#AE0000; font-weight: bold; font-size: 20px;" href="<c:url value="/user/orderList.html"/>" >返回我的订单</a>
 								</div>
 						</div>

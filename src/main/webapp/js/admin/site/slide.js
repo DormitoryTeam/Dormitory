@@ -40,7 +40,7 @@ function bindMoveDownButton() {
 
 function appendLastestImagePreview(data) {
     $.each(data.result, function(i, e) {
-        var imageURL = "/dormitory/upload/images/slide/" + e.name;
+        var imageURL = "/upload/images/slide/" + e.name;
         var row = $("<tr class=\"fileRow\">");
         row.append($('<td>').html("<input type=\"text\" name=\"imageNames\" readonly=\"readonly\" class=\"fileNames\" value=\"" + e.name + "\" /><input type=\"hidden\" name=\"imageIndexes\" class=\"fileIndex\" value=\"" + getNextIndex() + "\" />"));
         row.append($('<td>').html("<a href='" + imageURL + "'><img src='" + imageURL + "' /></a>"));

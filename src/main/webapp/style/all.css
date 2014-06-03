@@ -829,13 +829,15 @@ textarea{
 .qq{
 	position: fixed;
 	top: 45%;
-	right: 11%;
+	right: 5%;
+	font-weight: bolder;
+	
 }
 
 .qq a{
-	background: url(common/qq.png) no-repeat;
+	/**background: url(common/qq.png) no-repeat;
 	width: 224px;
-	height: 147px;
+	height: 147px;*/
 	display: block;
 }
 /**
