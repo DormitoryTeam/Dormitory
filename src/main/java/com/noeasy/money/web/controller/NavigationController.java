@@ -174,6 +174,8 @@ public class NavigationController {
         model.addAttribute("backURL", backURL);
         List<RichTextBean> articleTitles = siteService.queryArticleTitles(type);
         model.addAttribute("articleTitles", articleTitles);
+        List<RichTextBean> hotArticles = siteService.queryArticleTitlesWithStatus(null, "2");
+        model.addAttribute("hotArticles", hotArticles);
         return "navigation/articlelist";
     }
 

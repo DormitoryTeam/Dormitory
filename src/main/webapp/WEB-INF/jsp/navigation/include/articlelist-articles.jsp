@@ -3,13 +3,9 @@
 		<div class="hot-news-list">
 			<div class="title">热门信息</div>
 			<ul class="news-list">
-				<li><a href="#">预订宿舍免费接机</a></li>
-				<li><a href="#">国内免费寄送新生大礼包</a></li>
-				<li><a href="#">预订宿舍免费接机</a></li>
-				<li><a href="#">国内免费寄送新生大礼包</a></li>
-				<li><a href="#">预订宿舍免费接机</a></li>
-				<li><a href="#">预订宿舍免费接机</a></li>
-				<li class="last"><a href="#">国内免费寄送新生大礼包</a></li>
+				<c:forEach var="article" items="${hotArticles}">
+					<li><a href="<c:url value='/navigation/article-detail.html?id=${article.id}'/>">${article.title}</a></li>
+				</c:forEach>
 			</ul>
 		</div>
 		<ul class="about-info news">
