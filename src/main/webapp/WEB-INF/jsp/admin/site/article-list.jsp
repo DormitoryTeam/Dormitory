@@ -20,6 +20,7 @@
 				<th>文章标题</th>
 				<th>文章类型</th>
 				<th>文章状态</th>
+				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -36,6 +37,7 @@
 						<c:if test="${article.status eq '1'}">展示</c:if>
 						<c:if test="${article.status eq '2'}">展示(热门)</c:if>
 					</td>
+					<td><a href="<c:url value='/admin/site/article-add-or-update.html?id=${article.id}'/>">修改</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
