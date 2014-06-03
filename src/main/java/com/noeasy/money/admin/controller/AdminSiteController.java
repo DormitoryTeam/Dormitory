@@ -125,7 +125,7 @@ public class AdminSiteController {
     public String toArticleList(final HttpServletRequest request, final HttpServletResponse response,
             final Model model, final String backURL) {
         model.addAttribute("backURL", backURL);
-        List<Map<String, Object>> articleTitles = siteService.queryArticleTitles(null);
+        List<RichTextBean> articleTitles = siteService.queryArticleTitles(null);
         model.addAttribute("articleTitles", articleTitles);
         return "admin/site/article-list";
     }

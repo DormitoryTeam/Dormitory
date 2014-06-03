@@ -87,11 +87,11 @@ public class SiteRepository extends BaseRepository implements ISiteRepository {
 
 
     /**
-     * @see com.noeasy.money.repository.ISiteRepository#queryArticleTitle(java.lang.String,
+     * @see com.noeasy.money.repository.ISiteRepository#queryArticleTitleWithStatus(java.lang.String,
      *      java.lang.String)
      */
     @Override
-    public List<Map<String, Object>> queryArticleTitle(final String pType, final String pStatus) {
+    public List<RichTextBean> queryArticleTitleWithStatus(final String pType, final String pStatus) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("status", pStatus);
         params.put("type", pType);

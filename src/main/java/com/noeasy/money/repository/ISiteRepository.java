@@ -58,7 +58,7 @@ public interface ISiteRepository {
 
 
 
-    List<Map<String, Object>> queryArticleTitle(String pType, String pStatus);
+    List<RichTextBean> queryArticleTitleWithStatus(String pType, String pStatus);
 
 
 

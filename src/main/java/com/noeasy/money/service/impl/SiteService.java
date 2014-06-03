@@ -64,16 +64,6 @@ public class SiteService implements ISiteService {
 
 
     /**
-     * @see com.noeasy.money.service.ISiteService#queryActiveArticleTitles(java.lang.String)
-     */
-    @Override
-    public List<Map<String, Object>> queryActiveArticleTitles(final String pType) {
-        return siteRepository.queryArticleTitle(pType, "1");
-    }
-
-
-
-    /**
      * @see com.noeasy.money.service.ISiteService#queryAllSlides()
      */
     @Override
@@ -107,8 +97,19 @@ public class SiteService implements ISiteService {
      * @see com.noeasy.money.service.ISiteService#queryArticleTitles(java.lang.String)
      */
     @Override
-    public List<Map<String, Object>> queryArticleTitles(final String pType) {
-        return siteRepository.queryArticleTitle(pType, null);
+    public List<RichTextBean> queryArticleTitles(final String pType) {
+        return siteRepository.queryArticleTitleWithStatus(pType, null);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.ISiteService#queryArticleTitlesWithStatus(java.lang.String,
+     *      String)
+     */
+    @Override
+    public List<RichTextBean> queryArticleTitlesWithStatus(final String pType, final String pStatus) {
+        return siteRepository.queryArticleTitleWithStatus(pType, pStatus);
     }
 
 

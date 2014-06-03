@@ -29,8 +29,6 @@
 package com.noeasy.money.web.controller;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -51,13 +49,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.noeasy.money.constant.Constants;
 import com.noeasy.money.constant.SessionConstants;
-import com.noeasy.money.enumeration.OrderType;
 import com.noeasy.money.model.RichTextBean;
 import com.noeasy.money.model.UserBean;
 import com.noeasy.money.service.INavigationService;
 import com.noeasy.money.service.IOrderService;
 import com.noeasy.money.service.ISiteService;
 import com.noeasy.money.service.IUserService;
+import com.noeasy.money.util.HtmlRegexpUtil;
 import com.noeasy.money.util.ParamUtils;
 
 /**
@@ -162,7 +160,9 @@ public class NavigationController {
             article = siteService.queryArticle(id);
             model.addAttribute("backURL", MessageFormat.format("{0}?type={1}", backURL, article.getType()));
         }
+        List<RichTextBean> hotArticles = siteService.queryArticleTitlesWithStatus(null, "2");
         model.addAttribute("article", article);
+        model.addAttribute("hotArticles", hotArticles);
         return "navigation/articledetail";
     }
 
@@ -172,7 +172,7 @@ public class NavigationController {
     public String toArticleList(final HttpServletRequest request, final HttpServletResponse response,
             final Model model, final String type, final String backURL) {
         model.addAttribute("backURL", backURL);
-        List<Map<String, Object>> articleTitles = siteService.queryArticleTitles(type);
+        List<RichTextBean> articleTitles = siteService.queryArticleTitles(type);
         model.addAttribute("articleTitles", articleTitles);
         return "navigation/articlelist";
     }
@@ -188,9 +188,10 @@ public class NavigationController {
         }
         if (userId > 0) {
             UserBean user = userService.findUserById(userId);
-//            boolean hasPickupOrder = orderService.hasOrder(user, OrderType.PICKUP);
+            // boolean hasPickupOrder = orderService.hasOrder(user,
+            // OrderType.PICKUP);
             model.addAttribute("user", user);
-//            model.addAttribute("hasPickupOrder", hasPickupOrder);
+            // model.addAttribute("hasPickupOrder", hasPickupOrder);
         }
 
         List<Map<String, Object>> countries = navigationService.queryCountries();
@@ -202,8 +203,11 @@ public class NavigationController {
 
             List<Map<String, Object>> slides = siteService.querySlides();
 
-            List<Map<String, Object>> news = siteService.queryArticleTitles(RichTextBean.NEWS);
-            List<Map<String, Object>> goTravles = siteService.queryArticleTitles(RichTextBean.GO_TRAVEL);
+            List<RichTextBean> news = siteService.queryArticleTitles(RichTextBean.NEWS);
+            List<RichTextBean> goTravles = siteService.queryArticleTitles(RichTextBean.GO_TRAVEL);
+            for (RichTextBean article : goTravles) {
+                article.setTextBody(HtmlRegexpUtil.filterHtml(article.getTextBody()));
+            }
             List<Map<String, Object>> airports = navigationService.queryAirports(firstCountryId);
 
             model.addAttribute("countries", countries);
@@ -234,7 +238,7 @@ public class NavigationController {
         } else {
             cityColleges = navigationService.queryCityCollegeByCityId(cityId);
         }
-//        cityColleges = sortByCityName(cityColleges);
+        // cityColleges = sortByCityName(cityColleges);
         model.addAttribute("cityColleges", cityColleges);
         model.addAttribute("countryId", countryId);
         model.addAttribute("cityId", cityId);
@@ -242,24 +246,26 @@ public class NavigationController {
         return "navigation/citynavigation";
     }
 
-//    private List<Map<String, Object>> sortByCityName (List<Map<String, Object>> cityColleges) {
-//        if (CollectionUtils.isEmpty(cityColleges)) {
-//            return cityColleges;
-//        }
-//        List<CityCollegeWrapper> temp = new ArrayList<CityCollegeWrapper>();
-//        for (Map<String, Object> cityCollege: cityColleges) {
-//            temp.add(new CityCollegeWrapper(cityCollege));
-//        }
-//        
-//        Collections.sort(temp);
-//        List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
-//        for (CityCollegeWrapper wrapper: temp) {
-//            result.add(wrapper.getCityCollege());
-//        }
-//        
-//        return result;
-//    }
 
+
+    // private List<Map<String, Object>> sortByCityName (List<Map<String,
+    // Object>> cityColleges) {
+    // if (CollectionUtils.isEmpty(cityColleges)) {
+    // return cityColleges;
+    // }
+    // List<CityCollegeWrapper> temp = new ArrayList<CityCollegeWrapper>();
+    // for (Map<String, Object> cityCollege: cityColleges) {
+    // temp.add(new CityCollegeWrapper(cityCollege));
+    // }
+    //
+    // Collections.sort(temp);
+    // List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
+    // for (CityCollegeWrapper wrapper: temp) {
+    // result.add(wrapper.getCityCollege());
+    // }
+    //
+    // return result;
+    // }
 
     @RequestMapping("/hot-colleges" + Constants.URL_SUFFIX)
     public String toHotColleges(final HttpServletRequest request, final HttpServletResponse response,
@@ -270,29 +276,29 @@ public class NavigationController {
 
         return "navigation/collegenavigation";
     }
-    
-//    class CityCollegeWrapper implements Comparable<CityCollegeWrapper>{
-//        private Map<String, Object> mCityCollege;
-//        CityCollegeWrapper (Map<String, Object> pCityCollege) {
-//            mCityCollege = pCityCollege;
-//        }
-//        public String getCityName() {
-//            return (String)mCityCollege.get("cityName");
-//        }
-//        
-//        @Override
-//        public int compareTo(CityCollegeWrapper target) {
-//            if (!(target instanceof CityCollegeWrapper)) {
-//                return 1;
-//            }
-//            if (null == this.getCityName() || null == target) {
-//                return 1;
-//            }
-//            return this.getCityName().compareTo(target.getCityName());
-//        }
-//        public Map<String, Object> getCityCollege() {
-//            return mCityCollege;
-//        }
-//        
-//    }
+
+    // class CityCollegeWrapper implements Comparable<CityCollegeWrapper>{
+    // private Map<String, Object> mCityCollege;
+    // CityCollegeWrapper (Map<String, Object> pCityCollege) {
+    // mCityCollege = pCityCollege;
+    // }
+    // public String getCityName() {
+    // return (String)mCityCollege.get("cityName");
+    // }
+    //
+    // @Override
+    // public int compareTo(CityCollegeWrapper target) {
+    // if (!(target instanceof CityCollegeWrapper)) {
+    // return 1;
+    // }
+    // if (null == this.getCityName() || null == target) {
+    // return 1;
+    // }
+    // return this.getCityName().compareTo(target.getCityName());
+    // }
+    // public Map<String, Object> getCityCollege() {
+    // return mCityCollege;
+    // }
+    //
+    // }
 }

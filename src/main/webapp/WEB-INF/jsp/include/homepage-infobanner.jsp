@@ -6,7 +6,7 @@
 		<div class="news-box">
 			<ul>
 				<c:forEach var="article" items="${news}" end="6">
-					<li><a href="<c:url value='/navigation/article-detail.html?id=${article.id}&backURL=${pageContext.request.contextPath}${requestScope.javax.servlet.forward.servlet_path}'/>">${article['title']}</a></li>
+					<li><a href="<c:url value='/navigation/article-detail.html?id=${article.id}'/>">${article['title']}</a></li>
 				</c:forEach>
 			</ul>
 			<a href="<c:url value='/navigation/article-list.html?type=1'/>" class="more"> 更多</a>

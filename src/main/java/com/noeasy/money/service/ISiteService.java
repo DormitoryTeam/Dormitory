@@ -46,7 +46,7 @@ public interface ISiteService {
 
 
 
-    List<Map<String, Object>> queryActiveArticleTitles(String pType);
+    List<RichTextBean> queryArticleTitlesWithStatus(String pType, String pStatus);
 
 
 
@@ -62,7 +62,7 @@ public interface ISiteService {
 
 
 
-    List<Map<String, Object>> queryArticleTitles(String pType);
+    List<RichTextBean> queryArticleTitles(String pType);
 
 
 

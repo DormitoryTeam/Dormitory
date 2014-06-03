@@ -1053,6 +1053,20 @@ a.disabled {
 	font-size: 18px;
 }
 
+.news-info .news-details .news-footer{
+	text-align: center;
+}
+
+.news-info .news-details .news-footer img{
+	width: 500px;
+}
+
+.news-info .news-details .news-footer a.btn-style{
+	float: none;
+	margin: 25px auto;
+	font-size: 18px;
+}
+
 .news-info .bread-crumb{
 	border-bottom: 1px solid #c3c3c3;
 	padding-bottom: 30px;

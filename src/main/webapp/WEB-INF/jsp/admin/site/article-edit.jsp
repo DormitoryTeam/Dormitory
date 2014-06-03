@@ -27,14 +27,15 @@
 		
 		<div class="container">
 			<div class="hero-unit">
-				文章标题&nbsp;<input type="text" name="title" value="${article['title']}" /><br />
-				文章类型&nbsp;<select name="type">
+				文章标题:&nbsp;<input type="text" name="title" value="${article['title']}" /><br />
+				文章类型:&nbsp;<select name="type">
 					<option value="1" ${article['type'] eq 1 ? 'selected' : ''}>新闻</option>
 					<option value="2" ${article['type'] eq 2 ? 'selected' : ''}>去旅行</option>
 				</select><br />
-				文章状态&nbsp;<select name="status">
+				文章状态:&nbsp;<select name="status">
 					<option value="0" ${0 eq article['status'] ? 'selected' : ''}>不展示</option>
 					<option value="1" ${1 eq article['status'] ? 'selected' : ''}>展示</option>
+					<option value="2" ${2 eq article['status'] ? 'selected' : ''}>展示(热门)</option>
 				</select> 
 				<hr />
 				<div id="alerts"></div>
@@ -89,22 +90,23 @@
 		
 				<div id="editor">${article['textBody']}</div>
 				
-				文章封面:
-				<input type="hidden" name="coverPath" value="${article['coverPath']}" />
-				<input type="file" name="cover" />
+				<p>文章封面:</p>
 				<c:if test="${not empty article['coverPath']}">
 					<img style="height:160px;" src="<c:url value='/upload/images/articleCover/${article.id}/${article.coverPath}'/>" />
-					<input id="ckbRemoveCover" type="checkbox" value="删除封面" />
-					Remove cover:
+					<input id="ckbRemoveCover" type="checkbox" value="删除封面" alt="删除封面" />
+					删除封面
 					<input id="hidRemoveCover" type="hidden" name="removeCover" value="false" />
 				</c:if>
+				<br />
+				<input type="file" name="cover" />
+				<input type="hidden" name="coverPath" value="${article['coverPath']}" />
 
+				<br />
+				<br />
 				<br />
 				
 				<input id="btnSubmit" type="button" value="提交" />
-				<c:if test="${not empty backURL}">
-					&nbsp;<a href="${backURL}">Back</a>
-				</c:if>
+				<input type="button" value="返回" onclick='window.location.href="<c:url value='/admin/site/article-list.html'/>";return false;' />
 			</div>
 		</div>
 	</form>

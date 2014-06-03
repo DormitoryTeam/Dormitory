@@ -70,8 +70,8 @@
 		where id = #{id}
 	</update>
 
-	<select id="selectArticleTitle" resultType="hashmap" parameterType="java.util.Map">
-		select id, title, cover_path coverPath, create_time createTime from article
+	<select id="selectArticleTitle" resultType="com.noeasy.money.model.RichTextBean" parameterType="java.util.Map">
+		select id, user_id userId, title, text textBodyByte, create_time createTime, `type` type, cover_path coverPath, status from article
 		where 1=1
 		<if test="type != null">
 			and type = #{type}
