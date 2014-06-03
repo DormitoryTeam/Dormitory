@@ -160,7 +160,7 @@ public class NavigationController {
             article = siteService.queryArticle(id);
             model.addAttribute("backURL", MessageFormat.format("{0}?type={1}", backURL, article.getType()));
         }
-        List<RichTextBean> hotArticles = siteService.queryArticleTitlesWithStatus(null, "2");
+        List<RichTextBean> hotArticles = siteService.queryArticleTitlesWithStatus(null, "2", "0");
         model.addAttribute("article", article);
         model.addAttribute("hotArticles", hotArticles);
         return "navigation/articledetail";
@@ -172,9 +172,9 @@ public class NavigationController {
     public String toArticleList(final HttpServletRequest request, final HttpServletResponse response,
             final Model model, final String type, final String backURL) {
         model.addAttribute("backURL", backURL);
-        List<RichTextBean> articleTitles = siteService.queryArticleTitles(type);
+        List<RichTextBean> articleTitles = siteService.queryArticleTitlesWithStatus(type, null, "0");
         model.addAttribute("articleTitles", articleTitles);
-        List<RichTextBean> hotArticles = siteService.queryArticleTitlesWithStatus(null, "2");
+        List<RichTextBean> hotArticles = siteService.queryArticleTitlesWithStatus(null, "2", "0");
         model.addAttribute("hotArticles", hotArticles);
         return "navigation/articlelist";
     }
@@ -205,8 +205,8 @@ public class NavigationController {
 
             List<Map<String, Object>> slides = siteService.querySlides();
 
-            List<RichTextBean> news = siteService.queryArticleTitles(RichTextBean.NEWS);
-            List<RichTextBean> goTravles = siteService.queryArticleTitles(RichTextBean.GO_TRAVEL);
+            List<RichTextBean> news = siteService.queryArticleTitlesWithStatus(RichTextBean.NEWS, null, "0");
+            List<RichTextBean> goTravles = siteService.queryArticleTitlesWithStatus(RichTextBean.GO_TRAVEL, null, "0");
             for (RichTextBean article : goTravles) {
                 article.setTextBody(HtmlRegexpUtil.filterHtml(article.getTextBody()));
             }

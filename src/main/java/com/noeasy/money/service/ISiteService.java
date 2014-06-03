@@ -46,10 +46,6 @@ public interface ISiteService {
 
 
 
-    List<RichTextBean> queryArticleTitlesWithStatus(String pType, String pStatus);
-
-
-
     List<Map<String, Object>> queryAllSlides();
 
 
@@ -63,6 +59,10 @@ public interface ISiteService {
 
 
     List<RichTextBean> queryArticleTitles(String pType);
+
+
+
+    List<RichTextBean> queryArticleTitlesWithStatus(String pType, String pStatus, String pExcludeStatus);
 
 
 

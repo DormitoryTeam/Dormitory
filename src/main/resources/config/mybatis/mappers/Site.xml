@@ -79,6 +79,9 @@
 		<if test="status != null">
 			and status = #{status}
 		</if>
+		<if test="excludeStatus != null">
+			and status != #{excludeStatus}
+		</if>
 		order by create_time desc
 	</select>
 	

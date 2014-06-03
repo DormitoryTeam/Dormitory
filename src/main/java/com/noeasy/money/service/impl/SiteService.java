@@ -98,18 +98,19 @@ public class SiteService implements ISiteService {
      */
     @Override
     public List<RichTextBean> queryArticleTitles(final String pType) {
-        return siteRepository.queryArticleTitleWithStatus(pType, null);
+        return siteRepository.queryArticleTitleWithStatus(pType, null, null);
     }
 
 
 
     /**
      * @see com.noeasy.money.service.ISiteService#queryArticleTitlesWithStatus(java.lang.String,
-     *      String)
+     *      String, String)
      */
     @Override
-    public List<RichTextBean> queryArticleTitlesWithStatus(final String pType, final String pStatus) {
-        return siteRepository.queryArticleTitleWithStatus(pType, pStatus);
+    public List<RichTextBean> queryArticleTitlesWithStatus(final String pType, final String pStatus,
+            final String pExcludeStatus) {
+        return siteRepository.queryArticleTitleWithStatus(pType, pStatus, pExcludeStatus);
     }
 
 
