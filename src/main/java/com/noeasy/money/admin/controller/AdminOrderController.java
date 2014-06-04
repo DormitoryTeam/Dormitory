@@ -358,14 +358,19 @@ public class AdminOrderController {
     @RequestMapping(value = "/orderList.html")
     public String getOrderList(final ModelMap model, final HttpServletRequest request,
             final HttpServletResponse response, final String orderType, final String orderId, final String login,
-            final String dateFrom, final String dateTo, final String currentPage, final String pageSize) {
+            final String userToken, final String dateFrom, final String dateTo, final String currentPage,
+            final String pageSize) {
         OrderType type = OrderType.getType(orderType);// "D" means dormitory
         OrderSearchBean searchBean = new OrderSearchBean();
         searchBean.setOrderType(type);
-        if (StringUtils.isNotBlank(login)) {
+        if (StringUtils.isNotBlank(login) || StringUtils.isNotBlank(userToken)) {
             UserBean user = new UserBean();
-            user.setLogin(login);
-            ;
+            if (StringUtils.isNotBlank(login)) {
+                user.setLogin(login);
+            }
+            if (StringUtils.isNotBlank(userToken)) {
+                user.setToken(userToken);
+            }
             searchBean.setUser(user);
         }
 
@@ -404,6 +409,7 @@ public class AdminOrderController {
         model.addAttribute("type", orderType);
         model.addAttribute("orderId", orderId);
         model.addAttribute("login", login);
+        model.addAttribute("userToken", userToken);
         model.addAttribute("dateFrom", dateFrom);
         model.addAttribute("dateTo", dateTo);
         return "admin/order/orderList";

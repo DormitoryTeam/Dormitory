@@ -24,52 +24,7 @@ public class UserBean extends BaseBean {
 
     private String         code;
 
-
-    public String getCode() {
-        return code;
-    }
-
-
-
-    public void setCode(String pCode) {
-        code = pCode;
-    }
-
-
-
-    public Integer getId() {
-        return id;
-    }
-
-
-
-    public void setId(Integer pId) {
-        id = pId;
-    }
-
-
-
-    public String getLogin() {
-        return login;
-    }
-
-
-
-    public void setLogin(String pLogin) {
-        login = pLogin;
-    }
-
-
-
-    public String getPassword() {
-        return password;
-    }
-
-
-
-    public void setPassword(String pPassword) {
-        password = pPassword;
-    }
+    private String         token;
 
 
 
@@ -79,44 +34,8 @@ public class UserBean extends BaseBean {
 
 
 
-    public void setAlias(String pAlias) {
-        alias = pAlias;
-    }
-
-
-
-    public String getResetPasswordSign() {
-        return resetPasswordSign;
-    }
-
-
-
-    public void setResetPasswordSign(String pResetPasswordSign) {
-        resetPasswordSign = pResetPasswordSign;
-    }
-
-
-
-    public UserInfoBean getInfo() {
-        return info;
-    }
-
-
-
-    public void setInfo(UserInfoBean pInfo) {
-        info = pInfo;
-    }
-
-
-
-    public UserInfoBean getGuaranteeInfo() {
-        return guaranteeInfo;
-    }
-
-
-
-    public void setGuaranteeInfo(UserInfoBean pGuaranteeInfo) {
-        guaranteeInfo = pGuaranteeInfo;
+    public String getCode() {
+        return code;
     }
 
 
@@ -127,20 +46,52 @@ public class UserBean extends BaseBean {
 
 
 
-    public void setContactPersonInfo(UserInfoBean pContactPersonInfo) {
-        contactPersonInfo = pContactPersonInfo;
-    }
-
-
-
     public String getEmail() {
         return email;
     }
 
 
 
-    public void setEmail(String pEmail) {
-        email = pEmail;
+    public UserInfoBean getGuaranteeInfo() {
+        return guaranteeInfo;
+    }
+
+
+
+    public Integer getId() {
+        return id;
+    }
+
+
+
+    public UserInfoBean getInfo() {
+        return info;
+    }
+
+
+
+    public String getLogin() {
+        return login;
+    }
+
+
+
+    public String getNewCode() {
+        String idStr = getId().toString();
+        String result = getCode().substring(0, 10 - idStr.length()) + idStr;
+        result = result.replace("0", "x");
+        result = result.replace("o", "x");
+        result = result.replace("O", "x");
+        result = result.replace("1", "X");
+        result = result.replace("l", "X");
+        result = result.replace("L", "X");
+        return result;
+    }
+
+
+
+    public String getPassword() {
+        return password;
     }
 
 
@@ -151,23 +102,96 @@ public class UserBean extends BaseBean {
 
 
 
-    public void setPrefer(UserPreferBean pPrefer) {
+    public String getResetPasswordSign() {
+        return resetPasswordSign;
+    }
+
+
+
+    /**
+     * @return the token
+     */
+    public String getToken() {
+        return token;
+    }
+
+
+
+    public void setAlias(final String pAlias) {
+        alias = pAlias;
+    }
+
+
+
+    public void setCode(final String pCode) {
+        code = pCode;
+    }
+
+
+
+    public void setContactPersonInfo(final UserInfoBean pContactPersonInfo) {
+        contactPersonInfo = pContactPersonInfo;
+    }
+
+
+
+    public void setEmail(final String pEmail) {
+        email = pEmail;
+    }
+
+
+
+    public void setGuaranteeInfo(final UserInfoBean pGuaranteeInfo) {
+        guaranteeInfo = pGuaranteeInfo;
+    }
+
+
+
+    public void setId(final Integer pId) {
+        id = pId;
+    }
+
+
+
+    public void setInfo(final UserInfoBean pInfo) {
+        info = pInfo;
+    }
+
+
+
+    public void setLogin(final String pLogin) {
+        login = pLogin;
+    }
+
+
+
+    public void setPassword(final String pPassword) {
+        password = pPassword;
+    }
+
+
+
+    public void setPrefer(final UserPreferBean pPrefer) {
         prefer = pPrefer;
     }
 
-//    public void setNewCode() {
-//        
-//    }
-    
-    public String getNewCode() {
-        String idStr = getId().toString();
-        String result = getCode().substring(0,10 - idStr.length()) + idStr;
-        result = result.replace("0", "x");
-        result = result.replace("o", "x");
-        result = result.replace("O", "x");
-        result = result.replace("1", "X");
-        result = result.replace("l", "X");
-        result = result.replace("L", "X");
-        return result;
+
+
+    public void setResetPasswordSign(final String pResetPasswordSign) {
+        resetPasswordSign = pResetPasswordSign;
+    }
+
+
+
+    // public void setNewCode() {
+    //
+    // }
+
+    /**
+     * @param pToken
+     *            the token to set
+     */
+    public void setToken(final String pToken) {
+        token = pToken;
     }
 }

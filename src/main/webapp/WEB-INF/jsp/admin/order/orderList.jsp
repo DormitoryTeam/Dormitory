@@ -2,9 +2,10 @@
 ${message}
 <br />
 <form action="<c:url value='/admin/order/orderList.html'/>" method="GET">
-订单类型: <input type="text" name="orderType" value="${type}"/><br>
+<input type="hidden" name="orderType" value="${type}"/><br>
 订单编号: <input type="text" name="orderId" value="${orderId}"/><br>
 用户名: &nbsp;&nbsp;&nbsp;<input type="text" name="login" value="${login}"/><br>
+用户识别码: &nbsp;&nbsp;&nbsp;<input type="text" name="userToken" value="${userToken}"/><br>
 起始时间: <input type="text" name="dateFrom" value="${dateFrom}"/><br>
 结束时间: <input type="text" name="dateTo" value="${dateTo}"/><br>
 <input type="submit" value="查询"/>
