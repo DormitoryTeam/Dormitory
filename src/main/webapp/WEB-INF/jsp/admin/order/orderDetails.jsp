@@ -1,7 +1,7 @@
 <%@ taglib uri="/dormitory" prefix="dor"%>
 ${message}
 
-订单编号:&nbsp;&nbsp;<dor:getOrderToken orderId="${order.id}" /><br>
+订单编号:&nbsp;&nbsp;${order.id}<br>
 订单价格:&nbsp;&nbsp;${order.amount}<br>
 当前状态:&nbsp;&nbsp;${order.orderStatus}<br>
 用户:&nbsp;&nbsp;${order.belongsTo.login}<br>

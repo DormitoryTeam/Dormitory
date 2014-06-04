@@ -24,7 +24,7 @@ public class OrderTokenUtil {
             return "";
         }
 
-        String orderId = orderToken;
+        String orderId = orderToken.substring(0, 2);
         orderId = orderId.replaceAll("^0*(?=[1,9])", "");
 
         return orderId;
@@ -32,12 +32,12 @@ public class OrderTokenUtil {
 
 
 
-    public static String getOrderToken(final String orderId) {
+    public static String getOrderToken(final String orderId, final String prefix) {
         if (StringUtils.isEmpty(orderId)) {
             return "0";
         }
 
-        StringBuffer orderTokenBuffer = new StringBuffer();
+        StringBuffer orderTokenBuffer = new StringBuffer(prefix);
         for (int i = 0; i < ORDER_TOKEN_LENGTH - orderId.length(); i++) {
             orderTokenBuffer.append(PREFIX_ZERO);
         }

@@ -23,7 +23,7 @@ ${message}
 	</tr>
 	<c:forEach var="order" items="${orders}" varStatus="i">
 	<tr>
-		<td><a href="<c:url value='/admin/order/editDormitoryOrder.html?orderId=${order.id}'/>"><dor:getOrderToken orderId="${order.id}" /></a></td>
+		<td><a href="<c:url value='/admin/order/editDormitoryOrder.html?orderId=${order.id}'/>"><dor:getOrderToken orderId="${order.id}" prefix="AC"  /></a></td>
 		<td>${order.lineItems[0].dormitory.name}</td>
 		<td>${order.amount}</td>
 		<td>${order.user.login}</td>
@@ -52,7 +52,7 @@ ${message}
 	</tr>
 	<c:forEach var="order" items="${orders}" varStatus="i">
 	<tr>
-		<td><a href="<c:url value='/admin/order/editPickupOrder.html?orderId=${order.id}&orderType=${type}'/>"><dor:getOrderToken orderId="${order.id}" /></a></td>
+		<td><a href="<c:url value='/admin/order/editPickupOrder.html?orderId=${order.id}&orderType=${type}'/>"><dor:getOrderToken orderId="${order.id}" prefix="PU" /></a></td>
 		<td>${order.lineItems[0].flightNum}</td>
 		<td>${order.amount}</td>
 		<td>${order.user.login}</td>
