@@ -30,6 +30,11 @@
 			update_date = now()
 		WHERE id = #{id}
 	</update>
+	
+	<update id="updateUserToken" parameterType="com.noeasy.money.model.UserBean">
+		UPDATE users SET token = #{newCode}
+		WHERE id = #{id}
+	</update>
 
 
 	<update id="resetPassword" parameterType="com.noeasy.money.model.UserBean">
