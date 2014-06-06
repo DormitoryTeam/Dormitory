@@ -43,8 +43,10 @@
 						<img src="<c:url value='/upload/images/articleCover/${article.id}/${article.coverPath}' />" />
 					</div>
 					<div class="news-info">
-						<h2><a href="<c:url value='/navigation/article-detail.html?id=${article.id}'/>">${article['title']}</a></h2>
-						<p style="height: 150px; overflow: hidden; text-overflow:ellipsis">&nbsp;&nbsp;&nbsp;&nbsp;${article.textBody}...</p>
+						<h2 style="width: 280px; overflow: hidden; text-overflow: ellipsis; display: block; white-space: nowrap;">
+							<a href="<c:url value='/navigation/article-detail.html?id=${article.id}'/>">${article['title']}</a></h2>
+						<p style="height: 168px; width: 300px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 8; -webkit-box-orient: vertical; font-size: 14px;">
+							&nbsp;&nbsp;&nbsp;&nbsp;${article.textBody}</p>
 					</div>
 				</li>
 			</c:forEach>

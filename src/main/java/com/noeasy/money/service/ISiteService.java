@@ -82,7 +82,7 @@ public interface ISiteService {
 
 
 
-    boolean saveSlide(String pDescription, String pPath, Integer pIndex, Integer pStatus);
+    boolean saveSlide(String pURL, String pPath, Integer pIndex, Integer pStatus);
 
 
 

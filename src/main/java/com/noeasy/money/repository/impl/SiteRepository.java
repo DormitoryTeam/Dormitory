@@ -149,10 +149,10 @@ public class SiteRepository extends BaseRepository implements ISiteRepository {
      *      java.lang.String, java.lang.String, java.lang.String, String)
      */
     @Override
-    public boolean saveSlide(final String pDescription, final String pPath, final Integer pIndex,
-            final Integer pStatus, final String pType) {
+    public boolean saveSlide(final String pURL, final String pPath, final Integer pIndex, final Integer pStatus,
+            final String pType) {
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("desc", pDescription);
+        params.put("redirecturl", pURL);
         params.put("path", pPath);
         params.put("index", pIndex);
         params.put("status", pStatus);

@@ -90,7 +90,7 @@ public class AdminSlideController {
 
     @RequestMapping("/slide-save" + Constants.URL_SUFFIX)
     public String slideSave(final HttpServletRequest request, final HttpServletResponse response, final Model model,
-            final String[] imageNames, final int[] imageIndexes, final int[] imageShow) {
+            final String[] imageNames, final int[] imageIndexes, final int[] imageShow, final String[] urls) {
         if (imageNames != null && imageIndexes != null && imageShow != null) {
             if (imageNames.length == imageIndexes.length && imageNames.length == imageShow.length) {
                 siteService.deleteSlide();
@@ -98,7 +98,7 @@ public class AdminSlideController {
                     if (imageShow[i] == 0) {
                         imageIndexes[i] = Integer.MAX_VALUE;
                     }
-                    siteService.saveSlide("-", imageNames[i], imageIndexes[i], imageShow[i]);
+                    siteService.saveSlide(urls[i], imageNames[i], imageIndexes[i], imageShow[i]);
                 }
                 model.addAttribute("result", true);
 

@@ -143,9 +143,16 @@
 				<c:if test="${not empty slides}">
 					<c:forEach var="img" items="${slides}">
 						<div class="sliderItem">
-							<a href="<c:url value='/upload/images/slide/${img.path}' />">
-								<img src="<c:url value='/upload/images/slide/${img.path}'/>" alt="${empty img['desc'] ? img['path'] : img['desc']}" />
-							</a>
+							<c:if test="${not empty img.redirecturl}">
+								<a href="${img.redirecturl}">
+									<img src="<c:url value='/upload/images/slide/${img.path}'/>" alt="${empty img['desc'] ? img['path'] : img['desc']}" />
+								</a>
+							</c:if>
+							<c:if test="${empty img.redirecturl}">
+								<a href="<c:url value='/upload/images/slide/${img.path}' />">
+									<img src="<c:url value='/upload/images/slide/${img.path}'/>" alt="${empty img['desc'] ? img['path'] : img['desc']}" />
+								</a>
+							</c:if>
 							<p class="text"></p>
 						</div>
 					</c:forEach>
