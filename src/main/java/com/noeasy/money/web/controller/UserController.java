@@ -155,12 +155,6 @@ public class UserController {
         paramMap.put("login", login);
         paramMap.put("password", password);
 
-        String from = EmailUtils.getServiceEmail();
-        String fromAlias = EmailUtils.getServiceAlias();
-        String subject = "注册成功-留学生活网-您身边的留学生活专家";
-        String template = EmailUtils.generateTemplateEmail("template1.html", paramMap);
-        boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, login, login, subject, template);
-
         if (StringUtils.isBlank(login)) {
             resultMap.put("message", "邮箱不能为空。");
         } else if (StringUtils.isBlank(password)) {
@@ -172,6 +166,11 @@ public class UserController {
                 resultMap.put("message", "该邮箱已存在。");
             } else {
                 ServletUtils.setUser2Session(request, user);
+                String from = EmailUtils.getServiceEmail();
+                String fromAlias = EmailUtils.getServiceAlias();
+                String subject = "注册成功-留学生活网-您身边的留学生活专家";
+                String template = EmailUtils.generateTemplateEmail("template1.html", paramMap);
+                boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, login, login, subject, template);
                 resultMap.put("login", user.getLogin());
                 resultMap.put("result", true);
             }

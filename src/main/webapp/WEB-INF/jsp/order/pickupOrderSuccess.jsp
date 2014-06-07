@@ -13,8 +13,9 @@
 				<div class="nav-box">
 					<ul class="reservation-nav">
 						<li class="icon-plane"><a href="#">接机预定</a></li>
+						<!-- 
 						<li class="icon-old"><a href="#">往年回顾</a></li>
-						<li class="icon-air-compare"><a href="#">航班对比</a></li>
+						<li class="icon-air-compare"><a href="#">航班对比</a></li>-->
 					</ul>
 					<div class="air-tip">
 						<!--
@@ -44,11 +45,13 @@
 							<li class="ui-state-default ui-corner-top ui-tabs-active ui-state-active" role="tab" tabindex="0" aria-controls="tabs-personal" aria-labelledby="ui-id-1" aria-selected="true"><a href="#tabs-personal" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-1">个人信息</a></li>
 							<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-hobby" aria-labelledby="ui-id-2" aria-selected="false"><a href="#tabs-hobby" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-2">航班信息</a></li>
 							<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-security" aria-labelledby="ui-id-3" aria-selected="false"><a href="#tabs-security" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-3">送达地址</a></li>
-							<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-additional" aria-labelledby="ui-id-4" aria-selected="false"><a href="#tabs-additional" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-4">补充信息</a></li>
+							<li style="background: #ff8a00;" class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-additional" aria-labelledby="ui-id-4" aria-selected="false"><a href="#tabs-additional" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-4">补充信息</a></li>
 						</ul>
 						<div id="tabs-personal" aria-labelledby="ui-id-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" aria-expanded="true" aria-hidden="false">
 							<div class="row text-center"> 
-								<br><br><br><br><br><h2 style="color: #FF8A00;">下单成功&nbsp;请查收邮件</h2><br><br><br><br><br>
+								<br><br><br><br><br><h1 style="color: #FF8A00;">下单成功</h1><br>
+								<h2 style="color: #FF8A00;">请查收邮件, 如果未收到邮件请查看垃圾邮箱</h2>
+								<br><br><br>
 								<a style="color:#AE0000; font-weight: bold; font-size: 20px;" href="<c:url value="/user/orderList.html"/>" >返回我的订单</a>
 								</div>
 						</div>

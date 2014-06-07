@@ -276,7 +276,7 @@ public class OrderController {
         PickupLineItem item = getPickupItemFromSesssion(pRequest);
         String takeOffDateStr = pRequest.getParameter("takeOffDate");
         if (StringUtils.isNotBlank(takeOffDateStr)) {
-            item.setTakeOffDate(DateUtils.stringToDate(takeOffDateStr));
+            item.setTakeOffDate(DateUtils.stringToDate(takeOffDateStr, "yyyy-MM-dd HH:mm"));
         }
         item.setTakeOffCity(pRequest.getParameter("takeOffCity"));
         String pickupDateStr = pRequest.getParameter("pickupDate");
@@ -531,7 +531,7 @@ public class OrderController {
                 paramMap.put("login", email);
                 paramMap.put("password", password);
 
-                String from = EmailUtils.getServiceEmail();
+                String from = "enquiries@liuxuelife.com";
                 String fromAlias = EmailUtils.getServiceAlias();
                 String subject = "注册成功-留学生活网-您身边的留学生活专家";
                 String template = EmailUtils.generateTemplateEmail("template1.html", paramMap);
@@ -728,6 +728,7 @@ public class OrderController {
                 step = Integer.valueOf(maxStep);
             }
         }
+        model.addAttribute("step", step);
         maintainsModel(request, model);
         if (ServletUtils.isGet(request)) {
             switch (step) {
@@ -746,6 +747,7 @@ public class OrderController {
             if (OrderType.PICKUP == order.getOrderType()) {
                 model.addAttribute("item", getPickupItemFromSesssion(request));
             }
+            model.addAttribute("step", step);
             return forwrdURLs[step];
         } else {
             OrderBean order = ServletUtils.getOrderFromSession(request);
@@ -768,7 +770,7 @@ public class OrderController {
                         String email = order.getOrderContact().getBelongsToInfo().getEmail();
                         paramMap.put("login", email);
                         paramMap.put("password", order.getBelongsTo().getPassword());
-                        String from = EmailUtils.getServiceEmail();
+                        String from = "enquiries@liuxuelife.com";
                         String fromAlias = EmailUtils.getServiceAlias();
                         String subject = "请完善您的个人信息-留学生活网-您身边的留学生活专家";
                         String template = EmailUtils.generateTemplateEmail("template1_1.html", paramMap);
@@ -779,6 +781,7 @@ public class OrderController {
                         }
                     }
                 }
+                model.addAttribute("step", step);
                 return forwrdURLs[step];
             } else {
                 maintainSessionOrder(request, step);
@@ -789,6 +792,7 @@ public class OrderController {
                         return "order/pickupOrderSuccess";
                     }
                 }
+                model.addAttribute("step", step + 1);
                 return forwrdURLs[step + 1];
             }
         }
@@ -843,7 +847,10 @@ public class OrderController {
 
         paramMap.put("orderId", OrderTokenUtil.getOrderToken(order.getId().toString()));
         paramMap.put("userName", EmailUtils.getStringValue(userInfo.getLastName()) + " " + EmailUtils.getStringValue(userInfo.getName()));
-        paramMap.put("userToken", EmailUtils.getStringValue(order.getBelongsTo().getNewCode()));
+        UserBean user = userService.findUserById(order.getBelongsTo().getId());
+        paramMap.put("userToken", EmailUtils.getStringValue(user.getNewCode()));
+        paramMap.put("login",EmailUtils.getStringValue(user.getLogin()));
+        paramMap.put("password",EmailUtils.getStringValue(user.getPassword()));
 
         paramMap.put("address", EmailUtils.getStringValue(userInfo.getAddress()));
         paramMap.put("phone", "???");
@@ -856,7 +863,7 @@ public class OrderController {
         paramMap.put("flightNum", EmailUtils.getStringValue(pickupLineItem.getFlightNum()));
         paramMap.put("arrivalAirport", EmailUtils.getStringValue(pickupLineItem.getArrivalAirport()));
         if (null != pickupLineItem.getTakeOffDate()) {
-            paramMap.put("startTime", DateUtils.dateToString(pickupLineItem.getTakeOffDate()));
+            paramMap.put("startTime", DateUtils.dateToString(pickupLineItem.getTakeOffDate(), "yyyy-MM-dd HH:mm"));
         } else {
             paramMap.put("startTime", "");
         }
@@ -864,7 +871,7 @@ public class OrderController {
         paramMap.put("transferTime", "???");
         if (null != pickupLineItem.getPickupDate()) {
             paramMap.put("arriveTime",
-                    DateUtils.dateToString(pickupLineItem.getPickupDate(), DateUtils.DATE_TIME_FORAMT_RULE));
+                    DateUtils.dateToString(pickupLineItem.getPickupDate(), "yyyy-MM-dd HH:mm"));
         } else {
             paramMap.put("arriveTime","");
         }
@@ -875,24 +882,26 @@ public class OrderController {
             luggage += pickupLineItem.getLuggageSize1() + "寸X" + pickupLineItem.getLuggageAmount1() + "个";
         }
         if (null != pickupLineItem.getLuggageSize2()) {
-            luggage += pickupLineItem.getLuggageSize2() + "寸X" + pickupLineItem.getLuggageAmount2() + "个";
+            luggage += "; " + pickupLineItem.getLuggageSize2() + "寸X" + pickupLineItem.getLuggageAmount2() + "个";
         }
         if (null != pickupLineItem.getLuggageSize3()) {
-            luggage += pickupLineItem.getLuggageSize3() + "寸X" + pickupLineItem.getLuggageAmount3() + "个";
+            luggage += "; " + pickupLineItem.getLuggageSize3() + "寸X" + pickupLineItem.getLuggageAmount3() + "个";
         }
 
         if (null != pickupLineItem.getLuggageSize4()) {
-            luggage += pickupLineItem.getLuggageSize4() + "寸X" + pickupLineItem.getLuggageAmount4() + "个";
+            luggage += "; " + pickupLineItem.getLuggageSize4() + "寸X" + pickupLineItem.getLuggageAmount4() + "个";
         }
 
         if (null != pickupLineItem.getLuggageSize5()) {
-            luggage += pickupLineItem.getLuggageSize5() + "寸X" + pickupLineItem.getLuggageAmount5() + "个";
+            luggage += "; " + pickupLineItem.getLuggageSize5() + "寸X" + pickupLineItem.getLuggageAmount5() + "个";
         }
 
         paramMap.put("comment", luggage);
         paramMap.put("city", pickupLineItem.getArrivalCity());
+        paramMap.put("takeoffCity", pickupLineItem.getTakeOffCity());
+        paramMap.put("destinationCity", pickupLineItem.getPickup2City());
 
-        String from = EmailUtils.getServiceEmail();
+        String from = "pickup@liuxuelife.com";
         String fromAlias = EmailUtils.getServiceAlias();
         String subject = "您的接机订单已提交-留学生活网-您身边的留学生活专家";
         String template = EmailUtils.generateTemplateEmail("template10.html", paramMap);

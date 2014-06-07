@@ -327,7 +327,7 @@ public class AdminOrderController {
 
 
     private void sendPickupOrder(OrderBean order, String operation) {
-        String from = EmailUtils.getServiceEmail();
+        String from = "pickup@liuxuelife.com";
         String fromAlias = EmailUtils.getServiceAlias();
         String login = "";
         if (null != order && null != order.getOrderContact()
@@ -377,7 +377,7 @@ public class AdminOrderController {
             paramMap.put("gender", gender);
             if (null != item) {
                 if (null != item.getTakeOffDate()) {
-                    paramMap.put("takeoffTime", DateUtils.dateToString(item.getTakeOffDate()));
+                    paramMap.put("takeoffTime", DateUtils.dateToString(item.getTakeOffDate(), "yyyy-MM-dd HH:mm"));
                 } else {
                     paramMap.put("takeoffTime", "");
                 }
@@ -403,11 +403,16 @@ public class AdminOrderController {
 
                 paramMap.put("luggage", luggage);
 
-                paramMap.put("fromCity", EmailUtils.getStringValue( item.getTakeOffCity()));
-                paramMap.put("fromAirport", "");
-                paramMap.put("toCity", EmailUtils.getStringValue( item.getArrivalCity()));
+                paramMap.put("landingCity", EmailUtils.getStringValue(item.getArrivalCity()));
+                paramMap.put("landingAirport", EmailUtils.getStringValue(item.getArrivalAirport()));
+                paramMap.put("pickup2City", EmailUtils.getStringValue(item.getPickup2City()));
                 paramMap.put("dormitoryAddress", EmailUtils.getStringValue(item.getPickup2Address()));
                 paramMap.put("postcode", EmailUtils.getStringValue(item.getPickup2Postalcode()));
+                paramMap.put("takeoffCity", EmailUtils.getStringValue( item.getTakeOffCity()));
+                paramMap.put("takeoffAirport", "");
+                paramMap.put("toCity", EmailUtils.getStringValue( item.getArrivalCity()));
+                
+                
                 paramMap.put("totalPrice", order.getAmount().toString());
                 paramMap.put("orderStatus", "");
                 paramMap.put("flightNum", item.getFlightNum());

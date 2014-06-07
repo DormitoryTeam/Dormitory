@@ -6,7 +6,7 @@
 		<div class="news-box">
 			<ul>
 				<c:forEach var="article" items="${news}" end="6">
-					<li><a href="<c:url value='/navigation/article-detail.html?id=${article.id}'/>">${article['title']}</a></li>
+					<li><a href="<c:url value='/navigation/article-detail.html?id=${article.id}'/>"><c:if test="${(not empty article['title']) and fn:length(article['title']) > 13}">${fn:substring(article['title'], 0, 13)}...</c:if><c:if test="${(not empty article['title']) and fn:length(article['title']) <= 13}">${article['title']}</c:if></a></li>
 				</c:forEach>
 			</ul>
 			<a href="<c:url value='/navigation/article-list.html?type=1'/>" class="more"> 更多</a>

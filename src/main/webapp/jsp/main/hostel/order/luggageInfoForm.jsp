@@ -15,7 +15,7 @@
 		<li aria-selected="false" aria-labelledby="ui-id-1" aria-controls="tabs-personal" tabindex="-1" role="tab" class="ui-state-default ui-corner-top"><a id="ui-id-1" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="#tabs-personal">个人信息</a></li>
 		<li aria-selected="false" aria-labelledby="ui-id-2" aria-controls="tabs-hobby" tabindex="-1" role="tab" class="ui-state-default ui-corner-top"><a id="ui-id-2" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="#tabs-hobby">航班信息</a></li>
 		<li aria-selected="false" aria-labelledby="ui-id-3" aria-controls="tabs-security" tabindex="-1" role="tab" class="ui-state-default ui-corner-top"><a id="ui-id-3" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="#tabs-security">送达地址</a></li>
-		<li aria-selected="true" aria-labelledby="ui-id-4" aria-controls="tabs-additional" tabindex="0" role="tab" class="ui-state-default ui-corner-top ui-tabs-active ui-state-active"><a id="ui-id-4" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="#tabs-additional">补充信息</a></li>
+		<li style="background: #ff8a00;" aria-selected="true" aria-labelledby="ui-id-4" aria-controls="tabs-additional" tabindex="0" role="tab" class="ui-state-default ui-corner-top ui-tabs-active ui-state-active"><a id="ui-id-4" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="#tabs-additional">补充信息</a></li>
 	</ul>
 	<div aria-hidden="false" aria-expanded="true" style="display: block;" role="tabpanel" class="ui-tabs-panel ui-widget-content ui-corner-bottom" aria-labelledby="ui-id-4" id="tabs-additional">
 		<fieldset>
@@ -25,11 +25,11 @@
 			<dl>
 				<dt>尺寸</dt>
 				<dd>
-					<input type="text" name="luggageSize1" value="${item.luggageSize1}" style="width:100px;"/>&nbsp;（寸）
+					<input type="text" name="luggageSize1" value="${item.luggageSize1}" style="width:100px;" class="validate" errorFieldName="第一排尺寸" />&nbsp;（寸）
 				</dd>
 				<dt class="min">个数</dt>
 				<dd>
-					<input type="text" name="luggageAmount1" value="${item.luggageAmount1}" style="width:100px;"/>&nbsp;（个）
+					<input type="text" name="luggageAmount1" value="${item.luggageAmount1}" style="width:100px;" class="validate" errorFieldName="第一排个数" />&nbsp;（个）
 				</dd>
 			</dl>
 			<dl>

@@ -144,7 +144,11 @@ $(function() {
 		var src = $(this).attr("src");
 		showImgPopup(src);
 	});
-	initialize();
+	try {
+		initialize();
+	} catch(e) {
+	}
+	
 });
 
 function initialize() {

@@ -118,7 +118,8 @@ public class EmailUtils {
 
         HtmlEmail email = new HtmlEmail();
         email.setHostName(hostName);
-        email.setAuthentication(username, password); // 用户名和密码
+        email.setSmtpPort(25);
+        email.setAuthentication(pFrom, password); // 用户名和密码
         email.setCharset(charset); // 设置字符集
         email.setSSL(true); // gmail邮箱必须设置为true
         try {

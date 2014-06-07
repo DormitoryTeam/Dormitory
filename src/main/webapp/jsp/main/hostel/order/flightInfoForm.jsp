@@ -13,7 +13,7 @@
 	</div>
 	<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist">
 		<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-personal" aria-labelledby="ui-id-1" aria-selected="false"><a href="#tabs-personal" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-1">个人信息</a></li>
-		<li class="ui-state-default ui-corner-top ui-tabs-active ui-state-active" role="tab" tabindex="0" aria-controls="tabs-hobby" aria-labelledby="ui-id-2" aria-selected="true"><a href="#tabs-hobby" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-2">航班信息</a></li>
+		<li style="background: #ff8a00;" class="ui-state-default ui-corner-top ui-tabs-active ui-state-active" role="tab" tabindex="0" aria-controls="tabs-hobby" aria-labelledby="ui-id-2" aria-selected="true"><a href="#tabs-hobby" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-2">航班信息</a></li>
 		<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-security" aria-labelledby="ui-id-3" aria-selected="false"><a href="#tabs-security" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-3">送达地址</a></li>
 		<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-additional" aria-labelledby="ui-id-4" aria-selected="false"><a href="#tabs-additional" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-4">补充信息</a></li>
 	</ul>
@@ -21,49 +21,49 @@
 	<div id="tabs-hobby" aria-labelledby="ui-id-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" style="display: block;" aria-expanded="true" aria-hidden="false">
 		<fieldset>
 			<dl>
-				<dt>起飞日期</dt>
+				<dt>起飞时间</dt>
 				<dd>
-					<input type="text" class="datepicker" name="takeOffDate" value="<fmt:formatDate value='${item.takeOffDate}' pattern='yyyy-MM-dd'/>"/>
+					<input style="width:180px;" type="text" class="timepicker validate" errorFieldName="起飞时间" name="takeOffDate" value="<fmt:formatDate value='${item.takeOffDate}' pattern='yyyy-MM-dd HH:mm'/>"/>&nbsp;<span style="color: red;">（请选择准确的起飞时间）</span>
 				</dd>
 			</dl>
 			<dl>
 				<dt class="long">起飞城市</dt>
 				<dd>
-					<input type="text" name="takeOffCity" value="${item.takeOffCity}" class="min"/>
+					<input type="text" name="takeOffCity" errorFieldName="起飞城市" value="${item.takeOffCity}" class="min validate"/>
 				</dd>
 				<dt class="long">抵达城市</dt>
 				<dd>
-					<input type="text" name="arrivalCity" value="${item.arrivalCity}" class="min"/>
+					<input type="text" name="arrivalCity" errorFieldName="抵达城市" value="${item.arrivalCity}" class="min validate"/>
 				</dd>
 			</dl>
 			<dl>
 				<dt>抵达国家</dt>
 				<dd>
-					<input type="text" name="arrivalCountry" value="${item.arrivalCountry}" class="min"/>
+					<input type="text" name="arrivalCountry" errorFieldName="抵达国家" value="${item.arrivalCountry}" class="min validate"/>
 				</dd>
 			</dl>
 			<dl>
 				<dt>抵达机场</dt>
 				<dd>
-					<input type="text" name="arrivalAirport" value="${item.arrivalAirport}"/>
+					<input type="text" name="arrivalAirport" errorFieldName="抵达机场" value="${item.arrivalAirport}"/>
 				</dd>
 			</dl>
 			<dl>
 				<dt>抵达时间</dt>
 				<dd>
-					<input type="text" style="width:180px;" class="timepicker" name="pickupDate" value="<fmt:formatDate value='${item.pickupDate}' pattern='yyyy-MM-dd HH:mm'/>"/>
+					<input type="text" style="width:180px;" class="timepicker validate" errorFieldName="抵达时间" name="pickupDate" value="<fmt:formatDate value='${item.pickupDate}' pattern='yyyy-MM-dd HH:mm'/>"/>&nbsp;<span style="color: red;">（请选择准确的抵达时间）</span>
 				</dd>
 			</dl>
 			<dl>
 				<dt>航空公司</dt>
 				<dd>
-					<input type="text" name="flightCompany" value="${item.flightCompany}"/>
+					<input type="text" name="flightCompany" value="${item.flightCompany}" class="validate" errorFieldName="航空公司"/>
 				</dd>
 			</dl>
 			<dl>
 				<dt>航班号</dt>
 				<dd>
-					<input type="text" name="flightNumber" value="${item.flightNum}" placeholder="xxx转xxx"/>
+					<input type="text" name="flightNumber" value="${item.flightNum}" placeholder="xxx转xxx" class="validate" errorFieldName="航班号"/>
 				</dd>
 			</dl>
 			<dl>

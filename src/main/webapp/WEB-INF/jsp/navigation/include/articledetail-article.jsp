@@ -45,7 +45,6 @@
 			<div class="news-header">
 				<c:if test="${not empty article['coverPath']}">
 					<img src="<c:url value="/upload/images/articleCover/${article['id']}/${article['coverPath']}"/>" />
-					<a href="<c:url value='/navigation/home.html'/>" class="btn-style">返回</a>
 				</c:if>
 			</div>
 			<div class="news-content-text">${article['textBody']}</div>

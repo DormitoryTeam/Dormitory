@@ -193,6 +193,36 @@ require(['config'], function(config) {
 	            time24h: true
             });
             $(".timepicker").attr("readonly",true);
+            $('.jQ-loginbtn').on('click', function() {
+				$(this).acsPopup({
+					popupSrc : $(this).attr("data-popupSrc"),
+					callBack : function() {
+						$("#btnLoginSubmit").unbind('click').bind('click', function(e) {
+							e.preventDefault();
+							$(".errorMessage").html("&nbsp;");
+							$.ajax({
+								type : "POST",
+								dataType : "json",
+								url : ctx + "/user/asynLogin.html",
+								data : {
+									login : $("#iptLogin").val(),
+									password : $("#iptPassword").val()
+								},
+								success : function(data) {
+									if (data.result) {
+										window.location.href = window.location.href + "&login=" + data.login
+									} else {
+										$(".errorMessage").html(data.message);
+									}
+								},
+								error : function(e) {
+									alert(e);
+								}
+							})
+						});
+					}
+				});
+			});
         });
     });
 });

@@ -5,9 +5,9 @@ ${message}
 	<input type="hidden" name="orderId" value="${order.id}" />
 	<hr>
 	<h2>订单基本信息</h2>
-	订单编号:&nbsp;&nbsp;
+	订单编号：&nbsp;&nbsp;
 	<dor:getOrderToken orderId="${order.id}" />
-	<br> 订单价格:&nbsp;&nbsp;${order.amount}<br> 当前状态:&nbsp;&nbsp;
+	<br> 订单价格：&nbsp;&nbsp;${order.amount}<br> 当前状态:&nbsp;&nbsp;
 	<c:choose>
 		<c:when test="${'INITIAL' eq order.orderStatus}">等待用户完成订单</c:when>
 		<c:when test="${'COMMIT' eq order.orderStatus}">已提交,等待审核</c:when>
@@ -17,6 +17,7 @@ ${message}
 		<c:otherwise>已支付，已发送车票邮件</c:otherwise>
 	</c:choose>
 	<br>
+	用户密码：&nbsp;&nbsp;${order.belongsTo.password}
 	<hr>
 	<h2>个人信息</h2>
 	<c:set var="gender" value="${order.orderContact.belongsToInfo.gender}" />

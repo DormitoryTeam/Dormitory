@@ -26,7 +26,9 @@
 							</ul>
 							<div aria-hidden="false" aria-expanded="true" style="display: block;" role="tabpanel" class="ui-tabs-panel ui-widget-content ui-corner-bottom" aria-labelledby="ui-id-5" id="tabs-additional">
 								<div class="row text-center"> 
-								<br><br><br><br><br><h2 style="color: #FF8A00;">下单成功&nbsp;请查收邮件</h2><br><br><br><br><br>
+								<br><br><br><br><br><h1 style="color: #FF8A00;">下单成功</h1><br>
+								<h2 style="color: #FF8A00;">请查收邮件, 如果未收到邮件请查看垃圾邮箱</h2>
+								<br><br><br>
 								<a style="color:#AE0000; font-weight: bold; font-size: 20px;" href="<c:url value="/user/orderList.html?orderType=D"/>" >返回我的订单</a>
 								</div>
 							</div>

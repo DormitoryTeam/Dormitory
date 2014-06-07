@@ -9,6 +9,8 @@
 	<ul class="menu">
 		<li class="parent">
 			<a href="<c:url value="/navigation/home.html"/>">首页</a>
+		</li>
+		<li class="parent">
 		</li>	
 		<li class="parent">
 			<a href="#">特色服务</a>
@@ -49,19 +51,13 @@
 			<a href="<c:url value="/order/dormitory-place-order.html?orderType=pickup"/>">接机预订</a>
 		</li>
 		<li class="parent">
-			<a href="#">24H安全</a>
-		</li>
-		<li>
-			<a href="#">会员卡</a>
-		</li>
-		<li class="parent">
 			<a href="#">特别优惠</a>
 		</li>
 		<li>
-			<a href="#">关注你的城市</a>
-		</li>
-		<li>
 			<a href="#">帮助</a>
+		</li>
+		<li style="color: #fff;">
+			<a href="#" style="font-size:14px;" class="jQ-loginbtn" data-popupsrc="/user/loadLogin.html">登录</a>&nbsp;|&nbsp;<a style="font-size:14px;" href="#" class="jQ-regbtn" data-popupsrc="/user/loadRegister.html">注册</a>
 		</li>
 	</ul>
 </div>

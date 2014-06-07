@@ -14,7 +14,7 @@
 	<ul role="tablist" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
 		<li aria-selected="false" aria-labelledby="ui-id-1" aria-controls="tabs-personal" tabindex="-1" role="tab" class="ui-state-default ui-corner-top"><a id="ui-id-1" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="#tabs-personal">个人信息</a></li>
 		<li aria-selected="false" aria-labelledby="ui-id-2" aria-controls="tabs-hobby" tabindex="-1" role="tab" class="ui-state-default ui-corner-top"><a id="ui-id-2" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="#tabs-hobby">航班信息</a></li>
-		<li aria-selected="true" aria-labelledby="ui-id-3" aria-controls="tabs-security" tabindex="0" role="tab" class="ui-state-default ui-corner-top ui-tabs-active ui-state-active"><a id="ui-id-3" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="#tabs-security">送达地址</a></li>
+		<li style="background: #ff8a00;" aria-selected="true" aria-labelledby="ui-id-3" aria-controls="tabs-security" tabindex="0" role="tab" class="ui-state-default ui-corner-top ui-tabs-active ui-state-active"><a id="ui-id-3" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="#tabs-security">送达地址</a></li>
 		<li aria-selected="false" aria-labelledby="ui-id-4" aria-controls="tabs-additional" tabindex="-1" role="tab" class="ui-state-default ui-corner-top"><a id="ui-id-4" tabindex="-1" role="presentation" class="ui-tabs-anchor" href="#tabs-additional">补充信息</a></li>
 	</ul>
 	
@@ -22,15 +22,15 @@
 	<div aria-hidden="false" aria-expanded="true" style="display: block;" role="tabpanel" class="ui-tabs-panel ui-widget-content ui-corner-bottom" aria-labelledby="ui-id-3" id="tabs-security">
 		<fieldset>
 			<dl>
-				<dt>城市</dt>
+				<dt>送达城市</dt>
 				<dd>
-					<input type="text" name="pickup2City" value="${item.pickup2City}"/> (学生手填)
+					<input type="text" name="pickup2City" value="${item.pickup2City}" class="validate" errorFieldName="送达城市"/> (学生手填)
 				</dd>
 			</dl>
 			<dl>
-				<dt>地址</dt>
+				<dt>送达地址</dt>
 				<dd>
-					<input type="text" name="pickup2Address" value="${item.pickup2Address}" class="larger"/>
+					<input type="text" name="pickup2Address" value="${item.pickup2Address}" class="larger validate" errorFieldName="送达地址"/>
 				</dd>
 			</dl>
 			<dl>
@@ -42,7 +42,7 @@
 			<dl>
 				<dt>邮编</dt>
 				<dd>
-					<input type="text" name="pickup2Postalcode" value="${item.pickup2Postalcode}"/> (若是公寓宿舍请提供其名字)
+					<input type="text" name="pickup2Postalcode" value="${item.pickup2Postalcode}"/> (若是公寓宿舍请提供其邮编)
 				</dd>
 			</dl>
 			<dl>

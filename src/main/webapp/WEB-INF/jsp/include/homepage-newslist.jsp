@@ -40,11 +40,11 @@
 			<c:forEach var="article" items="${goTravles}" end="2">
 				<li class="news-itme">
 					<div class="news-img pull-left">
-						<img src="<c:url value='/upload/images/articleCover/${article.id}/${article.coverPath}' />" />
+						<a href="<c:url value='/navigation/article-detail.html?id=${article.id}'/>"><img src="<c:url value='/upload/images/articleCover/${article.id}/${article.coverPath}' />" /></a>
 					</div>
 					<div class="news-info">
-						<h2><a href="<c:url value='/navigation/article-detail.html?id=${article.id}'/>">${article['title']}</a></h2>
-						<p style="height: 150px; overflow: hidden; text-overflow:ellipsis">&nbsp;&nbsp;&nbsp;&nbsp;${article.textBody}...</p>
+						<h2><a href="<c:url value='/navigation/article-detail.html?id=${article.id}'/>"><c:if test="${(not empty article['title']) and fn:length(article['title']) > 15}">${fn:substring(article['title'], 0, 15)}...</c:if><c:if test="${(not empty article['title']) and fn:length(article['title']) <= 15}">${article['title']}</c:if></a></h2>
+						<p style="height: 180px; overflow: hidden; text-overflow:ellipsis; font-size:15px;">&nbsp;&nbsp;&nbsp;&nbsp;<c:if test="${(not empty article.textBody) and fn:length(article.textBody) > 200}">${fn:substring(article.textBody, 0, 200)}...</c:if><c:if test="${(not empty article.textBody) and fn:length(article.textBody) <= 200}">${article.textBody}</c:if></p>
 					</div>
 				</li>
 			</c:forEach>

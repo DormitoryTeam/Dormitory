@@ -982,6 +982,7 @@ header{
 .header .menu li.parent{
 	background: url(common/menu_tip.png) no-repeat right bottom;
 	position: relative;
+	margin-right: 20px;
 }
 
 .header .menu li a{
@@ -991,7 +992,7 @@ header{
 
 .header .phoneNum{
 	float: right;
-	width: 100px;
+	/**width: 100px;*/
 	margin-right: -100px;
 	margin-top: 15px;
 	color: #fff;

@@ -27,13 +27,13 @@
 					<div aria-hidden="false" aria-expanded="true" style="display: block;" role="tabpanel" class="ui-tabs-panel ui-widget-content ui-corner-bottom" aria-labelledby="ui-id-3" id="tabs-security">
 						<fieldset>
 							<dl>
-								<dt>城市</dt>
+								<dt>送达城市</dt>
 								<dd>
 									${item.pickup2City}
 								</dd>
 							</dl>
 							<dl>
-								<dt>地址</dt>
+								<dt>送达地址</dt>
 								<dd>
 									${item.pickup2Address}
 								</dd>

@@ -9,9 +9,7 @@
 	</div>
 	<ul class="city-list show-list-c">
 		<c:forEach var="college" items="${allColleges}">
-			<c:if test="${college['topCollege']}">
 				<li><a href="<c:url value='/dormitory/dormitory-list.html?cityId=${college.cityId}&collegeId=${college.id}'/>">${college['originalName']}</a></li>
-			</c:if>
 		</c:forEach>
 	</ul>
 </div>

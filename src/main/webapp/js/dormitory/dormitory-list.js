@@ -1,6 +1,6 @@
 $(function() {
-
-	var latitude = $("#collegeLatitude").val();
+    try {
+    var latitude = $("#collegeLatitude").val();
 	var longitdue = $("#collegeLongitude").val();
 	var originalName = $("#collegeOriginalName").val();
 	var collegeLatlng = new google.maps.LatLng(latitude, longitdue);
@@ -46,6 +46,9 @@ $(function() {
 			window.location.href = ctx + '/dormitory/dormitory-detail.html?id=' + dormitoryId;  
 		});
 	});
+    
+    } catch(e) {
+    }
 
 	$(".ckbSortField").bind("click", function() {
 		$("#btnSearchAndSortBy").click();
