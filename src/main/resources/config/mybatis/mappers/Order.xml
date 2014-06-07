@@ -9,7 +9,7 @@
 	</sql>
 
 	<sql id="select-dormitory-order-content">
-		select o.id as order_id, o.type as order_type, o.status as order_status, o.amount as order_amount, o.currency as order_currency, o.create_time as order_create_time, o.send_save_email as order_send_save_email, o.send_commit_email as order_send_commit_email,
+		select o.id as order_id, o.type as order_type, o.status as order_status, o.amount as order_amount, o.currency as order_currency, o.create_time as order_create_time, o.send_save_email as order_send_save_email, o.send_commit_email as order_send_commit_email, o.condition as order_condition,
 		placer.id as placer_id, placer.login as placer_login, placer.email as placer_email, placer.alias as placer_alias,
 		belong_to.id as bt_id, belong_to.login as bt_login, belong_to.email as bt_email, belong_to.alias as bt_alias, md5(belong_to.id) as bt_code, belong_to.password as bt_password,
 		order_contact.id as contact_id, order_contact.order_id as contact_order_id,
@@ -40,7 +40,7 @@
 	</sql>
 
 	<sql id="select-pickup-order-content">
-		select o.id as order_id, o.type as order_type, o.status as order_status, o.amount as order_amount, o.currency as order_currency, o.create_time as order_create_time, o.send_save_email as order_send_save_email, o.send_commit_email as order_send_commit_email,
+		select o.id as order_id, o.type as order_type, o.status as order_status, o.amount as order_amount, o.currency as order_currency, o.create_time as order_create_time, o.send_save_email as order_send_save_email, o.send_commit_email as order_send_commit_email, o.condition as order_condition,
 		placer.id as placer_id, placer.login as placer_login, placer.email as placer_email, placer.alias as placer_alias,
 		belong_to.id as bt_id, belong_to.login as bt_login, belong_to.email as bt_email, belong_to.alias as bt_alias, md5(belong_to.id) as bt_code, belong_to.password as bt_password,
 		order_contact.id as contact_id, order_contact.order_id as contact_order_id,
@@ -85,6 +85,9 @@
 		</if>
 		<if test="orderType != null">
 			and o.type = #{orderType}
+		</if>
+		<if test="condition != null">
+			and o.condition = #{condition}
 		</if>
 	</sql>
 
@@ -236,6 +239,12 @@
 	<update id="updateOrderStatus" parameterType="com.noeasy.money.model.OrderBean">
 		UPDATE `order` SET
 		status = #{orderStatus,javaType=String,jdbcType=VARCHAR},
+		update_time = now()
+		WHERE id = #{id}
+	</update>
+	<update id="updateOrderCondition" parameterType="com.noeasy.money.model.OrderBean">
+		UPDATE `order` SET
+		`condition` = #{condition,javaType=String,jdbcType=VARCHAR},
 		update_time = now()
 		WHERE id = #{id}
 	</update>
@@ -450,6 +459,7 @@
 		<result property="createTime" column="order_create_time" />
 		<result property="sendSaveEmail" column="order_send_save_email" />
 		<result property="sendCommitEmail" column="order_send_commit_email" />
+		<result property="condition" column="order_condition" />
 		<association property="user" column="placer_id" resultMap="placer" />
 		<association property="belongsTo" column="bt_id"
 			resultMap="belongTo" />
@@ -515,6 +525,7 @@
 		<result property="createTime" column="order_create_time" />
 		<result property="sendSaveEmail" column="order_send_save_email" />
 		<result property="sendCommitEmail" column="order_send_commit_email" />
+		<result property="condition" column="order_condition" />
 		<association property="user" column="placer_id" resultMap="placer" />
 		<association property="belongsTo" column="bt_id"
 			resultMap="belongTo" />

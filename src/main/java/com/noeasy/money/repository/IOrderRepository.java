@@ -144,4 +144,5 @@ public interface IOrderRepository {
 
     void sendCommitEmail(OrderBean pOrder);
 
+    void updateOrderCondition(OrderBean pOrder);
 }

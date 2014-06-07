@@ -325,6 +325,7 @@ public class AdminOrderController {
     }
 
 
+
     @RequestMapping(value = "/orderDetails.html")
     public String getOrderDetails(final ModelMap model, final HttpServletRequest request,
             final HttpServletResponse response, final String orderId, final String orderType) {
@@ -357,8 +358,8 @@ public class AdminOrderController {
     @RequestMapping(value = "/orderList.html")
     public String getOrderList(final ModelMap model, final HttpServletRequest request,
             final HttpServletResponse response, final String orderType, final String orderId, final String login,
-            final String userToken, final String dateFrom, final String dateTo, final String currentPage,
-            final String pageSize) {
+            final String userToken, final String condition, final String dateFrom, final String dateTo,
+            final String currentPage, final String pageSize) {
         OrderType type = OrderType.getType(orderType);// "D" means dormitory
         OrderSearchBean searchBean = new OrderSearchBean();
         searchBean.setOrderType(type);
@@ -373,6 +374,9 @@ public class AdminOrderController {
             searchBean.setUser(user);
         }
 
+        if (StringUtils.isNoneBlank(condition)) {
+            searchBean.setCondition(condition);
+        }
         if (StringUtils.isBlank(orderId) || StringUtils.isNotBlank(OrderTokenUtil.getOrderId(orderId))) {
             if (StringUtils.isNotBlank(orderId)) {
                 searchBean.setOrderNumber(Integer.valueOf(OrderTokenUtil.getOrderId(orderId)));
@@ -390,12 +394,13 @@ public class AdminOrderController {
             }
             int rowTotal = orderService.queryOrderCount(searchBean);
             PageBean page = new PageBean(rowTotal);
-            if (StringUtils.isNotBlank(currentPage)) {
-                page.setPageNum(Integer.valueOf(currentPage));
-            }
             if (StringUtils.isNotBlank(pageSize)) {
                 page.setPageSize(Integer.valueOf(pageSize));
             }
+            if (StringUtils.isNotBlank(currentPage)) {
+                page.setPageNum(Integer.valueOf(currentPage));
+            }
+
             page.setQueryString(request.getQueryString());
             searchBean.setPageBean(page);
             List<OrderBean> orders = orderService.queryOrder(searchBean);
@@ -412,6 +417,26 @@ public class AdminOrderController {
         model.addAttribute("dateFrom", dateFrom);
         model.addAttribute("dateTo", dateTo);
         return "admin/order/orderList";
+    }
+
+
+
+    @RequestMapping(value = "/updateOrderCondition.html")
+    public String updateOrderCondition(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, final String id, final String orderId, final String currentPage,
+            final String updateCondition, final String pageSize, final String orderType, final String orderToken,
+            final String login, final String userToken, final String dateFrom, final String dateTo,
+            final String condition) {
+
+        if (StringUtils.isBlank(id)) {
+            return "redirect:/admin/order/orderList.html?orderType=" + orderType + "&orderId=" + orderToken
+                    + "&login=&userToken=" + userToken + "&dateFrom=" + dateFrom + "&dateTo=" + dateTo + "&condition="
+                    + condition + "&currentPage=" + currentPage + "&pageSize=" + pageSize;
+        }
+        orderService.updateOrderCondition(Integer.valueOf(id), updateCondition);
+        return "redirect:/admin/order/orderList.html?orderType=" + orderType + "&orderId=" + orderId
+                + "&login=&userToken=" + userToken + "&dateFrom=" + dateFrom + "&dateTo=" + dateTo + "&condition="
+                + condition + "&currentPage=" + currentPage + "&pageSize=" + pageSize;
     }
 
 
@@ -505,11 +530,10 @@ public class AdminOrderController {
                 paramMap.put("pickup2City", EmailUtils.getStringValue(item.getPickup2City()));
                 paramMap.put("dormitoryAddress", EmailUtils.getStringValue(item.getPickup2Address()));
                 paramMap.put("postcode", EmailUtils.getStringValue(item.getPickup2Postalcode()));
-                paramMap.put("takeoffCity", EmailUtils.getStringValue( item.getTakeOffCity()));
+                paramMap.put("takeoffCity", EmailUtils.getStringValue(item.getTakeOffCity()));
                 paramMap.put("takeoffAirport", "");
-                paramMap.put("toCity", EmailUtils.getStringValue( item.getArrivalCity()));
-                
-                
+                paramMap.put("toCity", EmailUtils.getStringValue(item.getArrivalCity()));
+
                 paramMap.put("totalPrice", order.getAmount().toString());
                 paramMap.put("orderStatus", "");
                 paramMap.put("flightNum", item.getFlightNum());

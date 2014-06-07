@@ -104,4 +104,6 @@ public interface IOrderService {
 
 
     void sendCommitEmail(OrderBean pOrder);
+    
+    void updateOrderCondition(Integer pId, String pCondition);
 }

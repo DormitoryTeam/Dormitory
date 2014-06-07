@@ -263,6 +263,17 @@ public class OrderService implements IOrderService {
     public void sendCommitEmail(OrderBean pOrder) {
         orderRepository.sendCommitEmail(pOrder);
     }
+
+
+
+    @Override
+    public void updateOrderCondition(Integer pId, String pCondition) {
+        OrderBean order = new OrderBean();
+        order.setId(pId);
+        order.setCondition(pCondition);
+        orderRepository.updateOrderCondition(order);
+        
+    }
     
     
 }

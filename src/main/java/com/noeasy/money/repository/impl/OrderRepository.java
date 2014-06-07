@@ -276,4 +276,12 @@ public class OrderRepository extends BaseRepository implements IOrderRepository 
         
     }
 
+
+
+    @Override
+    public void updateOrderCondition(OrderBean pOrder) {
+        getSqlSession().update("com.noeasy.money.model.Order.updateOrderCondition", pOrder);
+        
+    }
+
 }

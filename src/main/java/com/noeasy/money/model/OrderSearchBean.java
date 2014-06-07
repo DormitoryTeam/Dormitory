@@ -41,7 +41,7 @@ import com.noeasy.money.enumeration.OrderType;
  */
 
 public class OrderSearchBean {
-
+    
     private UserBean    mUser;
 
     private OrderType   mOrderType;
@@ -52,9 +52,10 @@ public class OrderSearchBean {
 
     private Date        mDateTo;
 
-    private OrderStatus mOrderStatus;
+    private String      mCondition;
 
     private PageBean    mPageBean;
+
 
 
     /**
@@ -82,14 +83,6 @@ public class OrderSearchBean {
         return mOrderNumber;
     }
 
-
-
-    /**
-     * @return the orderStatus
-     */
-    public OrderStatus getOrderStatus() {
-        return mOrderStatus;
-    }
 
 
 
@@ -151,16 +144,6 @@ public class OrderSearchBean {
 
 
     /**
-     * @param pOrderStatus
-     *            the orderStatus to set
-     */
-    public void setOrderStatus(final OrderStatus pOrderStatus) {
-        mOrderStatus = pOrderStatus;
-    }
-
-
-
-    /**
      * @param pOrderType
      *            the orderType to set
      */
@@ -186,6 +169,18 @@ public class OrderSearchBean {
      */
     public void setUser(final UserBean pUser) {
         mUser = pUser;
+    }
+
+
+
+    public String getCondition() {
+        return mCondition;
+    }
+
+
+
+    public void setCondition(String pCondition) {
+        mCondition = pCondition;
     }
 
 }

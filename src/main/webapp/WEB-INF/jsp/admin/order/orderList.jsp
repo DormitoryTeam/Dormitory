@@ -3,11 +3,15 @@ ${message}
 <br />
 <form action="<c:url value='/admin/order/orderList.html'/>" method="GET">
 <input type="hidden" name="orderType" value="${type}"/><br>
-订单编号: <input type="text" name="orderId" value="${orderId}"/><br>
-用户名: &nbsp;&nbsp;&nbsp;<input type="text" name="login" value="${login}"/><br>
-用户识别码: &nbsp;&nbsp;&nbsp;<input type="text" name="userToken" value="${userToken}"/><br>
-起始时间: <input type="text" name="dateFrom" value="${dateFrom}"/><br>
-结束时间: <input type="text" name="dateTo" value="${dateTo}"/><br>
+订单编号： <input type="text" name="orderId" value="${orderId}"/><br>
+用户名： &nbsp;&nbsp;&nbsp;<input type="text" name="login" value="${login}"/><br>
+用户识别码： &nbsp<input type="text" name="userToken" value="${userToken}"/><br>
+起始时间： <input type="text" name="dateFrom" value="${dateFrom}"/><br>
+结束时间： <input type="text" name="dateTo" value="${dateTo}"/><br>
+是否删除：<select name="condition">
+		<option value="active" <c:if test="${empty param.condition or param.condition eq 'active'}">selected</c:if>>是</option>
+		<option value="inactive" <c:if test="${param.condition eq 'inactive'}">selected</c:if>>否</option>
+		</select><br>
 <input type="submit" value="查询"/>
 </form>
 <hr>
@@ -21,6 +25,7 @@ ${message}
 		<td>用户</td>
 		<td>预定时间</td>
 		<td>当前状态</td>
+		<td>操作</td>
 	</tr>
 	<c:forEach var="order" items="${orders}" varStatus="i">
 	<tr>
@@ -39,6 +44,16 @@ ${message}
 				<c:otherwise>完成</c:otherwise>
 			</c:choose>
 		</td>
+		<td>
+		<c:choose>
+		<c:when test="${'active' eq order.condition}">
+		<a href="<c:url value="/admin/order/updateOrderCondition.html?id=${order.id}&currentPage=${param.currentPage}&updateCondition=inactive&pageSize=${param.pageSize}&orderType=${param.orderType}&orderId=${param.orderId}&login=${param.login}&userToken=${param.userToken}&dateFrom=${param.dateFrom}&dateTo=${param.dateTo}&condition=${param.condition}"/>">取消</a>
+		</c:when>
+		<c:otherwise>
+		<a href="<c:url value="/admin/order/updateOrderCondition.html?id=${order.id}&currentPage=${param.currentPage}&updateCondition=active&pageSize=${param.pageSize}&orderType=${param.orderType}&orderId=${param.orderId}&login=${param.login}&userToken=${param.userToken}&dateFrom=${param.dateFrom}&dateTo=${param.dateTo}&condition=${param.condition}"/>">恢复</a>
+		</c:otherwise>
+		</c:choose>
+		</td>
 	<tr>
 	</c:forEach>
 </c:when>
@@ -50,6 +65,7 @@ ${message}
 		<td>用户</td>
 		<td>预定时间</td>
 		<td>当前状态</td>
+		<td>操作</td>
 	</tr>
 	<c:forEach var="order" items="${orders}" varStatus="i">
 	<tr>
@@ -67,6 +83,16 @@ ${message}
 				<c:when test="${'PAYMENT_NOT_DONE' eq order.orderStatus}">未支付，已发送车票邮件</c:when>
 				<c:otherwise>已支付，已发送车票邮件</c:otherwise>
 			</c:choose>
+		</td>
+		<td>
+		<c:choose>
+		<c:when test="${'active' eq order.condition}">
+		<a href="<c:url value="/admin/order/updateOrderCondition.html?id=${order.id}&currentPage=${param.currentPage}&updateCondition=inactive&pageSize=${param.pageSize}&orderType=${param.orderType}&orderId=${param.orderId}&login=${param.login}&userToken=${param.userToken}&dateFrom=${param.dateFrom}&dateTo=${param.dateTo}&condition=${param.condition}"/>">取消</a>
+		</c:when>
+		<c:otherwise>
+		<a href="<c:url value="/admin/order/updateOrderCondition.html?id=${order.id}&currentPage=${param.currentPage}&updateCondition=active&pageSize=${param.pageSize}&orderType=${param.orderType}&orderId=${param.orderId}&login=${param.login}&userToken=${param.userToken}&dateFrom=${param.dateFrom}&dateTo=${param.dateTo}&condition=${param.condition}"/>">恢复</a>
+		</c:otherwise>
+		</c:choose>
 		</td>
 	<tr>
 	</c:forEach>

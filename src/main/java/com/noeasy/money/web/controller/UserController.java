@@ -313,14 +313,16 @@ public class UserController {
         OrderSearchBean searchBean = new OrderSearchBean();
         searchBean.setOrderType(type);
         searchBean.setUser(user);
+        searchBean.setCondition(OrderBean.CONDITION_ACTIVE);
         int rowTotal = orderService.queryOrderCount(searchBean);
         PageBean page = new PageBean(rowTotal);
-        if (StringUtils.isNotBlank(currentPage)) {
-            page.setPageNum(Integer.valueOf(currentPage));
-        }
         if (StringUtils.isNotBlank(pageSize)) {
             page.setPageSize(Integer.valueOf(pageSize));
         }
+        if (StringUtils.isNotBlank(currentPage)) {
+            page.setPageNum(Integer.valueOf(currentPage));
+        }
+        
         page.setQueryString(request.getQueryString());
         searchBean.setPageBean(page);
         List<OrderBean> orders = orderService.queryOrder(searchBean);
@@ -329,6 +331,33 @@ public class UserController {
         model.addAttribute("page", page);
         model.addAttribute("user", user);
         return "user/orderList";
+    }
+
+
+
+    @RequestMapping(value = "/deleteOrder.html")
+    public String deleteOrder(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, final String id, final String currentPage, final String pageSize,
+            final String orderType) {
+
+        if (StringUtils.isBlank(id)) {
+            return "redirect:/user/orderList.html?currentPage=" + currentPage + "&pageSize=" + pageSize;
+        }
+        Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+        UserBean user = userService.findUserById(userId);
+        OrderSearchBean searchBean = new OrderSearchBean();
+        OrderType type = OrderType.getType(orderType);// "D" means dormitory
+        searchBean.setOrderType(type);
+        searchBean.setUser(user);
+        Integer orderId = Integer.valueOf(id);
+        searchBean.setOrderNumber(orderId);
+        int rowTotal = orderService.queryOrderCount(searchBean);
+        if (rowTotal <= 0) {
+            return "redirect:/user/orderList.html?currentPage=" + currentPage + "&pageSize=" + pageSize;
+        }
+        orderService.updateOrderCondition(orderId, OrderBean.CONDITION_INACTIVE);
+        return "redirect:/user/orderList.html?orderType=" + orderType + "&currentPage=" + currentPage + "&pageSize="
+                + pageSize;
     }
 
 

@@ -44,31 +44,37 @@ import com.noeasy.money.enumeration.OrderType;
 
 public class OrderBean extends BaseBean {
 
-    private Integer          mId;
+    public static final String CONDITION_ACTIVE   = "active";
 
-    private String           mCurrency;
+    public static final String CONDITION_INACTIVE = "inactive";
 
-    private BigDecimal       mAmount;
+    private Integer            mId;
 
-    private UserBean         mUser;
+    private String             mCurrency;
 
-    private UserBean         mBelongsTo;
+    private BigDecimal         mAmount;
 
-    private String           mOrderStatus;
+    private UserBean           mUser;
 
-    private OrderContactInfo mOrderContact;
+    private UserBean           mBelongsTo;
 
-    private List<LineItem>   mLineItems;
+    private String             mOrderStatus;
 
-    private List<OrderTail>  mTails;
+    private OrderContactInfo   mOrderContact;
 
-    private OrderType        mOrderType;
+    private List<LineItem>     mLineItems;
 
-    private Date             mCreateTime;
+    private List<OrderTail>    mTails;
 
-    private boolean          mSendSaveEmail;
+    private OrderType          mOrderType;
 
-    private boolean          mSendCommitEmail;
+    private Date               mCreateTime;
+
+    private boolean            mSendSaveEmail;
+
+    private boolean            mSendCommitEmail;
+
+    private String             mCondition;
 
 
 
@@ -261,6 +267,18 @@ public class OrderBean extends BaseBean {
 
     public void setSendCommitEmail(boolean pSendCommitEmail) {
         mSendCommitEmail = pSendCommitEmail;
+    }
+
+
+
+    public String getCondition() {
+        return mCondition;
+    }
+
+
+
+    public void setCondition(String pCondition) {
+        mCondition = pCondition;
     }
 
 }

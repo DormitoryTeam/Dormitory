@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 
 public class OrderTokenUtil {
 
-    private static final int    ORDER_TOKEN_LENGTH = 8;
+    private static final int    ORDER_TOKEN_LENGTH = 10;
 
     private static final String PREFIX_ZERO        = "0";
 
@@ -24,7 +24,7 @@ public class OrderTokenUtil {
             return "";
         }
 
-        String orderId = orderToken.substring(0, 2);
+        String orderId = orderToken.substring(2);
         orderId = orderId.replaceAll("^0*(?=[1,9])", "");
 
         return orderId;

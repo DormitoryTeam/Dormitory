@@ -210,12 +210,13 @@ public class DormitoryController {
             int rowTotal = dormitoryService.queryDormitoryCount(searchBean);
 
             PageBean page = new PageBean(rowTotal);
-            if (StringUtils.isNotBlank(currentPage)) {
-                page.setPageNum(Integer.valueOf(currentPage));
-            }
             if (StringUtils.isNotBlank(pageSize)) {
                 page.setPageSize(Integer.valueOf(pageSize));
             }
+            if (StringUtils.isNotBlank(currentPage)) {
+                page.setPageNum(Integer.valueOf(currentPage));
+            }
+            
             page.setQueryString(request.getQueryString());
             searchBean.setPageBean(page);
             List<DormitoryBean> dormitories = dormitoryService.queryDormitoryPage(searchBean);
