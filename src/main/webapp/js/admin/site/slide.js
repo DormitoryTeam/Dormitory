@@ -44,6 +44,7 @@ function appendLastestImagePreview(data) {
         var row = $("<tr class=\"fileRow\">");
         row.append($('<td>').html("<input type=\"text\" name=\"imageNames\" readonly=\"readonly\" class=\"fileNames\" value=\"" + e.name + "\" /><input type=\"hidden\" name=\"imageIndexes\" class=\"fileIndex\" value=\"" + getNextIndex() + "\" />"));
         row.append($('<td>').html("<a href='" + imageURL + "'><img src='" + imageURL + "' /></a>"));
+        row.append($('<td>').html('<input type="text" name="urls" style="length: 460px;" />'));
         row.append($('<td>').html("<input type=\"button\" value=\"向前移 ↑\" class=\"btnUp\" />"));
         row.append($('<td>').html("<input type=\"button\" value=\"向后移 ↓\" class=\"btnDown\" />"));
         row.append($('<td>').html("<input type=\"button\" value=\"删除\" class=\"btnRemove\" />"));

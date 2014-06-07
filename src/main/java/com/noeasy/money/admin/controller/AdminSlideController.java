@@ -98,7 +98,12 @@ public class AdminSlideController {
                     if (imageShow[i] == 0) {
                         imageIndexes[i] = Integer.MAX_VALUE;
                     }
-                    siteService.saveSlide(urls[i], imageNames[i], imageIndexes[i], imageShow[i]);
+                    if(null != urls && i < urls.length) {
+                        siteService.saveSlide(urls[i], imageNames[i], imageIndexes[i], imageShow[i]);
+                    } else {
+                        siteService.saveSlide("", imageNames[i], imageIndexes[i], imageShow[i]);
+                    }
+                    
                 }
                 model.addAttribute("result", true);
 
