@@ -18,6 +18,8 @@ public class OrderTokenTag extends SimpleTagSupport {
 
     private String orderId;
 
+    private String prefix;
+
 
 
     /**
@@ -27,7 +29,7 @@ public class OrderTokenTag extends SimpleTagSupport {
     public void doTag() throws JspException, IOException {
         super.doTag();
         Writer out = getJspContext().getOut();
-        out.write(OrderTokenUtil.getOrderToken(orderId));
+        out.write(OrderTokenUtil.getOrderToken(orderId, prefix));
     }
 
 
@@ -42,10 +44,29 @@ public class OrderTokenTag extends SimpleTagSupport {
 
 
     /**
+     * @return the prefix
+     */
+    public String getPrefix() {
+        return prefix;
+    }
+
+
+
+    /**
      * @param pOrderId
      *            the orderId to set
      */
     public void setOrderId(final String pOrderId) {
         orderId = pOrderId;
+    }
+
+
+
+    /**
+     * @param pPrefix
+     *            the prefix to set
+     */
+    public void setPrefix(final String pPrefix) {
+        prefix = pPrefix;
     }
 }

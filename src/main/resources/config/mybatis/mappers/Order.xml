@@ -79,6 +79,9 @@
 				and (placer.login like CONCAT('%', #{user.login}, '%') or belong_to.login like
 				CONCAT('%', #{user.login}, '%'))
 			</if>
+			<if test="user.token != null">
+				and ((placer.token = #{user.token}) or (belong_to.token like #{user.token}))
+			</if>
 		</if>
 		<if test="orderType != null">
 			and o.type = #{orderType}

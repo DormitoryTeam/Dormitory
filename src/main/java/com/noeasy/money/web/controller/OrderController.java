@@ -68,7 +68,6 @@ import com.noeasy.money.service.IUserService;
 import com.noeasy.money.service.IUserService.INFO_TYPE;
 import com.noeasy.money.util.DateUtils;
 import com.noeasy.money.util.EmailUtils;
-import com.noeasy.money.util.PropertiesUtils;
 import com.noeasy.money.util.ServletUtils;
 
 /**
@@ -430,12 +429,12 @@ public class OrderController {
             OrderBean order = ServletUtils.getOrderFromSession(pRequest);
             if (!order.isSendCommitEmail()) {
                 boolean sucess = sendPickupOrderCommitEmail(pRequest);
-                if(sucess) {
+                if (sucess) {
                     order.setSendCommitEmail(true);
                     orderService.sendCommitEmail(order);
                 }
             }
-            
+
             break;
         }
 
@@ -525,7 +524,7 @@ public class OrderController {
             if (null == user) {
                 String password = RandomStringUtils.randomAlphanumeric(8);
                 user = userService.register(email, password);
-//                
+                //
                 // send email.
                 Map<String, String> paramMap = EmailUtils.getParamMap();
                 paramMap.put("login", email);
@@ -845,12 +844,16 @@ public class OrderController {
         UserInfoBean userInfo = order.getOrderContact().getBelongsToInfo();
         String login = ServletUtils.getLoign(pRequest);
 
-        paramMap.put("orderId", OrderTokenUtil.getOrderToken(order.getId().toString()));
+        paramMap.put("orderId", OrderTokenUtil.getOrderToken(order.getId().toString(), "PU"));
         paramMap.put("userName", EmailUtils.getStringValue(userInfo.getLastName()) + " " + EmailUtils.getStringValue(userInfo.getName()));
         UserBean user = userService.findUserById(order.getBelongsTo().getId());
         paramMap.put("userToken", EmailUtils.getStringValue(user.getNewCode()));
         paramMap.put("login",EmailUtils.getStringValue(user.getLogin()));
         paramMap.put("password",EmailUtils.getStringValue(user.getPassword()));
+        paramMap.put("orderId", OrderTokenUtil.getOrderToken(order.getId().toString(), "PU"));
+        paramMap.put("userName",
+                EmailUtils.getStringValue(userInfo.getLastName()) + " " + EmailUtils.getStringValue(userInfo.getName()));
+        paramMap.put("userToken", EmailUtils.getStringValue(order.getBelongsTo().getNewCode()));
 
         paramMap.put("address", EmailUtils.getStringValue(userInfo.getAddress()));
         paramMap.put("phone", "???");
@@ -867,15 +870,15 @@ public class OrderController {
         } else {
             paramMap.put("startTime", "");
         }
-        
+
         paramMap.put("transferTime", "???");
         if (null != pickupLineItem.getPickupDate()) {
             paramMap.put("arriveTime",
                     DateUtils.dateToString(pickupLineItem.getPickupDate(), "yyyy-MM-dd HH:mm"));
         } else {
-            paramMap.put("arriveTime","");
+            paramMap.put("arriveTime", "");
         }
-        
+
         pickupLineItem.analyzeLuggage();
         String luggage = "";
         if (null != pickupLineItem.getLuggageSize1()) {
@@ -907,7 +910,7 @@ public class OrderController {
         String template = EmailUtils.generateTemplateEmail("template10.html", paramMap);
         boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, login, login, subject, template);
         return sendSuccess;
-        
+
     }
 
 

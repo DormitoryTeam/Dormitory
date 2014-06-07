@@ -164,8 +164,8 @@ public class SiteService implements ISiteService {
      *      java.lang.String, java.lang.Integer, java.lang.Integer)
      */
     @Override
-    public boolean saveSlide(final String pDescription, final String pPath, final Integer pIndex, final Integer pStatus) {
-        return siteRepository.saveSlide(pDescription, pPath, pIndex, pStatus, null);
+    public boolean saveSlide(final String pURL, final String pPath, final Integer pIndex, final Integer pStatus) {
+        return siteRepository.saveSlide(pURL, pPath, pIndex, pStatus, null);
     }
 
 

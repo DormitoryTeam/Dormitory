@@ -78,7 +78,7 @@ public interface ISiteRepository {
 
 
 
-    boolean saveSlide(String pDescription, String pPath, Integer pIndex, Integer pStatus, String pType);
+    boolean saveSlide(String pURL, String pPath, Integer pIndex, Integer pStatus, String pType);
 
 
 

@@ -8,21 +8,21 @@
 <mapper namespace="com.noeasy.money.model.Site">
 
 	<select id="selectSlide" resultType="hashmap" parameterType="java.util.Map">
-		select id, `desc`, path, `index`
+		select id, `desc`, path, redirecturl, `index`
 		from slide
 		where status = 1
 		order by `index` asc
 	</select>
 
 	<select id="selectAllSlide" resultType="hashmap" parameterType="java.util.Map">
-		select id, `desc`, path, `index`, status
+		select id, `desc`, path, `index`, redirecturl, status
 		from slide
 		order by `index` asc
 	</select>
 
 	<insert id="insertSlide" keyProperty="id" useGeneratedKeys="true" parameterType="java.util.Map">
-		insert into slide (`desc`, path, `index`, status) values (
-		#{desc,javaType=string,jdbcType=VARCHAR},
+		insert into slide (`redirecturl`, path, `index`, status) values (
+		#{redirecturl,javaType=string,jdbcType=VARCHAR},
 		#{path,javaType=string,jdbcType=VARCHAR},
 		#{index,javaType=int,jdbcType=INTEGER},
 		#{status,javaType=int,jdbcType=INTEGER}
@@ -30,7 +30,7 @@
 	</insert>
 
 	<update id="updateSlideDesc" parameterType="java.util.Map">
-		update slide set id = #{id}
+		update slide set id = #{id}, redirecturl = #{redirecturl}
 		<if test="desc != null">
 			, `desc` = #{desc}
 		</if>

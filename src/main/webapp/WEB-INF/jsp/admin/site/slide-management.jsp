@@ -23,6 +23,7 @@
 						<tr>
 							<th>图片名称</th>
 							<th>预览</th>
+							<th>链接</th>
 							<th>向前移</th>
 							<th>向后移</th>
 							<th>删除</th>
@@ -32,6 +33,7 @@
 							<tr class="fileRow">
 								<td><input type="text" readonly="readonly" name="imageNames" class="fileNames" value="${slide['path']}" /> <input type="hidden" name="imageIndexes" class="fileIndex" value="${slide['index']}" /></td>
 								<td><a href="<c:url value='/upload/images/slide/${slide.path}'/>"> <img src="<c:url value='/upload/images/slide/${slide.path}'/>" /></a></td>
+								<td><input type="text" name="urls" value="${slide.redirecturl}" style="length: 460px;" /></td>
 								<td><input type="button" value="向前移 ↑" class="btnUp" /></td>
 								<td><input type="button" value="向后移 ↓" class="btnDown" /></td>
 								<td><input type="button" value="删除" class="btnRemove" /></td>

@@ -3,7 +3,6 @@ package com.noeasy.money.admin.controller;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -326,12 +325,110 @@ public class AdminOrderController {
     }
 
 
-    private void sendPickupOrder(OrderBean order, String operation) {
+    @RequestMapping(value = "/orderDetails.html")
+    public String getOrderDetails(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, final String orderId, final String orderType) {
+        Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
+        String message = null;
+        model.addAttribute("type", orderType);
+        if (StringUtils.isBlank(orderId)) {
+            message = "orderId is blank";
+            model.addAttribute("message", message);
+            return "admin/order/orderDetails";
+        }
+        OrderSearchBean searchBean = new OrderSearchBean();
+        UserBean user = new UserBean();
+        user.setId(userId);
+        searchBean.setUser(user);
+        searchBean.setOrderNumber(Integer.valueOf(orderId));
+        searchBean.setOrderType(OrderType.getType(orderType));
+        List<OrderBean> orders = orderService.queryOrder(searchBean);
+        if (CollectionUtils.isEmpty(orders)) {
+            message = "no such order";
+            return "admin/order/orderDetails";
+        }
+        model.addAttribute("order", orders.get(0));
+        model.addAttribute("message", message);
+        return "admin/order/orderDetails";
+    }
+
+
+
+    @RequestMapping(value = "/orderList.html")
+    public String getOrderList(final ModelMap model, final HttpServletRequest request,
+            final HttpServletResponse response, final String orderType, final String orderId, final String login,
+            final String userToken, final String dateFrom, final String dateTo, final String currentPage,
+            final String pageSize) {
+        OrderType type = OrderType.getType(orderType);// "D" means dormitory
+        OrderSearchBean searchBean = new OrderSearchBean();
+        searchBean.setOrderType(type);
+        if (StringUtils.isNotBlank(login) || StringUtils.isNotBlank(userToken)) {
+            UserBean user = new UserBean();
+            if (StringUtils.isNotBlank(login)) {
+                user.setLogin(login);
+            }
+            if (StringUtils.isNotBlank(userToken)) {
+                user.setToken(userToken);
+            }
+            searchBean.setUser(user);
+        }
+
+        if (StringUtils.isBlank(orderId) || StringUtils.isNotBlank(OrderTokenUtil.getOrderId(orderId))) {
+            if (StringUtils.isNotBlank(orderId)) {
+                searchBean.setOrderNumber(Integer.valueOf(OrderTokenUtil.getOrderId(orderId)));
+            }
+            if (StringUtils.isNotBlank(dateFrom)) {
+                Date tDateFrom = DateUtils.stringToDate(dateFrom);
+                searchBean.setDateFrom(tDateFrom);
+            }
+            if (StringUtils.isNotBlank(dateTo)) {
+                Date tDateTo = DateUtils.stringToDate(dateTo);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(tDateTo);
+                calendar.add(Calendar.DATE, 1);
+                searchBean.setDateTo(calendar.getTime());
+            }
+            int rowTotal = orderService.queryOrderCount(searchBean);
+            PageBean page = new PageBean(rowTotal);
+            if (StringUtils.isNotBlank(currentPage)) {
+                page.setPageNum(Integer.valueOf(currentPage));
+            }
+            if (StringUtils.isNotBlank(pageSize)) {
+                page.setPageSize(Integer.valueOf(pageSize));
+            }
+            page.setQueryString(request.getQueryString());
+            searchBean.setPageBean(page);
+            List<OrderBean> orders = orderService.queryOrder(searchBean);
+            model.addAttribute("orders", orders);
+            model.addAttribute("page", page);
+        } else {
+            model.addAttribute("message", "请输入正确的订单编号！");
+        }
+
+        model.addAttribute("type", orderType);
+        model.addAttribute("orderId", orderId);
+        model.addAttribute("login", login);
+        model.addAttribute("userToken", userToken);
+        model.addAttribute("dateFrom", dateFrom);
+        model.addAttribute("dateTo", dateTo);
+        return "admin/order/orderList";
+    }
+
+
+
+    @RequestMapping(value = "/home.html")
+    public String home(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response) {
+
+        return "/home.html";
+    }
+
+
+
+    private void sendPickupOrder(final OrderBean order, final String operation) {
         String from = "pickup@liuxuelife.com";
         String fromAlias = EmailUtils.getServiceAlias();
         String login = "";
-        if (null != order && null != order.getOrderContact()
-                && null != order.getOrderContact().getBelongsToInfo()) {
+        if (null != order && null != order.getOrderContact() && null != order.getOrderContact().getBelongsToInfo()) {
             login = order.getOrderContact().getBelongsToInfo().getEmail();
         }
         PickupLineItem item = null;
@@ -359,7 +456,7 @@ public class AdminOrderController {
         if ("PAYMENT_DONE".equals(operation) || "PAYMENT_NOT_DONE".equals(operation)) {
             // send template 5
             Map<String, String> paramMap = EmailUtils.getParamMap();
-            paramMap.put("orderId", OrderTokenUtil.getOrderToken(order.getId().toString()));
+            paramMap.put("orderId", OrderTokenUtil.getOrderToken(order.getId().toString(), "PU"));
             paramMap.put("userName", order.getOrderContact().getBelongsToInfo().getLastName() + " "
                     + order.getOrderContact().getBelongsToInfo().getName());
             paramMap.put("userToken", order.getBelongsTo().getNewCode());
@@ -423,7 +520,7 @@ public class AdminOrderController {
                 }
                 paramMap.put("toCity", EmailUtils.getStringValue(item.getPickup2City()));
                 paramMap.put("toAirport", EmailUtils.getStringValue(item.getArrivalAirport()));
-                
+
             }
             String subject = "您的接机车票（请打印后，在接机现场出示）-留学生活网-您身边的留学生活专家";
             String templateHtml = "template5.html";
@@ -433,97 +530,6 @@ public class AdminOrderController {
             String template = EmailUtils.generateTemplateEmail(templateHtml, paramMap);
             boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, login, login, subject, template);
         }
-    }
-
-    @RequestMapping(value = "/orderDetails.html")
-    public String getOrderDetails(final ModelMap model, final HttpServletRequest request,
-            final HttpServletResponse response, final String orderId, final String orderType) {
-        Integer userId = (Integer) request.getSession().getAttribute(SessionConstants.SESSION_KEY_USER_ID);
-        String message = null;
-        model.addAttribute("type", orderType);
-        if (StringUtils.isBlank(orderId)) {
-            message = "orderId is blank";
-            model.addAttribute("message", message);
-            return "admin/order/orderDetails";
-        }
-        OrderSearchBean searchBean = new OrderSearchBean();
-        UserBean user = new UserBean();
-        user.setId(userId);
-        searchBean.setUser(user);
-        searchBean.setOrderNumber(Integer.valueOf(orderId));
-        searchBean.setOrderType(OrderType.getType(orderType));
-        List<OrderBean> orders = orderService.queryOrder(searchBean);
-        if (CollectionUtils.isEmpty(orders)) {
-            message = "no such order";
-            return "admin/order/orderDetails";
-        }
-        model.addAttribute("order", orders.get(0));
-        model.addAttribute("message", message);
-        return "admin/order/orderDetails";
-    }
-
-
-
-    @RequestMapping(value = "/orderList.html")
-    public String getOrderList(final ModelMap model, final HttpServletRequest request,
-            final HttpServletResponse response, final String orderType, final String orderId, final String login,
-            final String dateFrom, final String dateTo, final String currentPage, final String pageSize) {
-        OrderType type = OrderType.getType(orderType);// "D" means dormitory
-        OrderSearchBean searchBean = new OrderSearchBean();
-        searchBean.setOrderType(type);
-        if (StringUtils.isNotBlank(login)) {
-            UserBean user = new UserBean();
-            user.setLogin(login);
-            ;
-            searchBean.setUser(user);
-        }
-
-        if (StringUtils.isBlank(orderId) || StringUtils.isNotBlank(OrderTokenUtil.getOrderId(orderId))) {
-            if (StringUtils.isNotBlank(orderId)) {
-                searchBean.setOrderNumber(Integer.valueOf(OrderTokenUtil.getOrderId(orderId)));
-            }
-            if (StringUtils.isNotBlank(dateFrom)) {
-                Date tDateFrom = DateUtils.stringToDate(dateFrom);
-                searchBean.setDateFrom(tDateFrom);
-            }
-            if (StringUtils.isNotBlank(dateTo)) {
-                Date tDateTo = DateUtils.stringToDate(dateTo);
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(tDateTo);
-                calendar.add(Calendar.DATE, 1);
-                searchBean.setDateTo(calendar.getTime());
-            }
-            int rowTotal = orderService.queryOrderCount(searchBean);
-            PageBean page = new PageBean(rowTotal);
-            if (StringUtils.isNotBlank(currentPage)) {
-                page.setPageNum(Integer.valueOf(currentPage));
-            }
-            if (StringUtils.isNotBlank(pageSize)) {
-                page.setPageSize(Integer.valueOf(pageSize));
-            }
-            page.setQueryString(request.getQueryString());
-            searchBean.setPageBean(page);
-            List<OrderBean> orders = orderService.queryOrder(searchBean);
-            model.addAttribute("orders", orders);
-            model.addAttribute("page", page);
-        } else {
-            model.addAttribute("message", "请输入正确的订单编号！");
-        }
-
-        model.addAttribute("type", orderType);
-        model.addAttribute("orderId", orderId);
-        model.addAttribute("login", login);
-        model.addAttribute("dateFrom", dateFrom);
-        model.addAttribute("dateTo", dateTo);
-        return "admin/order/orderList";
-    }
-
-
-
-    @RequestMapping(value = "/home.html")
-    public String home(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response) {
-
-        return "/home.html";
     }
 
 
