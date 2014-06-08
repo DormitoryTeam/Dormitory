@@ -30,7 +30,6 @@ package com.noeasy.money.model;
 
 import java.util.Date;
 
-import com.noeasy.money.enumeration.OrderStatus;
 import com.noeasy.money.enumeration.OrderType;
 
 /**
@@ -41,20 +40,28 @@ import com.noeasy.money.enumeration.OrderType;
  */
 
 public class OrderSearchBean {
-    
-    private UserBean    mUser;
 
-    private OrderType   mOrderType;
+    private UserBean  mUser;
 
-    private Integer     mOrderNumber;
+    private OrderType mOrderType;
 
-    private Date        mDateFrom;
+    private Integer   mOrderNumber;
 
-    private Date        mDateTo;
+    private Date      mDateFrom;
 
-    private String      mCondition;
+    private Date      mDateTo;
 
-    private PageBean    mPageBean;
+    private String    mCondition;
+
+    private PageBean  mPageBean;
+
+    private String    mStatus;
+
+
+
+    public String getCondition() {
+        return mCondition;
+    }
 
 
 
@@ -85,7 +92,6 @@ public class OrderSearchBean {
 
 
 
-
     /**
      * @return the orderType
      */
@@ -105,10 +111,25 @@ public class OrderSearchBean {
 
 
     /**
+     * @return the status
+     */
+    public String getStatus() {
+        return mStatus;
+    }
+
+
+
+    /**
      * @return the user
      */
     public UserBean getUser() {
         return mUser;
+    }
+
+
+
+    public void setCondition(final String pCondition) {
+        mCondition = pCondition;
     }
 
 
@@ -164,23 +185,21 @@ public class OrderSearchBean {
 
 
     /**
+     * @param pStatus
+     *            the status to set
+     */
+    public void setStatus(final String pStatus) {
+        mStatus = pStatus;
+    }
+
+
+
+    /**
      * @param pUser
      *            the user to set
      */
     public void setUser(final UserBean pUser) {
         mUser = pUser;
-    }
-
-
-
-    public String getCondition() {
-        return mCondition;
-    }
-
-
-
-    public void setCondition(String pCondition) {
-        mCondition = pCondition;
     }
 
 }

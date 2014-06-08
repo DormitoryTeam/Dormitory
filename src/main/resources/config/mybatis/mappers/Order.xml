@@ -89,6 +89,9 @@
 		<if test="condition != null">
 			and o.condition = #{condition}
 		</if>
+		<if test="status!= null">
+			and o.status!= = #{status}
+		</if>
 	</sql>
 
 	<sql id="limit-split-page">
@@ -434,7 +437,7 @@
 		<result property="email" column="bt_email" />
 		<result property="code" column="bt_code" />
 		<result property="password" column="bt_password" />
-		
+		<association property="info" resultMap="belongToInfo" />
 	</resultMap>
 
 	<resultMap id="orderContact" type="com.noeasy.money.model.OrderContactInfo">

@@ -32,7 +32,7 @@ public class DateUtils {
             throw new IllegalArgumentException("formatRule is blank.");
         }
         if (null == date) {
-            throw new IllegalArgumentException("date is null.");
+            return "";
         }
         String result = null;
         DateFormat formatter = new SimpleDateFormat(formatRule);

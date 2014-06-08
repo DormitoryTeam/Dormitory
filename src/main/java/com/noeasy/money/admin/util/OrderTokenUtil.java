@@ -10,9 +10,13 @@ import org.apache.commons.lang3.StringUtils;
 
 public class OrderTokenUtil {
 
-    private static final int    ORDER_TOKEN_LENGTH = 10;
+    private static final int    ORDER_TOKEN_LENGTH           = 10;
 
-    private static final String PREFIX_ZERO        = "0";
+    private static final String PREFIX_ZERO                  = "0";
+
+    public static final String  PICKUP_ORDER_TOKEN_PREFIX    = "PU";
+
+    public static final String  DORMITORY_ORDER_TOKEN_PREFIX = "AC";
 
 
 
