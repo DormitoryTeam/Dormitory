@@ -85,8 +85,7 @@ public class AdminExcelController {
 
     @RequestMapping("/exportPickUpExcel" + Constants.URL_SUFFIX)
     public void exportPickUpRecords(final HttpServletRequest request, final HttpServletResponse response,
-            final ModelMap model, final String dateFrom, final String dateTo, final String status,
-            final String condition) {
+            final ModelMap model, final String dateFrom, final String dateTo, final String status, final String condition) {
         OrderSearchBean searchBean = new OrderSearchBean();
         if (StringUtils.isNoneBlank(dateFrom)) {
             searchBean.setDateFrom(DateUtils.stringToDate(dateFrom));
@@ -97,10 +96,11 @@ public class AdminExcelController {
         if (StringUtils.isNoneBlank(status)) {
             searchBean.setStatus(status);
         }
-        if (StringUtils.isNoneBlank(condition)) {
+        if (StringUtils.isNotBlank(condition)) {
             searchBean.setCondition(condition);
         }
         searchBean.setOrderType(OrderType.PICKUP);
+        
         List<OrderBean> orders = orderService.queryOrder(searchBean);
         HSSFWorkbook workbook = OrderExcelUtils.writePickupExcel(orders);
 
@@ -123,7 +123,6 @@ public class AdminExcelController {
             }
         }
     }
-
 
 
     @RequestMapping("/toExportDormitoryExcel" + Constants.URL_SUFFIX)

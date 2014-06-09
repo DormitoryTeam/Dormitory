@@ -17,6 +17,14 @@
 			</select></td>
 		</tr>
 		<tr>
+			<td>是否有效</td>
+			<td><select name="condition">
+					<option value="">所有</option>
+					<option value="active">有效</option>
+					<option value="inactive">已删除</option>
+			</select></td>
+		</tr>
+		<tr>
 			<td><input type="submit" value="下载"</td>
 			<td><input type="button" value="返回" onclick="window.location.href='<c:url value="/admin/site/admin-navigation.html"/>'" /></td>
 		</tr>
