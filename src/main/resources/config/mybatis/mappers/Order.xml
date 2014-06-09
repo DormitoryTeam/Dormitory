@@ -90,7 +90,7 @@
 			and o.condition = #{condition}
 		</if>
 		<if test="status!= null">
-			and o.status!= = #{status}
+			and o.status = #{status}
 		</if>
 	</sql>
 

@@ -32,7 +32,7 @@ public class OrderExcelUtils {
             "学生识别码", "名", "姓", "生日", "性别", "QQ", "邮箱地址", "联系方式", "uk手机号", "航空公司", "航班号", "起飞时间", "到达时间", "起飞机场(城市)",
             "中转机场", "到达机场", "落地航站楼", "送达住址", "送达地邮编", "行李", "国内快递地址", "会员卡号", "快递单号", "备注" };
 
-    private static final Integer[] PICKUP_COLUMN_UNDEFINED = new Integer[] { 12, 18, 20, 24, 25, 26, 27 };
+    private static final Integer[] PICKUP_COLUMN_UNDEFINED = new Integer[] { 3, 12, 18, 20, 24, 25, 26, 27 };
 
     private static List<Integer>   mPickupUndefinedIndexes;
 
@@ -42,8 +42,27 @@ public class OrderExcelUtils {
 
 
 
-    protected static String converGender(final int gender) {
+    protected static String convertGender(final int gender) {
         return gender > 0 ? "女" : "男";
+    }
+
+
+
+    protected static String convertStatus(final String status) {
+        switch (status) {
+        case "INITIAL":
+            return "等待用户完成订单";
+        case "COMMIT":
+            return "已提交,等待审核";
+        case "REVIEWDE":
+            return "审核完成，已发送付款邮件";
+        case "PAYMENT_DONE":
+            return "已支付，已发送车票邮件";
+        case "PAYMENT_NOT_DONE":
+            return "未支付，已发送车票邮件";
+        default:
+            return "未知的状态";
+        }
     }
 
 
@@ -98,10 +117,10 @@ public class OrderExcelUtils {
             cell.setCellValue(order.getAmount().toString());
             // 2
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(order.getOrderStatus());
+            cell.setCellValue(convertStatus(order.getOrderStatus()));
             // 3
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue("???");
+            cell.setCellValue("");
             // 4
             cell = orderRow.createCell(colIndex++);
             cell.setCellValue(order.getBelongsTo().getNewCode());
@@ -117,7 +136,7 @@ public class OrderExcelUtils {
                     DateUtils.DATE_TIME_FORAMT_RULE));
             // 8
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(converGender(order.getBelongsTo().getInfo().getGender()));
+            cell.setCellValue(convertGender(order.getBelongsTo().getInfo().getGender()));
             // 9
             cell = orderRow.createCell(colIndex++);
             cell.setCellValue(order.getBelongsTo().getInfo().getQq());
