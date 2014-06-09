@@ -28,11 +28,11 @@ public class OrderExcelUtils {
 
     private static final String    DEFUALT_SHEET_NAME      = "sheet";
 
-    private static final String[]  PICKUP_COLUMN_NAMES     = new String[] { "接机订单编号", "支付金额", "支付状态", "是否通过本司预定正课宿舍",
-            "学生识别码", "名", "姓", "生日", "性别", "QQ", "邮箱地址", "联系方式", "uk手机号", "航空公司", "航班号", "起飞时间", "到达时间", "起飞机场(城市)",
-            "中转机场", "到达机场", "落地航站楼", "送达住址", "送达地邮编", "行李", "国内快递地址", "会员卡号", "快递单号", "备注" };
+    private static final String[]  PICKUP_COLUMN_NAMES     = new String[] { "接机订单编号", "支付金额", "支付状态", "下单时间",
+            "是否通过本司预定正课宿舍", "学生识别码", "名", "姓", "生日", "性别", "QQ", "邮箱地址", "联系方式", "uk手机号", "航空公司", "航班号", "起飞时间",
+            "到达时间", "起飞机场(城市)", "中转机场", "到达机场", "落地航站楼", "送达住址", "送达地邮编", "行李", "国内快递地址", "会员卡号", "快递单号", "备注" };
 
-    private static final Integer[] PICKUP_COLUMN_UNDEFINED = new Integer[] { 3, 12, 18, 20, 24, 25, 26, 27 };
+    private static final Integer[] PICKUP_COLUMN_UNDEFINED = new Integer[] { 4, 13, 19, 21, 25, 26, 27, 28 };
 
     private static List<Integer>   mPickupUndefinedIndexes;
 
@@ -146,71 +146,70 @@ public class OrderExcelUtils {
             cell.setCellValue(convertStatus(order.getOrderStatus()));
             // 3
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue("");
+            cell.setCellValue(DateUtils.dateToString(order.getCreateTime(), DateUtils.DATE_TIME_FORAMT_RULE));
             // 4
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(order.getBelongsTo().getNewCode());
+            cell.setCellValue("");
             // 5
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(order.getBelongsTo().getInfo().getName());
+            cell.setCellValue(order.getBelongsTo().getNewCode());
             // 6
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(order.getBelongsTo().getInfo().getLastName());
+            cell.setCellValue(order.getBelongsTo().getInfo().getName());
             // 7
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(DateUtils.dateToString(order.getBelongsTo().getInfo().getBirthday(),
-                    DateUtils.DATE_TIME_FORAMT_RULE));
+            cell.setCellValue(order.getBelongsTo().getInfo().getLastName());
             // 8
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(convertGender(order.getBelongsTo().getInfo().getGender()));
+            cell.setCellValue(DateUtils.dateToString(order.getBelongsTo().getInfo().getBirthday()));
             // 9
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(order.getBelongsTo().getInfo().getQq());
+            cell.setCellValue(convertGender(order.getBelongsTo().getInfo().getGender()));
             // 10
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(order.getBelongsTo().getEmail());
+            cell.setCellValue(order.getBelongsTo().getInfo().getQq());
             // 11
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(order.getBelongsTo().getInfo().getPhone());
+            cell.setCellValue(order.getBelongsTo().getEmail());
             // 12
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue("");
+            cell.setCellValue(order.getBelongsTo().getInfo().getPhone());
             // 13
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(item.getFlightCompany());
+            cell.setCellValue("");
             // 14
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(item.getFlightNum());
+            cell.setCellValue(item.getFlightCompany());
             // 15
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(DateUtils.dateToString(item.getTakeOffDate(), DateUtils.DATE_TIME_FORAMT_RULE));
+            cell.setCellValue(item.getFlightNum());
             // 16
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(DateUtils.dateToString(item.getPickupDate(), DateUtils.DATE_TIME_FORAMT_RULE));
+            cell.setCellValue(DateUtils.dateToString(item.getTakeOffDate(), DateUtils.DATE_TIME_FORAMT_RULE));
             // 17
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(item.getTakeOffCity());
+            cell.setCellValue(DateUtils.dateToString(item.getPickupDate(), DateUtils.DATE_TIME_FORAMT_RULE));
             // 18
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue("");
+            cell.setCellValue(item.getTakeOffCity());
             // 19
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(item.getArrivalAirport() + "," + item.getArrivalCity());
+            cell.setCellValue("");
             // 20
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue("");
+            cell.setCellValue(item.getArrivalAirport() + "," + item.getArrivalCity());
             // 21
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(item.getPickup2Address());
+            cell.setCellValue("");
             // 22
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(item.getPickup2Postalcode());
+            cell.setCellValue(item.getPickup2Address());
             // 23
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(convertLuggageSize(item));
+            cell.setCellValue(item.getPickup2Postalcode());
             // 24
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue("");
+            cell.setCellValue(convertLuggageSize(item));
             // 25
             cell = orderRow.createCell(colIndex++);
             cell.setCellValue("");
@@ -218,6 +217,9 @@ public class OrderExcelUtils {
             cell = orderRow.createCell(colIndex++);
             cell.setCellValue("");
             // 27
+            cell = orderRow.createCell(colIndex++);
+            cell.setCellValue("");
+            // 28
             cell = orderRow.createCell(colIndex++);
             cell.setCellValue("");
         }
