@@ -15,6 +15,15 @@
 					<option value="PAYMENT_DONE">已支付，已发送车票邮件</option>
 					<option value="PAYMENT_NOT_DONE">未支付，已发送车票邮件</option>
 			</select></td>
+			
+		</tr>
+		<tr>
+			<td>是否有效</td>
+			<td><select name="condition">
+					<option value="">所有</option>
+					<option value="active">有效</option>
+					<option value="inactive">已删除</option>
+			</select></td>
 		</tr>
 		<tr>
 			<td><input type="submit" value="下载"</td>
