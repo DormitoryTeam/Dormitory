@@ -48,6 +48,31 @@ public class OrderExcelUtils {
 
 
 
+    protected static String convertLuggageSize(final PickupLineItem lineItem) {
+        lineItem.analyzeLuggage();
+        String luggage = "";
+        if (null != lineItem.getLuggageSize1()) {
+            luggage += lineItem.getLuggageSize1() + "寸X" + lineItem.getLuggageAmount1() + "个";
+        }
+        if (null != lineItem.getLuggageSize2()) {
+            luggage += "; " + lineItem.getLuggageSize2() + "寸X" + lineItem.getLuggageAmount2() + "个";
+        }
+        if (null != lineItem.getLuggageSize3()) {
+            luggage += "; " + lineItem.getLuggageSize3() + "寸X" + lineItem.getLuggageAmount3() + "个";
+        }
+
+        if (null != lineItem.getLuggageSize4()) {
+            luggage += "; " + lineItem.getLuggageSize4() + "寸X" + lineItem.getLuggageAmount4() + "个";
+        }
+
+        if (null != lineItem.getLuggageSize5()) {
+            luggage += "; " + lineItem.getLuggageSize5() + "寸X" + lineItem.getLuggageAmount5() + "个";
+        }
+        return luggage;
+    }
+
+
+
     protected static String convertStatus(final String status) {
         switch (status) {
         case "INITIAL":
@@ -73,6 +98,7 @@ public class OrderExcelUtils {
 
         HSSFPalette palette = workbook.getCustomPalette();
         palette.setColorAtIndex((short) 12, (byte) (79), (byte) (129), (byte) (189));
+        palette.setColorAtIndex((short) 8, (byte) (69), (byte) (69), (byte) (69));
 
         HSSFRow titleRow = worksheet.createRow(0);
         titleRow.setHeightInPoints(71.25f);
@@ -90,7 +116,7 @@ public class OrderExcelUtils {
             titleCellStyle.setFont(font);
 
             if (mPickupUndefinedIndexes.contains(i)) {
-                titleCellStyle.setFillForegroundColor(HSSFColor.BLACK.index);
+                titleCellStyle.setFillForegroundColor((short) 8);
             } else {
                 titleCellStyle.setFillForegroundColor((short) 12);
             }
@@ -181,7 +207,7 @@ public class OrderExcelUtils {
             cell.setCellValue(item.getPickup2Postalcode());
             // 23
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(item.getLuggageAmount());
+            cell.setCellValue(convertLuggageSize(item));
             // 24
             cell = orderRow.createCell(colIndex++);
             cell.setCellValue("");
