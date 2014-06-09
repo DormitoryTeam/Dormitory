@@ -21,7 +21,8 @@
 		room_info.id as ri_id, room_info.dormitory_id as ri_dormitory_id, room_info.room_type_id as ri_room_type_id, room_info.description as ri_description, room_info.checkin_date as ri_checkin_date, room_info.orientations as ri_orientations, room_info.floors as ri_floors, room_info.bed_type as ri_bed_type, room_info.house_area as ri_house_area, room_info.ensuite_bathroom as ri_ensuite_bathroom, room_info.kitchen_people_number as ri_kitchen_people_number, room_info.floor_arrangement as ri_floor_arrangement, room_info.orientation_arrangement as ri_orientation_arrangement, room_info.room_language_arrangement as ri_language_arrangement, room_info.kitchen_equipment as ri_kitchen_equipment, room_info.bathroom_equipment as ri_bathroom_equipment, room_info.status as ri_status,
 		room_type.name as ri_room_type,
 		contract_type.id as ct_id, contract_type.name as ct_name,
-		prefer.id as prefer_id, prefer.smoke as prefer_smoke, prefer.vegetarianism as prefer_vegetarianism, prefer.your_grade as prefer_your_grade, prefer.room_member_grade as prefer_room_member_grade, prefer.room_member_gender as prefer_room_member_gender, prefer.major as prefer_major, prefer.college as prefer_college, prefer.floor as prefer_floor, prefer.orientation as prefer_orientation, prefer.graduate_school as prefer_graduate_school, prefer.need_push as prefer_need_push, prefer.read_clause as prefer_read_clause
+		prefer.id as prefer_id, prefer.smoke as prefer_smoke, prefer.vegetarianism as prefer_vegetarianism, prefer.your_grade as prefer_your_grade, prefer.room_member_grade as prefer_room_member_grade, prefer.room_member_gender as prefer_room_member_gender, prefer.major as prefer_major, prefer.college as prefer_college, prefer.floor as prefer_floor, prefer.orientation as prefer_orientation, prefer.graduate_school as prefer_graduate_school, prefer.need_push as prefer_need_push, prefer.read_clause as prefer_read_clause,
+		company.id as dormitory_companyId, company.name as dormitory_companyName, city.id as dormitory_cityId, city.name as dormitory_cityName
 	</sql>
 	<sql id="select-dormitory-order-table-join">
 		from `order` as o
@@ -37,6 +38,8 @@
 		left join room_info as room_info on room_info.id = item.room_info_id
 		left join room_type as room_type on room_info.room_type_id = room_type.id
 		left join contract_type as contract_type on contract_type.id = item.contract_type_id
+		left join company as company on company.id = dormitory.company_id
+		left join city as city on city.id = dormitory.city_id
 	</sql>
 
 	<sql id="select-pickup-order-content">
@@ -489,6 +492,10 @@
 				<result property="description" column="dormitory_description" />
 				<result property="status" column="dormitory_status" />
 				<result property="additionalPrice" column="dormitory_additionalPrice" />
+				<result property="companyId" column="dormitory_companyId" />
+				<result property="company" column="dormitory_companyName" />
+				<result property="cityId" column="dormitory_cityId" />
+				<result property="city" column="dormitory_cityName" />
 			</association>
 			<association property="roomInfo" column="ri_id"
 				javaType="com.noeasy.money.model.RoomInfoBean">
