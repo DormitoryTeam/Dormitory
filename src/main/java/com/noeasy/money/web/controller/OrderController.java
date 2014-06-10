@@ -854,6 +854,8 @@ public class OrderController {
         paramMap.put("name", EmailUtils.getStringValue(userInfo.getLastName()) + " " + EmailUtils.getStringValue(userInfo.getName()));
         UserBean user = userService.findUserById(order.getBelongsTo().getId());
         paramMap.put("userToken", EmailUtils.getStringValue(user.getNewCode()));
+        paramMap.put("login",EmailUtils.getStringValue(user.getLogin()));
+        paramMap.put("password",EmailUtils.getStringValue(user.getPassword()));
         paramMap.put("address", EmailUtils.getStringValue(userInfo.getAddress()));
         paramMap.put("phone", EmailUtils.getStringValue(userInfo.getPhone()));
         paramMap.put("email", login);
