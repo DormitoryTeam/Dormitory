@@ -770,7 +770,8 @@
 		room_info.floors as ri_floors, room_info.bed_type as ri_bed_type, room_info.house_area as ri_house_area, room_info.ensuite_bathroom as ri_ensuite_bathroom, 
 		room_info.kitchen_people_number as ri_kitchen_people_number, room_info.floor_arrangement as ri_floor_arrangement, 
 		room_info.orientation_arrangement as ri_orientation_arrangement, room_info.room_language_arrangement as ri_language_arrangement, 
-		room_info.kitchen_equipment as ri_kitchen_equipment, room_info.bathroom_equipment as ri_bathroom_equipment, room_info.status as ri_status 
+		room_info.kitchen_equipment as ri_kitchen_equipment, room_info.bathroom_equipment as ri_bathroom_equipment, room_info.status as ri_status,
+		room_info.name as ri_name
 		from room_info
 		where id = #{id}
 	</select>
@@ -817,6 +818,7 @@
 		<result property="kitchenEquipment" column="ri_kitchen_equipment" />
 		<result property="bathroomEquipment" column="ri_bathroom_equipment" />
 		<result property="status" column="ri_status" />
+		<result property="name" column="ri_name" />
 	</resultMap>
 	
 	

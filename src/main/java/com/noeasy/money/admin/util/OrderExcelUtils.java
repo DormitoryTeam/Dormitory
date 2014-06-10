@@ -3,6 +3,7 @@ package com.noeasy.money.admin.util;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -155,10 +156,10 @@ public class OrderExcelUtils {
             cell.setCellValue(order.getBelongsTo().getNewCode());
             // 6
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(order.getBelongsTo().getInfo().getName());
+            cell.setCellValue(StringEscapeUtils.unescapeHtml(order.getBelongsTo().getInfo().getName()));
             // 7
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(order.getBelongsTo().getInfo().getLastName());
+            cell.setCellValue(StringEscapeUtils.unescapeHtml(order.getBelongsTo().getInfo().getLastName()));
             // 8
             cell = orderRow.createCell(colIndex++);
             cell.setCellValue(DateUtils.dateToString(order.getBelongsTo().getInfo().getBirthday()));
@@ -179,10 +180,10 @@ public class OrderExcelUtils {
             cell.setCellValue("");
             // 14
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(item.getFlightCompany());
+            cell.setCellValue(StringEscapeUtils.unescapeHtml(item.getFlightCompany()));
             // 15
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(item.getFlightNum());
+            cell.setCellValue(StringEscapeUtils.unescapeHtml(item.getFlightNum()));
             // 16
             cell = orderRow.createCell(colIndex++);
             cell.setCellValue(DateUtils.dateToString(item.getTakeOffDate(), DateUtils.DATE_TIME_FORAMT_RULE));
@@ -191,22 +192,22 @@ public class OrderExcelUtils {
             cell.setCellValue(DateUtils.dateToString(item.getPickupDate(), DateUtils.DATE_TIME_FORAMT_RULE));
             // 18
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(item.getTakeOffCity());
+            cell.setCellValue(StringEscapeUtils.unescapeHtml(item.getTakeOffCity()));
             // 19
             cell = orderRow.createCell(colIndex++);
             cell.setCellValue("");
             // 20
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(item.getArrivalAirport() + "," + item.getArrivalCity());
+            cell.setCellValue(StringEscapeUtils.unescapeHtml(item.getArrivalAirport() + "," + item.getArrivalCity()));
             // 21
             cell = orderRow.createCell(colIndex++);
             cell.setCellValue("");
             // 22
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(item.getPickup2Address());
+            cell.setCellValue(StringEscapeUtils.unescapeHtml(item.getPickup2Address()));
             // 23
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(item.getPickup2Postalcode());
+            cell.setCellValue(StringEscapeUtils.unescapeHtml(item.getPickup2Postalcode()));
             // 24
             cell = orderRow.createCell(colIndex++);
             cell.setCellValue(convertLuggageSize(item));

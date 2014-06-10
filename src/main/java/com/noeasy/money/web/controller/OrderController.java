@@ -691,6 +691,14 @@ public class OrderController {
             // 2. maintain prefer.
             maintainsPrefer(pRequest);
             setOrderCommit(pRequest);
+            OrderBean order = ServletUtils.getOrderFromSession(pRequest);
+            if (!order.isSendCommitEmail()) {
+                boolean sucess = sendDormitoryOrderCommitEmail(pRequest);
+                if (sucess) {
+                    order.setSendCommitEmail(true);
+                    orderService.sendCommitEmail(order);
+                }
+            }
             break;
         default:
             break;
@@ -832,6 +840,55 @@ public class OrderController {
 
     }
 
+    
+    private boolean sendDormitoryOrderCommitEmail(final HttpServletRequest pRequest) {
+        Map<String, String> paramMap = EmailUtils.getParamMap();
+        OrderBean order = ServletUtils.getOrderFromSession(pRequest);
+        DormitoryLineItem lineItem = new DormitoryLineItem();
+        if (order.getLineItems().get(0) instanceof DormitoryLineItem) {
+            lineItem = (DormitoryLineItem) order.getLineItems().get(0);
+        }
+        String login = order.getOrderContact().getBelongsToInfo().getEmail();
+        paramMap.put("orderId", OrderTokenUtil.getOrderToken(order.getId().toString(), "AC"));
+        UserInfoBean userInfo = order.getOrderContact().getBelongsToInfo();
+        paramMap.put("name", EmailUtils.getStringValue(userInfo.getLastName()) + " " + EmailUtils.getStringValue(userInfo.getName()));
+        UserBean user = userService.findUserById(order.getBelongsTo().getId());
+        paramMap.put("userToken", EmailUtils.getStringValue(user.getNewCode()));
+        paramMap.put("address", EmailUtils.getStringValue(userInfo.getAddress()));
+        paramMap.put("phone", EmailUtils.getStringValue(userInfo.getPhone()));
+        paramMap.put("email", login);
+        paramMap.put("dormitoryName", EmailUtils.getStringValue(lineItem.getDormitory().getName()));
+        paramMap.put("dormitoryAddress", EmailUtils.getStringValue(lineItem.getDormitory().getAddress()));
+        paramMap.put("roomName", EmailUtils.getStringValue(lineItem.getRoomInfo().getName()));
+        paramMap.put("contract", EmailUtils.getStringValue(lineItem.getContractType().getName()));
+        BigDecimal zero = new BigDecimal("0");
+        if (zero.compareTo(lineItem.getListPrice()) > 0) {
+            paramMap.put("weekPrice", "未知");            
+        } else {
+            paramMap.put("weekPrice", EmailUtils.getStringValue(lineItem.getListPrice().toString()));
+        }
+        if (lineItem.getDormitory().getAdditionalPrice() < 0) {
+            paramMap.put("additionalPrice", "未知");     
+        } else {
+            paramMap.put("additionalPrice", EmailUtils.getStringValue(lineItem.getDormitory().getAdditionalPrice().toString()));
+        }
+        if (zero.compareTo(lineItem.getAmount()) > 0) {
+            paramMap.put("salePrice", "未知");
+        } else {
+            paramMap.put("salePrice", EmailUtils.getStringValue(lineItem.getAmount().toString()));
+        }
+        paramMap.put("checkinDate", EmailUtils.getStringValue(lineItem.getRoomInfo().getCheckinDate()));
+        paramMap.put("comment", "");
+        paramMap.put("city", EmailUtils.getStringValue(lineItem.getDormitory().getCity()));
+        
+        String from = "accommodation@liuxuelife.com";
+        String fromAlias = EmailUtils.getServiceAlias();
+        String subject = "您的宿舍订单已提交-留学生活网-您身边的留学生活专家";
+        String template = EmailUtils.generateTemplateEmail("template2.html", paramMap);
+        boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, login, login, subject, template);
+        return sendSuccess;
+    }
+    
 
 
     private boolean sendPickupOrderCommitEmail(final HttpServletRequest pRequest) {
@@ -842,7 +899,7 @@ public class OrderController {
             pickupLineItem = (PickupLineItem) order.getLineItems().get(0);
         }
         UserInfoBean userInfo = order.getOrderContact().getBelongsToInfo();
-        String login = ServletUtils.getLoign(pRequest);
+        String login = order.getOrderContact().getBelongsToInfo().getEmail();
 
         paramMap.put("orderId", OrderTokenUtil.getOrderToken(order.getId().toString(), "PU"));
         paramMap.put("userName", EmailUtils.getStringValue(userInfo.getLastName()) + " " + EmailUtils.getStringValue(userInfo.getName()));
