@@ -39,9 +39,54 @@ public class AdminExcelController {
 
 
 
+    @RequestMapping("/exportDormitoryExcel" + Constants.URL_SUFFIX)
+    public void exportDormitoryRecords(final HttpServletRequest request, final HttpServletResponse response,
+            final ModelMap model, final String dateFrom, final String dateTo, final String status,
+            final String condition) {
+        OrderSearchBean searchBean = new OrderSearchBean();
+        if (StringUtils.isNoneBlank(dateFrom)) {
+            searchBean.setDateFrom(DateUtils.stringToDate(dateFrom));
+        }
+        if (StringUtils.isNoneBlank(dateTo)) {
+            searchBean.setDateTo(DateUtils.stringToDate(dateTo));
+        }
+        if (StringUtils.isNoneBlank(status)) {
+            searchBean.setStatus(status);
+        }
+        if (StringUtils.isNoneBlank(condition)) {
+            searchBean.setCondition(condition);
+        }
+        searchBean.setOrderType(OrderType.DORMITORY);
+        searchBean.setCondition("active");
+        List<OrderBean> orders = orderService.queryOrder(searchBean);
+        HSSFWorkbook workbook = OrderExcelUtils.writeDormitoryExcel(orders);
+
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("content-disposition", "attachment;filename=dormitoryOrders.xls");
+        OutputStream out = null;
+        try {
+            out = response.getOutputStream();
+            workbook.write(out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.flush();
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
     @RequestMapping("/exportPickUpExcel" + Constants.URL_SUFFIX)
     public void exportPickUpRecords(final HttpServletRequest request, final HttpServletResponse response,
-            final ModelMap model, final String dateFrom, final String dateTo, final String status, final String condition) {
+            final ModelMap model, final String dateFrom, final String dateTo, final String status,
+            final String condition) {
         OrderSearchBean searchBean = new OrderSearchBean();
         if (StringUtils.isNoneBlank(dateFrom)) {
             searchBean.setDateFrom(DateUtils.stringToDate(dateFrom));
@@ -56,7 +101,7 @@ public class AdminExcelController {
             searchBean.setCondition(condition);
         }
         searchBean.setOrderType(OrderType.PICKUP);
-        
+
         List<OrderBean> orders = orderService.queryOrder(searchBean);
         HSSFWorkbook workbook = OrderExcelUtils.writePickupExcel(orders);
 
@@ -78,6 +123,13 @@ public class AdminExcelController {
                 e.printStackTrace();
             }
         }
+    }
+
+
+
+    @RequestMapping("/toExportDormitoryExcel" + Constants.URL_SUFFIX)
+    public String toExportDormitoryRecords(final HttpServletRequest request, final HttpServletResponse response) {
+        return "admin/order/exportDormitoryOrderExcel";
     }
 
 
