@@ -96,4 +96,51 @@
 	<update id="updateCompanyStatus" parameterType="java.util.Map">
 		update company set status = #{status} where id = #{id}
 	</update>
+	
+	<select id="queryCities" resultType="hashmap" parameterType="java.util.Map">
+		select id, country_id, name, name_ch, status, create_time, topCity
+		from city where 1=1
+		<if test="name != null">
+			and name_ch like concat('%', #{name}, '%')
+		</if>
+	</select>
+	
+	<insert id="saveCity" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.Map">
+		insert into city (country_id, name, name_ch, status, topCity) values 
+		(#{countryId}, #{originalName}, #{name}, #{status}, #{topCity});
+	</insert>
+	
+	<update id="updateCity" parameterType="java.util.Map">
+		update city set
+		name = #{originalName},
+		name_ch = #{name},
+		topCity = #{topCity},
+		status = #{status} 
+		where id = #{id}
+	</update>
+	
+	<select id="queryColleges" resultType="hashmap" parameterType="string">
+		select id, city_id, name, original_name, latitude, longitude, postalcode, status, create_time, topCollege
+		from city where 1=1
+		<if test="name != null">
+			and name like concat('%', #{name}, '%')
+		</if>
+		<if test="cityId != null">
+			and city_id = #{cityId}
+		</if>
+	</select>
+	
+	<insert id="saveCollege" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.Map">
+		insert into city (city_id, name, original_name, latitude, longitude, postalcode, status, create_time, topCollege) values 
+		(#{city_id}, #{name}, #{originalName}, #{latitude}, #{longitude}, #{postalcode}, #[status}, now(), #{topCollege});
+	</insert>
+	
+	<update id="updateCollege" parameterType="java.util.Map">
+		update city set
+		name = #{originalName},
+		name_ch = #{name},
+		topCity = #{topCity},
+		status = #{status} 
+		where id = #{id}
+	</update>
 </mapper>

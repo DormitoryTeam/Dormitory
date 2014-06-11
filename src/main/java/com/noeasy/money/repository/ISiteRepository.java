@@ -62,6 +62,14 @@ public interface ISiteRepository {
 
 
 
+    List<Map<String, Object>> queryCities(String pCityName);
+
+
+
+    List<Map<String, Object>> queryColleges(String pCollegeName, String pCityId);
+
+
+
     List<Map<String, Object>> queryCompanies();
 
 
@@ -74,6 +82,15 @@ public interface ISiteRepository {
 
 
 
+    boolean saveCity(String pName, String pOriginalName, String pTopCity, String pStatus);
+
+
+
+    boolean saveCollege(String pName, String pOriginalName, String pLattilude, String pLongitude, String pPostalCode,
+            boolean pTopCollege, String pStatus);
+
+
+
     boolean saveCompnay(String pCompanyName);
 
 
@@ -83,6 +100,15 @@ public interface ISiteRepository {
 
 
     boolean updateArticle(RichTextBean pRichTextBean);
+
+
+
+    boolean updateCity(String pId, String pName, String pOriginalName, String pTopCity, String pStatus);
+
+
+
+    boolean updateCollege(String pId, String pCityId, String pName, String pOriginalName, String pLattilude,
+            String pLongitude, String pPostalCode, boolean pTopCollege, String pStatus);
 
 
 

@@ -77,6 +77,15 @@ public class AdminSiteController {
 
 
 
+    @RequestMapping("/save-city" + Constants.URL_SUFFIX)
+    public String saveCity(final HttpServletRequest request, final HttpServletResponse response, final Model model,
+            final String id, final String name, final String originalName, final String topCity, final String status) {
+        siteService.saveOrUpdateCity(id, name, originalName, topCity, status);
+        return "redirect:/admin/site/city-management.html";
+    }
+
+
+
     @RequestMapping("/save-company" + Constants.URL_SUFFIX)
     public String saveCompnay(final HttpServletRequest request, final HttpServletResponse response, final Model model,
             final String name) {
@@ -128,6 +137,16 @@ public class AdminSiteController {
         List<RichTextBean> articleTitles = siteService.queryArticleTitles(null);
         model.addAttribute("articleTitles", articleTitles);
         return "admin/site/article-list";
+    }
+
+
+
+    @RequestMapping("/city-management" + Constants.URL_SUFFIX)
+    public String toCityManagement(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final String cityName) {
+        List<Map<String, Object>> cities = siteService.queryCities(cityName);
+        model.addAttribute("cities", cities);
+        return "admin/site/city-management";
     }
 
 

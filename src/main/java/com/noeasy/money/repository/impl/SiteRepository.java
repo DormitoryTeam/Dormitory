@@ -103,6 +103,32 @@ public class SiteRepository extends BaseRepository implements ISiteRepository {
 
 
     /**
+     * @see com.noeasy.money.repository.ISiteRepository#queryCities(java.lang.String)
+     */
+    @Override
+    public List<Map<String, Object>> queryCities(final String pCityName) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("name", pCityName);
+        return getSqlSession().selectList("com.noeasy.money.model.Site.queryCities", params);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.ISiteRepository#queryColleges(java.lang.String,
+     *      java.lang.String)
+     */
+    @Override
+    public List<Map<String, Object>> queryColleges(final String pCollegeName, final String pCityId) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("name", pCollegeName);
+        params.put("cityId", pCityId);
+        return getSqlSession().selectList("com.noeasy.money.model.Site.queryColleges", params);
+    }
+
+
+
+    /**
      * @see com.noeasy.money.repository.ISiteRepository#queryCompanies()
      */
     @Override
@@ -128,6 +154,44 @@ public class SiteRepository extends BaseRepository implements ISiteRepository {
     @Override
     public boolean saveArticle(final RichTextBean pRichTextBean) {
         return getSqlSession().insert("com.noeasy.money.model.Site.saveArticle", pRichTextBean) > 0;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.ISiteRepository#saveCity(java.lang.String,
+     *      java.lang.String, String, java.lang.String)
+     */
+    @Override
+    public boolean saveCity(final String pName, final String pOriginalName, final String pTopCity, final String pStatus) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("countryId", 1);
+        params.put("name", pName);
+        params.put("originalName", pOriginalName);
+        params.put("topCity", pTopCity);
+        params.put("status", pStatus);
+        return getSqlSession().insert("com.noeasy.money.model.Site.saveCity", params) > 1;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.ISiteRepository#saveCollege(java.lang.String,
+     *      java.lang.String, java.lang.String, java.lang.String,
+     *      java.lang.String, boolean, java.lang.String)
+     */
+    @Override
+    public boolean saveCollege(final String pName, final String pOriginalName, final String pLattilude,
+            final String pLongitude, final String pPostalCode, final boolean pTopCollege, final String pStatus) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("name", pName);
+        params.put("originalName", pOriginalName);
+        params.put("lattilude", pLattilude);
+        params.put("longitude", pLongitude);
+        params.put("postalCode", pPostalCode);
+        params.put("topCollege", pTopCollege);
+        params.put("status", pStatus);
+        return getSqlSession().insert("com.noeasy.money.model.Site.saveCollege", params) > 1;
     }
 
 
@@ -168,6 +232,48 @@ public class SiteRepository extends BaseRepository implements ISiteRepository {
     @Override
     public boolean updateArticle(final RichTextBean pRichTextBean) {
         return getSqlSession().update("com.noeasy.money.model.Site.updateArticle", pRichTextBean) > 0;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.ISiteRepository#updateCity(java.lang.String,
+     *      java.lang.String, java.lang.String, String, java.lang.String)
+     */
+    @Override
+    public boolean updateCity(final String pId, final String pName, final String pOriginalName, final String pTopCity,
+            final String pStatus) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("id", pId);
+        params.put("name", pName);
+        params.put("originalName", pOriginalName);
+        params.put("topCity", pTopCity);
+        params.put("status", pStatus);
+        return getSqlSession().update("com.noeasy.money.model.Site.updateCity", params) > 1;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.ISiteRepository#updateCollege(java.lang.String,
+     *      java.lang.String, java.lang.String, java.lang.String,
+     *      java.lang.String, java.lang.String, java.lang.String, boolean,
+     *      java.lang.String)
+     */
+    @Override
+    public boolean updateCollege(final String pId, final String pCityId, final String pName,
+            final String pOriginalName, final String pLattilude, final String pLongitude, final String pPostalCode,
+            final boolean pTopCollege, final String pStatus) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("id", pId);
+        params.put("name", pName);
+        params.put("originalName", pOriginalName);
+        params.put("lattilude", pLattilude);
+        params.put("longitude", pLongitude);
+        params.put("postalcode", pPostalCode);
+        params.put("topCollege", pTopCollege);
+        params.put("status", pStatus);
+        return getSqlSession().update("com.noeasy.money.model.Site.updateCollege", params) > 1;
     }
 
 

@@ -33,6 +33,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.noeasy.money.model.RichTextBean;
@@ -40,7 +41,6 @@ import com.noeasy.money.repository.ISiteRepository;
 import com.noeasy.money.service.ISiteService;
 
 /**
- * <class description>
  * 
  * @author: Yove
  * @version: 1.0, Mar 6, 2014
@@ -116,6 +116,27 @@ public class SiteService implements ISiteService {
 
 
     /**
+     * @see com.noeasy.money.service.ISiteService#queryCities(java.lang.String)
+     */
+    @Override
+    public List<Map<String, Object>> queryCities(final String pCityName) {
+        return siteRepository.queryCities(pCityName);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.ISiteService#queryColleges(java.lang.String,
+     *      java.lang.String)
+     */
+    @Override
+    public List<Map<String, Object>> queryColleges(final String pCollegeName, final String pCityId) {
+        return siteRepository.queryColleges(pCollegeName, pCityId);
+    }
+
+
+
+    /**
      * @see com.noeasy.money.service.ISiteService#queryCompanies()
      */
     @Override
@@ -154,6 +175,43 @@ public class SiteService implements ISiteService {
             return siteRepository.saveArticle(pRichTextBean);
         } else {
             return siteRepository.updateArticle(pRichTextBean);
+        }
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.ISiteService#saveOrUpdateCity(java.lang.String,
+     *      java.lang.String, java.lang.String, String, java.lang.String)
+     */
+    @Override
+    public boolean saveOrUpdateCity(final String pId, final String pName, final String pOriginalName,
+            final String pTopCity, final String pStatus) {
+        if (StringUtils.isBlank(pId)) {
+            return siteRepository.saveCity(pName, pOriginalName, pTopCity, pStatus);
+        } else {
+            return siteRepository.updateCity(pId, pName, pOriginalName, pTopCity, pStatus);
+        }
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.ISiteService#saveOrUpdateCollege(java.lang.String,
+     *      java.lang.String, java.lang.String, java.lang.String,
+     *      java.lang.String, java.lang.String, java.lang.String, boolean,
+     *      java.lang.String)
+     */
+    @Override
+    public boolean saveOrUpdateCollege(final String pId, final String pCityId, final String pName,
+            final String pOriginalName, final String pLattilude, final String pLongitude, final String pPostalCode,
+            final boolean pTopCollege, final String pStatus) {
+        if (StringUtils.isBlank(pId)) {
+            return siteRepository.saveCollege(pName, pOriginalName, pLattilude, pLongitude, pPostalCode, pTopCollege,
+                    pStatus);
+        } else {
+            return siteRepository.updateCollege(pId, pCityId, pName, pOriginalName, pLattilude, pLongitude,
+                    pPostalCode, pTopCollege, pStatus);
         }
     }
 
