@@ -12,7 +12,7 @@
 </head>
 <body>
 	<form action="<c:url value="/admin/site/city-management.html"/>" method="POST">
-		城市名称: <input type="text" name="cityName" value="${name}" /> <input type="submit" value="搜索" />
+		城市名称: <input type="text" name="cityName" value="${cityName}" /> <input type="submit" value="搜索" />
 	</form>
 	<table class="table table-hover table-bordered table-striped">
 		<tr>

@@ -94,8 +94,8 @@ public interface ISiteService {
 
 
 
-    boolean saveOrUpdateCollege(String pId, String pCityId, String pName, String pOriginalName, String pLattilude,
-            String pLongitude, String pPostalCode, boolean pTopCollege, String status);
+    boolean saveOrUpdateCollege(String pId, String pCityId, String pName, String pOriginalName, String pLatitude,
+            String pLongitude, String pPostalCode, String pTopCollege, String status);
 
 
 

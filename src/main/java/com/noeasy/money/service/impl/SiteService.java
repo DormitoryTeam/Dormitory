@@ -199,19 +199,19 @@ public class SiteService implements ISiteService {
     /**
      * @see com.noeasy.money.service.ISiteService#saveOrUpdateCollege(java.lang.String,
      *      java.lang.String, java.lang.String, java.lang.String,
-     *      java.lang.String, java.lang.String, java.lang.String, boolean,
+     *      java.lang.String, java.lang.String, java.lang.String, String,
      *      java.lang.String)
      */
     @Override
     public boolean saveOrUpdateCollege(final String pId, final String pCityId, final String pName,
-            final String pOriginalName, final String pLattilude, final String pLongitude, final String pPostalCode,
-            final boolean pTopCollege, final String pStatus) {
+            final String pOriginalName, final String pLatitude, final String pLongitude, final String pPostalCode,
+            final String pTopCollege, final String pStatus) {
         if (StringUtils.isBlank(pId)) {
-            return siteRepository.saveCollege(pName, pOriginalName, pLattilude, pLongitude, pPostalCode, pTopCollege,
-                    pStatus);
+            return siteRepository.saveCollege(pName, pOriginalName, pCityId, pLatitude, pLongitude, pPostalCode,
+                    pTopCollege, pStatus);
         } else {
-            return siteRepository.updateCollege(pId, pCityId, pName, pOriginalName, pLattilude, pLongitude,
-                    pPostalCode, pTopCollege, pStatus);
+            return siteRepository.updateCollege(pId, pCityId, pName, pOriginalName, pLatitude, pLongitude, pPostalCode,
+                    pTopCollege, pStatus);
         }
     }
 

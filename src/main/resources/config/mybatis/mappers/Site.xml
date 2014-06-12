@@ -121,7 +121,7 @@
 	
 	<select id="queryColleges" resultType="hashmap" parameterType="string">
 		select id, city_id, name, original_name, latitude, longitude, postalcode, status, create_time, topCollege
-		from city where 1=1
+		from college where 1=1
 		<if test="name != null">
 			and name like concat('%', #{name}, '%')
 		</if>
@@ -131,15 +131,19 @@
 	</select>
 	
 	<insert id="saveCollege" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.Map">
-		insert into city (city_id, name, original_name, latitude, longitude, postalcode, status, create_time, topCollege) values 
-		(#{city_id}, #{name}, #{originalName}, #{latitude}, #{longitude}, #{postalcode}, #[status}, now(), #{topCollege});
+		insert into college (city_id, name, original_name, latitude, longitude, postalcode, status, create_time, topCollege) values 
+		(#{cityId}, #{name}, #{originalName}, #{latitude}, #{longitude}, #{postalcode}, #{status}, now(), #{topCollege});
 	</insert>
 	
 	<update id="updateCollege" parameterType="java.util.Map">
-		update city set
-		name = #{originalName},
-		name_ch = #{name},
-		topCity = #{topCity},
+		update college set
+		name = #{name},
+		original_name = #{originalName},
+		city_id = #{cityId},
+		latitude = #{latitude},
+		longitude = #{longitude},
+		postalcode = #{postalcode},
+		topCollege = #{topCollege},
 		status = #{status} 
 		where id = #{id}
 	</update>

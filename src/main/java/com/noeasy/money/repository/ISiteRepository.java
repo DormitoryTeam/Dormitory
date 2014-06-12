@@ -86,8 +86,8 @@ public interface ISiteRepository {
 
 
 
-    boolean saveCollege(String pName, String pOriginalName, String pLattilude, String pLongitude, String pPostalCode,
-            boolean pTopCollege, String pStatus);
+    boolean saveCollege(String pName, String pOriginalName, String pCityId, String pLatitude, String pLongitude,
+            String pPostalCode, String pTopCollege, String pStatus);
 
 
 
@@ -107,8 +107,8 @@ public interface ISiteRepository {
 
 
 
-    boolean updateCollege(String pId, String pCityId, String pName, String pOriginalName, String pLattilude,
-            String pLongitude, String pPostalCode, boolean pTopCollege, String pStatus);
+    boolean updateCollege(String pId, String pCityId, String pName, String pOriginalName, String pLatitude,
+            String pLongitude, String pPostalCode, String pTopCollege, String pStatus);
 
 
 

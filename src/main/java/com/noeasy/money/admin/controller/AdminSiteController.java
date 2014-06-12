@@ -86,6 +86,17 @@ public class AdminSiteController {
 
 
 
+    @RequestMapping("/save-college" + Constants.URL_SUFFIX)
+    public String saveCollege(final HttpServletRequest request, final HttpServletResponse response, final Model model,
+            final String id, final String name, final String originalName, final String cityId, final String latitude,
+            final String longitude, final String postalcode, final String topCollege, final String status) {
+        siteService.saveOrUpdateCollege(id, cityId, name, originalName, latitude, longitude, postalcode, topCollege,
+                status);
+        return "redirect:/admin/site/college-management.html";
+    }
+
+
+
     @RequestMapping("/save-company" + Constants.URL_SUFFIX)
     public String saveCompnay(final HttpServletRequest request, final HttpServletResponse response, final Model model,
             final String name) {
@@ -146,7 +157,22 @@ public class AdminSiteController {
             final Model model, final String cityName) {
         List<Map<String, Object>> cities = siteService.queryCities(cityName);
         model.addAttribute("cities", cities);
+        model.addAttribute("cityName", cityName);
         return "admin/site/city-management";
+    }
+
+
+
+    @RequestMapping("/college-management" + Constants.URL_SUFFIX)
+    public String toCollegeManagement(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final String collegeName, final String cityId) {
+        List<Map<String, Object>> colleges = siteService.queryColleges(collegeName, cityId);
+        List<Map<String, Object>> cities = siteService.queryCities(null);
+        model.addAttribute("cities", cities);
+        model.addAttribute("colleges", colleges);
+        model.addAttribute("collegeName", collegeName);
+        model.addAttribute("cityId", cityId);
+        return "admin/site/college-management";
     }
 
 
