@@ -190,6 +190,10 @@ public interface IDormitoryRepository {
 
 
 
+    boolean updateDormitoryPrice(String pId);
+
+
+
     boolean updateDormitoryStatus(String pId, DormitoryStatus pStatus);
 
 

@@ -507,6 +507,18 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
 
 
     /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#updateDormitoryPrice(java.lang.String)
+     */
+    @Override
+    public boolean updateDormitoryPrice(final String pId) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("dormitoryId", pId);
+        return getSqlSession().update("com.noeasy.money.model.Dormitory.updateDormitoryPrice", params) > 0;
+    }
+
+
+
+    /**
      * @see com.noeasy.money.repository.IDormitoryRepository#updateDormitoryStatus(java.lang.String,
      *      com.noeasy.money.enumeration.DormitoryStatus)
      */

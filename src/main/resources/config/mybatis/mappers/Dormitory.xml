@@ -382,6 +382,13 @@
 		)
 	</insert>
 
+	<update id="updateDormitoryPrice" parameterType="map">
+		update dormitory set 
+		weekPrice = (select min(weekPrice) from room_price where room_info_id in (select id from room_info where dormitory_id  = #{dormitoryId})),
+		salePrice = (select min(salePrice) from room_price where room_info_id in (select id from room_info where dormitory_id  = #{dormitoryId}))
+		where id = #{dormitoryId}
+	</update>
+
 	<!-- RoomInfo #################################################### -->
 
 	<sql id="select-room-info">

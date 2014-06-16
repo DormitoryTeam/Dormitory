@@ -352,6 +352,16 @@ public class DormitoryService implements IDormitoryService {
 
 
     /**
+     * @see com.noeasy.money.service.IDormitoryService#updateDormitoryPrice(java.lang.String)
+     */
+    @Override
+    public boolean updateDormitoryPrice(final String pId) {
+        return dormitoryRepository.updateDormitoryPrice(pId);
+    }
+
+
+
+    /**
      * @see com.noeasy.money.service.IDormitoryService#updateDormitoryStatus(java.lang.String,
      *      com.noeasy.money.enumeration.DormitoryStatus)
      */

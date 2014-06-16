@@ -154,10 +154,11 @@ public class AdminDormitoryController {
     public String saveRoomInfo(final HttpServletRequest request, final HttpServletResponse response, final Model model,
             final String dormitoryId, final RoomInfoBean room) {
         boolean result = dormitoryService.saveOrUpdateRoombInfo(room);
+        dormitoryService.updateDormitoryPrice(dormitoryId);
         model.addAttribute("result", result);
         model.addAttribute("roomId", room.getId());
         model.addAttribute("dormitoryId", dormitoryId);
-        return "forward:room-edit.html";
+        return "forward:room-edit.html?roomId=" + room.getId();
     }
 
 
