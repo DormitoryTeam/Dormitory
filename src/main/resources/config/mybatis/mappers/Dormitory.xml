@@ -575,14 +575,20 @@
 		from dormitory_media
 		<include refid="where" />
 		<include refid="where-with-media-type" />
-		<include refid="order-by-field" />
+		order by cover desc
+	</select>
+	
+	<select id="queryCoverImageName" resultType="string" parameterType="java.util.Map">
+		select media_path from dormitory_media
+		<include refid="where" />
+		and dormitory_id = #{dormitoryId} and media_type = 1 and cover = 1
 	</select>
 
 
 	<insert id="insertImagePath" parameterType="java.util.List">
-		insert into dormitory_media (dormitory_id, media_type, media_path, `index`) values
+		insert into dormitory_media (dormitory_id, media_type, media_path, `index`, cover) values
 		<foreach collection="list" item="item" index="index" open="" close="" separator=",">
-			(#{item.dormitoryId}, 1, #{item.path}, #{index})
+			(#{item.dormitoryId}, 1, #{item.path}, #{index}, #{item.cover})
 		</foreach>
 	</insert>
 
@@ -596,6 +602,7 @@
 	<delete id="removeMediaPath" parameterType="int">
 		delete from dormitory_media where dormitory_id = #{dormitoryId}
 	</delete>
+
 
 
 	<!-- Service & Equipment ######################################################## -->

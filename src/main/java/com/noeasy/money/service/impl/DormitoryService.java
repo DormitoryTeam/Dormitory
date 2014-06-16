@@ -170,6 +170,7 @@ public class DormitoryService implements IDormitoryService {
             List<String> videoPath = dormitoryRepository.queryVideoPathByDormitoryId(dormitory.getId());
             dormitory.setVideoPath(videoPath);
         }
+        dormitory.setCoverImageName(dormitoryRepository.queryCoverImageNameByDormitoryId(dormitory.getId()));
         return dormitory;
     }
 
@@ -282,6 +283,26 @@ public class DormitoryService implements IDormitoryService {
 
 
     /**
+     * @see com.noeasy.money.service.IDormitoryService#removeRoomInfos(java.util.List)
+     */
+    @Override
+    public Integer removeRoomInfos(final List<Integer> pRoomInfoIds) {
+        return dormitoryRepository.removeRoomInfos(pRoomInfoIds);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.IDormitoryService#removeRoomPrices(java.util.List)
+     */
+    @Override
+    public Integer removeRoomPrices(final List<Integer> pRoomPriceIds) {
+        return dormitoryRepository.removeRoomInfos(pRoomPriceIds);
+    }
+
+
+
+    /**
      * @see com.noeasy.money.service.IDormitoryService#saveDormitoryBrowseHistory(int,
      *      int)
      */
@@ -337,26 +358,6 @@ public class DormitoryService implements IDormitoryService {
     @Override
     public boolean updateDormitoryStatus(final String pId, final DormitoryStatus pStatus) {
         return dormitoryRepository.updateDormitoryStatus(pId, pStatus);
-    }
-
-
-
-    /**
-     * @see com.noeasy.money.service.IDormitoryService#removeRoomInfos(java.util.List)
-     */
-    @Override
-    public Integer removeRoomInfos(List<Integer> pRoomInfoIds) {
-        return dormitoryRepository.removeRoomInfos(pRoomInfoIds);
-    }
-
-
-
-    /**
-     * @see com.noeasy.money.service.IDormitoryService#removeRoomPrices(java.util.List)
-     */
-    @Override
-    public Integer removeRoomPrices(List<Integer> pRoomPriceIds) {
-        return dormitoryRepository.removeRoomInfos(pRoomPriceIds);
     }
 
 }

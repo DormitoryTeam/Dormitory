@@ -91,6 +91,12 @@ public class AdminDormitoryController {
 
         if (ArrayUtils.isNotEmpty(paramVector.getImageNames())) {
             dormitory.setPicPath(Arrays.asList(paramVector.getImageNames()));
+            for (String image : paramVector.getImageNames()) {
+                if (image.equals(paramVector.getCoverImageName())) {
+                    dormitory.setCoverImageName(image);
+                    break;
+                }
+            }
         }
 
         boolean result = dormitoryService.saveOrUpdateDormitory(dormitory);
@@ -244,7 +250,7 @@ public class AdminDormitoryController {
         if (StringUtils.isNotBlank(currentPage)) {
             page.setPageNum(Integer.valueOf(currentPage));
         }
-        
+
         page.setQueryString(request.getQueryString());
         searchBean.setPageBean(page);
         List<DormitoryBean> dormitories = dormitoryService.queryDormitoryPage(searchBean);

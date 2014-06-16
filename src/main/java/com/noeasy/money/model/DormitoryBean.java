@@ -103,6 +103,8 @@ public class DormitoryBean extends BaseBean {
 
     private Integer            mDisplayOrder;
 
+    private String             mCoverImageName;
+
 
 
     /**
@@ -168,6 +170,21 @@ public class DormitoryBean extends BaseBean {
 
 
 
+    public Integer getCompanyId() {
+        return mCompanyId;
+    }
+
+
+
+    /**
+     * @return the coverImageName
+     */
+    public String getCoverImageName() {
+        return mCoverImageName;
+    }
+
+
+
     /**
      * @return the currency
      */
@@ -182,6 +199,12 @@ public class DormitoryBean extends BaseBean {
      */
     public String getDescription() {
         return mDescription;
+    }
+
+
+
+    public Integer getDisplayOrder() {
+        return mDisplayOrder;
     }
 
 
@@ -436,6 +459,22 @@ public class DormitoryBean extends BaseBean {
 
 
 
+    public void setCompanyId(final Integer pCompanyId) {
+        mCompanyId = pCompanyId;
+    }
+
+
+
+    /**
+     * @param pCoverImageName
+     *            the coverImageName to set
+     */
+    public void setCoverImageName(final String pCoverImageName) {
+        mCoverImageName = pCoverImageName;
+    }
+
+
+
     /**
      * @param pCurrency
      *            the currency to set
@@ -452,6 +491,12 @@ public class DormitoryBean extends BaseBean {
      */
     public void setDescription(final String pDescription) {
         mDescription = pDescription;
+    }
+
+
+
+    public void setDisplayOrder(final Integer pDisplayOrder) {
+        mDisplayOrder = pDisplayOrder;
     }
 
 
@@ -652,30 +697,6 @@ public class DormitoryBean extends BaseBean {
      */
     public void setWeekPrice(final Double pWeekPrice) {
         mWeekPrice = pWeekPrice;
-    }
-
-
-
-    public Integer getDisplayOrder() {
-        return mDisplayOrder;
-    }
-
-
-
-    public void setDisplayOrder(Integer pDisplayOrder) {
-        mDisplayOrder = pDisplayOrder;
-    }
-
-
-
-    public Integer getCompanyId() {
-        return mCompanyId;
-    }
-
-
-
-    public void setCompanyId(Integer pCompanyId) {
-        mCompanyId = pCompanyId;
     }
 
 }

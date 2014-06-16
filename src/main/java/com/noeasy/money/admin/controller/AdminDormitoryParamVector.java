@@ -1,6 +1,5 @@
 package com.noeasy.money.admin.controller;
 
-
 /**
  * <class description>
  * 
@@ -12,6 +11,17 @@ public class AdminDormitoryParamVector {
 
     private String[] mImageNames;
 
+    private String   mCoverImageName;
+
+
+
+    /**
+     * @return the coverImageName
+     */
+    public String getCoverImageName() {
+        return mCoverImageName;
+    }
+
 
 
     /**
@@ -19,6 +29,26 @@ public class AdminDormitoryParamVector {
      */
     public String[] getImageNames() {
         return mImageNames;
+    }
+
+
+
+    /**
+     * @param pCoverImageName
+     *            the coverImageName to set
+     */
+    public void setCoverImageName(final String pCoverImageName) {
+        mCoverImageName = pCoverImageName;
+    }
+
+
+
+    /**
+     * @param pImageNames
+     *            the imageNames to set
+     */
+    public void setImageNames(final String[] pImageNames) {
+        mImageNames = pImageNames;
     }
 
 }

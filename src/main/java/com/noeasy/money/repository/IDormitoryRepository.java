@@ -101,6 +101,10 @@ public interface IDormitoryRepository {
 
 
 
+    String queryCoverImageNameByDormitoryId(int pDormitoryId);
+
+
+
     DormitoryBean queryDormitory(DormitorySearchBean pSearchBean);
 
 
@@ -169,7 +173,8 @@ public interface IDormitoryRepository {
 
 
 
-    Boolean saveDormitoryMediaPath(List<String> pMediaPath, Integer pDormitoryId, boolean pIsVideo);
+    Boolean saveDormitoryMediaPath(List<String> pMediaPath, Integer pDormitoryId, boolean pIsVideo,
+            String pCoverImagePath);
 
 
 
