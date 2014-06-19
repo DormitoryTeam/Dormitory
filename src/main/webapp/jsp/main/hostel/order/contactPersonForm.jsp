@@ -13,16 +13,7 @@
 				<input class="save btn-place-order-save" type="button" value="保存" />
 				<input type="button" style="background-color: #808080;" value="提交" />
 			</div>
-			<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist">
-				<li class="ui-state-default ui-corner-left" role="tab" tabindex="-1" aria-controls="tabs-personal" aria-labelledby="ui-id-1" aria-selected="false"><a href="#tabs-emergency" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-1">个人信息</a></li>
-				<li class="ui-state-default ui-corner-left" role="tab" tabindex="-1" aria-controls="tabs-hobby" aria-labelledby="ui-id-2" aria-selected="false"><a href="#tabs-emergency" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-2">个人偏好</a></li>
-				<li class="ui-state-default ui-corner-left" role="tab" tabindex="-1" aria-controls="tabs-security" aria-labelledby="ui-id-3" aria-selected="false"><a href="#tabs-emergency" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-3">担保人信息</a></li>
-				<li style="background-color: antiquewhite;" class="ui-state-default ui-corner-left ui-tabs-active ui-state-active" role="tab" tabindex="0" aria-controls="tabs-emergency" aria-labelledby="ui-id-4" aria-selected="true"><a href="#tabs-emergency" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-4">紧急联系人信息</a></li>
-				<li class="ui-state-default ui-corner-left" role="tab" tabindex="-1" aria-controls="tabs-additional" aria-labelledby="ui-id-5" aria-selected="false"><a href="#tabs-emergency" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-5">补充信息</a></li>
-			</ul>
-			
-			
-			
+			<jsp:include page="/jsp/main/hostel/order/include/dormitoryOrderTab.jsp"/>
 			<div id="tabs-emergency" aria-labelledby="ui-id-4" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" style="display: block;" aria-expanded="true" aria-hidden="false">
 				<fieldset>
 					<dl>

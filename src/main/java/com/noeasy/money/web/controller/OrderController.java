@@ -52,6 +52,8 @@ import com.noeasy.money.enumeration.OrderType;
 import com.noeasy.money.model.ContractType;
 import com.noeasy.money.model.DormitoryBean;
 import com.noeasy.money.model.DormitoryLineItem;
+import com.noeasy.money.model.FillDormitoryOrderStatus;
+import com.noeasy.money.model.FillPickupOrderStatus;
 import com.noeasy.money.model.LineItem;
 import com.noeasy.money.model.OrderBean;
 import com.noeasy.money.model.OrderContactInfo;
@@ -750,6 +752,8 @@ public class OrderController {
                 break;
             }
             OrderBean order = ServletUtils.getOrderFromSession(request);
+            order.setFillOrdmitoryOrderStatus(new FillDormitoryOrderStatus(order));
+            order.setFillPickupOrderStatus(new FillPickupOrderStatus(order));
             model.addAttribute("order", order);
             if (OrderType.PICKUP == order.getOrderType()) {
                 model.addAttribute("item", getPickupItemFromSesssion(request));
@@ -789,6 +793,8 @@ public class OrderController {
                     }
                 }
                 model.addAttribute("step", step);
+                order.setFillOrdmitoryOrderStatus(new FillDormitoryOrderStatus(order));
+                order.setFillPickupOrderStatus(new FillPickupOrderStatus(order));
                 return forwrdURLs[step];
             } else {
                 maintainSessionOrder(request, step);
@@ -800,6 +806,8 @@ public class OrderController {
                     }
                 }
                 model.addAttribute("step", step + 1);
+                order.setFillOrdmitoryOrderStatus(new FillDormitoryOrderStatus(order));
+                order.setFillPickupOrderStatus(new FillPickupOrderStatus(order));
                 return forwrdURLs[step + 1];
             }
         }

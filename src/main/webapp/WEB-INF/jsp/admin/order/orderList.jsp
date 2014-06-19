@@ -8,7 +8,7 @@ ${message}
 用户识别码： &nbsp<input type="text" name="userToken" value="${userToken}"/><br>
 起始时间： <input type="text" name="dateFrom" value="${dateFrom}"/><br>
 结束时间： <input type="text" name="dateTo" value="${dateTo}"/><br>
-是否删除：<select name="condition">
+是否有效：<select name="condition">
 		<option value="active" <c:if test="${empty param.condition or param.condition eq 'active'}">selected</c:if>>是</option>
 		<option value="inactive" <c:if test="${param.condition eq 'inactive'}">selected</c:if>>否</option>
 		</select><br>

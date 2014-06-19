@@ -34,9 +34,9 @@
 			</dl>
 			<dl>
 				<dt>
-					<input type="radio" class="ckbSortField" name="sortField" value="<c:choose><c:when test="${fn:startsWith (sortField, 'salePrice') and fn:endsWith (sortField, '+')}">salePrice-</c:when><c:otherwise>salePrice+</c:otherwise></c:choose>" <c:if test="${fn:startsWith (sortField, 'salePrice')}">checked</c:if> />
+					<input type="radio" class="ckbSortField" name="sortField" value="<c:choose><c:when test="${fn:startsWith (sortField, 'weekPrice') and fn:endsWith (sortField, '+')}">weekPrice-</c:when><c:otherwise>weekPrice+</c:otherwise></c:choose>" <c:if test="${fn:startsWith (sortField, 'weekPrice')}">checked</c:if> />
 				<dd>
-					<label for="price">按价格<c:if test="${fn:startsWith (sortField, 'salePrice')}">${arr}</c:if></label>
+					<label for="price">按价格<c:if test="${fn:startsWith (sortField, 'weekPrice')}">${arr}</c:if></label>
 				</dd>
 			</dl>
 			<c:if test="${not empty collegeId}">

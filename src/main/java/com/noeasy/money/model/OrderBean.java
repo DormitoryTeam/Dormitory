@@ -32,7 +32,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import com.noeasy.money.enumeration.OrderStatus;
 import com.noeasy.money.enumeration.OrderType;
 
 /**
@@ -44,37 +43,41 @@ import com.noeasy.money.enumeration.OrderType;
 
 public class OrderBean extends BaseBean {
 
-    public static final String CONDITION_ACTIVE   = "active";
+    public static final String       CONDITION_ACTIVE   = "active";
 
-    public static final String CONDITION_INACTIVE = "inactive";
+    public static final String       CONDITION_INACTIVE = "inactive";
 
-    private Integer            mId;
+    private Integer                  mId;
 
-    private String             mCurrency;
+    private String                   mCurrency;
 
-    private BigDecimal         mAmount;
+    private BigDecimal               mAmount;
 
-    private UserBean           mUser;
+    private UserBean                 mUser;
 
-    private UserBean           mBelongsTo;
+    private UserBean                 mBelongsTo;
 
-    private String             mOrderStatus;
+    private String                   mOrderStatus;
 
-    private OrderContactInfo   mOrderContact;
+    private OrderContactInfo         mOrderContact;
 
-    private List<LineItem>     mLineItems;
+    private List<LineItem>           mLineItems;
 
-    private List<OrderTail>    mTails;
+    private List<OrderTail>          mTails;
 
-    private OrderType          mOrderType;
+    private OrderType                mOrderType;
 
-    private Date               mCreateTime;
+    private Date                     mCreateTime;
 
-    private boolean            mSendSaveEmail;
+    private boolean                  mSendSaveEmail;
 
-    private boolean            mSendCommitEmail;
+    private boolean                  mSendCommitEmail;
 
-    private String             mCondition;
+    private String                   mCondition;
+
+    private FillDormitoryOrderStatus mFillOrdmitoryOrderStatus;
+
+    private FillPickupOrderStatus    mFillPickupOrderStatus;
 
 
 
@@ -279,6 +282,30 @@ public class OrderBean extends BaseBean {
 
     public void setCondition(String pCondition) {
         mCondition = pCondition;
+    }
+
+
+
+    public FillDormitoryOrderStatus getFillOrdmitoryOrderStatus() {
+        return mFillOrdmitoryOrderStatus;
+    }
+
+
+
+    public void setFillOrdmitoryOrderStatus(FillDormitoryOrderStatus pFillOrdmitoryOrderStatus) {
+        mFillOrdmitoryOrderStatus = pFillOrdmitoryOrderStatus;
+    }
+
+
+
+    public FillPickupOrderStatus getFillPickupOrderStatus() {
+        return mFillPickupOrderStatus;
+    }
+
+
+
+    public void setFillPickupOrderStatus(FillPickupOrderStatus pFillPickupOrderStatus) {
+        mFillPickupOrderStatus = pFillPickupOrderStatus;
     }
 
 }

@@ -18,6 +18,8 @@ import org.apache.poi.ss.usermodel.Font;
 import com.noeasy.money.model.DormitoryLineItem;
 import com.noeasy.money.model.OrderBean;
 import com.noeasy.money.model.PickupLineItem;
+import com.noeasy.money.model.UserBean;
+import com.noeasy.money.model.UserInfoBean;
 import com.noeasy.money.util.DateUtils;
 
 /**
@@ -34,7 +36,7 @@ public class OrderExcelUtils {
             "是否通过本司预定正课宿舍", "学生识别码", "名", "姓", "生日", "性别", "QQ", "邮箱地址", "联系方式", "uk手机号", "航空公司", "航班号", "起飞时间",
             "到达时间", "起飞机场(城市)", "中转机场", "到达机场", "落地航站楼", "送达住址", "送达地邮编", "行李", "国内快递地址", "会员卡号", "快递单号", "备注" };
 
-    private static final Integer[] PICKUP_COLUMN_UNDEFINED    = new Integer[] { 4, 13, 19, 21, 25, 26, 27, 28 };
+    private static final Integer[] PICKUP_COLUMN_UNDEFINED    = new Integer[] { 4, 13, 19, 21, 26, 27, 28 };
 
     private static List<Integer>   mPickupUndefinedIndexes;
 
@@ -282,9 +284,18 @@ public class OrderExcelUtils {
         HSSFCell cell;
         for (int i = 0; i < pOrders.size(); i++) {
             OrderBean order = pOrders.get(i);
+            PickupLineItem item = (PickupLineItem) order.getLineItems().get(0);
+            UserBean belongsTo = order.getBelongsTo();
+            if (null == item || null == belongsTo) {
+                continue;
+            }
+            if (null == order.getOrderContact() || null == order.getOrderContact().getBelongsToInfo()) {
+                continue;
+            }
+            UserInfoBean info = order.getOrderContact().getBelongsToInfo();
+
             HSSFRow orderRow = worksheet.createRow(i + 1);
             int colIndex = 0;
-            PickupLineItem item = (PickupLineItem) order.getLineItems().get(0);
 
             // 0
             cell = orderRow.createCell(colIndex++);
@@ -305,28 +316,28 @@ public class OrderExcelUtils {
             cell.setCellValue("");
             // 5
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(order.getBelongsTo().getNewCode());
+            cell.setCellValue(belongsTo.getNewCode());
             // 6
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(StringEscapeUtils.unescapeHtml4(order.getBelongsTo().getInfo().getName()));
+            cell.setCellValue(StringEscapeUtils.unescapeHtml4(info.getName()));
             // 7
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(StringEscapeUtils.unescapeHtml4(order.getBelongsTo().getInfo().getLastName()));
+            cell.setCellValue(StringEscapeUtils.unescapeHtml4(info.getLastName()));
             // 8
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(DateUtils.dateToString(order.getBelongsTo().getInfo().getBirthday()));
+            cell.setCellValue(DateUtils.dateToString(info.getBirthday()));
             // 9
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(convertGender(order.getBelongsTo().getInfo().getGender()));
+            cell.setCellValue(convertGender(info.getGender()));
             // 10
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(order.getBelongsTo().getInfo().getQq());
+            cell.setCellValue(info.getQq());
             // 11
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(order.getBelongsTo().getEmail());
+            cell.setCellValue(info.getEmail());
             // 12
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(order.getBelongsTo().getInfo().getPhone());
+            cell.setCellValue(info.getPhone());
             // 13
             cell = orderRow.createCell(colIndex++);
             cell.setCellValue("");
@@ -365,7 +376,7 @@ public class OrderExcelUtils {
             cell.setCellValue(convertLuggageSize(item));
             // 25
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue("");
+            cell.setCellValue(StringEscapeUtils.unescapeHtml4(info.getCountry()) + " " + StringEscapeUtils.unescapeHtml4(info.getProvince()) + "(省) "+ StringEscapeUtils.unescapeHtml4(info.getCity()) + "(市) " + StringEscapeUtils.unescapeHtml4(info.getCounty()) +"(区县) " +StringEscapeUtils.unescapeHtml4(info.getAddress()) + "( "+ StringEscapeUtils.unescapeHtml4(info.getPostalcode()) + " )");
             // 26
             cell = orderRow.createCell(colIndex++);
             cell.setCellValue("");

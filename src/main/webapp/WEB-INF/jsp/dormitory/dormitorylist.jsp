@@ -3,7 +3,7 @@
 <hostel:container template="hostel">
 
 	<script type="text/javascript" src="<c:url value='/js/dormitory/dormitory-list.js'/>"></script>
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDseYSlaYVhokgVdQuPH9Y35gACzO2n3BM&sensor=false"></script>
+	<!--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDseYSlaYVhokgVdQuPH9Y35gACzO2n3BM&sensor=false"></script>-->
 	
 	<%-- top section --%>
 	<header>
