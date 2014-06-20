@@ -1,9 +1,9 @@
-
+<link rel="stylesheet" href="/style/all.css">
 <form action="<c:url value='/admin/excel/exportPickUpExcel.html'/>" method="POST">
 	<table>
 		<tr>
 			<td>下单时间:</td>
-			<td><input type="text" name="dateFrom" value="" />到<input type="text" name="dateTo" value="" /></td>
+			<td><input type="text" name="dateFrom" value="" class="datepicker" />到<input type="text" name="dateTo" value="" class="datepicker"/></td>
 		</tr>
 		<tr>
 			<td>订单状态:</td>
@@ -31,3 +31,22 @@
 		</tr>
 	</table>
 </form>
+<script type="text/javascript" charset="utf-8" src="/js/vendor/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/lib/jquery-ui.js"></script>
+<script>
+$(function() {
+
+	// bind datepicker
+    var currentYear = new Date().getFullYear();
+    $(".datepicker").datepicker({ 
+        dateFormat: "yy-mm-dd",
+        showMonthAfterYear:true,
+        changeMonth: true,
+        changeYear: true,
+        yearRange: (currentYear-34) + ":" + currentYear
+    });
+    $(".datepicker").attr("readonly",true);
+
+});
+
+</script>

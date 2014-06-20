@@ -1,4 +1,5 @@
 <%@ taglib uri="/dormitory" prefix="dor"%>
+<link rel="stylesheet" href="/style/all.css">
 ${message}
 <br />
 <form action="<c:url value='/admin/order/orderList.html'/>" method="GET">
@@ -6,8 +7,8 @@ ${message}
 订单编号： <input type="text" name="orderId" value="${orderId}"/><br>
 用户名： &nbsp;&nbsp;&nbsp;<input type="text" name="login" value="${login}"/><br>
 用户识别码： &nbsp<input type="text" name="userToken" value="${userToken}"/><br>
-起始时间： <input type="text" name="dateFrom" value="${dateFrom}"/><br>
-结束时间： <input type="text" name="dateTo" value="${dateTo}"/><br>
+起始时间： <input type="text" name="dateFrom" class="datepicker" value="${dateFrom}"/><br>
+结束时间： <input type="text" name="dateTo" class="datepicker" value="${dateTo}"/><br>
 是否有效：<select name="condition">
 		<option value="active" <c:if test="${empty param.condition or param.condition eq 'active'}">selected</c:if>>是</option>
 		<option value="inactive" <c:if test="${param.condition eq 'inactive'}">selected</c:if>>否</option>
@@ -100,3 +101,22 @@ ${message}
 </c:choose>
 </table>
 <jsp:include page="/jsp/utils/pagination.jsp" flush="true"/>
+<script type="text/javascript" charset="utf-8" src="/js/vendor/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/lib/jquery-ui.js"></script>
+<script>
+$(function() {
+
+	// bind datepicker
+    var currentYear = new Date().getFullYear();
+    $(".datepicker").datepicker({ 
+        dateFormat: "yy-mm-dd",
+        showMonthAfterYear:true,
+        changeMonth: true,
+        changeYear: true,
+        yearRange: (currentYear-34) + ":" + currentYear
+    });
+    $(".datepicker").attr("readonly",true);
+
+});
+
+</script>
