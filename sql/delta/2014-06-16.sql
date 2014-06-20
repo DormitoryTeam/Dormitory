@@ -223,3 +223,7 @@ update dormitory set weekPrice = 125 where id = 95;
 update dormitory set weekPrice = 162.5 where id = 96;
 update dormitory set weekPrice = 140.5 where id = 97;
 update dormitory set weekPrice = 102 where id = 98;
+
+ALTER TABLE `dormitory`.`dormitory_media` 
+ADD COLUMN `cover` INT NOT NULL DEFAULT 0 AFTER `update_time`;
+

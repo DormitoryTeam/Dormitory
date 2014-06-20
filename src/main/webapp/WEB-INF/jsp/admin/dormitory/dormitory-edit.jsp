@@ -144,13 +144,15 @@
 					<tr>
 						<th>图片名称</th>
 						<th>图片预览</th>
+						<th>默认图片</th>
 						<th>操作</th>
 					</tr>
 					<c:forEach var="path" items="${dormitory['picPath']}" varStatus="index">
 						<tr>
 							<td><input type="text" name="imageNames" class="fileNames" value="${path}" /></td>
 							<td><a href="<c:url value='/upload/images/dormitory/${dormitory.id}/${path}'/>"> <img src="<c:url value='/upload/images/dormitory/${dormitory.id}/${path}'/>" /></a></td>
-							<td><input type="button" value="Remove" class="btnRemove" fileName="${path}" /></td>
+							<td><input type="radio" name="coverImageName" value="${path}" ${dormitory.coverImageName eq path ? 'checked' : ''} /></td>
+							<td><input type="button" value="删除" class="btnRemove" fileName="${path}" /></td>
 						</tr>
 					</c:forEach>
 				</table>

@@ -91,6 +91,12 @@ public class AdminDormitoryController {
 
         if (ArrayUtils.isNotEmpty(paramVector.getImageNames())) {
             dormitory.setPicPath(Arrays.asList(paramVector.getImageNames()));
+            for (String image : paramVector.getImageNames()) {
+                if (image.equals(paramVector.getCoverImageName())) {
+                    dormitory.setCoverImageName(image);
+                    break;
+                }
+            }
         }
 
         boolean result = dormitoryService.saveOrUpdateDormitory(dormitory);
@@ -148,10 +154,11 @@ public class AdminDormitoryController {
     public String saveRoomInfo(final HttpServletRequest request, final HttpServletResponse response, final Model model,
             final String dormitoryId, final RoomInfoBean room) {
         boolean result = dormitoryService.saveOrUpdateRoombInfo(room);
+        dormitoryService.updateDormitoryPrice(dormitoryId);
         model.addAttribute("result", result);
         model.addAttribute("roomId", room.getId());
         model.addAttribute("dormitoryId", dormitoryId);
-        return "forward:room-edit.html";
+        return "forward:room-edit.html?roomId=" + room.getId();
     }
 
 
@@ -244,7 +251,7 @@ public class AdminDormitoryController {
         if (StringUtils.isNotBlank(currentPage)) {
             page.setPageNum(Integer.valueOf(currentPage));
         }
-        
+
         page.setQueryString(request.getQueryString());
         searchBean.setPageBean(page);
         List<DormitoryBean> dormitories = dormitoryService.queryDormitoryPage(searchBean);

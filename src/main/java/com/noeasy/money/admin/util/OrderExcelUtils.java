@@ -159,11 +159,16 @@ public class OrderExcelUtils {
         }
 
         HSSFCell cell;
-        for (int i = 0; i < pOrders.size(); i++) {
+        for (int i = 0, j = 0; i < pOrders.size(); i++) {
             OrderBean order = pOrders.get(i);
-            HSSFRow orderRow = worksheet.createRow(i + 1);
+            HSSFRow orderRow = worksheet.createRow(i + 1 - j);
             int colIndex = 0;
             DormitoryLineItem item = (DormitoryLineItem) order.getLineItems().get(0);
+
+            if (order.getBelongsTo() == null || item == null || item.getRoomInfo() == null) {
+                j++;
+                continue;
+            }
 
             // 0
             cell = orderRow.createCell(colIndex++);
@@ -282,7 +287,7 @@ public class OrderExcelUtils {
         }
 
         HSSFCell cell;
-        for (int i = 0; i < pOrders.size(); i++) {
+        for (int i = 0, j = 0; i < pOrders.size(); i++) {
             OrderBean order = pOrders.get(i);
             PickupLineItem item = (PickupLineItem) order.getLineItems().get(0);
             UserBean belongsTo = order.getBelongsTo();
@@ -294,8 +299,14 @@ public class OrderExcelUtils {
             }
             UserInfoBean info = order.getOrderContact().getBelongsToInfo();
 
-            HSSFRow orderRow = worksheet.createRow(i + 1);
+            HSSFRow orderRow = worksheet.createRow(i + 1 - j);
             int colIndex = 0;
+            PickupLineItem item = (PickupLineItem) order.getLineItems().get(0);
+            if (order.getBelongsTo() == null || item == null) {
+                j++;
+                continue;
+            }
+>
 
             // 0
             cell = orderRow.createCell(colIndex++);

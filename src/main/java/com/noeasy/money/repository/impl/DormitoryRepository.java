@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
 import com.noeasy.money.enumeration.DormitoryStatus;
@@ -179,6 +180,23 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
 
 
     /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#queryCoverImageNameByDormitoryId(int)
+     */
+    @Override
+    public String queryCoverImageNameByDormitoryId(final int pDormitoryId) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("dormitoryId", pDormitoryId);
+        List<String> covers = getSqlSession()
+                .selectList("com.noeasy.money.model.Dormitory.queryCoverImageName", params);
+        if (CollectionUtils.isEmpty(covers)) {
+            return "";
+        }
+        return covers.get(0);
+    }
+
+
+
+    /**
      * @see com.noeasy.money.repository.IDormitoryRepository#queryDormitory(com.noeasy.money.model.DormitorySearchBean)
      */
     @Override
@@ -280,7 +298,6 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("dormitoryId", pDormitoryId);
         params.put("mediaType", 1);
-        params.put("sortField", "index");
         return getSqlSession().selectList("com.noeasy.money.model.Dormitory.queryMediaPath", params);
     }
 
@@ -385,6 +402,10 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
     @Override
     public Integer saveDormitory(final DormitoryBean pDormitory) {
         int result = getSqlSession().insert("com.noeasy.money.model.Dormitory.saveDormitory", pDormitory);
+        deleteDormitoryMediaPath(pDormitory.getId());
+        if (CollectionUtils.isNotEmpty(pDormitory.getPicPath())) {
+            saveDormitoryMediaPath(pDormitory.getPicPath(), pDormitory.getId(), false, null);
+        }
         return result;
     }
 
@@ -409,16 +430,17 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
 
     /**
      * @see com.noeasy.money.repository.IDormitoryRepository#saveDormitoryMediaPath(java.util.List,
-     *      java.lang.Integer, boolean)
+     *      java.lang.Integer, boolean, String)
      */
     @Override
     public Boolean saveDormitoryMediaPath(final List<String> pMediaPath, final Integer pDormitoryId,
-            final boolean pIsVideo) {
+            final boolean pIsVideo, final String pCoverImagePath) {
         List<Map<String, Object>> pMediaPathMapList = new ArrayList<Map<String, Object>>();
         for (String path : pMediaPath) {
             Map<String, Object> pathMap = new HashMap<String, Object>();
             pathMap.put("dormitoryId", pDormitoryId);
             pathMap.put("path", path);
+            pathMap.put("cover", path.equals(pCoverImagePath));
             pMediaPathMapList.add(pathMap);
         }
         int result = 0;
@@ -468,7 +490,30 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
     @Override
     public Integer updateDormitory(final DormitoryBean pDormitory) {
         int result = getSqlSession().update("com.noeasy.money.model.Dormitory.updateDormitory", pDormitory);
+        if (result > 0) {
+            // for (RoomInfoBean room : pDormitory.getRooms()) {
+            // room.setDormitoryId(pDormitory.getId());
+            // saveRoomInfo(room);
+            // }
+            deleteDormitoryMediaPath(pDormitory.getId());
+            if (CollectionUtils.isNotEmpty(pDormitory.getPicPath())) {
+                saveDormitoryMediaPath(pDormitory.getPicPath(), pDormitory.getId(), false,
+                        pDormitory.getCoverImageName());
+            }
+        }
         return result;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#updateDormitoryPrice(java.lang.String)
+     */
+    @Override
+    public boolean updateDormitoryPrice(final String pId) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("dormitoryId", pId);
+        return getSqlSession().update("com.noeasy.money.model.Dormitory.updateDormitoryPrice", params) > 0;
     }
 
 
