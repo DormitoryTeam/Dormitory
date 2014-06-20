@@ -292,9 +292,11 @@ public class OrderExcelUtils {
             PickupLineItem item = (PickupLineItem) order.getLineItems().get(0);
             UserBean belongsTo = order.getBelongsTo();
             if (null == item || null == belongsTo) {
+                j++;
                 continue;
             }
             if (null == order.getOrderContact() || null == order.getOrderContact().getBelongsToInfo()) {
+                j++;
                 continue;
             }
             UserInfoBean info = order.getOrderContact().getBelongsToInfo();
@@ -302,10 +304,6 @@ public class OrderExcelUtils {
             HSSFRow orderRow = worksheet.createRow(i + 1 - j);
             int colIndex = 0;
             PickupLineItem item = (PickupLineItem) order.getLineItems().get(0);
-            if (order.getBelongsTo() == null || item == null) {
-                j++;
-                continue;
-            }
 >
 
             // 0
