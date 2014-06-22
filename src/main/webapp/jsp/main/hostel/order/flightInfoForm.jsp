@@ -5,10 +5,14 @@
 	</div>
 	<form action="<c:url value="/order/dormitory-place-order.html"/>" method="POST" id="placeOrderForm">
 	<input type="hidden" name="pageStep" value="1" />
+	<input type="hidden" name="action" value="${action}"/>
 	<input type="hidden" name="orderType" value="${orderType}"/>
 	<input type="hidden" name="command" id="command"/>
 	<!-- <a class="addOne" href="<c:url value="/order/dormitory-place-order.html?orderType=pickup"/>">&nbsp;</a>-->
 	<div class="btnBox">
+		<c:if test="${'edit' eq action}">
+			<input type="button" class="save btn-back" value="返回" data-url="<c:url value="/user/orderList.html"/>"/>
+		</c:if>
 		<input type="button" value="保存" class="save btn-place-order-save">
 	</div>
 	<jsp:include page="/jsp/main/hostel/order/include/pickupOrderTab.jsp"/>	

@@ -3,6 +3,7 @@
 	<div class="reservation-personal reservation-tab ui-tabs ui-widget ui-widget-content ui-corner-all ui-tabs-vertical ui-helper-clearfix">
 		<form action="<c:url value="/order/dormitory-place-order.html"/>" method="POST" id="placeOrderForm">
 			<input type="hidden" id="pageStep" name="pageStep" value="0" />
+			<input type="hidden" name="action" value="${action}"/>
 			<input type="hidden" name="command" id="command"/>
 			<input type="hidden" name="orderType" value="${orderType}" id="orderType"/>
 			<input type="hidden" name="dormitoryId" value="${dormitory.id}" />
@@ -12,6 +13,9 @@
 			<input name="pre_orderId" value="${param.orderId}" id="orderId" type="hidden"/>
 			<!-- <a href="<c:url value="/order/dormitory-place-order.html?dormitoryId=${dormitory.id}&contractId=${price.contractId}&roomInfoId=${roomInfo.id}"/>" class="addOne">&nbsp;</a>-->
 			<div class="btnBox">
+				<c:if test="${'edit' eq action}">
+					<input type="button" class="save btn-back" value="返回" data-url="<c:url value="/user/orderList.html?orderType=D"/>"/>
+				</c:if>
 				<input class="save btn-place-order-save" type="button" value="保存" />
 				<input type="button" style="background-color: #808080;" value="提交" />
 			</div>

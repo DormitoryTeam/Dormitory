@@ -4,6 +4,7 @@
 		<form action="<c:url value="/order/dormitory-place-order.html"/>" method="POST" id="placeOrderForm">
 			<input type="hidden" name="command" id="command"/>
 			<input name="pageStep" type="hidden" value="4"/>
+			<input type="hidden" name="action" value="${action}"/>
 			<input type="hidden" name="dormitoryId" value="${dormitory.id}" />
 			<input type="hidden" name="contractId" value="${price.contractId}" /> 
 			<input type="hidden" name="roomInfoId" value="${roomInfo.id}" />
@@ -11,6 +12,9 @@
 					
 			<!-- <a href="<c:url value="/order/dormitory-place-order.html?dormitoryId=${dormitory.id}&contractId=${price.contractId}&roomInfoId=${roomInfo.id}"/>" class="addOne">&nbsp;</a>-->
 			<div class="btnBox">
+				<c:if test="${'edit' eq action}">
+					<input type="button" class="save btn-back" value="返回" data-url="<c:url value="/user/orderList.html?orderType=D"/>"/>
+				</c:if>
 				<input class="save" type="button" style="background-color: #808080;" value="保存" />
 				<input type="button" class="btn-place-order-next" value="提交" />
 			</div>
@@ -56,7 +60,7 @@
 					<dl>
 						<dt>&nbsp;</dt>
 						<dd>
-							<c:if test="${not empty order.id}"><button class="btn-style btn-place-order-pre" preStep="<c:url value="/order/dormitory-place-order.html?orderId=${order.id}&pageStep=3"/>">上一步</button></c:if><button class="btn-style btn-place-order-next">提交</button>
+							<c:if test="${not empty order.id}"><button class="btn-style btn-place-order-pre" preStep="<c:url value="/order/dormitory-place-order.html?orderId=${order.id}&pageStep=3&action=${action}"/>">上一步</button></c:if><button class="btn-style btn-place-order-next">提交</button>
 						</dd>
 					</dl>
 				</fieldset>

@@ -303,8 +303,6 @@ public class OrderExcelUtils {
 
             HSSFRow orderRow = worksheet.createRow(i + 1 - j);
             int colIndex = 0;
-            PickupLineItem item = (PickupLineItem) order.getLineItems().get(0);
->
 
             // 0
             cell = orderRow.createCell(colIndex++);

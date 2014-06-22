@@ -5,10 +5,14 @@
 	</div>
 	<form action="<c:url value="/order/dormitory-place-order.html"/>" method="POST" id="placeOrderForm">
 	<input type="hidden" name="pageStep" value="3" />
+	<input type="hidden" name="action" value="${action}"/>
 	<input type="hidden" name="orderType" value="${orderType}"/>
 	<input type="hidden" name="command" id="command"/>
 	<!-- <a href="<c:url value="/order/dormitory-place-order.html?orderType=pickup"/>" class="addOne">&nbsp;</a>-->
 	<div class="btnBox">
+		<c:if test="${'edit' eq action}">
+			<input type="button" class="save btn-back" value="返回" data-url="<c:url value="/user/orderList.html"/>"/>
+		</c:if>
 		<input class="save btn-place-order-save" value="保存" type="button">
 	</div>
 	<jsp:include page="/jsp/main/hostel/order/include/pickupOrderTab.jsp"/>
@@ -71,7 +75,7 @@
 				<dt>&nbsp;</dt>
 				<dd>
 					<c:if test="${not empty order.id}">
-					<button class="btn-style btn-place-order-pre" preStep="<c:url value="/order/dormitory-place-order.html?orderType=pickup&orderId=${order.id}&pageStep=2"/>">上一步</button>
+					<button class="btn-style btn-place-order-pre" preStep="<c:url value="/order/dormitory-place-order.html?orderType=pickup&orderId=${order.id}&pageStep=2&action=${action}"/>">上一步</button>
 					</c:if>
 					<button class="btn-style btn-place-order-next">下一步</button>
 				</dd>

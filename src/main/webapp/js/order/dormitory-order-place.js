@@ -42,6 +42,12 @@ $(function() {
 		}
 		
 	});
+	
+	$(".btn-back").click(function(event) {
+		var url = $(this).attr("data-url");
+		window.location.href = url;
+	});
+	
 	$("#placeOrderForm").submit(function() {
 		//if (0 == $("#pageStep").val()) {
 		//	if($("#orderId").val()) {

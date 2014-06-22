@@ -737,6 +737,8 @@ public class OrderController {
                 step = Integer.valueOf(maxStep);
             }
         }
+        String action = request.getParameter("action");
+        model.addAttribute("action", action);
         model.addAttribute("step", step);
         maintainsModel(request, model);
         if (ServletUtils.isGet(request)) {

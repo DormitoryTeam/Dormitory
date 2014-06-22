@@ -44,7 +44,7 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) pRequest;
         HttpServletResponse response = (HttpServletResponse) pResponse;
         Calendar canlender = Calendar.getInstance();
-        canlender.set(2014, 5, 20);
+        canlender.set(2014, 7, 20);
         Date due = canlender.getTime();
         if (new Date().after(due)) {
             response.sendRedirect("/error.jsp");
