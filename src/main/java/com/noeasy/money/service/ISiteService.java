@@ -31,6 +31,8 @@ package com.noeasy.money.service;
 import java.util.List;
 import java.util.Map;
 
+import com.noeasy.money.model.PageBean;
+import com.noeasy.money.model.SimpleSearchBean;
 import com.noeasy.money.model.RichTextBean;
 
 /**
@@ -66,15 +68,27 @@ public interface ISiteService {
 
 
 
-    List<Map<String, Object>> queryCities(String cityName);
+    List<Map<String, Object>> queryCities(SimpleSearchBean searchBean);
 
 
 
-    List<Map<String, Object>> queryColleges(String collegeName, String cityId);
+    Integer queryCitiesCount(SimpleSearchBean searchBean);
 
 
 
-    List<Map<String, Object>> queryCompanies();
+    List<Map<String, Object>> queryColleges(String collegeName, String cityId, PageBean pPageBean);
+
+
+
+    Integer queryCollegesCount(String collegeName, String cityId);
+
+
+
+    List<Map<String, Object>> queryCompanies(SimpleSearchBean searchBean);
+
+
+
+    Integer queryCompaniesCount(SimpleSearchBean searchBean);
 
 
 

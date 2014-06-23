@@ -35,6 +35,8 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
+import com.noeasy.money.model.PageBean;
+import com.noeasy.money.model.SimpleSearchBean;
 import com.noeasy.money.model.RichTextBean;
 import com.noeasy.money.repository.ISiteRepository;
 
@@ -107,12 +109,15 @@ public class SiteRepository extends BaseRepository implements ISiteRepository {
      * @see com.noeasy.money.repository.ISiteRepository#queryCities(java.lang.String)
      */
     @Override
-    public List<Map<String, Object>> queryCities(final String pCityName) {
-        Map<String, Object> params = new HashMap<String, Object>();
-        if (StringUtils.isNoneBlank(pCityName)) {
-            params.put("name", pCityName);
-        }
-        return getSqlSession().selectList("com.noeasy.money.model.Site.queryCities", params);
+    public List<Map<String, Object>> queryCities(final SimpleSearchBean pSearchBean) {
+        return getSqlSession().selectList("com.noeasy.money.model.Site.queryCities", pSearchBean);
+    }
+
+
+
+    @Override
+    public Integer queryCitiesCount(SimpleSearchBean pSearchBean) {
+        return getSqlSession().selectOne("com.noeasy.money.model.Site.queryCitiesCount", pSearchBean);
     }
 
 
@@ -122,7 +127,7 @@ public class SiteRepository extends BaseRepository implements ISiteRepository {
      *      java.lang.String)
      */
     @Override
-    public List<Map<String, Object>> queryColleges(final String pCollegeName, final String pCityId) {
+    public List<Map<String, Object>> queryColleges(final String pCollegeName, final String pCityId, PageBean pageBean) {
         Map<String, Object> params = new HashMap<String, Object>();
         if (StringUtils.isNoneBlank(pCollegeName)) {
             params.put("name", pCollegeName);
@@ -130,7 +135,25 @@ public class SiteRepository extends BaseRepository implements ISiteRepository {
         if (StringUtils.isNoneBlank(pCityId)) {
             params.put("cityId", pCityId);
         }
+        if (null != pageBean) {
+            params.put("pageBean", pageBean);
+        }
+
         return getSqlSession().selectList("com.noeasy.money.model.Site.queryColleges", params);
+    }
+
+
+
+    @Override
+    public Integer queryCollegesCount(String pCollegeName, String pCityId) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        if (StringUtils.isNoneBlank(pCollegeName)) {
+            params.put("name", pCollegeName);
+        }
+        if (StringUtils.isNoneBlank(pCityId)) {
+            params.put("cityId", pCityId);
+        }
+        return getSqlSession().selectOne("com.noeasy.money.model.Site.queryCollegesCount", params);
     }
 
 
@@ -139,8 +162,8 @@ public class SiteRepository extends BaseRepository implements ISiteRepository {
      * @see com.noeasy.money.repository.ISiteRepository#queryCompanies()
      */
     @Override
-    public List<Map<String, Object>> queryCompanies() {
-        return getSqlSession().selectList("com.noeasy.money.model.Site.queryCompanies");
+    public List<Map<String, Object>> queryCompanies(SimpleSearchBean searchBean) {
+        return getSqlSession().selectList("com.noeasy.money.model.Site.queryCompanies", searchBean);
     }
 
 
@@ -316,6 +339,13 @@ public class SiteRepository extends BaseRepository implements ISiteRepository {
         params.put("id", pId);
         params.put("type", pType);
         return getSqlSession().update("com.noeasy.money.model.Site.updateSlide", params) > 0;
+    }
+
+
+
+    @Override
+    public Integer queryCompaniesCount(SimpleSearchBean pSearchBean) {
+        return getSqlSession().selectOne("com.noeasy.money.model.Site.queryCompaniesCount", pSearchBean);
     }
 
 }
