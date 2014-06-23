@@ -89,7 +89,7 @@ public interface IDormitoryRepository {
 
 
 
-    RoomPrice findRoomPrice(RoomPriceSearchBean seachBean);
+    RoomPrice findRoomPrice(RoomPriceSearchBean searchBean);
 
 
 
@@ -117,11 +117,19 @@ public interface IDormitoryRepository {
 
 
 
+    Integer queryDormitoryRateCount(DormitorySearchBean pSearchBean);
+
+
+
     List<DormitoryBean> queryDormitoryPage(DormitorySearchBean pSearchBean);
 
 
 
-    List<DormitoryRateBean> queryDormitoryRates(int pDormitoryId);
+    List<DormitoryBean> queryDormitoryRates(DormitorySearchBean pSearchBean);
+
+
+
+    List<DormitoryRateBean> queryDormitoryRates(int pDormitoryId, boolean pActive);
 
 
 

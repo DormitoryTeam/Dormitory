@@ -194,7 +194,7 @@
 		t9.name dor_company
 		from dormitory t1
 		left join city t2 on t2.id = t1.city_id
-		left outer join dormitory_rating t3 on t3.dormitory_id = t1.id
+		left outer join dormitory_rating t3 on t3.dormitory_id = t1.id and t3.status > 0
 		<if test="id != null">
 		left join (select * from room_info where dormitory_id = #{id}) t4 ON t4.dormitory_id = t1.id 
 		</if>
@@ -249,7 +249,7 @@
 		</if>
 		group by t5.id
 	</select>
-
+	
 	<select id="queryDormitoryCount" parameterType='com.noeasy.money.model.DormitorySearchBean' resultType="int">
 		select count(*)
 		from
@@ -321,11 +321,111 @@
 		left join
 		city t2 on t2.id = t1.city_id
 		left outer join
-		dormitory_rating t3 on t3.dormitory_id = t1.id
+		dormitory_rating t3 on t3.dormitory_id = t1.id and t3.status > 0
 		left join
 		company t9 on t1.company_id = t9.id
 		<include refid="where" />
 		and t1.id = #{id}
+	</select>
+	
+	<select id="queryDormitoryRates" parameterType='com.noeasy.money.model.DormitorySearchBean' resultMap="dormitory">
+		select
+		t1.id dor_id,
+		t1.name dor_name,
+		t1.address dor_address,
+		t1.postcode dor_postcode,
+		t1.city_id dor_cityId,
+		t1.status dor_status,
+		t1.display_order dor_displayOrder,
+		t2.name dor_city,
+		coalesce(avg(t3.score), 0) rating,
+		count(t3.id) as rateCount,
+		t9.id dor_companyId,
+		t9.name dor_company
+		from dormitory t1
+		left join city t2 on t2.id = t1.city_id
+		left outer join dormitory_rating t3 on t3.dormitory_id = t1.id
+		<if test="ratingStatus != null">
+			and t3.status = #{ratingStatus}
+		</if>
+		left join company t9 on t1.company_id = t9.id
+		<include refid="where" />
+		<if test="id != null">
+			<include refid="where-with-id" />
+		</if>
+		<if test="dormitoryName != null">
+			<include refid="where-with-dormitory-name" />
+		</if>
+		<if test="cityId != null">
+			<include refid="where-with-city-id" />
+		</if>
+		<if test="cityName != null">
+			<include refid="where-with-city-name" />
+		</if>
+		<if test="keyword != null">
+			<include refid="where-with-keyword" />
+		</if>
+		<if test="status != null">
+			and t1.status = #{status}
+		</if>
+		<if test="excludeStatus != null">
+			and t1.status != #{excludeStatus}
+		</if>
+		group by t1.id
+		<if test="ratingStatus != null">
+			having count(t3.id) > 0
+		</if>
+		<if test="sortBy != null">
+			<include refid="order-by-order-field" />
+		</if>
+		<if test="sortBy == null">
+			<if test="collegeId != null">
+			order by distance
+			</if>
+		</if>
+		<if test="pageBean != null">
+			<include refid="limit-split-page" />
+		</if>
+	</select>
+	
+	<select id="queryDormitoryRateCount" parameterType='com.noeasy.money.model.DormitorySearchBean' resultType="int">
+		select count(*)
+		from (
+		select
+		t1.id dor_id
+		from dormitory t1
+		left join city t2 on t2.id = t1.city_id
+		left outer join dormitory_rating t3 on t3.dormitory_id = t1.id
+		<if test="ratingStatus != null">
+			and t3.status = #{ratingStatus}
+		</if>
+		left join company t9 on t1.company_id = t9.id
+		<include refid="where" />
+		<if test="id != null">
+			<include refid="where-with-id" />
+		</if>
+		<if test="dormitoryName != null">
+			<include refid="where-with-dormitory-name" />
+		</if>
+		<if test="cityId != null">
+			<include refid="where-with-city-id" />
+		</if>
+		<if test="cityName != null">
+			<include refid="where-with-city-name" />
+		</if>
+		<if test="keyword != null">
+			<include refid="where-with-keyword" />
+		</if>
+		<if test="status != null">
+			and t1.status = #{status}
+		</if>
+		<if test="excludeStatus != null">
+			and t1.status != #{excludeStatus}
+		</if>
+		group by t1.id
+		<if test="ratingStatus != null">
+			having count(t3.id) > 0
+		</if>) t
 	</select>
 	
 	<update id="updateDormitoryStatus" parameterType="java.util.Map">
@@ -684,9 +784,15 @@
 	<select id="selectRates" parameterType="int" resultMap="dormitoryRate">
 		select id dr_id, dormitory_id dr_dormitoryId, user_id dr_userId, alias dr_alias, score dr_point, comment dr_comment, create_time dr_createTime, status dr_status
 		from dormitory_rating
+		where dormitory_id = #{dormitoryId} and status >= 0
+	</select>
+	
+	<select id="selectAllRates" parameterType="int" resultMap="dormitoryRate">
+		select id dr_id, dormitory_id dr_dormitoryId, user_id dr_userId, alias dr_alias, score dr_point, comment dr_comment, create_time dr_createTime, status dr_status
+		from dormitory_rating
 		where dormitory_id = #{dormitoryId}
 	</select>
-
+	
 	<!-- Calculate Distance ################################################################ -->
 	<delete id="clearDistanceResult">
 		DELETE FROM distance_result;
@@ -845,6 +951,7 @@
 		<result property="service" column="dor_service" />
 		<result property="currency" column="dor_currency" />
 		<result property="rating" column="rating" />
+		<result property="rateCount" column="rateCount" />
 		<result property="weekPrice" column="dor_weekPrice" />
 		<result property="salePrice" column="dor_salePrice" />
 		<result property="additionalPrice" column="dor_additionalPrice" />

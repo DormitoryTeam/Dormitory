@@ -1,5 +1,6 @@
 <ul>
 	<li><a href="<c:url value="/admin/dormitory/dormitory-management.html?dormitoryName=&cityId=0&status="/>">宿舍管理</a></li>
+	<li><a href="<c:url value="/admin/dormitory/dormitory-rates.html?dormitoryName=&cityId=0&status=&ratingStatus=0"/>">宿舍评论管理</a></li>
 	<li><a href="<c:url value="/admin/site/company-management.html"/>">公司管理</a></li>
 	<li><a href="<c:url value="/admin/site/city-management.html"/>">城市管理</a></li>
 	<li><a href="<c:url value="/admin/site/college-management.html"/>">大学管理</a></li>

@@ -71,7 +71,7 @@ public class DormitoryController {
             if (userIdObj != null) {
                 userId = NumberUtils.toInt(String.valueOf(userIdObj));
             }
-            dormitoryService.rateDormitory(id, dormitoryId, userId, point == null ? 0 : point, comment, alias);
+            dormitoryService.rateDormitory(id, dormitoryId, userId, point == null ? 0 : point, comment, alias, null);
         }
         return "redirect:/dormitory/dormitory-detail.html?id=" + dormitoryId;
     }
@@ -98,21 +98,22 @@ public class DormitoryController {
                 if (userNameObj != null) {
                     userName = String.valueOf(userNameObj);
                 }
+                List<DormitoryRateBean> rates = dormitoryService.queryDormitoryRates(dormitoryId, true);
                 List<Map<String, String>> browsingHistory = null;
+                model.addAttribute("curRate", new DormitoryRateBean());
+
                 if (null == userId) {
                     browsingHistory = dormitoryService.queryDormitoryBrowseHistory(0, dormitoryId);
                     dormitoryService.saveDormitoryBrowseHistory(0, dormitory.getId());
                 } else {
                     browsingHistory = dormitoryService.queryDormitoryBrowseHistory(userId, dormitoryId);
                     dormitoryService.saveDormitoryBrowseHistory(userId, dormitory.getId());
-                }
 
-                model.addAttribute("curRate", new DormitoryRateBean());
-                List<DormitoryRateBean> rates = dormitoryService.queryDormitoryRates(dormitoryId);
-                for (DormitoryRateBean rate : rates) {
-                    if (rate.getUserId() == userId) {
-                        model.addAttribute("curRate", rate);
-                        break;
+                    for (DormitoryRateBean rate : rates) {
+                        if (rate.getUserId() == userId) {
+                            model.addAttribute("curRate", rate);
+                            break;
+                        }
                     }
                 }
 
@@ -216,7 +217,7 @@ public class DormitoryController {
             if (StringUtils.isNotBlank(currentPage)) {
                 page.setPageNum(Integer.valueOf(currentPage));
             }
-            
+
             page.setQueryString(request.getQueryString());
             searchBean.setPageBean(page);
             List<DormitoryBean> dormitories = dormitoryService.queryDormitoryPage(searchBean);

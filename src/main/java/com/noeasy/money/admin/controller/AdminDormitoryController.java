@@ -59,6 +59,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.noeasy.money.constant.Constants;
 import com.noeasy.money.enumeration.DormitoryStatus;
 import com.noeasy.money.model.DormitoryBean;
+import com.noeasy.money.model.DormitoryRateBean;
 import com.noeasy.money.model.DormitorySearchBean;
 import com.noeasy.money.model.PageBean;
 import com.noeasy.money.model.RoomInfoBean;
@@ -146,6 +147,18 @@ public class AdminDormitoryController {
                 e.printStackTrace();
             }
         }
+    }
+
+
+
+    @RequestMapping("/dormitory-rate-save" + Constants.URL_SUFFIX)
+    public String saveDormitoryRate(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final int id, final Integer dormitoryId, final String alias, final String comment,
+            final Integer point, final Integer userId, final String status) {
+        if (dormitoryId > 0) {
+            dormitoryService.rateDormitory(id, dormitoryId, userId, point, comment, alias, status);
+        }
+        return "redirect:/admin/dormitory/dormitory-rate-edit.html?dormitoryId=" + dormitoryId;
     }
 
 
@@ -266,6 +279,85 @@ public class AdminDormitoryController {
             model.addAttribute("cityId", Integer.valueOf(cityId));
         }
         return "admin/dormitory/dormitory-management";
+    }
+
+
+
+    @RequestMapping("dormitory-rate-edit" + Constants.URL_SUFFIX)
+    public String toDormitoryRateEdit(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final int dormitoryId) {
+        List<DormitoryRateBean> rates = dormitoryService.queryDormitoryRates(dormitoryId, false);
+        DormitorySearchBean searchBean = new DormitorySearchBean();
+        searchBean.setId(dormitoryId);
+        DormitoryBean dormitory = dormitoryService.queryDormitory(searchBean);
+        model.addAttribute("dormitory", dormitory);
+        model.addAttribute("rates", rates);
+        return "admin/dormitory/dormitory-rate-edit";
+    }
+
+
+
+    @RequestMapping("dormitory-rates" + Constants.URL_SUFFIX)
+    public String toDormitoryRateList(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final String dormitoryName, final String cityName, final String sortField,
+            final String sortType, final String currentPage, final String pageSize, final String cityId,
+            final String status, final String ratingStatus) {
+        Integer countryId = 1;
+        List<Map<String, Object>> cities = navigationService.queryCities(countryId);
+        DormitorySearchBean searchBean = new DormitorySearchBean();
+        searchBean.setCollegeId(null);
+
+        if (StringUtils.isNotBlank(dormitoryName)) {
+            searchBean.setDormitoryName(dormitoryName);
+        }
+        if (StringUtils.isNoneBlank(cityName)) {
+            searchBean.setCityName(cityName);
+        }
+        if (StringUtils.isNoneBlank(sortField)) {
+            searchBean.setSortField(sortField);
+            if (StringUtils.isNoneBlank(sortType)) {
+                searchBean.setSortType(sortType);
+            }
+        }
+        if (StringUtils.isNotBlank(cityId)) {
+            Integer cityIdVal = Integer.valueOf(cityId);
+            if (cityIdVal > 0) {
+                searchBean.setCityId(cityIdVal);
+            }
+        }
+        if (StringUtils.isNoneBlank(ratingStatus)) {
+            searchBean.setRatingStatus(ratingStatus);
+        }
+        searchBean.setSortType("DESC");
+        if (DormitoryStatus.INVISIBILITY.toString().equals(status)) {
+            searchBean.setStatus(DormitoryStatus.INVISIBILITY);
+        } else {
+            searchBean.setExcludeStatus(DormitoryStatus.INVISIBILITY);
+        }
+        int rowTotal = dormitoryService.queryDormitoryRateCount(searchBean);
+
+        PageBean page = new PageBean(rowTotal);
+        if (StringUtils.isNotBlank(pageSize)) {
+            page.setPageSize(Integer.valueOf(pageSize));
+        }
+        if (StringUtils.isNotBlank(currentPage)) {
+            page.setPageNum(Integer.valueOf(currentPage));
+        }
+
+        page.setQueryString(request.getQueryString());
+        searchBean.setPageBean(page);
+        List<DormitoryBean> dormitories = dormitoryService.queryDormitoryRates(searchBean);
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("dormitories", dormitories);
+        model.addAttribute("page", page);
+        model.addAttribute("cityName", searchBean.getCityName());
+        model.addAttribute("dormitoryName", searchBean.getDormitoryName());
+        model.addAttribute("cities", cities);
+        if (StringUtils.isNotBlank(cityId)) {
+            model.addAttribute("cityId", Integer.valueOf(cityId));
+        }
+        return "admin/dormitory/dormitory-rates";
     }
 
 

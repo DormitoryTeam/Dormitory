@@ -105,6 +105,8 @@ public class DormitoryBean extends BaseBean {
 
     private String             mCoverImageName;
 
+    private int                mRateCount;
+
 
 
     /**
@@ -313,6 +315,15 @@ public class DormitoryBean extends BaseBean {
      */
     public DormitoryRateBean getRate() {
         return mRate;
+    }
+
+
+
+    /**
+     * @return the rateCount
+     */
+    public int getRateCount() {
+        return mRateCount;
     }
 
 
@@ -617,6 +628,16 @@ public class DormitoryBean extends BaseBean {
      */
     public void setRate(final DormitoryRateBean pRate) {
         mRate = pRate;
+    }
+
+
+
+    /**
+     * @param pRateCount
+     *            the rateCount to set
+     */
+    public void setRateCount(final int pRateCount) {
+        mRateCount = pRateCount;
     }
 
 

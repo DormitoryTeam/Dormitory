@@ -152,8 +152,8 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
 
 
     @Override
-    public RoomPrice findRoomPrice(final RoomPriceSearchBean seachBean) {
-        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.findRoomPrice", seachBean);
+    public RoomPrice findRoomPrice(final RoomPriceSearchBean searchBean) {
+        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.findRoomPrice", searchBean);
     }
 
 
@@ -270,12 +270,43 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
 
 
 
+    @Override
+    public Integer queryDormitoryRateCount(final DormitorySearchBean pSearchBean) {
+        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.queryDormitoryRateCount", pSearchBean);
+    }
+
+
+
     /**
-     * @see com.noeasy.money.repository.IDormitoryRepository#queryDormitoryRates(int)
+     * @see com.noeasy.money.repository.IDormitoryRepository#queryDormitoryRates(com.noeasy.money.model.DormitorySearchBean)
      */
     @Override
-    public List<DormitoryRateBean> queryDormitoryRates(final int pDormitoryId) {
-        return getSqlSession().selectList("com.noeasy.money.model.Dormitory.selectRates", pDormitoryId);
+    public List<DormitoryBean> queryDormitoryRates(final DormitorySearchBean pSearchBean) {
+        List<DormitoryBean> dormitories = getSqlSession().selectList(
+                "com.noeasy.money.model.Dormitory.queryDormitoryRates", pSearchBean);
+        List<Integer> dormitoryIds = new ArrayList<Integer>();
+        for (DormitoryBean dormitory : dormitories) {
+            dormitoryIds.add(dormitory.getId());
+        }
+        if (dormitoryIds.isEmpty()) {
+            return dormitories;
+        }
+        return dormitories;
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.repository.IDormitoryRepository#queryDormitoryRates(int,
+     *      boolean)
+     */
+    @Override
+    public List<DormitoryRateBean> queryDormitoryRates(final int pDormitoryId, final boolean pActive) {
+        if (pActive) {
+            return getSqlSession().selectList("com.noeasy.money.model.Dormitory.selectRates", pDormitoryId);
+        } else {
+            return getSqlSession().selectList("com.noeasy.money.model.Dormitory.selectAllRates", pDormitoryId);
+        }
     }
 
 

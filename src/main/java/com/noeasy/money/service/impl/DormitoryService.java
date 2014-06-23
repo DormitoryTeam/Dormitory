@@ -36,6 +36,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.noeasy.money.enumeration.DormitoryStatus;
@@ -216,12 +217,30 @@ public class DormitoryService implements IDormitoryService {
 
 
 
+    @Override
+    public Integer queryDormitoryRateCount(final DormitorySearchBean pSearchBean) {
+        return dormitoryRepository.queryDormitoryRateCount(pSearchBean);
+    }
+
+
+
     /**
-     * @see com.noeasy.money.service.IDormitoryService#queryDormitoryRates(int)
+     * @see com.noeasy.money.service.IDormitoryService#queryDormitoryRates(com.noeasy.money.model.DormitorySearchBean)
      */
     @Override
-    public List<DormitoryRateBean> queryDormitoryRates(final int pDormitoryId) {
-        return dormitoryRepository.queryDormitoryRates(pDormitoryId);
+    public List<DormitoryBean> queryDormitoryRates(final DormitorySearchBean pSearchBean) {
+        return dormitoryRepository.queryDormitoryRates(pSearchBean);
+    }
+
+
+
+    /**
+     * @see com.noeasy.money.service.IDormitoryService#queryDormitoryRates(int,
+     *      boolean)
+     */
+    @Override
+    public List<DormitoryRateBean> queryDormitoryRates(final int pDormitoryId, final boolean pActive) {
+        return dormitoryRepository.queryDormitoryRates(pDormitoryId, pActive);
     }
 
 
@@ -269,14 +288,18 @@ public class DormitoryService implements IDormitoryService {
 
     /**
      * @see com.noeasy.money.service.IDormitoryService#rateDormitory(int, int,
-     *      int, int, java.lang.String, java.lang.String)
+     *      int, int, java.lang.String, java.lang.String, String)
      */
     @Override
     public boolean rateDormitory(final int pId, final int pDormitoryId, final int pUserId, final int pPoint,
-            final String pComment, final String pAlias) {
+            final String pComment, final String pAlias, final String pStatus) {
         DormitoryRateBean rate = new DormitoryRateBean(pDormitoryId, pUserId, pPoint, pComment, pAlias);
         rate.setId(pId);
-        rate.setStatus("1");
+        if (StringUtils.isBlank(pStatus)) {
+            rate.setStatus("0");
+        } else {
+            rate.setStatus(pStatus);
+        }
         return dormitoryRepository.rateDormitory(rate);
     }
 

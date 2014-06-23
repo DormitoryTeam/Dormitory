@@ -6,7 +6,7 @@ ${message}
 <input type="hidden" name="orderType" value="${type}"/><br>
 订单编号： <input type="text" name="orderId" value="${orderId}"/><br>
 用户名： &nbsp;&nbsp;&nbsp;<input type="text" name="login" value="${login}"/><br>
-用户识别码： &nbsp<input type="text" name="userToken" value="${userToken}"/><br>
+用户识别码： &nbsp<input type="text" name="userToken" value="${usertoken}"/><br>
 起始时间： <input type="text" name="dateFrom" class="datepicker" value="${dateFrom}"/><br>
 结束时间： <input type="text" name="dateTo" class="datepicker" value="${dateTo}"/><br>
 是否有效：<select name="condition">

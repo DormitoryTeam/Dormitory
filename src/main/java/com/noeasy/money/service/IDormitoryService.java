@@ -97,6 +97,17 @@ public interface IDormitoryService {
 
 
 
+    /**
+     * <method description>
+     * 
+     * @param pSearchBean
+     * @return
+     */
+
+    Integer queryDormitoryRateCount(DormitorySearchBean pSearchBean);
+
+
+
     List<String> queryDormitoryImages(int pId);
 
 
@@ -105,7 +116,11 @@ public interface IDormitoryService {
 
 
 
-    List<DormitoryRateBean> queryDormitoryRates(int pDormitoryId);
+    List<DormitoryBean> queryDormitoryRates(DormitorySearchBean pSearchBean);
+
+
+
+    List<DormitoryRateBean> queryDormitoryRates(int pDormitoryId, boolean pActive);
 
 
 
@@ -125,7 +140,8 @@ public interface IDormitoryService {
 
 
 
-    boolean rateDormitory(int pId, int pDormitoryId, int pUserId, int pPoint, String pComment, String pAlias);
+    boolean rateDormitory(int pId, int pDormitoryId, int pUserId, int pPoint, String pComment, String pAlias,
+            String pStatus);
 
 
 

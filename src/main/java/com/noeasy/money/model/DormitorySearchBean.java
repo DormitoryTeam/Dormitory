@@ -44,11 +44,7 @@ public class DormitorySearchBean {
 
     private Integer              mId;
 
-
-
     private String               mDormitoryName;
-
-
 
     private Integer              mCityId;
 
@@ -80,6 +76,10 @@ public class DormitorySearchBean {
 
     private Integer              mExcludeRoomPriceStatus;
 
+    private String               mRatingStatus;
+
+
+
     /**
      * @return the cityId
      */
@@ -87,12 +87,15 @@ public class DormitorySearchBean {
         return mCityId;
     }
 
+
+
     /**
      * @return the cityName
      */
     public String getCityName() {
         return mCityName;
     }
+
 
 
     /**
@@ -190,6 +193,15 @@ public class DormitorySearchBean {
      */
     public Pair<Double, Double> getPriceRange() {
         return mPriceRange;
+    }
+
+
+
+    /**
+     * @return the ratingStatus
+     */
+    public String getRatingStatus() {
+        return mRatingStatus;
     }
 
 
@@ -309,7 +321,8 @@ public class DormitorySearchBean {
 
 
     /**
-     * @param pExcludeRoomPriceStatus the excludeRoomPriceStatus to set
+     * @param pExcludeRoomPriceStatus
+     *            the excludeRoomPriceStatus to set
      */
     public void setExcludeRoomPriceStatus(final Integer pExcludeRoomPriceStatus) {
         mExcludeRoomPriceStatus = pExcludeRoomPriceStatus;
@@ -375,6 +388,16 @@ public class DormitorySearchBean {
      */
     public void setPriceRange(final Pair<Double, Double> pPriceRange) {
         mPriceRange = pPriceRange;
+    }
+
+
+
+    /**
+     * @param pRatingStatus
+     *            the ratingStatus to set
+     */
+    public void setRatingStatus(final String pRatingStatus) {
+        mRatingStatus = pRatingStatus;
     }
 
 
