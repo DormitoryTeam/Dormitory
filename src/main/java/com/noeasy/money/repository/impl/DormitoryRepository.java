@@ -152,8 +152,8 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
 
 
     @Override
-    public RoomPrice findRoomPrice(final RoomPriceSearchBean seachBean) {
-        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.findRoomPrice", seachBean);
+    public RoomPrice findRoomPrice(final RoomPriceSearchBean searchBean) {
+        return getSqlSession().selectOne("com.noeasy.money.model.Dormitory.findRoomPrice", searchBean);
     }
 
 

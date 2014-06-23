@@ -11,7 +11,7 @@
 <title>大学管理</title>
 </head>
 <body>
-	<form action="<c:url value="/admin/site/college-management.html"/>" method="POST">
+	<form action="<c:url value="/admin/site/college-management.html"/>" method="GET">
 		大学名称: <input type="text" name="collegeName" value="${collegeName}" />
 		城市: <select name="cityId">
 			<option value="">所有城市</option>
@@ -82,5 +82,7 @@
 			</tr>
 		</form>
 	</table>
+	<a href="<c:url value="/admin/site/admin-navigation.html"/>">返回</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+	<jsp:include page="/jsp/utils/pagination.jsp" flush="true"/>
 </body>
 </html>

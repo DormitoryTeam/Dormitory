@@ -31,6 +31,8 @@ package com.noeasy.money.repository;
 import java.util.List;
 import java.util.Map;
 
+import com.noeasy.money.model.PageBean;
+import com.noeasy.money.model.SimpleSearchBean;
 import com.noeasy.money.model.RichTextBean;
 
 /**
@@ -61,16 +63,18 @@ public interface ISiteRepository {
     List<RichTextBean> queryArticleTitleWithStatus(String pType, String pStatus, String pExcludeStatus);
 
 
-
-    List<Map<String, Object>> queryCities(String pCityName);
-
-
-
-    List<Map<String, Object>> queryColleges(String pCollegeName, String pCityId);
+    List<Map<String, Object>> queryCities(final SimpleSearchBean pSearchBean);
 
 
 
-    List<Map<String, Object>> queryCompanies();
+
+    List<Map<String, Object>> queryColleges(String pCollegeName, String pCityId, PageBean pPageBean);
+
+
+
+    List<Map<String, Object>> queryCompanies(SimpleSearchBean searchBean);
+    
+    Integer queryCompaniesCount(SimpleSearchBean searchBean);
 
 
 
@@ -117,4 +121,12 @@ public interface ISiteRepository {
 
 
     boolean updateSlide(Integer pId, String pDescription, Integer pIndex, String pStatus, String pType);
+
+
+
+    Integer queryCitiesCount(SimpleSearchBean pSearchBean);
+
+
+
+    Integer queryCollegesCount(String pCollegeName, String pCityId);
 }

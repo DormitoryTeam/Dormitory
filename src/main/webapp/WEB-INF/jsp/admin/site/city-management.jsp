@@ -11,7 +11,7 @@
 <title>城市管理</title>
 </head>
 <body>
-	<form action="<c:url value="/admin/site/city-management.html"/>" method="POST">
+	<form action="<c:url value="/admin/site/city-management.html"/>" method="GET">
 		城市名称: <input type="text" name="cityName" value="${cityName}" /> <input type="submit" value="搜索" />
 	</form>
 	<table class="table table-hover table-bordered table-striped">
@@ -55,5 +55,7 @@
 			</tr>
 		</form>
 	</table>
+	<a href="<c:url value="/admin/site/admin-navigation.html"/>">返回</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+	<jsp:include page="/jsp/utils/pagination.jsp" flush="true"/>
 </body>
 </html>

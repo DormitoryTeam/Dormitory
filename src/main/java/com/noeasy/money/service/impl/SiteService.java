@@ -36,6 +36,8 @@ import javax.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import com.noeasy.money.model.PageBean;
+import com.noeasy.money.model.SimpleSearchBean;
 import com.noeasy.money.model.RichTextBean;
 import com.noeasy.money.repository.ISiteRepository;
 import com.noeasy.money.service.ISiteService;
@@ -119,19 +121,29 @@ public class SiteService implements ISiteService {
      * @see com.noeasy.money.service.ISiteService#queryCities(java.lang.String)
      */
     @Override
-    public List<Map<String, Object>> queryCities(final String pCityName) {
-        return siteRepository.queryCities(pCityName);
+    public List<Map<String, Object>> queryCities(final SimpleSearchBean pSearchBean) {
+        return siteRepository.queryCities(pSearchBean);
     }
 
-
+    @Override
+    public Integer queryCitiesCount(SimpleSearchBean pSearchBean) {
+        return siteRepository.queryCitiesCount(pSearchBean);
+    }
 
     /**
      * @see com.noeasy.money.service.ISiteService#queryColleges(java.lang.String,
      *      java.lang.String)
      */
     @Override
-    public List<Map<String, Object>> queryColleges(final String pCollegeName, final String pCityId) {
-        return siteRepository.queryColleges(pCollegeName, pCityId);
+    public List<Map<String, Object>> queryColleges(final String pCollegeName, final String pCityId, PageBean pPageBean) {
+        return siteRepository.queryColleges(pCollegeName, pCityId, pPageBean);
+    }
+
+
+
+    @Override
+    public Integer queryCollegesCount(String pCollegeName, String pCityId) {
+        return siteRepository.queryCollegesCount(pCollegeName, pCityId);
     }
 
 
@@ -140,8 +152,8 @@ public class SiteService implements ISiteService {
      * @see com.noeasy.money.service.ISiteService#queryCompanies()
      */
     @Override
-    public List<Map<String, Object>> queryCompanies() {
-        return siteRepository.queryCompanies();
+    public List<Map<String, Object>> queryCompanies(SimpleSearchBean searchBean) {
+        return siteRepository.queryCompanies(searchBean);
     }
 
 
@@ -235,6 +247,13 @@ public class SiteService implements ISiteService {
     @Override
     public boolean updateCompanyStatus(final String pCompanyId, final String pStatus) {
         return siteRepository.updateCompanyStatus(pCompanyId, pStatus);
+    }
+
+
+
+    @Override
+    public Integer queryCompaniesCount(SimpleSearchBean searchBean) {
+        return siteRepository.queryCompaniesCount(searchBean);
     }
 
 }

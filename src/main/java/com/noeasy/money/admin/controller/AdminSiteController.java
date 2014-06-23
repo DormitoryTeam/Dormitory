@@ -2,6 +2,7 @@ package com.noeasy.money.admin.controller;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.noeasy.money.constant.Constants;
+import com.noeasy.money.model.SimpleSearchBean;
+import com.noeasy.money.model.PageBean;
 import com.noeasy.money.model.RichTextBean;
 import com.noeasy.money.service.ISiteService;
 import com.noeasy.money.util.FileUtils;
@@ -154,10 +157,30 @@ public class AdminSiteController {
 
     @RequestMapping("/city-management" + Constants.URL_SUFFIX)
     public String toCityManagement(final HttpServletRequest request, final HttpServletResponse response,
-            final Model model, final String cityName) {
-        List<Map<String, Object>> cities = siteService.queryCities(cityName);
+            final Model model, final String currentPage, final String pageSize) throws UnsupportedEncodingException {
+        String cityName = null;
+        if (StringUtils.isNotBlank(request.getParameter("cityName"))) {
+            cityName = new String(org.apache.commons.lang3.StringEscapeUtils.unescapeHtml4(
+                    request.getParameter("cityName")).getBytes("iso8859-1"), "UTF-8");
+        }
+
+        SimpleSearchBean searchBean = new SimpleSearchBean();
+
+        searchBean.setName(cityName);
+        int rowTotal = siteService.queryCitiesCount(searchBean);
+        PageBean page = new PageBean(rowTotal);
+        if (StringUtils.isNotBlank(pageSize)) {
+            page.setPageSize(Integer.valueOf(pageSize));
+        }
+        if (StringUtils.isNotBlank(currentPage)) {
+            page.setPageNum(Integer.valueOf(currentPage));
+        }
+        page.setQueryString(request.getQueryString());
+        searchBean.setPageBean(page);
+        List<Map<String, Object>> cities = siteService.queryCities(searchBean);
         model.addAttribute("cities", cities);
         model.addAttribute("cityName", cityName);
+        model.addAttribute("page", page);
         return "admin/site/city-management";
     }
 
@@ -165,13 +188,30 @@ public class AdminSiteController {
 
     @RequestMapping("/college-management" + Constants.URL_SUFFIX)
     public String toCollegeManagement(final HttpServletRequest request, final HttpServletResponse response,
-            final Model model, final String collegeName, final String cityId) {
-        List<Map<String, Object>> colleges = siteService.queryColleges(collegeName, cityId);
+            final Model model, final String cityId, final String currentPage, final String pageSize)
+            throws UnsupportedEncodingException {
+        String collegeName = null;
+        if (StringUtils.isNotBlank(request.getParameter("collegeName"))) {
+            collegeName = new String(org.apache.commons.lang3.StringEscapeUtils.unescapeHtml4(
+                    request.getParameter("collegeName")).getBytes("iso8859-1"), "UTF-8");
+        }
+
+        int rowTotal = siteService.queryCollegesCount(collegeName, cityId);
+        PageBean page = new PageBean(rowTotal);
+        if (StringUtils.isNotBlank(pageSize)) {
+            page.setPageSize(Integer.valueOf(pageSize));
+        }
+        if (StringUtils.isNotBlank(currentPage)) {
+            page.setPageNum(Integer.valueOf(currentPage));
+        }
+        page.setQueryString(request.getQueryString());
+        List<Map<String, Object>> colleges = siteService.queryColleges(collegeName, cityId, page);
         List<Map<String, Object>> cities = siteService.queryCities(null);
         model.addAttribute("cities", cities);
         model.addAttribute("colleges", colleges);
         model.addAttribute("collegeName", collegeName);
         model.addAttribute("cityId", cityId);
+        model.addAttribute("page", page);
         return "admin/site/college-management";
     }
 
@@ -179,9 +219,22 @@ public class AdminSiteController {
 
     @RequestMapping("/company-management" + Constants.URL_SUFFIX)
     public String toCompanyManagement(final HttpServletRequest request, final HttpServletResponse response,
-            final Model model) {
-        List<Map<String, Object>> companies = siteService.queryCompanies();
+            final Model model, final String name, final String currentPage, final String pageSize) {
+        SimpleSearchBean searchBean = new SimpleSearchBean();
+        searchBean.setName(name);
+        int rowTotal = siteService.queryCompaniesCount(searchBean);
+        PageBean page = new PageBean(rowTotal);
+        if (StringUtils.isNotBlank(pageSize)) {
+            page.setPageSize(Integer.valueOf(pageSize));
+        }
+        if (StringUtils.isNotBlank(currentPage)) {
+            page.setPageNum(Integer.valueOf(currentPage));
+        }
+        page.setQueryString(request.getQueryString());
+        searchBean.setPageBean(page);
+        List<Map<String, Object>> companies = siteService.queryCompanies(searchBean);
         model.addAttribute("companies", companies);
+        model.addAttribute("page", page);
         return "admin/site/company-management";
     }
 

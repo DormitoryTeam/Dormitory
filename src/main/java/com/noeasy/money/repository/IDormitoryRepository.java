@@ -89,7 +89,7 @@ public interface IDormitoryRepository {
 
 
 
-    RoomPrice findRoomPrice(RoomPriceSearchBean seachBean);
+    RoomPrice findRoomPrice(RoomPriceSearchBean searchBean);
 
 
 

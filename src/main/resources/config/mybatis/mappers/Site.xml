@@ -7,6 +7,10 @@
  
 <mapper namespace="com.noeasy.money.model.Site">
 
+	<sql id="limit-split-page">
+		limit #{pageBean.pageStartIndex}, #{pageBean.pageSize}
+	</sql>
+	
 	<select id="selectSlide" resultType="hashmap" parameterType="java.util.Map">
 		select id, `desc`, path, redirecturl, `index`
 		from slide
@@ -85,8 +89,24 @@
 		order by create_time desc
 	</select>
 	
-	<select id="queryCompanies" resultType="hashmap">
-		select id, name, status from company;
+	<select id="queryCompaniesCount" resultType="int" parameterType="com.noeasy.money.model.SimpleSearchBean">
+		select count(*) from company
+		where 1=1
+		<if test="name != null">
+		ane name like CONCAT('%', #{name}, '%')
+		</if>
+	</select>
+	
+	
+	<select id="queryCompanies" resultType="hashmap" parameterType="com.noeasy.money.model.SimpleSearchBean">
+		select id, name, status from company
+		where 1=1
+		<if test="name != null">
+		ane name like CONCAT('%', #{name}, '%')
+		</if>
+		<if test="pageBean != null">
+			<include refid="limit-split-page" />
+		</if>
 	</select>
 	
 	<insert id="saveCompany" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.Map">
@@ -97,8 +117,19 @@
 		update company set status = #{status} where id = #{id}
 	</update>
 	
-	<select id="queryCities" resultType="hashmap" parameterType="java.util.Map">
+	<select id="queryCities" resultType="hashmap" parameterType="com.noeasy.money.model.SimpleSearchBean">
 		select id, country_id, name, name_ch, status, create_time, topCity
+		from city where 1=1
+		<if test="name != null">
+			and name_ch like concat('%', #{name}, '%')
+		</if>
+		<if test="pageBean != null">
+			<include refid="limit-split-page" />
+		</if>
+	</select>
+	
+	<select id="queryCitiesCount" resultType="int" parameterType="com.noeasy.money.model.SimpleSearchBean">
+		select count(*)
 		from city where 1=1
 		<if test="name != null">
 			and name_ch like concat('%', #{name}, '%')
@@ -119,8 +150,22 @@
 		where id = #{id}
 	</update>
 	
-	<select id="queryColleges" resultType="hashmap" parameterType="string">
+	<select id="queryColleges" resultType="hashmap" parameterType="java.util.Map">
 		select id, city_id, name, original_name, latitude, longitude, postalcode, status, create_time, topCollege
+		from college where 1=1
+		<if test="name != null">
+			and name like concat('%', #{name}, '%')
+		</if>
+		<if test="cityId != null">
+			and city_id = #{cityId}
+		</if>
+		<if test="pageBean != null">
+			<include refid="limit-split-page" />
+		</if>
+	</select>
+	
+	<select id="queryCollegesCount" resultType="int" parameterType="java.util.Map">
+		select count(*)
 		from college where 1=1
 		<if test="name != null">
 			and name like concat('%', #{name}, '%')
