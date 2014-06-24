@@ -72,6 +72,7 @@
 			</c:if>
 		</tbody>
 	</table>
+	<a href="<c:url value="/admin/site/admin-navigation.html"/>">返回</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 	<jsp:include page="/jsp/utils/pagination.jsp" flush="true"/> 
 </body>
 </html>
