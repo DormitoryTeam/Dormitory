@@ -90,8 +90,12 @@
 				<tr>
 					<td>货币:</td>
 					<td><input type="text" name="currency" value="${dormitory['currency']}" /></td>
+				</tr>
+				<tr>
 					<td>附加费用*:</td>
 					<td><input type="text" name="additionalPrice" value="${dormitory['additionalPrice']}" /></td>
+					<td>附加费用描述*:</td>
+					<td><input type="text" name="additionalPriceText" value="${dormitory['additionalPriceText']}" /></td>
 				</tr>
 				<tr>
 					<td>周价*:</td>
