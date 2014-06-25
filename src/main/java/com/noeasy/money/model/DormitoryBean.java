@@ -55,6 +55,8 @@ public class DormitoryBean extends BaseBean {
 
     private Double             mAdditionalPrice;
 
+    private String             mAdditionalPriceText;
+
     private String             mPromotion;
 
     private String             mCurrency;
@@ -114,6 +116,15 @@ public class DormitoryBean extends BaseBean {
      */
     public Double getAdditionalPrice() {
         return mAdditionalPrice;
+    }
+
+
+
+    /**
+     * @return the additionalPriceText
+     */
+    public String getAdditionalPriceText() {
+        return mAdditionalPriceText;
     }
 
 
@@ -406,6 +417,16 @@ public class DormitoryBean extends BaseBean {
      */
     public void setAdditionalPrice(final Double pAdditionalPrice) {
         mAdditionalPrice = pAdditionalPrice;
+    }
+
+
+
+    /**
+     * @param pAdditionalPriceText
+     *            the additionalPriceText to set
+     */
+    public void setAdditionalPriceText(final String pAdditionalPriceText) {
+        mAdditionalPriceText = pAdditionalPriceText;
     }
 
 

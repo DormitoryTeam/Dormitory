@@ -2,14 +2,15 @@
 	<c:forEach var="dormitory" items="${dormitories}" varStatus="i">
 		<li>
 			<div class="hostel-img pull-left">
-			
-				<a href="<c:url value='/dormitory/dormitory-detail.html?id=${dormitory.id}&collegeId=${collegeId}'/>">
-				<c:if test="${empty dormitory['picPath']}">
-					<img src="<c:url value='/img/house/house.jpg'/>" alt /></a>
-				</c:if>
-				<c:if test="${not empty dormitory['picPath']}">
-					<img src="<c:url value='/upload/images/dormitory/${dormitory.id}/${dormitory.picPath[0]}'/>" alt /></a>
-				</c:if>
+				<div style="height: 180px;overflow: hidden;">
+					<a href="<c:url value='/dormitory/dormitory-detail.html?id=${dormitory.id}&collegeId=${collegeId}'/>">
+					<c:if test="${empty dormitory['picPath']}">
+						<img src="<c:url value='/img/house/house.jpg'/>" alt /></a>
+					</c:if>
+					<c:if test="${not empty dormitory['picPath']}">
+						<img src="<c:url value='/upload/images/dormitory/${dormitory.id}/${dormitory.picPath[0]}'/>" alt /></a>
+					</c:if>
+				</div>
 						
 				<p class="hostel-server">
 					<a href="#" class="video">&nbsp;</a>

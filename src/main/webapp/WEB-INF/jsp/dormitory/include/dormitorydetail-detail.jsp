@@ -12,7 +12,7 @@
 		<p><textarea readonly class="auto-height-textarea" style="font-family: '微软雅黑';border: 0px;resize: none;overflow-y: hidden;font-size: 13px;width: 666px; height:auto;">${dormitory['service']}</textarea></p>
 		<p><span style="font-weight: bolder">优惠：</span></p>
 		<p><textarea readonly class="auto-height-textarea" style="font-family: '微软雅黑';border: 0px;resize: none;overflow-y: hidden;font-size: 13px;width: 666px; height:auto;">${dormitory['promotion']}</textarea></p>
-		<p><span style="font-weight: bolder">附加费用：</span><span><c:if test="${dormitory['additionalPrice']>=0}"><em>&#163;</em>&nbsp;<fmt:formatNumber value="${dormitory['additionalPrice']}" pattern="#0.00"/></c:if><c:if test="${dormitory['additionalPrice']<0}">暂未定价</c:if></span></p>
+		<p><span style="font-weight: bolder">附加费用：</span><span><c:if test="${dormitory['additionalPrice']>=0}"><em>&#163;</em>&nbsp;<fmt:formatNumber value="${dormitory['additionalPrice']}" pattern="#0.00"/></c:if><c:if test="${dormitory['additionalPrice']<0}">暂未定价</c:if></span>, <span style="text-decoration:underline;">${dormitory['additionalPriceText']}</span></p>
 	</div>
 	<div class="house-tabs">
 		<ul>

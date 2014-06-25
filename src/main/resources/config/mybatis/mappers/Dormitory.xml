@@ -66,6 +66,7 @@
 		t1.weekPrice dor_weekPrice,
 		t1.salePrice dor_salePrice,
 		t1.additionalPrice dor_additionalPrice,
+		t1.additionalPriceText dor_additionalPriceText,
 		t1.promotion dor_promotion,
 		t1.latitude dor_latitude,
 		t1.longitude dor_longitude,
@@ -146,6 +147,7 @@
 		t1.weekPrice dor_weekPrice,
 		t1.salePrice dor_salePrice,
 		t1.additionalPrice dor_additionalPrice,
+		t1.additionalPriceText dor_additionalPriceText,
 		t1.promotion dor_promotion,
 		t1.latitude dor_latitude,
 		t1.longitude dor_longitude,
@@ -302,6 +304,7 @@
 		t1.weekPrice dor_weekPrice,
 		t1.salePrice dor_salePrice,
 		t1.additionalPrice dor_additionalPrice,
+		t1.additionalPriceText dor_additionalPriceText,
 		t1.promotion dor_promotion,
 		t1.latitude dor_latitude,
 		t1.longitude dor_longitude,
@@ -440,6 +443,7 @@
 			equipment = #{equipment},
 			service = #{service},
 			additionalPrice = #{additionalPrice},
+			additionalPriceText = #{additionalPriceText},
 			weekPrice = #{weekPrice},
 			salePrice = #{salePrice},
 			latitude = #{latitude},
@@ -458,13 +462,14 @@
 	</update>
 
 	<insert id="saveDormitory" keyProperty="id" useGeneratedKeys='true' parameterType="com.noeasy.money.model.DormitoryBean">
-		insert into dormitory (city_id, company_id, name, address, postcode, additionalPrice, weekPrice, salePrice, currency, latitude, longitude, equipment, service, description, promotion, refund, question, feature, status, display_order) values (
+		insert into dormitory (city_id, company_id, name, address, postcode, additionalPrice, additionalPriceText, weekPrice, salePrice, currency, latitude, longitude, equipment, service, description, promotion, refund, question, feature, status, display_order) values (
 			#{cityId,javaType=int,jdbcType=INTEGER},
 			#{companyId,javaType=int,jdbcType=INTEGER},
 			#{name,javaType=String,jdbcType=VARCHAR},
 			#{address,javaType=String,jdbcType=VARCHAR},
 			#{postcode,javaType=String,jdbcType=VARCHAR},
 			#{additionalPrice,javaType=Double,jdbcType=DECIMAL},
+			#{additionalPriceText,javaType=String,jdbcType=VARCHAR},
 			#{weekPrice,javaType=Double,jdbcType=DECIMAL},
 			#{salePrice,javaType=Double,jdbcType=DECIMAL},
 			#{currency,javaType=String,jdbcType=VARCHAR},
@@ -955,6 +960,7 @@
 		<result property="weekPrice" column="dor_weekPrice" />
 		<result property="salePrice" column="dor_salePrice" />
 		<result property="additionalPrice" column="dor_additionalPrice" />
+		<result property="additionalPriceText" column="dor_additionalPriceText" />
 		<result property="promotion" column="dor_promotion" />
 		<result property="latitude" column="dor_latitude" />
 		<result property="longitude" column="dor_longitude" />
