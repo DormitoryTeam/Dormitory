@@ -41,7 +41,7 @@
 	</sql>
 
 	<sql id="order-by-order-field">
-		order by ${sortBy}
+		order by ${sortBy}, distance asc
 	</sql>
 
 	<sql id="order-by-field">

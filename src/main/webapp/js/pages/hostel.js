@@ -210,7 +210,13 @@ require(['config'], function(config) {
 								},
 								success : function(data) {
 									if (data.result) {
-										window.location.href = window.location.href + "&login=" + data.login
+										
+										if (window.location.href.lastIndexOf('#') > 0) {
+											window.location.href = window.location.href.substr(0, window.location.href.lastIndexOf('#')) + "&login=" + data.login
+										} else {
+											window.location.href = window.location.href + "&login=" + data.login;
+										}
+										
 									} else {
 										$(".errorMessage").html(data.message);
 									}
