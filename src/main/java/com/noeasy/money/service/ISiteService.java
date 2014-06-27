@@ -118,4 +118,12 @@ public interface ISiteService {
 
 
     boolean updateCompanyStatus(String pCompanyId, String pStatus);
+
+
+
+    List<Map<String, Object>> queryEmail(String type, String status);
+
+
+
+    boolean saveOrUpdateEmail(String Id, String email, String type, String status);
 }

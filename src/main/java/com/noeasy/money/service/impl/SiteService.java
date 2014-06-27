@@ -28,6 +28,7 @@
  */
 package com.noeasy.money.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -254,6 +255,33 @@ public class SiteService implements ISiteService {
     @Override
     public Integer queryCompaniesCount(SimpleSearchBean searchBean) {
         return siteRepository.queryCompaniesCount(searchBean);
+    }
+
+
+
+    @Override
+    public List<Map<String, Object>> queryEmail(String pType, String pStatus) {
+        Map<String, Object> condition = new HashMap<String, Object>();
+        condition.put("type", pType);
+        condition.put("status", pStatus);
+        return siteRepository.queryEmail(condition);
+    }
+
+
+
+    @Override
+    public boolean saveOrUpdateEmail(String pId, String pEmail, String pType, String pStatus) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("email", pEmail);
+        params.put("type", StringUtils.isBlank(pType) ? "1": pType);
+        params.put("status", StringUtils.isBlank(pStatus) ? "1": pStatus);
+        if(StringUtils.isNotBlank(pId)) {
+            params.put("id", Integer.valueOf(pId));
+            siteRepository.updateEmail(params);
+        } else {
+            siteRepository.createEmail(params);
+        }
+        return true;
     }
 
 }

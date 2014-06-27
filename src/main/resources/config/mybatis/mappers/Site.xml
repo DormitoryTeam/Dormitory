@@ -192,4 +192,30 @@
 		status = #{status} 
 		where id = #{id}
 	</update>
+	
+	
+	<select id="queryEmail" resultType="hashmap" parameterType="java.util.Map">
+		select id, email, email_type as type, status
+		from system_email
+		where 1=1
+		<if test="type != null">
+		and email_type = #{type}
+		</if>
+		<if test="status != null">
+		and status = #{status}
+		</if>
+	</select>
+	
+	<insert id="createEmail" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.Map">
+		insert into system_email (email, email_type, status, create_time, update_time) values
+		(#{email}, #{type}, #{status}, now(), now());
+	</insert>
+	<update id="updateEmail" parameterType="java.util.Map">
+		update system_email set
+		update_time = now(),
+		email = #{email},
+		email_type = #{type},
+		status = #{status}
+		where id = #{id}
+	</update>
 </mapper>

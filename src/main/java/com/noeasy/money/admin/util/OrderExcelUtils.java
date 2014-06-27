@@ -34,7 +34,7 @@ public class OrderExcelUtils {
 
     private static final String[]  PICKUP_COLUMN_NAMES        = new String[] { "接机订单编号", "支付金额", "支付状态", "下单时间",
             "是否通过本司预定正课宿舍", "学生识别码", "名", "姓", "生日", "性别", "QQ", "邮箱地址", "联系方式", "uk手机号", "航空公司", "航班号", "起飞时间",
-            "到达时间", "起飞机场(城市)", "中转机场", "到达机场", "落地航站楼", "送达住址", "送达地邮编", "行李", "国内快递地址", "会员卡号", "快递单号", "备注" };
+            "到达时间", "起飞机场(城市)", "中转机场", "到达机场", "落地航站楼", "送达住址", "送达地邮编", "行李", "国内快递地址", "会员卡号", "快递单号", "备注", "微信号" };
 
     private static final Integer[] PICKUP_COLUMN_UNDEFINED    = new Integer[] { 4, 13, 19, 21, 26, 27, 28 };
 
@@ -393,6 +393,9 @@ public class OrderExcelUtils {
             // 28
             cell = orderRow.createCell(colIndex++);
             cell.setCellValue("");
+            // 29
+            cell = orderRow.createCell(colIndex++);
+            cell.setCellValue(info.getWechat());
         }
 
         for (Integer i = 0; i < PICKUP_COLUMN_NAMES.length; i++) {

@@ -66,6 +66,7 @@ import com.noeasy.money.model.UserPreferBean;
 import com.noeasy.money.service.IDormitoryService;
 import com.noeasy.money.service.INavigationService;
 import com.noeasy.money.service.IOrderService;
+import com.noeasy.money.service.ISiteService;
 import com.noeasy.money.service.IUserService;
 import com.noeasy.money.service.IUserService.INFO_TYPE;
 import com.noeasy.money.util.DateUtils;
@@ -93,6 +94,9 @@ public class OrderController {
 
     @Resource(name = "navigationService")
     INavigationService navigationService;
+    
+    @Resource(name = "siteService")
+    ISiteService siteService;
 
 
 
@@ -898,6 +902,13 @@ public class OrderController {
         String subject = "您的宿舍订单已提交-留学生活网-您身边的留学生活专家";
         String template = EmailUtils.generateTemplateEmail("template2.html", paramMap);
         boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, login, login, subject, template);
+        List<Map<String, Object>> emails = siteService.queryEmail("D", "1");
+        if (CollectionUtils.isNotEmpty(emails)) {
+            for (Map<String, Object> emailMap : emails) {
+                String emailAddress = (String)emailMap.get("email");
+                EmailUtils.sendEmail(from, fromAlias, emailAddress, emailAddress, "宿舍订单提交通知-留学生活网-您身边的留学生活专家", template);
+            }
+        }
         return sendSuccess;
     }
     
@@ -978,6 +989,13 @@ public class OrderController {
         String subject = "您的接机订单已提交-留学生活网-您身边的留学生活专家";
         String template = EmailUtils.generateTemplateEmail("template10.html", paramMap);
         boolean sendSuccess = EmailUtils.sendEmail(from, fromAlias, login, login, subject, template);
+        List<Map<String, Object>> emails = siteService.queryEmail("P", "1");
+        if (CollectionUtils.isNotEmpty(emails)) {
+            for (Map<String, Object> emailMap : emails) {
+                String emailAddress = (String)emailMap.get("email");
+                EmailUtils.sendEmail(from, fromAlias, emailAddress, emailAddress, "接机订单提交通知-留学生活网-您身边的留学生活专家", template);
+            }
+        }
         return sendSuccess;
 
     }

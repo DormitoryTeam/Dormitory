@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
@@ -346,6 +347,28 @@ public class SiteRepository extends BaseRepository implements ISiteRepository {
     @Override
     public Integer queryCompaniesCount(SimpleSearchBean pSearchBean) {
         return getSqlSession().selectOne("com.noeasy.money.model.Site.queryCompaniesCount", pSearchBean);
+    }
+
+
+
+    @Override
+    public List<Map<String, Object>> queryEmail(Map<String, Object> pCondition) {
+        
+        return getSqlSession().selectList("com.noeasy.money.model.Site.queryEmail", pCondition);
+    }
+
+
+
+    @Override
+    public void updateEmail(Map<String, Object> pParams) {
+        getSqlSession().update("com.noeasy.money.model.Site.updateEmail", pParams);
+    }
+
+
+
+    @Override
+    public void createEmail(Map<String, Object> pParams) {
+        getSqlSession().insert("com.noeasy.money.model.Site.createEmail", pParams);
     }
 
 }

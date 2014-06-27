@@ -129,4 +129,19 @@ public interface ISiteRepository {
 
 
     Integer queryCollegesCount(String pCollegeName, String pCityId);
+
+
+
+    List<Map<String, Object>> queryEmail(Map<String, Object> pCondition);
+
+
+
+    void updateEmail(Map<String, Object> pParams);
+
+
+
+    void createEmail(Map<String, Object> pParams);
+
+
+
 }

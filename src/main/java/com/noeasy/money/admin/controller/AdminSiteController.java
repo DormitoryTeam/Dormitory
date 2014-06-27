@@ -246,4 +246,22 @@ public class AdminSiteController {
         siteService.updateCompanyStatus(id, status);
         return "redirect:/admin/site/company-management.html";
     }
+
+
+
+    @RequestMapping("/email-management" + Constants.URL_SUFFIX)
+    public String emailManagement(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final String type, final String status) {
+        List<Map<String, Object>> emails = siteService.queryEmail(type, status);
+        model.addAttribute("emails", emails);
+        model.addAttribute("type", type);
+        return "admin/site/email-management";
+    }
+    
+    @RequestMapping("/edit-email" + Constants.URL_SUFFIX)
+    public String editEmail(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final String id, final String email, final String type, final String status) {
+        siteService.saveOrUpdateEmail(id, email, type, status);
+        return "redirect:/admin/site/email-management.html?type=" + type;
+    }
 }
