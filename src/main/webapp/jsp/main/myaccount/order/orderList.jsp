@@ -81,7 +81,7 @@
 					<li class="order-active"><a href="<c:url value="/order/view-order.html?orderId=${order.id}"/>">查看</a><c:if test="${order.orderStatus == 'INITIAL' or  order.orderStatus == 'COMMIT'}">|<a href="<c:url value="/order/dormitory-place-order.html?orderId=${order.id}&action=edit"/>">修改</a></c:if>|<a href="<c:url value="/user/deleteOrder.html?orderType=D&id=${order.id}&currentPage=${param.currentPage}&pageSize=${param.pageSize}"/>" onclick="return confirm('确定取消订单?')">取消</a></li>
 					</c:when>
 					<c:otherwise>
-					<li class="order-active"><a href="<c:url value="/order/view-order.html?orderId=${order.id}&orderType=pickup"/>">查看</a><c:if test="${order.orderStatus == 'INITIAL' or  order.orderStatus == 'COMMIT'}">|<a href="<c:url value="/order/dormitory-place-order.html?orderId=${order.id}&orderType=pickup&action=edit"/>">修改</a></c:if>|<a href="<c:url value="/user/deleteOrder.html?id=${order.id}&currentPage=${param.currentPage}&pageSize=${param.pageSize}"/>" onclick="return confirm('确定取消订单?')">取消</a></li>
+					<li class="order-active"><a href="<c:url value="/order/view-order.html?orderId=${order.id}&orderType=pickup"/>">查看</a><c:if test="${order.orderStatus =='REVIEWDE'}">|<a href="${order.lineItems[0].paymentUrl}" target="_blank">支付</a></c:if><c:if test="${order.orderStatus == 'INITIAL' or  order.orderStatus == 'COMMIT'}">|<a href="<c:url value="/order/dormitory-place-order.html?orderId=${order.id}&orderType=pickup&action=edit"/>">修改</a></c:if>|<a href="<c:url value="/user/deleteOrder.html?id=${order.id}&currentPage=${param.currentPage}&pageSize=${param.pageSize}"/>" onclick="return confirm('确定取消订单?')">取消</a></li>
 					</c:otherwise>
 					</c:choose>
 					

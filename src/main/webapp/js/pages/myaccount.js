@@ -34,9 +34,9 @@ $(function() {
 							if (data.result) {
 								
 								if (window.location.href.lastIndexOf('#') > 0) {
-									window.location.href = window.location.href.substr(0, window.location.href.lastIndexOf('#')) + "&login=" + data.login
+									window.location.href = window.location.href.substr(0, window.location.href.lastIndexOf('#'));
 								} else {
-									window.location.href = window.location.href + "&login=" + data.login;
+									window.location.href = window.location.href;
 								}
 								
 							} else {

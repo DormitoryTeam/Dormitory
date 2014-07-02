@@ -125,6 +125,16 @@ public class DormitoryController {
                     Map<String, Object> college = navigationService
                             .queryCollegeById(NumberUtils.toInt(collegeId), null);
                     model.addAttribute("college", college);
+                    if (null != college && null != college.get("cityId")) {
+                        Map<String, Object> city = navigationService.queryCityById((Integer) college.get("cityId"),
+                                null);
+                        model.addAttribute("city", city);
+                        if (null != city && null != city.get("countryId")) {
+                            Map<String, Object> country = navigationService.queryCountryById((Integer) city
+                                    .get("countryId"));
+                            model.addAttribute("country", country);
+                        }
+                    }
                 }
                 // boolean hasOrder = false;
                 // if (null != userId) {

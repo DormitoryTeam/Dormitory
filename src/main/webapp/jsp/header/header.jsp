@@ -57,7 +57,12 @@
 			<a href="#">帮助</a>
 		</li>
 		<li style="color: #fff;">
-			<a href="#" style="font-size:14px;" class="jQ-loginbtn" data-popupsrc="/user/loadLogin.html">登录</a>&nbsp;|&nbsp;<a style="font-size:14px;" href="#" class="jQ-regbtn" data-popupsrc="/user/loadRegister.html">注册</a>
+			<c:if test="${empty sessionScope.USER_ID }">
+				<a href="#" style="font-size:14px;" class="jQ-loginbtn" data-popupsrc="/user/loadLogin.html">登录</a>&nbsp;|&nbsp;<a style="font-size:14px;" href="#" class="jQ-regbtn" data-popupsrc="/user/loadRegister.html">注册</a>
+			</c:if>
+			<c:if test="${not empty sessionScope.USER_ID }">
+				<a href="<c:url value="/user/editUserInfo.html"/>" style="font-size:14px;">个人中心</a>&nbsp;|&nbsp;<a href="<c:url value="/user/signout.html"/>" style="font-size:14px;">注销</a>
+			</c:if>
 		</li>
 	</ul>
 </div>

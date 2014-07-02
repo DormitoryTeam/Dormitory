@@ -1,4 +1,11 @@
 <div class="row house-detail-info">
+	<ul class="row bread-crumb">
+		<li><a style="color: #dfdfdf;" href="<c:url value='/navigation/hot-cities.html?countryId=${country.id}'/>">${country['name']}</a></li>
+		<li><a style="color: #dfdfdf;" href="<c:url value='/navigation/hot-cities.html?cityId=${city.id}#${city.id}'/>"><span>&#62;</span>${city['name']}</a></li>
+		<c:if test="${not empty college}">
+			<li><a style="color: #dfdfdf;" href="<c:url value="/dormitory/dormitory-list.html?cityId=${city.id}&collegeId=${college['id']}"/>"><span>&#62;</span>${college['originalName']}</a></li>
+		</c:if>
+	</ul>
 	<div class="house-score pull-right">
 		用户评分
 		<div class="starBox" data-score="${dormitory['rating']}"></div>
