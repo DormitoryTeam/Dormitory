@@ -8,7 +8,7 @@
 	</ul>
 	<div class="house-score pull-right">
 		用户评分
-		<div class="starBox" data-score="${dormitory['rating']}"></div>
+		<div class="starBox" data-score="${empty dormitory['defaultRating'] ? dormitory['rating'] : dormitory['defaultRating']}"></div>
 	</div>
 	<div class="house-text-info">
 		<div class="title">${dormitory['name']}</div>

@@ -113,15 +113,7 @@ public class AdminDormitoryController {
             e.printStackTrace();
         }
 
-        List<Map<String, Object>> countries = navigationService.queryCountries();
-        Map<String, Object> currentCountry = navigationService.queryCountryByCityId(dormitory.getCityId());
-        List<Map<String, Object>> cities = navigationService.queryCitiesInSameCountry(dormitory.getCityId());
-
-        model.addAttribute("dormitory", dormitory);
-        model.addAttribute("countries", countries);
-        model.addAttribute("currentCountry", currentCountry);
-        model.addAttribute("cities", cities);
-        return "admin/dormitory/dormitory-edit";
+        return "redirect:/admin/dormitory/dormitory-edit.html?dormitoryId=" + dormitory.getId();
     }
 
 

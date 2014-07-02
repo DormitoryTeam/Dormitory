@@ -23,7 +23,7 @@
 				<input type="hidden" class="hidLocation" value="${dormitory['name']},${dormitory['latitude']},${dormitory['longitude']},${dormitory['id']}"/>
 				<div class="price">
 					价格<c:if test="${not empty dormitory['weekPrice'] and dormitory['weekPrice'] >= 0}"><span><em>&#163;</em>&nbsp;<fmt:formatNumber value="${dormitory['weekPrice']}" pattern="#0.00"/></span>起</c:if><c:if test="${empty dormitory['weekPrice'] or dormitory['weekPrice'] <0}"><span>暂无定价</span></c:if>
-					<div class="starBox" data-score="${dormitory['rating']}"></div>
+					<div class="starBox" data-score="${empty dormitory['defaultRating'] ? dormitory['rating'] : dormitory['defaultRating']}"></div>
 				</div>
 				<div class="title">
 					<a href="<c:url value='/dormitory/dormitory-detail.html?id=${dormitory.id}&collegeId=${collegeId}'/>">${dormitory['name']}</a>

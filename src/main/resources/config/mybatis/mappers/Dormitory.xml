@@ -77,6 +77,7 @@
 		t1.city_id dor_cityId,
 		t1.status dor_status,
 		t1.display_order dor_displayOrder,
+		t1.defaultRating dor_defaultRating,
 		t2.name dor_city,
 		ifnull(order_count.dormitory_order_count, 0),
 		coalesce(avg(t3.score), 0) rating,
@@ -158,6 +159,7 @@
 		t1.city_id dor_cityId,
 		t1.status dor_status,
 		t1.display_order dor_displayOrder,
+		t1.defaultRating dor_defaultRating,
 		t2.name dor_city,
 		coalesce(avg(t3.score), 0) rating,
 		t4.id ri_id,
@@ -315,6 +317,7 @@
 		t1.city_id dor_cityId,
 		t1.status dor_status,
 		t1.display_order dor_displayOrder,
+		t1.defaultRating dor_defaultRating,
 		t2.name dor_city,
 		coalesce(avg(t3.score), 0) rating,
 		t9.id dor_companyId,
@@ -340,6 +343,7 @@
 		t1.city_id dor_cityId,
 		t1.status dor_status,
 		t1.display_order dor_displayOrder,
+		t1.defaultRating dor_defaultRating,
 		t2.name dor_city,
 		coalesce(avg(t3.score), 0) rating,
 		count(t3.id) as rateCount,
@@ -457,12 +461,13 @@
 			city_id = #{cityId},
 			company_id = #{companyId},
 			status = #{status},
-			display_order = #{displayOrder}
+			display_order = #{displayOrder},
+			defaultRating = #{defaultRating}
 		where id = #{id}
 	</update>
 
 	<insert id="saveDormitory" keyProperty="id" useGeneratedKeys='true' parameterType="com.noeasy.money.model.DormitoryBean">
-		insert into dormitory (city_id, company_id, name, address, postcode, additionalPrice, additionalPriceText, weekPrice, salePrice, currency, latitude, longitude, equipment, service, description, promotion, refund, question, feature, status, display_order) values (
+		insert into dormitory (city_id, company_id, name, address, postcode, additionalPrice, additionalPriceText, weekPrice, salePrice, currency, latitude, longitude, equipment, service, description, promotion, refund, question, feature, status, display_order, defaultRating) values (
 			#{cityId,javaType=int,jdbcType=INTEGER},
 			#{companyId,javaType=int,jdbcType=INTEGER},
 			#{name,javaType=String,jdbcType=VARCHAR},
@@ -483,7 +488,7 @@
 			#{question,javaType=String,jdbcType=VARCHAR},
 			#{feature,javaType=String,jdbcType=VARCHAR},
 			#{status},
-			#{displayOrder}
+			#{displayOrder}, #{defaultRating}
 		)
 	</insert>
 
@@ -976,6 +981,7 @@
 		<result property="rating" column="rating" />
 		<result property="status" column="dor_status" />
 		<result property="displayOrder" column="dor_displayOrder" />
+		<result property="defaultRating" column="dor_defaultRating" />
 		<collection property="rooms" resultMap="roomInfo" />
 	</resultMap>
 

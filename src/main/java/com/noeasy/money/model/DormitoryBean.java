@@ -109,6 +109,8 @@ public class DormitoryBean extends BaseBean {
 
     private int                mRateCount;
 
+    private Double             mDefaultRating;
+
 
 
     /**
@@ -203,6 +205,15 @@ public class DormitoryBean extends BaseBean {
      */
     public String getCurrency() {
         return mCurrency;
+    }
+
+
+
+    /**
+     * @return the defaultRating
+     */
+    public Double getDefaultRating() {
+        return mDefaultRating;
     }
 
 
@@ -513,6 +524,16 @@ public class DormitoryBean extends BaseBean {
      */
     public void setCurrency(final String pCurrency) {
         mCurrency = pCurrency;
+    }
+
+
+
+    /**
+     * @param pDefaultRating
+     *            the defaultRating to set
+     */
+    public void setDefaultRating(final Double pDefaultRating) {
+        mDefaultRating = pDefaultRating;
     }
 
 

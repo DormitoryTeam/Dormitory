@@ -21,8 +21,8 @@
 </head>
 <body>
 	<br />
-	<c:if test="${not empty result}">
-		&nbsp;&nbsp;&nbsp;${result ? '保存成功!' : '保存失败!'}
+	<c:if test="${not empty param.result}">
+		&nbsp;&nbsp;&nbsp;${param.result ? '保存成功!' : '保存失败!'}
 	</c:if>
 	<br />
 	<br />
@@ -90,6 +90,8 @@
 				<tr>
 					<td>货币:</td>
 					<td><input type="text" name="currency" value="${dormitory['currency']}" /></td>
+					<td>固定评分(0-5)</td>
+					<td><input type="text" name="defaultRating" value="${dormitory['defaultRating']}" /></td>
 				</tr>
 				<tr>
 					<td>附加费用*:</td>
