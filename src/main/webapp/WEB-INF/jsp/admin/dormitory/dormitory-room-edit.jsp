@@ -64,9 +64,9 @@
 					<td>可提供语言宿舍</td>
 				</tr>
 				<tr>
-					<td><input type="text" name="houseArea" value="${room.houseArea}" /></td>
-					<td><input type="text" name="bedType" value="${room.bedType}" /></td>
-					<td><input type="text" name="kitchenPeople" value="${room.kitchenPeople}" /></td>
+					<td><input type="text" name="houseArea" value="${empty room.houseArea ? '-1' : room.houseArea}" /></td>
+					<td><input type="text" name="bedType" value="${empty room.bedType ? '单人床' : room.bedType}" /></td>
+					<td><input type="text" name="kitchenPeople" value="${empty room.kitchenPeople ? '未知' : room.kitchenPeople}" /></td>
 					<td><select name="ensuitBathroom">
 							<option value="false" ${!room.ensuitBathroom ? 'selected' : ''}>没有</option>
 							<option value="true" ${ room.ensuitBathroom ? 'selected' : ''}>有</option>
