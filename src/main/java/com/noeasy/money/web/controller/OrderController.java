@@ -94,9 +94,9 @@ public class OrderController {
 
     @Resource(name = "navigationService")
     INavigationService navigationService;
-    
+
     @Resource(name = "siteService")
-    ISiteService siteService;
+    ISiteService       siteService;
 
 
 
@@ -307,80 +307,62 @@ public class OrderController {
         String luggageSize1 = pRequest.getParameter("luggageSize1");
         String luggageAmount1 = pRequest.getParameter("luggageAmount1");
         if (StringUtils.isNotBlank(luggageSize1) && StringUtils.isNotBlank(luggageAmount1)) {
-            Double size = Double.valueOf(luggageSize1);
-            Integer amount = Integer.valueOf(luggageAmount1);
-            if (size > 0 && amount > 0) {
-                luggageSizeStr += size.toString();
-                luggageAmountStr += amount.toString();
-            }
+            // Double size = Double.valueOf(luggageSize1);
+            // Integer amount = Integer.valueOf(luggageAmount1);
+            luggageSizeStr += luggageSize1;
+            luggageAmountStr += luggageAmount1;
         }
 
         String luggageSize2 = pRequest.getParameter("luggageSize2");
         String luggageAmount2 = pRequest.getParameter("luggageAmount2");
         if (StringUtils.isNotBlank(luggageSize2) && StringUtils.isNotBlank(luggageAmount2)) {
-            Double size = Double.valueOf(luggageSize2);
-            Integer amount = Integer.valueOf(luggageAmount2);
-            if (size > 0 && amount > 0) {
-                if (StringUtils.isNotBlank(luggageSizeStr)) {
-                    luggageSizeStr += ":";
-                }
-                luggageSizeStr += size.toString();
-                if (StringUtils.isNotBlank(luggageAmountStr)) {
-                    luggageAmountStr += ":";
-                }
-                luggageAmountStr += amount.toString();
+            if (StringUtils.isNotBlank(luggageSizeStr)) {
+                luggageSizeStr += ":";
             }
+            luggageSizeStr += luggageSize2;
+            if (StringUtils.isNotBlank(luggageAmountStr)) {
+                luggageAmountStr += ":";
+            }
+            luggageAmountStr += luggageAmount2;
         }
 
         String luggageSize3 = pRequest.getParameter("luggageSize3");
         String luggageAmount3 = pRequest.getParameter("luggageAmount3");
         if (StringUtils.isNotBlank(luggageSize3) && StringUtils.isNotBlank(luggageAmount3)) {
-            Double size = Double.valueOf(luggageSize3);
-            Integer amount = Integer.valueOf(luggageAmount3);
-            if (size > 0 && amount > 0) {
-                if (StringUtils.isNotBlank(luggageSizeStr)) {
-                    luggageSizeStr += ":";
-                }
-                luggageSizeStr += size.toString();
-                if (StringUtils.isNotBlank(luggageAmountStr)) {
-                    luggageAmountStr += ":";
-                }
-                luggageAmountStr += amount.toString();
+            if (StringUtils.isNotBlank(luggageSizeStr)) {
+                luggageSizeStr += ":";
             }
+            luggageSizeStr += luggageSize3;
+            if (StringUtils.isNotBlank(luggageAmountStr)) {
+                luggageAmountStr += ":";
+            }
+            luggageAmountStr += luggageAmount3;
         }
 
         String luggageSize4 = pRequest.getParameter("luggageSize4");
         String luggageAmount4 = pRequest.getParameter("luggageAmount4");
         if (StringUtils.isNotBlank(luggageSize4) && StringUtils.isNotBlank(luggageAmount4)) {
-            Double size = Double.valueOf(luggageSize4);
-            Integer amount = Integer.valueOf(luggageAmount4);
-            if (size > 0 && amount > 0) {
-                if (StringUtils.isNotBlank(luggageSizeStr)) {
-                    luggageSizeStr += ":";
-                }
-                luggageSizeStr += size.toString();
-                if (StringUtils.isNotBlank(luggageAmountStr)) {
-                    luggageAmountStr += ":";
-                }
-                luggageAmountStr += amount.toString();
+            if (StringUtils.isNotBlank(luggageSizeStr)) {
+                luggageSizeStr += ":";
             }
+            luggageSizeStr += luggageSize4;
+            if (StringUtils.isNotBlank(luggageAmountStr)) {
+                luggageAmountStr += ":";
+            }
+            luggageAmountStr += luggageAmount4;
         }
 
         String luggageSize5 = pRequest.getParameter("luggageSize5");
         String luggageAmount5 = pRequest.getParameter("luggageAmount5");
         if (StringUtils.isNotBlank(luggageSize5) && StringUtils.isNotBlank(luggageAmount5)) {
-            Double size = Double.valueOf(luggageSize5);
-            Integer amount = Integer.valueOf(luggageAmount5);
-            if (size > 0 && amount > 0) {
-                if (StringUtils.isNotBlank(luggageSizeStr)) {
-                    luggageSizeStr += ":";
-                }
-                luggageSizeStr += size.toString();
-                if (StringUtils.isNotBlank(luggageAmountStr)) {
-                    luggageAmountStr += ":";
-                }
-                luggageAmountStr += amount.toString();
+            if (StringUtils.isNotBlank(luggageSizeStr)) {
+                luggageSizeStr += ":";
             }
+            luggageSizeStr += luggageSize5;
+            if (StringUtils.isNotBlank(luggageAmountStr)) {
+                luggageAmountStr += ":";
+            }
+            luggageAmountStr += luggageAmount5;
         }
         item.setLuggageSize(luggageSizeStr);
         item.setLuggageAmount(luggageAmountStr);
@@ -854,7 +836,8 @@ public class OrderController {
 
     }
 
-    
+
+
     private boolean sendDormitoryOrderCommitEmail(final HttpServletRequest pRequest) {
         Map<String, String> paramMap = EmailUtils.getParamMap();
         OrderBean order = ServletUtils.getOrderFromSession(pRequest);
@@ -865,11 +848,12 @@ public class OrderController {
         String login = order.getOrderContact().getBelongsToInfo().getEmail();
         paramMap.put("orderId", OrderTokenUtil.getOrderToken(order.getId().toString(), "AC"));
         UserInfoBean userInfo = order.getOrderContact().getBelongsToInfo();
-        paramMap.put("name", EmailUtils.getStringValue(userInfo.getLastName()) + " " + EmailUtils.getStringValue(userInfo.getName()));
+        paramMap.put("name",
+                EmailUtils.getStringValue(userInfo.getLastName()) + " " + EmailUtils.getStringValue(userInfo.getName()));
         UserBean user = userService.findUserById(order.getBelongsTo().getId());
         paramMap.put("userToken", EmailUtils.getStringValue(user.getNewCode()));
-        paramMap.put("login",EmailUtils.getStringValue(user.getLogin()));
-        paramMap.put("password",EmailUtils.getStringValue(user.getPassword()));
+        paramMap.put("login", EmailUtils.getStringValue(user.getLogin()));
+        paramMap.put("password", EmailUtils.getStringValue(user.getPassword()));
         paramMap.put("address", EmailUtils.getStringValue(userInfo.getAddress()));
         paramMap.put("phone", EmailUtils.getStringValue(userInfo.getPhone()));
         paramMap.put("email", login);
@@ -879,14 +863,15 @@ public class OrderController {
         paramMap.put("contract", EmailUtils.getStringValue(lineItem.getContractType().getName()));
         BigDecimal zero = new BigDecimal("0");
         if (zero.compareTo(lineItem.getListPrice()) > 0) {
-            paramMap.put("weekPrice", "未知");            
+            paramMap.put("weekPrice", "未知");
         } else {
             paramMap.put("weekPrice", EmailUtils.getStringValue(lineItem.getListPrice().toString()));
         }
         if (lineItem.getDormitory().getAdditionalPrice() < 0) {
-            paramMap.put("additionalPrice", "未知");     
+            paramMap.put("additionalPrice", "未知");
         } else {
-            paramMap.put("additionalPrice", EmailUtils.getStringValue(lineItem.getDormitory().getAdditionalPrice().toString()));
+            paramMap.put("additionalPrice",
+                    EmailUtils.getStringValue(lineItem.getDormitory().getAdditionalPrice().toString()));
         }
         if (zero.compareTo(lineItem.getAmount()) > 0) {
             paramMap.put("salePrice", "未知");
@@ -896,7 +881,7 @@ public class OrderController {
         paramMap.put("checkinDate", EmailUtils.getStringValue(lineItem.getRoomInfo().getCheckinDate()));
         paramMap.put("comment", "");
         paramMap.put("city", EmailUtils.getStringValue(lineItem.getDormitory().getCity()));
-        
+
         String from = "accommodation@liuxuelife.com";
         String fromAlias = EmailUtils.getServiceAlias();
         String subject = "您的宿舍订单已提交-留学生活网-您身边的留学生活专家";
@@ -905,13 +890,14 @@ public class OrderController {
         List<Map<String, Object>> emails = siteService.queryEmail("D", "1");
         if (CollectionUtils.isNotEmpty(emails)) {
             for (Map<String, Object> emailMap : emails) {
-                String emailAddress = (String)emailMap.get("email");
-                EmailUtils.sendEmail(from, fromAlias, emailAddress, emailAddress, "宿舍订单提交通知-留学生活网-您身边的留学生活专家", template);
+                String emailAddress = (String) emailMap.get("email");
+                EmailUtils
+                        .sendEmail(from, fromAlias, emailAddress, emailAddress, "宿舍订单提交通知-留学生活网-您身边的留学生活专家", template);
             }
         }
         return sendSuccess;
     }
-    
+
 
 
     private boolean sendPickupOrderCommitEmail(final HttpServletRequest pRequest) {
@@ -925,11 +911,12 @@ public class OrderController {
         String login = order.getOrderContact().getBelongsToInfo().getEmail();
 
         paramMap.put("orderId", OrderTokenUtil.getOrderToken(order.getId().toString(), "PU"));
-        paramMap.put("userName", EmailUtils.getStringValue(userInfo.getLastName()) + " " + EmailUtils.getStringValue(userInfo.getName()));
+        paramMap.put("userName",
+                EmailUtils.getStringValue(userInfo.getLastName()) + " " + EmailUtils.getStringValue(userInfo.getName()));
         UserBean user = userService.findUserById(order.getBelongsTo().getId());
         paramMap.put("userToken", EmailUtils.getStringValue(user.getNewCode()));
-        paramMap.put("login",EmailUtils.getStringValue(user.getLogin()));
-        paramMap.put("password",EmailUtils.getStringValue(user.getPassword()));
+        paramMap.put("login", EmailUtils.getStringValue(user.getLogin()));
+        paramMap.put("password", EmailUtils.getStringValue(user.getPassword()));
         paramMap.put("orderId", OrderTokenUtil.getOrderToken(order.getId().toString(), "PU"));
         paramMap.put("userName",
                 EmailUtils.getStringValue(userInfo.getLastName()) + " " + EmailUtils.getStringValue(userInfo.getName()));
@@ -953,8 +940,7 @@ public class OrderController {
 
         paramMap.put("transferTime", "???");
         if (null != pickupLineItem.getPickupDate()) {
-            paramMap.put("arriveTime",
-                    DateUtils.dateToString(pickupLineItem.getPickupDate(), "yyyy-MM-dd HH:mm"));
+            paramMap.put("arriveTime", DateUtils.dateToString(pickupLineItem.getPickupDate(), "yyyy-MM-dd HH:mm"));
         } else {
             paramMap.put("arriveTime", "");
         }
@@ -992,8 +978,9 @@ public class OrderController {
         List<Map<String, Object>> emails = siteService.queryEmail("P", "1");
         if (CollectionUtils.isNotEmpty(emails)) {
             for (Map<String, Object> emailMap : emails) {
-                String emailAddress = (String)emailMap.get("email");
-                EmailUtils.sendEmail(from, fromAlias, emailAddress, emailAddress, "接机订单提交通知-留学生活网-您身边的留学生活专家", template);
+                String emailAddress = (String) emailMap.get("email");
+                EmailUtils
+                        .sendEmail(from, fromAlias, emailAddress, emailAddress, "接机订单提交通知-留学生活网-您身边的留学生活专家", template);
             }
         }
         return sendSuccess;
