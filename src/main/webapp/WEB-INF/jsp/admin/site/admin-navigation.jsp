@@ -12,4 +12,5 @@
 	<li><a href="<c:url value="/admin/excel/toExportPickUpExcel.html"/>">接机订单导出</a></li>
 	<li><a href="<c:url value="/admin/site/email-management.html?type=P"/>">接机邮箱管理</a></li>
 	<li><a href="<c:url value="/admin/site/email-management.html?type=D"/>">宿舍邮箱管理</a></li>
+	<li><a href="<c:url value="/admin/user/userList.html"/>">用户密码管理</a></li>
 </ul>

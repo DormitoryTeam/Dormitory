@@ -133,8 +133,8 @@ require(['config'], function(config) {
 
             $('.house-score .starBox').raty({
                 path : '../style/img',
-                starOn : 'star-white-on.png',
-                starOff : 'star-white-off.png',
+                //starOn : 'star-white-on.png',
+                //starOff : 'star-white-off.png',
                 readOnly : true,
                 score : function() {
                     return $(this).attr('data-score');

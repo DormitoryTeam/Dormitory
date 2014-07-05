@@ -9,6 +9,7 @@ public class UserSearchBean {
     private String  sign;
     private String  searchKey;
     private PageBean page;
+    private String  token;
 
 
     public Integer getId() {
@@ -104,5 +105,18 @@ public class UserSearchBean {
     public void setPage(PageBean pPage) {
         page = pPage;
     }
+
+
+
+    public String getToken() {
+        return token;
+    }
+
+
+
+    public void setToken(String pToken) {
+        token = pToken;
+    }
+    
 
 }
