@@ -264,6 +264,12 @@
 			update_time = now()
 		WHERE id = #{id}
 	</update>
+	<select id="findUserPreferById" parameterType="int" resultType="com.noeasy.money.model.UserPreferBean">
+		select id, smoke, vegetarianism, your_grade as yourGrade, room_member_grade as roomMemberGrade,
+		room_member_gender as roomMemberGender, major, college, floor, orientation, graduate_school as graduateSchool,
+		need_push as needPush, read_clause as readClause
+		from user_prefer where id = #{id}
+	</select>
 	
 	<resultMap id="user" type="com.noeasy.money.model.UserBean">
 		<id column="uId" property="id" />

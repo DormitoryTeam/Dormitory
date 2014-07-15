@@ -259,6 +259,7 @@ public class AdminDormitoryController {
 
         page.setQueryString(request.getQueryString());
         searchBean.setPageBean(page);
+        searchBean.setHasDistance(false);
         List<DormitoryBean> dormitories = dormitoryService.queryDormitoryPage(searchBean);
 
         model.addAttribute("sortField", sortField);

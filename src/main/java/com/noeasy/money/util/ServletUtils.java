@@ -9,6 +9,7 @@ import com.noeasy.money.model.OrderBean;
 import com.noeasy.money.model.UserBean;
 import com.noeasy.money.model.UserInfoBean;
 import com.noeasy.money.model.UserPreferBean;
+import com.noeasy.money.service.impl.OrderService;
 
 public class ServletUtils {
     public static boolean isGet(HttpServletRequest pRequest) {
@@ -59,12 +60,14 @@ public class ServletUtils {
         pRequest.getSession().setAttribute(SessionConstants.SESSION_KEY_ORDER, order);
     }
 
-    
+
+
     public static void setUser2Session(HttpServletRequest request, UserBean user) {
         request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_ID, user.getId());
         request.getSession().setAttribute(SessionConstants.SESSION_KEY_USER_LOGIN, user.getLogin());
-        
+
     }
+
 
 
     public static UserInfoBean getUserInfoFromRequest(HttpServletRequest pRequest) {
@@ -99,10 +102,16 @@ public class ServletUtils {
     }
 
 
-
     public static UserPreferBean getUserPerferFromRequest(HttpServletRequest pRequest) {
-        UserPreferBean userPrefer = new UserPreferBean();
+    
+        return getUserPerferFromRequest(pRequest, null);
+    }
 
+    public static UserPreferBean getUserPerferFromRequest(HttpServletRequest pRequest, UserPreferBean userPrefer) {
+        if( null == userPrefer) {
+            userPrefer = new UserPreferBean();
+        }
+        
         String preferIdStr = pRequest.getParameter("preferId");
         if (StringUtils.isNotBlank(preferIdStr)) {
             userPrefer.setId(Integer.valueOf(preferIdStr));
@@ -124,22 +133,44 @@ public class ServletUtils {
                 userPrefer.setVegetarianism(Boolean.FALSE);
             }
         }
+        String yourGrade = pRequest.getParameter("yourGrade");
+        if (StringUtils.isNotBlank(yourGrade)) {
+            userPrefer.setYourGrade(yourGrade);
+        }
+        String roomMemberGrade = pRequest.getParameter("roomMemberGrade");
+        if (StringUtils.isNotBlank(roomMemberGrade)) {
+            userPrefer.setRoomMemberGrade(roomMemberGrade);
+        }
 
-        userPrefer.setYourGrade(pRequest.getParameter("yourGrade"));
-        userPrefer.setRoomMemberGrade(pRequest.getParameter("roomMemberGrade"));
         String roomMemberGenderStr = pRequest.getParameter("roomMemberGender");
         if (StringUtils.isNotBlank(roomMemberGenderStr)) {
             userPrefer.setRoomMemberGender(Integer.valueOf(roomMemberGenderStr));
         }
-        userPrefer.setMajor(pRequest.getParameter("major"));
-        userPrefer.setCollege(pRequest.getParameter("college"));
-        userPrefer.setFloor(pRequest.getParameter("floor"));
+
+        String major = pRequest.getParameter("major");
+        if (StringUtils.isNotBlank(major)) {
+            userPrefer.setMajor(major);
+        }
+
+        String college = pRequest.getParameter("college");
+        if (StringUtils.isNotBlank(college)) {
+            userPrefer.setCollege(college);
+        }
+
+        String floor = pRequest.getParameter("floor");
+        if (StringUtils.isNotBlank(floor)) {
+            userPrefer.setFloor(floor);
+        }
+
         String orientationStr = pRequest.getParameter("orientation");
         if (StringUtils.isNotBlank(orientationStr)) {
             userPrefer.setOrientation(Integer.valueOf(orientationStr));
         }
 
-        userPrefer.setGraduateSchool(pRequest.getParameter("graduateSchool"));
+        String graduateSchool = pRequest.getParameter("graduateSchool");
+        if (StringUtils.isNotBlank(graduateSchool)) {
+            userPrefer.setGraduateSchool(graduateSchool);
+        }
 
         String needPushStr = pRequest.getParameter("needPush");
         if (StringUtils.isNotBlank(needPushStr)) {

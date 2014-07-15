@@ -82,4 +82,8 @@ public interface IUserRepository {
 
 
     void setPrefer2Order(OrderContactInfo pContactInfo);
+
+
+
+    UserPreferBean findUserPreferById(Integer pId);
 }

@@ -41,7 +41,8 @@
 	</sql>
 
 	<sql id="order-by-order-field">
-		order by ${sortBy}, distance asc
+		order by ${sortBy}
+		<if test="hasDistance">, distance asc</if>
 	</sql>
 
 	<sql id="order-by-field">

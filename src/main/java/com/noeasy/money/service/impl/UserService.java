@@ -353,4 +353,11 @@ public class UserService implements IUserService {
         userRepository.updateUserPrefer(pUserPrefer);
     }
 
+
+
+    @Override
+    public UserPreferBean findUserPreferById(Integer pId) {
+        return userRepository.findUserPreferById(pId);
+    }
+
 }

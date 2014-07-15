@@ -78,7 +78,12 @@ public class DormitorySearchBean {
 
     private String               mRatingStatus;
 
+    private boolean              mHasDistance;
 
+
+    public DormitorySearchBean() {
+        this.mHasDistance = true;
+    }
 
     /**
      * @return the cityId
@@ -438,6 +443,18 @@ public class DormitorySearchBean {
      */
     public void setStatus(final DormitoryStatus pStatus) {
         mStatus = pStatus;
+    }
+
+
+
+    public boolean isHasDistance() {
+        return mHasDistance;
+    }
+
+
+
+    public void setHasDistance(boolean pHasDistance) {
+        mHasDistance = pHasDistance;
     }
 
 }

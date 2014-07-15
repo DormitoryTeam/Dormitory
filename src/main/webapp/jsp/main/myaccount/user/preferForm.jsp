@@ -65,11 +65,11 @@
 							</dt>
 						</dl>
 						<dl>
-							<dd style="width: 250px;">您的专业</dd>
+							<dd style="width: 250px;">申请的专业</dd>
 							<dt><input name="major" type="text" value="${user.prefer.major}" /> </dt>
 						</dl>
 						<dl>
-							<dd style="width: 250px;">学校</dd>
+							<dd style="width: 250px;">申请的学校</dd>
 							<dt><input name="college" value="${user.prefer.college}"/></dt>
 						</dl>
 						<dl>
