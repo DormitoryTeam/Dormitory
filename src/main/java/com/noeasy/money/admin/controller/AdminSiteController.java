@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,13 +17,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.noeasy.money.constant.Constants;
-import com.noeasy.money.model.SimpleSearchBean;
+import com.noeasy.money.enumeration.DormitoryStatus;
 import com.noeasy.money.model.PageBean;
 import com.noeasy.money.model.RichTextBean;
+import com.noeasy.money.model.SimpleSearchBean;
+import com.noeasy.money.service.IDormitoryService;
+import com.noeasy.money.service.INavigationService;
 import com.noeasy.money.service.ISiteService;
 import com.noeasy.money.util.FileUtils;
 import com.noeasy.money.util.ParamUtils;
@@ -38,7 +44,33 @@ import com.noeasy.money.util.ParamUtils;
 public class AdminSiteController {
 
     @Resource(name = "siteService")
-    ISiteService siteService;
+    ISiteService       siteService;
+
+    @Resource(name = "dormitoryService")
+    IDormitoryService  dormitoryService;
+
+    @Resource(name = "navigationService")
+    INavigationService navigationService;
+
+
+
+    @RequestMapping("/edit-email" + Constants.URL_SUFFIX)
+    public String editEmail(final HttpServletRequest request, final HttpServletResponse response, final Model model,
+            final String id, final String email, final String type, final String status) {
+        siteService.saveOrUpdateEmail(id, email, type, status);
+        return "redirect:/admin/site/email-management.html?type=" + type;
+    }
+
+
+
+    @RequestMapping("/email-management" + Constants.URL_SUFFIX)
+    public String emailManagement(final HttpServletRequest request, final HttpServletResponse response,
+            final Model model, final String type, final String status) {
+        List<Map<String, Object>> emails = siteService.queryEmail(type, status);
+        model.addAttribute("emails", emails);
+        model.addAttribute("type", type);
+        return "admin/site/email-management";
+    }
 
 
 
@@ -104,6 +136,7 @@ public class AdminSiteController {
     public String saveCompnay(final HttpServletRequest request, final HttpServletResponse response, final Model model,
             final String name) {
         siteService.saveCompnay(name);
+        updateApplicationCache();
         return "redirect:/admin/site/company-management.html";
     }
 
@@ -240,28 +273,29 @@ public class AdminSiteController {
 
 
 
+    public void updateApplicationCache() {
+        // get the parent context
+        WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
+        ServletContext servletContext = webApplicationContext.getServletContext();
+
+        List<Map<String, Object>> contractTypes = dormitoryService.queryContractTypes();
+        List<Map<String, Object>> roomTypes = dormitoryService.queryRoomTypes();
+        List<Map<String, Object>> companies = navigationService.queryCompanies();
+        Object[] allDormitoryStatus = DormitoryStatus.getAllStatus();
+
+        servletContext.setAttribute("contractTypes", contractTypes);
+        servletContext.setAttribute("roomTypes", roomTypes);
+        servletContext.setAttribute("companies", companies);
+        servletContext.setAttribute("allDormitoryStatus", allDormitoryStatus);
+    }
+
+
+
     @RequestMapping("/update-company" + Constants.URL_SUFFIX)
     public String updateCompnay(final HttpServletRequest request, final HttpServletResponse response,
             final Model model, final String id, final String status) {
         siteService.updateCompanyStatus(id, status);
+        updateApplicationCache();
         return "redirect:/admin/site/company-management.html";
-    }
-
-
-
-    @RequestMapping("/email-management" + Constants.URL_SUFFIX)
-    public String emailManagement(final HttpServletRequest request, final HttpServletResponse response,
-            final Model model, final String type, final String status) {
-        List<Map<String, Object>> emails = siteService.queryEmail(type, status);
-        model.addAttribute("emails", emails);
-        model.addAttribute("type", type);
-        return "admin/site/email-management";
-    }
-    
-    @RequestMapping("/edit-email" + Constants.URL_SUFFIX)
-    public String editEmail(final HttpServletRequest request, final HttpServletResponse response,
-            final Model model, final String id, final String email, final String type, final String status) {
-        siteService.saveOrUpdateEmail(id, email, type, status);
-        return "redirect:/admin/site/email-management.html?type=" + type;
     }
 }
