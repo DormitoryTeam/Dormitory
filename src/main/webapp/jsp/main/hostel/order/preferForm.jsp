@@ -47,7 +47,7 @@
 						</dd>
 					</dl>
 					<dl>
-						<dd>What will be your year of study?</dd>
+						<dd>您的年级?</dd>
 						<dd>
 							<c:set var="yourGrade" value="${order.orderContact.prefer.yourGrade}" />
 							<c:if test="${null == yourGrade}">
@@ -91,7 +91,7 @@
 						</dd>
 					</dl>
 					<dl>
-						<dt>您的专业</dt>
+						<dt>申请的专业</dt>
 						<dd>
 							<c:set var="major" value="${order.orderContact.prefer.major}" />
 							<c:if test="${null == major}">
@@ -101,7 +101,7 @@
 						</dd>
 					</dl>
 					<dl>
-						<dt>学校</dt>
+						<dt>申请的学校</dt>
 						<dd>
 							<c:set var="college" value="${order.orderContact.prefer.college}" />
 							<c:if test="${null == college}">

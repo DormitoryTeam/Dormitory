@@ -152,4 +152,11 @@ public class UserRepository extends BaseRepository implements IUserRepository {
 
     }
 
+
+
+    @Override
+    public UserPreferBean findUserPreferById(Integer pId) {
+        return getSqlSession().selectOne("findUserPreferById", pId);
+    }
+
 }

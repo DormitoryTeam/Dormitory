@@ -227,8 +227,14 @@ public class OrderExcelUtils {
             cell = orderRow.createCell(colIndex++);
             cell.setCellValue(DateUtils.dateToString(order.getCreateTime(), DateUtils.DATE_TIME_FORAMT_RULE));
             // 18
-            cell = orderRow.createCell(colIndex++);
-            cell.setCellValue("");
+            if (null != order.getOrderContact().getPrefer()) {
+                cell = orderRow.createCell(colIndex++);
+                cell.setCellValue(StringEscapeUtils.unescapeHtml4(order.getOrderContact().getPrefer().getFloor()));
+            } else {
+                cell = orderRow.createCell(colIndex++);
+                cell.setCellValue("");
+            }
+
             // 19
             cell = orderRow.createCell(colIndex++);
             cell.setCellValue(StringEscapeUtils.unescapeHtml4(order.getBelongsTo().getInfo().getAddress()));
@@ -383,7 +389,12 @@ public class OrderExcelUtils {
             cell.setCellValue(convertLuggageSize(item));
             // 25
             cell = orderRow.createCell(colIndex++);
-            cell.setCellValue(StringEscapeUtils.unescapeHtml4(info.getCountry()) + " " + StringEscapeUtils.unescapeHtml4(info.getProvince()) + "(省) "+ StringEscapeUtils.unescapeHtml4(info.getCity()) + "(市) " + StringEscapeUtils.unescapeHtml4(info.getCounty()) +"(区县) " +StringEscapeUtils.unescapeHtml4(info.getAddress()) + "( "+ StringEscapeUtils.unescapeHtml4(info.getPostalcode()) + " )");
+            cell.setCellValue(StringEscapeUtils.unescapeHtml4(info.getCountry()) + " "
+                    + StringEscapeUtils.unescapeHtml4(info.getProvince()) + "(省) "
+                    + StringEscapeUtils.unescapeHtml4(info.getCity()) + "(市) "
+                    + StringEscapeUtils.unescapeHtml4(info.getCounty()) + "(区县) "
+                    + StringEscapeUtils.unescapeHtml4(info.getAddress()) + "( "
+                    + StringEscapeUtils.unescapeHtml4(info.getPostalcode()) + " )");
             // 26
             cell = orderRow.createCell(colIndex++);
             cell.setCellValue("");

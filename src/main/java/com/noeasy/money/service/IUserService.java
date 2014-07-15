@@ -2,9 +2,9 @@ package com.noeasy.money.service;
 
 import java.util.List;
 
-import com.noeasy.money.model.OrderBean;
 import com.noeasy.money.model.OrderContactInfo;
 import com.noeasy.money.model.UserBean;
+import com.noeasy.money.model.UserPreferBean;
 import com.noeasy.money.model.UserSearchBean;
 
 public interface IUserService {
@@ -69,6 +69,7 @@ public interface IUserService {
     
     void saveUserPrder(OrderContactInfo contactInfo);
 
+    UserPreferBean findUserPreferById(Integer pId);
 
 
     UserBean findUserById(Integer pUserId);

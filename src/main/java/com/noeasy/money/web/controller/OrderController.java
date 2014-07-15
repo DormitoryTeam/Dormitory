@@ -626,7 +626,12 @@ public class OrderController {
 
     private void maintainsPrefer(final HttpServletRequest pRequest) {
         OrderBean order = ServletUtils.getOrderFromSession(pRequest);
-        UserPreferBean userPrefer = ServletUtils.getUserPerferFromRequest(pRequest);
+        String preferIdStr = pRequest.getParameter("preferId");
+        UserPreferBean userPrefer = null;
+        if(StringUtils.isNotBlank(preferIdStr)) {
+            userPrefer = userService.findUserPreferById(Integer.valueOf(preferIdStr));
+        }
+        userPrefer = ServletUtils.getUserPerferFromRequest(pRequest, userPrefer);
         order.getOrderContact().setPrefer(userPrefer);
         userService.saveUserPrder(order.getOrderContact());
     }
@@ -859,6 +864,7 @@ public class OrderController {
         paramMap.put("email", login);
         paramMap.put("dormitoryName", EmailUtils.getStringValue(lineItem.getDormitory().getName()));
         paramMap.put("dormitoryAddress", EmailUtils.getStringValue(lineItem.getDormitory().getAddress()));
+        paramMap.put("dormitoryPostalCode", EmailUtils.getStringValue(lineItem.getDormitory().getPostcode()));
         paramMap.put("roomName", EmailUtils.getStringValue(lineItem.getRoomInfo().getName()));
         paramMap.put("contract", EmailUtils.getStringValue(lineItem.getContractType().getName()));
         BigDecimal zero = new BigDecimal("0");
@@ -879,7 +885,12 @@ public class OrderController {
             paramMap.put("salePrice", EmailUtils.getStringValue(lineItem.getAmount().toString()));
         }
         paramMap.put("checkinDate", EmailUtils.getStringValue(lineItem.getRoomInfo().getCheckinDate()));
-        paramMap.put("comment", "");
+        if (null != order.getOrderContact().getPrefer()) {
+            paramMap.put("comment", EmailUtils.getStringValue(order.getOrderContact().getPrefer().getFloor()));
+        } else {
+            paramMap.put("comment", "");
+        }
+        
         paramMap.put("city", EmailUtils.getStringValue(lineItem.getDormitory().getCity()));
 
         String from = "accommodation@liuxuelife.com";

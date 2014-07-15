@@ -1,5 +1,5 @@
 <div class="reservation-info">
-	<span style="margin-right: 0px; padding-right: 5px; padding-left: 5px;">基本信息</span>
+	<!--span style="margin-right: 0px; padding-right: 5px; padding-left: 5px;">基本信息</span-->
 	<fieldset>
 		<dl>
 			<dt>房屋名</dt>
