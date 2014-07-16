@@ -253,14 +253,16 @@ public class DormitoryRepository extends BaseRepository implements IDormitoryRep
                 parameters);
         for (RoomInfoBean room : rooms) {
             for (DormitoryBean dormitory : dormitories) {
-                if (dormitory.getId() == room.getDormitoryId()
-                        && !DormitoryStatus.INVISIBILITY.equals(room.getStatus())) {
-                    int roomCount = dormitory.getRooms().size();
-                    if (roomCount < 2) {
-                        dormitory.getRooms().add(room);
-                    }
-                    if (roomCount == 1) {
-                        break;
+                if (dormitory.getId() == room.getDormitoryId()) {
+                    dormitory.setRoomCount(dormitory.getRoomCount() + 1);
+                    if (!DormitoryStatus.INVISIBILITY.equals(room.getStatus())) {
+                        int roomCount = dormitory.getRooms().size();
+                        if (roomCount < 2) {
+                            dormitory.getRooms().add(room);
+                        }
+                        if (roomCount == 1) {
+                            break;
+                        }
                     }
                 }
             }

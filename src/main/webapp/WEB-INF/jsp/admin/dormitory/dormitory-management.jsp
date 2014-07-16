@@ -62,7 +62,7 @@
 								<li><span style="font-weight: bolder">服务:</span> ${dormitory['service']}</li>
 								<li><span style="font-weight: bolder">优惠:</span> ${dormitory['promotion']}</li>
 								<li><span style="font-weight: bolder">附加费用:</span> ${dormitory['additionalPrice']}</li>
-								<li><span style="font-weight: bolder">拥有房型个数:</span> ${fn:length(dormitory['rooms'])}</li>
+								<li><span style="font-weight: bolder">拥有房型个数:</span> ${dormitory['roomCount']}</li>
 							</ul>
 							<hr />
 						</td>

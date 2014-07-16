@@ -111,6 +111,8 @@ public class DormitoryBean extends BaseBean {
 
     private Double             mDefaultRating;
 
+    private int                mRoomCount;
+
 
 
     /**
@@ -364,6 +366,15 @@ public class DormitoryBean extends BaseBean {
      */
     public String getRefund() {
         return mRefund;
+    }
+
+
+
+    /**
+     * @return the roomCount
+     */
+    public int getRoomCount() {
+        return mRoomCount;
     }
 
 
@@ -700,6 +711,16 @@ public class DormitoryBean extends BaseBean {
      */
     public void setRefund(final String pRefund) {
         mRefund = pRefund;
+    }
+
+
+
+    /**
+     * @param pRoomCount
+     *            the roomCount to set
+     */
+    public void setRoomCount(final int pRoomCount) {
+        mRoomCount = pRoomCount;
     }
 
 
